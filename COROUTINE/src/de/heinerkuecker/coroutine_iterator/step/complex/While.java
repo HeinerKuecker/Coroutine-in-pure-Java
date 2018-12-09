@@ -10,20 +10,19 @@ import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
 public class While<RESULT, PARENT extends CoroutineIterator<RESULT>>
-//extends ComplexStep<While<RESULT, PARENT>, RESULT, PARENT>
 extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, PARENT>
 {
     public final String label;
-    final Condition<? super PARENT/*? super CoroutineIterator<RESULT>*/> condition;
-    final ComplexStep<?, ?, RESULT, PARENT/*CoroutineIterator<RESULT>*/> bodyComplexStep;
+    final Condition<? super PARENT> condition;
+    final ComplexStep<?, ?, RESULT, PARENT> bodyComplexStep;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public While(
-            final Condition<? super PARENT/*? super CoroutineIterator<RESULT>*/> condition ,
-            final CoroIterStep<? super RESULT, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
+            final Condition<? super PARENT> condition ,
+            final CoroIterStep<? super RESULT, PARENT> ... steps )
     {
         super(
                 //creationStackOffset
@@ -36,7 +35,8 @@ extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, P
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
-            this.bodyComplexStep = (ComplexStep<?, ?, RESULT, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
+            this.bodyComplexStep =
+                    (ComplexStep<?, ?, RESULT, PARENT>) steps[ 0 ];
         }
         else
         {
@@ -118,8 +118,8 @@ extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, P
     @Override
     public String toString(
             final String indent ,
-            final ComplexStepState<?, /*STEP*/?, RESULT, PARENT> lastStepExecuteState ,
-            final ComplexStepState<?, /*STEP*/?, RESULT, PARENT> nextStepExecuteState )
+            final ComplexStepState<?, ?, RESULT, PARENT> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT, PARENT> nextStepExecuteState )
     {
         final WhileState<RESULT, PARENT> lastWhileExecuteState =
                 (WhileState<RESULT, PARENT>) lastStepExecuteState;
