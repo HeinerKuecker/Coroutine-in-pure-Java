@@ -95,17 +95,6 @@ extends ComplexStep<IfElse<RESULT, PARENT>, IfElseState<RESULT, PARENT>, RESULT,
             final ComplexStepState<?, /*STEP*/?, RESULT, PARENT> lastStepExecuteState ,
             final ComplexStepState<?, /*STEP*/?, RESULT, PARENT> nextStepExecuteState )
     {
-        //return
-        //        indent + this.getClass().getSimpleName() + " ( " + this.condition + " ) \n" +
-        //        this.thenBodySequence.toString(
-        //                indent + " " ,
-        //                //isThenCurrentExecuted &&
-        //                runInThenBody ) +
-        //        indent + "else\n" +
-        //        this.elseBodySequence.toString(
-        //                indent + " " ,
-        //                //isElseCurrentExecuted &&
-        //                runInElseBody );
         final IfElseState<RESULT, PARENT> lastIfElseExecuteState =
                 (IfElseState<RESULT, PARENT>) lastStepExecuteState;
 
