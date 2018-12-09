@@ -23,7 +23,7 @@ extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
     {
         super(
                 //creationStackOffset
-                2 );
+                3 );
 
         this.condition = condition;
 
@@ -124,7 +124,9 @@ extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
 
         return
                 indent +
-                this.getClass().getSimpleName() + " (\n" +
+                this.getClass().getSimpleName() + " (" +
+                ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
+                "\n" +
                 conditionStr + " )\n" +
                 this.thenBodyComplexStep.toString(
                         indent + " " ,

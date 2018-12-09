@@ -25,11 +25,27 @@ extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, P
             final Condition<? super PARENT/*? super CoroutineIterator<RESULT>*/> condition ,
             final CoroIterStep<? super RESULT, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
     {
-        this(
-                //label
-                null ,
-                condition ,
-                steps );
+        super(
+                //creationStackOffset
+                3 );
+
+        this.label = null;
+
+        this.condition = Objects.requireNonNull( condition );
+
+        if ( steps.length == 1 &&
+                steps[ 0 ] instanceof ComplexStep )
+        {
+            this.bodyComplexStep = (ComplexStep<?, ?, RESULT, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
+        }
+        else
+        {
+            this.bodyComplexStep =
+                    new StepSequence(
+                            // creationStackOffset
+                            3 ,
+                            steps );
+        }
     }
 
     /**
@@ -43,7 +59,7 @@ extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, P
     {
         super(
                 //creationStackOffset
-                2 );
+                3 );
 
         this.label = label;
 
@@ -159,7 +175,11 @@ extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, P
         }
 
         return
-        		indent + ( this.label != null ? this.label + " : " : "" ) + this.getClass().getSimpleName() + " (\n" +
+                indent +
+                ( this.label != null ? this.label + " : " : "" ) +
+                this.getClass().getSimpleName() + " (" +
+                ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
+                "\n" +
                 conditionStr + " )\n" +
                 this.bodyComplexStep.toString(
                         indent + " " ,

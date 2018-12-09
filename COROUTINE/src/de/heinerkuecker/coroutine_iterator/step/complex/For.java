@@ -30,13 +30,86 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
             final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> updateStep ,
             final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
-        this(
-                //label
-                null ,
-                initialStep ,
-                condition ,
-                updateStep ,
-                steps );
+        super(
+                //creationStackOffset
+                3 );
+
+        this.label = null;
+
+        if ( initialStep == null )
+        {
+            // C style default
+            this.initialStep = new NoOperation();
+        }
+        else
+        {
+            this.initialStep = initialStep;
+
+            if ( CoroutineIterator.initializationChecks &&
+                    initialStep instanceof ComplexStep )
+            {
+                final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+                        ( (ComplexStep<?, ?, RESULT, /*PARENT*/ ? super CoroutineIterator<RESULT>>) initialStep ).getUnresolvedBreaksOrContinues();
+
+                if ( ! unresolvedBreaksOrContinues.isEmpty() )
+                {
+                    throw new IllegalArgumentException(
+                            "unpermitted breaks or continues in initial step" +
+                            unresolvedBreaksOrContinues );
+                }
+            }
+        }
+
+        if ( condition == null )
+        {
+            // C style default
+            this.condition = new True();
+        }
+        else
+        {
+            this.condition = condition;
+        }
+
+
+        if ( updateStep == null )
+        {
+            // C style default
+            this.updateStep = new NoOperation();
+        }
+        else
+        {
+            this.updateStep = updateStep;
+
+            if ( CoroutineIterator.initializationChecks &&
+                    updateStep instanceof ComplexStep )
+            {
+                final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+                        ( (ComplexStep<?, ?, RESULT, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
+
+                if ( ! unresolvedBreaksOrContinues.isEmpty() )
+                {
+                    throw new IllegalArgumentException(
+                            "unpermitted breaks or continues in update step" +
+                            unresolvedBreaksOrContinues );
+                }
+            }
+        }
+
+        if ( steps.length == 1 &&
+                steps[ 0 ] instanceof ComplexStep )
+        {
+            this.bodyComplexStep =
+                    (ComplexStep<?, ?, RESULT, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
+        }
+        else
+        {
+            this.bodyComplexStep =
+                    //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
+                    new StepSequence(
+                            // creationStackOffset
+                            3 ,
+                            steps );
+        }
     }
 
     /**
@@ -52,7 +125,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
     {
         super(
                 //creationStackOffset
-                2 );
+                3 );
 
         this.label = label;
 
@@ -285,7 +358,11 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
         }
 
         return
-                indent + ( this.label != null ? this.label + " : " : "" ) + this.getClass().getSimpleName() + " (\n" +
+                indent +
+                ( this.label != null ? this.label + " : " : "" ) +
+                this.getClass().getSimpleName() + " (" +
+                ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
+                "\n" +
                 initialStepStr + " ;\n" +
                 conditionStr + " ;\n" +
                 updateStepStr + " )\n" +
