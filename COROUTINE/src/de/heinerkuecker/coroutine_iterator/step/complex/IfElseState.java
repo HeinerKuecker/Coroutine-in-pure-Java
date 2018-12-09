@@ -65,7 +65,7 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
                 this.thenBodyComplexState = thenBodyStep.newState();
             }
 
-            parent.saveLastStepState();
+            // TODO only before executing simple step: parent.saveLastStepState();
 
             final CoroIterStepResult<RESULT> executeResult =
                     this.thenBodyComplexState.execute(
@@ -95,7 +95,7 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
                 this.elseBodyComplexState = elseBodyStep.newState();
             }
 
-            parent.saveLastStepState();
+            // TODO only before executing simple step: parent.saveLastStepState();
 
             final CoroIterStepResult<RESULT> executeResult =
                     this.elseBodyComplexState.execute(

@@ -43,7 +43,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
             final CoroIterStep<RESULT, ? super PARENT> initializerStep =
                     _for.initialStep;
 
-            CoroIterStepResult<RESULT> initializerExecuteResult;
+            final CoroIterStepResult<RESULT> initializerExecuteResult;
             if ( initializerStep instanceof SimpleStep )
             {
                 final SimpleStep<RESULT, ? super PARENT> initializerSimpleStep =
@@ -60,7 +60,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
             }
             else
             {
-                ComplexStep<?, ?, RESULT, ? super PARENT> initializerComplexStep =
+                final ComplexStep<?, ?, RESULT, ? super PARENT> initializerComplexStep =
                         (ComplexStep<?, ?, RESULT, ? super PARENT>) initializerStep;
 
                 if ( this.initializerComplexStepState == null )
@@ -69,7 +69,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
                     this.initializerComplexStepState = initializerComplexStep.newState();
                 }
 
-                parent.saveLastStepState();
+                // TODO only before executing simple step: parent.saveLastStepState();
 
                 initializerExecuteResult =
                         this.initializerComplexStepState.execute(
@@ -135,7 +135,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
                     this.bodyComplexState = bodyComplexStep.newState();
                 }
 
-                parent.saveLastStepState();
+                // TODO only before executing simple step: parent.saveLastStepState();
 
                 final CoroIterStepResult<RESULT> bodyExecuteResult =
                         this.bodyComplexState.execute(
@@ -205,7 +205,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
                 }
                 else
                 {
-                    ComplexStep<?, ?, RESULT, ? super PARENT> updateComplexStep =
+                    final ComplexStep<?, ?, RESULT, ? super PARENT> updateComplexStep =
                             (ComplexStep<?, ?, RESULT, ? super PARENT>) updateStep;
 
                     if ( this.updateComplexStepState == null )
@@ -214,7 +214,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
                         this.updateComplexStepState = updateComplexStep.newState();
                     }
 
-                    parent.saveLastStepState();
+                    // TODO only before executing simple step: parent.saveLastStepState();
 
                     updateExecuteResult =
                             this.updateComplexStepState.execute(

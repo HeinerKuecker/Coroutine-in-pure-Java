@@ -65,7 +65,7 @@ implements ComplexStepState<WhileState<RESULT, PARENT>, While<RESULT, PARENT>, R
                     this.bodyComplexState = bodyStep.newState();
                 }
 
-                parent.saveLastStepState();
+                // TODO only before executing simple step: parent.saveLastStepState();
 
                 final CoroIterStepResult<RESULT> bodyExecuteResult =
                         this.bodyComplexState.execute(

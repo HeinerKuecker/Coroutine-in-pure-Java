@@ -36,7 +36,7 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
             final CoroIterStep<RESULT, ? super PARENT> currentStep =
                     sequence.getStep( this.currentStepIndex );
 
-            CoroIterStepResult<RESULT> executeResult;
+            final CoroIterStepResult<RESULT> executeResult;
             if ( currentStep instanceof SimpleStep )
             {
                 final SimpleStep<RESULT, ? super PARENT> currentSimpleStep =
@@ -52,7 +52,7 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
             }
             else
             {
-                ComplexStep<?, ?, RESULT, ? super PARENT> currentComplexStep =
+                final ComplexStep<?, ?, RESULT, ? super PARENT> currentComplexStep =
                         (ComplexStep<?, ?, RESULT, ? super PARENT>) currentStep;
 
                 if ( this.currentComplexState == null )
@@ -61,7 +61,7 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
                     this.currentComplexState = currentComplexStep.newState();
                 }
 
-                parent.saveLastStepState();
+                // TODO only before executing simple step: parent.saveLastStepState();
 
                 executeResult =
                         this.currentComplexState.execute(
