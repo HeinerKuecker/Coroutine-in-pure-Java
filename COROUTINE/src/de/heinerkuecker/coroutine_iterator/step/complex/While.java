@@ -159,8 +159,7 @@ extends ComplexStep<While<RESULT, PARENT>, WhileState<RESULT, PARENT>, RESULT, P
         }
 
         return
-                indent +
-                this.getClass().getSimpleName() + " (\n" +
+        		indent + ( this.label != null ? this.label + " : " : "" ) + this.getClass().getSimpleName() + " (\n" +
                 conditionStr + " )\n" +
                 this.bodyComplexStep.toString(
                         indent + " " ,

@@ -72,6 +72,7 @@ extends BreakOrContinue<RESULT>
     {
         return
                 this.getClass().getSimpleName() +
+                ( this.label != null ? " " + this.label  : "" ) +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

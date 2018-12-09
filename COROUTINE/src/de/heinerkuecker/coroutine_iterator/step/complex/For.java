@@ -285,8 +285,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
         }
 
         return
-                indent +
-                this.getClass().getSimpleName() + " (\n" +
+                indent + ( this.label != null ? this.label + " : " : "" ) + this.getClass().getSimpleName() + " (\n" +
                 initialStepStr + " ;\n" +
                 conditionStr + " ;\n" +
                 updateStepStr + " )\n" +
