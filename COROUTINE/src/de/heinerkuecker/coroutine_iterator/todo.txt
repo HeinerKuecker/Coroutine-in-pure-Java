@@ -1,9 +1,6 @@
 do {
 } while ( <condition> );
 
-break;
-continue
-
 switch
 
 try {
