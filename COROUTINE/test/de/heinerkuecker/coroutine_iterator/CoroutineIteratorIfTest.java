@@ -41,8 +41,8 @@ public class CoroutineIteratorIfTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -58,8 +58,8 @@ public class CoroutineIteratorIfTest
                                 // steps
                                 ) );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -94,8 +94,8 @@ public class CoroutineIteratorIfTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
 }

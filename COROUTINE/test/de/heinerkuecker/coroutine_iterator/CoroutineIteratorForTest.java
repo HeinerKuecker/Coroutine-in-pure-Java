@@ -123,8 +123,8 @@ public class CoroutineIteratorForTest
                 coroIter ,
                 3 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -161,8 +161,8 @@ public class CoroutineIteratorForTest
                 coroIter ,
                 7 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
 }

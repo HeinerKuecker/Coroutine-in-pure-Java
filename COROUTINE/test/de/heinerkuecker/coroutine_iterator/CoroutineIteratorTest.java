@@ -68,8 +68,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 "a" );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -85,8 +85,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 "a" );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -105,8 +105,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 "a" );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -123,8 +123,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 "a" );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -144,8 +144,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 0 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -163,8 +163,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -182,8 +182,8 @@ public class CoroutineIteratorTest
                 coroIter ,
                 0 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     /**

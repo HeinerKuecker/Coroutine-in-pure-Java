@@ -94,8 +94,8 @@ public class CoroutineIteratorContinueTest
                                         // this yield return is never executed
                                         new YieldReturnValue<>( 1 ) ) ) );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test( expected = IllegalStateException.class )
@@ -339,8 +339,8 @@ public class CoroutineIteratorContinueTest
                                         // this step is never executed
                                         new NoOperation<>() ) ) );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test( expected = IllegalStateException.class )

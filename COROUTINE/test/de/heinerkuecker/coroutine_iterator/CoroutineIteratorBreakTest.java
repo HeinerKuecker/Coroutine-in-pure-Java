@@ -49,8 +49,8 @@ public class CoroutineIteratorBreakTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -90,8 +90,8 @@ public class CoroutineIteratorBreakTest
                 coroIter ,
                 2 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test( expected = IllegalStateException.class )
@@ -274,8 +274,8 @@ public class CoroutineIteratorBreakTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -317,8 +317,8 @@ public class CoroutineIteratorBreakTest
                 coroIter ,
                 2 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test( expected = IllegalStateException.class )

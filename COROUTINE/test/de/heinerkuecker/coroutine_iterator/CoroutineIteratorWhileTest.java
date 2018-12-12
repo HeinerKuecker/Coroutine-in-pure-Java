@@ -49,8 +49,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -104,8 +104,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 2 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -128,8 +128,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 0 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -154,8 +154,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     // endless loop: @Test
@@ -171,8 +171,8 @@ public class CoroutineIteratorWhileTest
                                 // steps
                                 ) );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -188,8 +188,8 @@ public class CoroutineIteratorWhileTest
                                 // steps
                                 ) );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -215,8 +215,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -246,8 +246,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 2 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -279,8 +279,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 0 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
@@ -319,8 +319,8 @@ public class CoroutineIteratorWhileTest
                 coroIter ,
                 1 );
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
 }
