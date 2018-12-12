@@ -40,6 +40,28 @@ public class CoroutineIteratorDoWhileTest
                 coroIter );
     }
 
+    @Test
+    public void test_DoWhile_1()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new DoWhile<>(
+                                // condition
+                                new False()
+                                // no steps
+                                ) ,
+                        new YieldReturnValue<Integer>( 1 ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
     // TODO more tests
 
 }
