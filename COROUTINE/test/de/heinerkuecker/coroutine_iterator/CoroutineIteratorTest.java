@@ -98,7 +98,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         //parent -> new CoroIterStepResult.FinallyReturnWithResult<String>( "a" )
                         new FinallyReturnValue<>( "a" ) ,
-                        // the second step is never excuted
+                        // the second step is never executed
                         new YieldReturnValue<>( "b" ) );
 
         assertNext(

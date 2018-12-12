@@ -38,7 +38,7 @@ public class CoroutineIteratorBreakTest
                                 new YieldReturnValue<>( 0 ) ,
                                 new YieldReturnValue<>( 1 ) ,
                                 new Break<>() ,
-                                // the third yield return is never excuted
+                                // the third yield return is never executed
                                 new YieldReturnValue<>( 2 ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -263,7 +263,7 @@ public class CoroutineIteratorBreakTest
                                 new YieldReturnValue<>( 0 ) ,
                                 new YieldReturnValue<>( 1 ) ,
                                 new Break<>() ,
-                                // the third yield return is never excuted
+                                // the third yield return is never executed
                                 new YieldReturnValue<>( 2 ) ) );
 
         CoroutineIteratorTest.assertNext(

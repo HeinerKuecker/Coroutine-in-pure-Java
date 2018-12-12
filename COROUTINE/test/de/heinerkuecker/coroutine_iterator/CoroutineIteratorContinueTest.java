@@ -39,7 +39,7 @@ public class CoroutineIteratorContinueTest
                                 new YieldReturnValue<>( 0 ) ,
                                 new YieldReturnValue<>( 1 ) ,
                                 new Continue<>() ,
-                                // this step is never excuted
+                                // this step is never executed
                                 new NoOperation<>() ) );
 
         for ( int i = 0 ; i < 3 ; i++ )
@@ -291,7 +291,7 @@ public class CoroutineIteratorContinueTest
                                 new YieldReturnValue<>( 0 ) ,
                                 new YieldReturnValue<>( 1 ) ,
                                 new Continue<>() ,
-                                // this step is never excuted
+                                // this step is never executed
                                 new NoOperation<>() ) );
 
         for ( int i = 0 ; i < 3 ; i++ )
@@ -336,7 +336,7 @@ public class CoroutineIteratorContinueTest
                                         new Continue<>(
                                                 //label
                                                 "outer_while" ) ,
-                                        // this step is never excuted
+                                        // this step is never executed
                                         new NoOperation<>() ) ) );
 
         Assert.assertFalse(
@@ -369,7 +369,7 @@ public class CoroutineIteratorContinueTest
                                         new Continue<>(
                                                 //label
                                                 "wrong" ) ,
-                                        // this step is never excuted
+                                        // this step is never executed
                                         new NoOperation<>() ) ) );
 
         coroIter.hasNext();
@@ -401,7 +401,7 @@ public class CoroutineIteratorContinueTest
                                         new Continue<>(
                                                 //label
                                                 "wrong" ) ,
-                                        // this step is never excuted
+                                        // this step is never executed
                                         new NoOperation<>() ) ) );
 
         coroIter.hasNext();
