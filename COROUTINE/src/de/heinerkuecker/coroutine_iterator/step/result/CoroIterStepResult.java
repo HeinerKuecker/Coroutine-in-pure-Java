@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.result;
 
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.step.complex.DoWhile;
 import de.heinerkuecker.coroutine_iterator.step.complex.For;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
 

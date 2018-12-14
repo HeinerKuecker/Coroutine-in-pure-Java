@@ -38,6 +38,5 @@ extends HCloneable<STEP_STATE>
      */
     boolean isFinished();
 
-    // TODO unused
     STEP getStep();
 }

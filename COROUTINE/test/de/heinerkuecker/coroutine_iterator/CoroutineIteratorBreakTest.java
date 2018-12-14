@@ -1,6 +1,5 @@
 package de.heinerkuecker.coroutine_iterator;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine_iterator.condition.Lesser;

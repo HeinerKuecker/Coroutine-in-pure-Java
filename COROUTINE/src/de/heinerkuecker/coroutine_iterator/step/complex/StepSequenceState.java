@@ -79,7 +79,8 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
                     this.currentComplexState == null &&
                      sequence.getStep( this.currentStepIndex ) instanceof ComplexStep )
             {
-                this.currentComplexState = ( (ComplexStep) sequence.getStep( this.currentStepIndex ) ).newState();
+                this.currentComplexState =
+                        ( (ComplexStep) sequence.getStep( this.currentStepIndex ) ).newState();
             }
 
             if ( ! ( executeResult == null ||
