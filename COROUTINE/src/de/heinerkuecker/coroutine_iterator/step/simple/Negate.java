@@ -1,9 +1,12 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
+// TODO rename to Negatevar
 public final class Negate<RESULT>
 extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
 {
@@ -19,7 +22,9 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
     public Negate(
             final String varName )
     {
-        this.varName = varName;
+        this.varName =
+                Objects.requireNonNull(
+                        varName );
     }
 
     public static <RESULT> Negate<RESULT> negate(

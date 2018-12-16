@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -22,7 +24,11 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
             final String varName ,
             final Object varValue )
     {
-        this.varName = varName;
+        this.varName =
+                Objects.requireNonNull(
+                        varName );
+
+        // can be null
         this.varValue = varValue;
     }
 
@@ -58,7 +64,6 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
-
     }
 
 }

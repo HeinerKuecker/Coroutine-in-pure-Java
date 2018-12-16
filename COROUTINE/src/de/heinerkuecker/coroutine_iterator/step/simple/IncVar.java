@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -30,7 +32,9 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
     public IncVar(
             final String varName )
     {
-        this.varName = varName;
+        this.varName =
+                Objects.requireNonNull(
+                        varName );
     }
 
     /**
