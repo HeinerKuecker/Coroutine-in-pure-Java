@@ -124,7 +124,7 @@ extends ComplexStep<IfElse<RESULT, PARENT>, IfElseState<RESULT, PARENT>, RESULT,
         final ComplexStepState<?, ?, RESULT, PARENT> lastElseBodyState;
         if ( lastIfElseExecuteState != null )
         {
-            lastElseBodyState = lastIfElseExecuteState.thenBodyComplexState;
+            lastElseBodyState = lastIfElseExecuteState.elseBodyComplexState;
         }
         else
         {
@@ -134,7 +134,7 @@ extends ComplexStep<IfElse<RESULT, PARENT>, IfElseState<RESULT, PARENT>, RESULT,
         final ComplexStepState<?, ?, RESULT, PARENT> nextElseBodyState;
         if ( nextIfElseExecuteState != null )
         {
-            nextElseBodyState = nextIfElseExecuteState.thenBodyComplexState;
+            nextElseBodyState = nextIfElseExecuteState.elseBodyComplexState;
         }
         else
         {
