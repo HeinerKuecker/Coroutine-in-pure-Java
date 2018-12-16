@@ -41,6 +41,12 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
             // C style default
             this.initialStep = new NoOperation();
         }
+        else if ( initialStep instanceof BreakOrContinue )
+        {
+            throw new IllegalArgumentException(
+                    "break or continue in initial step: " +
+                    initialStep );
+        }
         else
         {
             this.initialStep = initialStep;
@@ -75,6 +81,12 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
         {
             // C style default
             this.updateStep = new NoOperation();
+        }
+        else if ( updateStep instanceof BreakOrContinue )
+        {
+            throw new IllegalArgumentException(
+                    "break or continue in update step: " +
+                            updateStep );
         }
         else
         {
@@ -222,6 +234,11 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
+        if ( initialStep instanceof ComplexStep )
+        {
+            result.addAll( ((ComplexStep) initialStep).getUnresolvedBreaksOrContinues() );
+        }
+
         for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues() )
         {
             final String label = unresolvedBreakOrContinue.getLabel();
@@ -232,6 +249,11 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
             {
                 result.add( unresolvedBreakOrContinue );
             }
+        }
+
+        if ( updateStep instanceof ComplexStep )
+        {
+            result.addAll( ((ComplexStep) updateStep).getUnresolvedBreaksOrContinues() );
         }
 
         return result;

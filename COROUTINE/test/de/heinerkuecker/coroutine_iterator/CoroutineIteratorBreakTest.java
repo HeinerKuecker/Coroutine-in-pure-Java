@@ -5,6 +5,7 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine_iterator.condition.Lesser;
 import de.heinerkuecker.coroutine_iterator.condition.True;
 import de.heinerkuecker.coroutine_iterator.step.complex.For;
+import de.heinerkuecker.coroutine_iterator.step.complex.StepSequence;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
 import de.heinerkuecker.coroutine_iterator.step.flow.Break;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
@@ -93,7 +94,7 @@ public class CoroutineIteratorBreakTest
                 coroIter );
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_in_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
@@ -118,7 +119,36 @@ public class CoroutineIteratorBreakTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
+    public void test_Negative_For_Break_in_complex_Initializer()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new While<Integer, CoroutineIterator<Integer>>(
+                                //condition
+                                new True() ,
+                                // steps
+                                new SetVar<>( "number" , 0 ) ,
+                                new For<Integer, CoroutineIterator<Integer>>(
+                                        // initialStep
+                                        new StepSequence<>(
+                                                // creationStackOffset
+                                                1 ,
+                                                // steps
+                                                new Break<>() ) ,
+                                        // condition
+                                        new True() ,
+                                        // updateStep
+                                        new NoOperation<>() ,
+                                        // steps
+                                        new NoOperation<>() ) ) );
+
+        coroIter.hasNext();
+    }
+
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_labeled_in_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
@@ -132,7 +162,7 @@ public class CoroutineIteratorBreakTest
                                 new SetVar<>( "number" , 0 ) ,
                                 new For<>(
                                         // initialStep
-                                        new Break<>( "any" ) ,
+                                        new Break<>( "wrong" ) ,
                                         // condition
                                         new True() ,
                                         // updateStep
@@ -143,7 +173,7 @@ public class CoroutineIteratorBreakTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_in_Update()
     {
         CoroutineIterator.initializationChecks = true;
@@ -168,7 +198,36 @@ public class CoroutineIteratorBreakTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
+    public void test_Negative_For_Break_in_Complex_Update()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new While<Integer, CoroutineIterator<Integer>>(
+                                //condition
+                                new True() ,
+                                // steps
+                                new SetVar<>( "number" , 0 ) ,
+                                new For<Integer, CoroutineIterator<Integer>>(
+                                        // initialStep
+                                        new NoOperation<>() ,
+                                        // condition
+                                        new True() ,
+                                        // updateStep
+                                        new StepSequence<>(
+                                                // creationStackOffset
+                                                1 ,
+                                                // steps
+                                                new Break<>() ) ,
+                                        // steps
+                                        new NoOperation<>() ) ) );
+
+        coroIter.hasNext();
+    }
+
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_labeled_in_Update()
     {
         CoroutineIterator.initializationChecks = true;

@@ -98,7 +98,7 @@ public class CoroutineIteratorContinueTest
                 coroIter );
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_in_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
@@ -123,7 +123,7 @@ public class CoroutineIteratorContinueTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_labeled_in_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
@@ -148,7 +148,7 @@ public class CoroutineIteratorContinueTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_in_Update()
     {
         CoroutineIterator.initializationChecks = true;
@@ -173,7 +173,7 @@ public class CoroutineIteratorContinueTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_labeled_in_Update()
     {
         CoroutineIterator.initializationChecks = true;
