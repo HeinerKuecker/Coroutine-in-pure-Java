@@ -152,7 +152,6 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
     @Override
     public IfElseState<RESULT, PARENT> createClone()
     {
-        //throw new RuntimeException( "not implemented" );
         final IfElseState<RESULT, PARENT> clone = new IfElseState<>( ifElse );
 
         clone.runInCondition = runInCondition;
