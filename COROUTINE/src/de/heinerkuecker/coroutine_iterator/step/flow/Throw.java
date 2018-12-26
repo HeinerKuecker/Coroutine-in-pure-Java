@@ -2,13 +2,13 @@ package de.heinerkuecker.coroutine_iterator.step.flow;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 import de.heinerkuecker.util.ExceptionUnchecker;
 
 public class Throw<RESULT>
-extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     private final Exception exception;
 
@@ -29,7 +29,7 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineIterator<RESULT> parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         return ExceptionUnchecker.returnRethrow( exception );
     }

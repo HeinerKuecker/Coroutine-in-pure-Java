@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine_iterator.step.simple;
 
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -16,7 +17,7 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  */
 public final class IncVar<RESULT>
-extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to increment in
@@ -40,15 +41,15 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
     /**
      * Increment variable.
      *
-     * @see CoroIterStep#execute(Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineIterator<RESULT> parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.vars.get( varName );
-        parent.vars.put( varName , var + 1 );
+        final int var = (int) parent.vars().get( varName );
+        parent.vars().put( varName , var + 1 );
         return CoroIterStepResult.continueCoroutine();
     }
 

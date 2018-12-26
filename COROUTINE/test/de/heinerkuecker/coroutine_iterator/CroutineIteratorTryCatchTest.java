@@ -37,9 +37,9 @@ public class CroutineIteratorTryCatchTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        TryCatch.<Integer, CoroutineIterator<Integer>>newTryCatch(
+                        TryCatch.<Integer/*, CoroutineIterator<Integer>*/>newTryCatch(
                                 // tryStep
-                                new StepSequence<Integer, CoroutineIterator<Integer>>(
+                                new StepSequence<Integer/*, CoroutineIterator<Integer>*/>(
                                         // creationStackOffset
                                         0 ,
                                         new Throw<Integer>( new TestException( "test" ) ) ,

@@ -15,11 +15,11 @@ import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-public class StepSequence<RESULT, PARENT extends CoroutineIterator<RESULT>>
+public class StepSequence<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
 //extends ComplexStep<StepSequence<RESULT, PARENT>, RESULT, PARENT>
-extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARENT>, RESULT, PARENT>
+extends ComplexStep<StepSequence<RESULT /*, PARENT*/>, StepSequenceState<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
 {
-    private final CoroIterStep<RESULT, PARENT>[] steps;
+    private final CoroIterStep<RESULT/*, PARENT*/>[] steps;
 
     /**
      * Constructor.
@@ -27,11 +27,11 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
     @SafeVarargs
     public StepSequence(
             final int creationStackOffset ,
-            final CoroIterStep<RESULT, PARENT>... steps )
+            final CoroIterStep<RESULT /*, PARENT*/>... steps )
     {
         super( creationStackOffset );
 
-        for ( final CoroIterStep<RESULT, PARENT> step : steps )
+        for ( final CoroIterStep<RESULT /*, PARENT*/> step : steps )
         {
             Objects.requireNonNull( step );
         }
@@ -46,7 +46,7 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
         return steps.length;
     }
 
-    CoroIterStep<RESULT, ? super PARENT> getStep(
+    CoroIterStep<RESULT /*, ? super PARENT*/> getStep(
             final int index )
     {
         return steps[ index ];
@@ -56,7 +56,7 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
      * @see ComplexStep#newState()
      */
     @Override
-    public StepSequenceState<RESULT, PARENT> newState()
+    public StepSequenceState<RESULT /*, PARENT*/> newState()
     {
         return new StepSequenceState<>( this );
     }
@@ -69,7 +69,7 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
-        for ( final CoroIterStep<RESULT, PARENT> step : this.steps )
+        for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
         {
             if ( step instanceof BreakOrContinue )
             {
@@ -79,7 +79,7 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
             else if ( step instanceof ComplexStep )
             {
                 result.addAll(
-                        ((ComplexStep<?, ?, RESULT, CoroutineIterator<RESULT>>) step).getUnresolvedBreaksOrContinues() );
+                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) step).getUnresolvedBreaksOrContinues() );
             }
         }
 
@@ -92,20 +92,20 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
     @Override
     public String toString(
             final String indent ,
-            final ComplexStepState<?, ?, RESULT, PARENT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT, PARENT> nextStepExecuteState )
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
-        final StepSequenceState<RESULT, PARENT> lastSequenceExecuteState =
-                (StepSequenceState<RESULT, PARENT>) lastStepExecuteState;
+        final StepSequenceState<RESULT /*, PARENT*/> lastSequenceExecuteState =
+                (StepSequenceState<RESULT /*, PARENT*/>) lastStepExecuteState;
 
-        final StepSequenceState<RESULT, PARENT> nextSequenceExecuteState =
-                (StepSequenceState<RESULT, PARENT>) nextStepExecuteState;
+        final StepSequenceState<RESULT /*, PARENT*/> nextSequenceExecuteState =
+                (StepSequenceState<RESULT /*, PARENT*/>) nextStepExecuteState;
 
         final StringBuilder buff = new StringBuilder();
 
         for ( int i = 0 ; i < steps.length ; i++ )
         {
-            final CoroIterStep<RESULT, PARENT> step = this.steps[ i ];
+            final CoroIterStep<RESULT /*, PARENT*/> step = this.steps[ i ];
 
             if ( step instanceof ComplexStep )
             {
@@ -132,7 +132,7 @@ extends ComplexStep<StepSequence<RESULT, PARENT>, StepSequenceState<RESULT, PARE
                 }
 
                 buff.append(
-                        ( (ComplexStep<?, ?, ?, ?>) step ).toString(
+                        ( (ComplexStep<?, ?, ? /*, ?*/>) step ).toString(
                                 //indent
                                 indent /*+ " "*/ ,
                                 lastSubStepExecuteState ,

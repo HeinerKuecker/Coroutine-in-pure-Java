@@ -226,7 +226,7 @@ public class CoroutineIteratorWhileTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Lesser( "number" , 3 ) ,
                                 // steps
@@ -257,7 +257,7 @@ public class CoroutineIteratorWhileTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 2 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Or(
                                         new Greater( "number" , 0 ) ,
@@ -291,7 +291,7 @@ public class CoroutineIteratorWhileTest
         final CoroutineIterator<Integer> coroIter =
         new CoroutineIterator<Integer>(
                 new SetVar<>( "first" , Boolean.TRUE ) ,
-                new While<Integer, CoroutineIterator<Integer>>(
+                new While<Integer/*, CoroutineIterator<Integer>*/>(
                         //condition
                         new True() ,
                         // steps
@@ -299,12 +299,12 @@ public class CoroutineIteratorWhileTest
                                 //condition
                                 new IsTrue( "first" ) ,
                                 // thenSteps
-                                (CoroIterStep<Integer, CoroutineIterator<Integer>>[]) new CoroIterStep[]
+                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                 {
                                         new YieldReturnValue<>( 0 ) ,
                                 } ,
                                 // elseSteps
-                                (CoroIterStep<Integer, CoroutineIterator<Integer>>[]) new CoroIterStep[]
+                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                 {
                                         new FinallyReturnValue<>( 1 ) ,
                                 } ) ,

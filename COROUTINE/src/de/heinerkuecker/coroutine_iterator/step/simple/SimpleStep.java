@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -13,8 +14,8 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  */
 //public interface SimpleStep<RESULT, PARENT>
-abstract public class SimpleStep<RESULT, PARENT>
-extends CoroIterStep<RESULT, PARENT>
+abstract public class SimpleStep<RESULT/*, PARENT*/>
+extends CoroIterStep<RESULT /*,PARENT*/>
 {
     /**
      * Constructor.
@@ -44,5 +45,6 @@ extends CoroIterStep<RESULT, PARENT>
      * @return object to return a value and to control the flow
      */
     abstract public CoroIterStepResult<RESULT> execute(
-            final PARENT parent );
+            //final PARENT parent
+            final CoroIteratorOrProcedure<RESULT> parent );
 }

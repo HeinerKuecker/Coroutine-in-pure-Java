@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 
 /**
@@ -10,7 +11,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * @author Heiner K&uuml;cker
  */
 public class True
-implements Condition<CoroutineIterator<?>>
+implements Condition/*<CoroutineIterator<?>>*/
 {
     /**
      * Returns always true.
@@ -19,7 +20,7 @@ implements Condition<CoroutineIterator<?>>
      */
     @Override
     public boolean execute(
-            final CoroutineIterator<?> parent )
+            final CoroIteratorOrProcedure<?> parent )
     {
         return true;
     }

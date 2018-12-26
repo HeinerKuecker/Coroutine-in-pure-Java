@@ -61,7 +61,7 @@ public class CoroutineIteratorBreakTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new For<Integer, CoroutineIterator<Integer>>(
+                        new For<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_for" ,
                                 // initialStep
@@ -101,7 +101,7 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -126,12 +126,12 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
                                 new SetVar<>( "number" , 0 ) ,
-                                new For<Integer, CoroutineIterator<Integer>>(
+                                new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
                                         new StepSequence<>(
                                                 // creationStackOffset
@@ -155,7 +155,7 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -180,7 +180,7 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -205,12 +205,12 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
                                 new SetVar<>( "number" , 0 ) ,
-                                new For<Integer, CoroutineIterator<Integer>>(
+                                new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
@@ -234,7 +234,7 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -259,7 +259,7 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -286,7 +286,7 @@ public class CoroutineIteratorBreakTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -314,7 +314,7 @@ public class CoroutineIteratorBreakTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 //steps
@@ -344,7 +344,7 @@ public class CoroutineIteratorBreakTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
                                 //condition
@@ -354,7 +354,7 @@ public class CoroutineIteratorBreakTest
                                         //compareValue
                                         2 ) ,
                                 //steps
-                                new While<Integer, CoroutineIterator<Integer>>(
+                                new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser(
                                                 //varName
@@ -387,7 +387,7 @@ public class CoroutineIteratorBreakTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
                                 //condition
@@ -397,7 +397,7 @@ public class CoroutineIteratorBreakTest
                                         //compareValue
                                         2 ) ,
                                 //steps
-                                new While<Integer, CoroutineIterator<Integer>>(
+                                new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser(
                                                 //varName
@@ -425,7 +425,7 @@ public class CoroutineIteratorBreakTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
                                 //condition
@@ -435,7 +435,7 @@ public class CoroutineIteratorBreakTest
                                         //compareValue
                                         2 ) ,
                                 //steps
-                                new While<Integer, CoroutineIterator<Integer>>(
+                                new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser(
                                                 //varName

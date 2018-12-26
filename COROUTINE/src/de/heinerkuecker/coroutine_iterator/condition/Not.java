@@ -1,17 +1,17 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 
 public class Not
-implements Condition<CoroutineIterator<?>>
+implements Condition/*<CoroutineIterator<?>>*/
 {
-    public final Condition<CoroutineIterator<?>> conditionToNegate;
+    public final Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
 
     /**
      * Constructor.
      */
     public Not(
-            final Condition<CoroutineIterator<?>> conditionToNegate )
+            final Condition/*<CoroutineIterator<?>>*/ conditionToNegate )
     {
         this.conditionToNegate = conditionToNegate;
     }
@@ -23,7 +23,7 @@ implements Condition<CoroutineIterator<?>>
      */
     @Override
     public boolean execute(
-            final CoroutineIterator<?> parent )
+            final CoroIteratorOrProcedure<?> parent )
     {
         return ! conditionToNegate.execute( parent );
     }

@@ -19,11 +19,12 @@ import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
  */
 //public interface ComplexStep<STEP extends ComplexStep<STEP, RESULT, PARENT>, RESULT, PARENT extends CoroutineIterator<RESULT>>
 abstract public class ComplexStep<
-    STEP extends ComplexStep<STEP, STEP_STATE, RESULT, PARENT>,
-    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT, PARENT>,
-    RESULT,
-    PARENT extends CoroutineIterator<RESULT>>
-extends CoroIterStep<RESULT, PARENT>
+    STEP extends ComplexStep<STEP, STEP_STATE, RESULT/*, PARENT*/>,
+    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT extends CoroIteratorOrProcedure<RESULT/*, PARENT*/>
+    >
+extends CoroIterStep<RESULT/*, PARENT*/>
 {
     /**
      * @param creationStackOffset
@@ -51,8 +52,8 @@ extends CoroIterStep<RESULT, PARENT>
      */
     abstract public String toString(
             final String indent ,
-            final ComplexStepState<?, ?, RESULT, PARENT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT, PARENT> nextStepExecuteState );
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState );
 
     /**
      * @see Object#toString()

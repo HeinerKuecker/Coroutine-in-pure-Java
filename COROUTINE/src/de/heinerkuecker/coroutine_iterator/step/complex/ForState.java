@@ -1,15 +1,21 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-public class ForState<RESULT, PARENT extends CoroutineIterator<RESULT>>
-implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESULT, PARENT>
+public class ForState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+implements ComplexStepState<
+    ForState<RESULT/*, PARENT*/>,
+    For<RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
-    private final For<RESULT, PARENT> _for;
+    private final For<RESULT/*, PARENT*/> _for;
 
     // TODO getter
     boolean runInInitializer = true;
@@ -17,16 +23,16 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
     boolean runInBody;
     boolean runInUpdate;
 
-    private ComplexStepState<? ,?, RESULT, ? super PARENT> initializerComplexStepState;
+    private ComplexStepState<? ,?, RESULT/*, ? super PARENT*/> initializerComplexStepState;
     // TODO getter
-    ComplexStepState<?, ?, RESULT, PARENT> bodyComplexState;
-    private ComplexStepState<?, ?, RESULT, ? super PARENT> updateComplexStepState;
+    ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
+    private ComplexStepState<?, ?, RESULT/*, ? super PARENT*/> updateComplexStepState;
 
     /**
      * Constructor.
      */
     public ForState(
-            final For<RESULT, PARENT> _for )
+            final For<RESULT/*, PARENT*/> _for )
     {
         this._for = _for;
     }
@@ -36,18 +42,18 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final PARENT parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         if ( runInInitializer )
         {
-            final CoroIterStep<RESULT, ? super PARENT> initializerStep =
+            final CoroIterStep<RESULT /*, ? super PARENT*/> initializerStep =
                     _for.initialStep;
 
             final CoroIterStepResult<RESULT> initializerExecuteResult;
             if ( initializerStep instanceof SimpleStep )
             {
-                final SimpleStep<RESULT, ? super PARENT> initializerSimpleStep =
-                        (SimpleStep<RESULT, ? super PARENT>) initializerStep;
+                final SimpleStep<RESULT/*, ? super PARENT*/> initializerSimpleStep =
+                        (SimpleStep<RESULT/*, ? super PARENT*/>) initializerStep;
 
                 parent.saveLastStepState();
 
@@ -60,8 +66,8 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
             }
             else
             {
-                final ComplexStep<?, ?, RESULT, ? super PARENT> initializerComplexStep =
-                        (ComplexStep<?, ?, RESULT, ? super PARENT>) initializerStep;
+                final ComplexStep<?, ?, RESULT/*, ? super PARENT*/> initializerComplexStep =
+                        (ComplexStep<?, ?, RESULT/*, ? super PARENT*/>) initializerStep;
 
                 if ( this.initializerComplexStepState == null )
                     // no existing state from previous execute call
@@ -126,7 +132,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
 
             if ( runInBody )
             {
-                final ComplexStep<?, ?, RESULT, PARENT> bodyComplexStep =
+                final ComplexStep<?, ?, RESULT/*, PARENT*/> bodyComplexStep =
                         _for.bodyComplexStep;
 
                 if ( this.bodyComplexState == null )
@@ -185,14 +191,14 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
 
             if ( runInUpdate )
             {
-                final CoroIterStep<RESULT, ? super PARENT> updateStep =
+                final CoroIterStep<RESULT/*, ? super PARENT*/> updateStep =
                         _for.updateStep;
 
                 CoroIterStepResult<RESULT> updateExecuteResult;
                 if ( updateStep instanceof SimpleStep )
                 {
-                    final SimpleStep<RESULT, ? super PARENT> updateSimpleStep =
-                            (SimpleStep<RESULT, ? super PARENT>) updateStep;
+                    final SimpleStep<RESULT/*, ? super PARENT*/> updateSimpleStep =
+                            (SimpleStep<RESULT/*, ? super PARENT*/>) updateStep;
 
                     parent.saveLastStepState();
 
@@ -205,8 +211,8 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
                 }
                 else
                 {
-                    final ComplexStep<?, ?, RESULT, ? super PARENT> updateComplexStep =
-                            (ComplexStep<?, ?, RESULT, ? super PARENT>) updateStep;
+                    final ComplexStep<?, ?, RESULT/*, ? super PARENT*/> updateComplexStep =
+                            (ComplexStep<?, ?, RESULT/*, ? super PARENT*/>) updateStep;
 
                     if ( this.updateComplexStepState == null )
                         // no existing state from previous execute call
@@ -273,7 +279,7 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
      * @see ComplexStepState#getStep()
      */
     @Override
-    public For<RESULT, PARENT> getStep()
+    public For<RESULT/*, PARENT*/> getStep()
     {
         return _for;
     }
@@ -282,9 +288,9 @@ implements ComplexStepState<ForState<RESULT, PARENT>, For<RESULT, PARENT>, RESUL
      * @see HCloneable#createClone()
      */
     @Override
-    public ForState<RESULT, PARENT> createClone()
+    public ForState<RESULT/*, PARENT*/> createClone()
     {
-        final ForState<RESULT, PARENT> clone = new ForState<>( _for ) ;
+        final ForState<RESULT/*, PARENT*/> clone = new ForState<>( _for ) ;
 
         clone.runInInitializer = runInInitializer;
         clone.runInCondition = runInCondition;

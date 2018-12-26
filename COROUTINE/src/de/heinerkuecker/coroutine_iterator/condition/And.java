@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 
 /**
  * And {@link Condition}.
@@ -10,16 +10,16 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * TODO rename to AndVals
  */
 public class And
-implements Condition<CoroutineIterator<?>>
+implements Condition/*<CoroutineIterator<?>>*/
 {
-    private final Condition<CoroutineIterator<?>>[] conditionsToAnd;
+    private final Condition/*<CoroutineIterator<?>>*/[] conditionsToAnd;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public And(
-            final Condition<CoroutineIterator<?>>... conditionsToAnd )
+            final Condition/*<CoroutineIterator<?>>*/... conditionsToAnd )
     {
         this.conditionsToAnd = conditionsToAnd;
     }
@@ -31,9 +31,9 @@ implements Condition<CoroutineIterator<?>>
      */
     @Override
     public boolean execute(
-            final CoroutineIterator<?> parent )
+            final CoroIteratorOrProcedure<?> parent )
     {
-        for ( final Condition<CoroutineIterator<?>> condition : conditionsToAnd )
+        for ( final Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         {
             if ( ! condition.execute( parent ) )
             {

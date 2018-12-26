@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 
 /**
@@ -10,7 +11,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-public interface Condition<PARENT>
+public interface Condition/*<PARENT>*/
 {
     /**
      * Execute the condition and return the result.
@@ -19,5 +20,6 @@ public interface Condition<PARENT>
      * @return condition result
      */
     boolean execute(
-            final PARENT parent );
+            //final PARENT parent
+            final CoroIteratorOrProcedure<?> parent );
 }

@@ -11,24 +11,29 @@ import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine_iterator.step.simple.NoOperation;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 
-public class For<RESULT, PARENT extends CoroutineIterator<RESULT>>
-extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PARENT>
+public class For<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+extends ComplexStep<
+    For<RESULT/*, PARENT*/>,
+    ForState<RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
     public final String label;
-    final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> initialStep;
-    final Condition<? super CoroutineIterator<RESULT>> condition;
-    final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> updateStep;
-    final ComplexStep<?, ?, RESULT, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
+    final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> initialStep;
+    final Condition condition;
+    final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> updateStep;
+    final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public For(
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> initialStep ,
-            final Condition<? super CoroutineIterator<RESULT>> condition ,
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> updateStep ,
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/>... steps )
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> initialStep ,
+            final Condition condition ,
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> updateStep ,
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
         super(
                 //creationStackOffset
@@ -39,7 +44,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
         if ( initialStep == null )
         {
             // C style default
-            this.initialStep = new NoOperation();
+            this.initialStep = new NoOperation<>();
         }
         else if ( initialStep instanceof BreakOrContinue )
         {
@@ -55,7 +60,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
                     initialStep instanceof ComplexStep )
             {
                 final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT, /*PARENT*/ ? super CoroutineIterator<RESULT>>) initialStep ).getUnresolvedBreaksOrContinues();
+                        ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues();
 
                 if ( ! unresolvedBreaksOrContinues.isEmpty() )
                 {
@@ -96,7 +101,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
                     updateStep instanceof ComplexStep )
             {
                 final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
+                        ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
 
                 if ( ! unresolvedBreaksOrContinues.isEmpty() )
                 {
@@ -111,7 +116,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
                 steps[ 0 ] instanceof ComplexStep )
         {
             this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
+                    (ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
@@ -130,10 +135,10 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
     @SafeVarargs
     public For(
             final String label ,
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> initialStep ,
-            final Condition<? super CoroutineIterator<RESULT>> condition ,
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> updateStep ,
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/>... steps )
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> initialStep ,
+            final Condition condition ,
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> updateStep ,
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
         super(
                 //creationStackOffset
@@ -144,7 +149,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
         if ( initialStep == null )
         {
             // C style default
-            this.initialStep = new NoOperation();
+            this.initialStep = new NoOperation<>();
         }
         else
         {
@@ -154,7 +159,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
                     initialStep instanceof ComplexStep )
             {
                 final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT, /*PARENT*/ ? super CoroutineIterator<RESULT>>) initialStep ).getUnresolvedBreaksOrContinues();
+                        ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues();
 
                 if ( ! unresolvedBreaksOrContinues.isEmpty() )
                 {
@@ -179,7 +184,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
         if ( updateStep == null )
         {
             // C style default
-            this.updateStep = new NoOperation();
+            this.updateStep = new NoOperation<>();
         }
         else
         {
@@ -189,7 +194,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
                     updateStep instanceof ComplexStep )
             {
                 final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
+                        ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
 
                 if ( ! unresolvedBreaksOrContinues.isEmpty() )
                 {
@@ -204,7 +209,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
                 steps[ 0 ] instanceof ComplexStep )
         {
             this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
+                    (ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
@@ -221,7 +226,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
      * @see ComplexStep#newState()
      */
     @Override
-    public ForState<RESULT, PARENT> newState()
+    public ForState<RESULT/*, PARENT*/> newState()
     {
         return new ForState<>( this );
     }
@@ -265,16 +270,16 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
     @Override
     public String toString(
             final String indent ,
-            final ComplexStepState<?, ?, RESULT, PARENT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT, PARENT> nextStepExecuteState )
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
-        final ForState<RESULT, PARENT> lastForExecuteState =
-                (ForState<RESULT, PARENT>) lastStepExecuteState;
+        final ForState<RESULT/*, PARENT*/> lastForExecuteState =
+                (ForState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
-        final ForState<RESULT, PARENT> nextForExecuteState =
-                (ForState<RESULT, PARENT>) nextStepExecuteState;
+        final ForState<RESULT/*, PARENT*/> nextForExecuteState =
+                (ForState<RESULT/*, PARENT*/>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT, PARENT> lastBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastBodyState;
         if ( lastForExecuteState != null )
         {
             lastBodyState = lastForExecuteState.bodyComplexState;
@@ -284,7 +289,7 @@ extends ComplexStep<For<RESULT, PARENT>, ForState<RESULT, PARENT>, RESULT, PAREN
             lastBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT, PARENT> nextBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextBodyState;
         if ( nextForExecuteState != null )
         {
             nextBodyState = nextForExecuteState.bodyComplexState;

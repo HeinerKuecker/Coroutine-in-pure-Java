@@ -1,25 +1,25 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-public class StepSequenceState<RESULT, PARENT extends CoroutineIterator<RESULT>>
-implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESULT, PARENT>, RESULT, PARENT>
+public class StepSequenceState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
 {
-    private final StepSequence<RESULT, PARENT> sequence;
+    private final StepSequence<RESULT /*, PARENT*/> sequence;
 
     // TODO getter to ensure unmodifiable from other class
     int currentStepIndex;
-    ComplexStepState<?, ?, RESULT, ? super PARENT> currentComplexState;
+    ComplexStepState<?, ?, RESULT /*, ? super PARENT*/> currentComplexState;
 
     /**
      *
      */
     public StepSequenceState(
-            final StepSequence<RESULT, PARENT> sequence )
+            final StepSequence<RESULT /*, PARENT*/> sequence )
     {
         this.sequence = sequence;
     }
@@ -29,18 +29,19 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final PARENT parent )
+            //final PARENT parent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         while ( currentStepIndex < sequence.length() )
         {
-            final CoroIterStep<RESULT, ? super PARENT> currentStep =
+            final CoroIterStep<RESULT /*, ? super PARENT*/> currentStep =
                     sequence.getStep( this.currentStepIndex );
 
             final CoroIterStepResult<RESULT> executeResult;
             if ( currentStep instanceof SimpleStep )
             {
-                final SimpleStep<RESULT, ? super PARENT> currentSimpleStep =
-                        (SimpleStep<RESULT, ? super PARENT>) currentStep;
+                final SimpleStep<RESULT /*, ? super PARENT*/> currentSimpleStep =
+                        (SimpleStep<RESULT /*, ? super PARENT*/>) currentStep;
 
                 parent.saveLastStepState();
 
@@ -52,8 +53,8 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
             }
             else
             {
-                final ComplexStep<?, ?, RESULT, ? super PARENT> currentComplexStep =
-                        (ComplexStep<?, ?, RESULT, ? super PARENT>) currentStep;
+                final ComplexStep<?, ?, RESULT /*, ? super PARENT*/> currentComplexStep =
+                        (ComplexStep<?, ?, RESULT /*, ? super PARENT*/>) currentStep;
 
                 if ( this.currentComplexState == null )
                     // no existing state from previous execute call
@@ -105,7 +106,7 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
      * @see ComplexStepState#getStep()
      */
     @Override
-    public StepSequence<RESULT, PARENT> getStep()
+    public StepSequence<RESULT /*, PARENT*/> getStep()
     {
         return this.sequence;
     }
@@ -114,9 +115,9 @@ implements ComplexStepState<StepSequenceState<RESULT, PARENT>, StepSequence<RESU
      * @see HCloneable#createClone()
      */
     @Override
-    public StepSequenceState<RESULT, PARENT> createClone()
+    public StepSequenceState<RESULT /*, PARENT*/> createClone()
     {
-        final StepSequenceState<RESULT, PARENT> clone = new StepSequenceState<>( sequence );
+        final StepSequenceState<RESULT /*, PARENT*/> clone = new StepSequenceState<>( sequence );
 
         clone.currentStepIndex = currentStepIndex;
         clone.currentComplexState = ( currentComplexState != null ? currentComplexState.createClone() : null );

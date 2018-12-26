@@ -1,14 +1,19 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-public class IfElseState<RESULT, PARENT extends CoroutineIterator<RESULT>>
-//implements ComplexStepState<IfElse<RESULT, PARENT>, RESULT, PARENT>
-implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>, RESULT, PARENT>
+public class IfElseState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+implements ComplexStepState<
+    IfElseState<RESULT/*, PARENT*/>,
+    IfElse<RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
-    private final IfElse<RESULT, PARENT> ifElse;
+    private final IfElse<RESULT/*, PARENT*/> ifElse;
 
     // TODO getter
     boolean runInCondition = true;
@@ -16,14 +21,14 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
     private boolean runInElseBody;
 
     // TODO getter
-    ComplexStepState<?, ?, RESULT, PARENT> thenBodyComplexState;
-    ComplexStepState<?, ?, RESULT, PARENT> elseBodyComplexState;
+    ComplexStepState<?, ?, RESULT/*, PARENT*/> thenBodyComplexState;
+    ComplexStepState<?, ?, RESULT/*, PARENT*/> elseBodyComplexState;
 
     /**
      * Constructor.
      */
     public IfElseState(
-            final IfElse<RESULT, PARENT> ifElse )
+            final IfElse<RESULT/*, PARENT*/> ifElse )
     {
         this.ifElse = ifElse;
     }
@@ -33,7 +38,7 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final PARENT parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         if ( runInCondition )
         {
@@ -56,7 +61,7 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
 
         if ( runInThenBody )
         {
-            final ComplexStep<?, ?, RESULT, PARENT> thenBodyStep =
+            final ComplexStep<?, ?, RESULT/*, PARENT*/> thenBodyStep =
                     ifElse.thenBodyComplexStep;
 
             if ( this.thenBodyComplexState == null )
@@ -86,7 +91,7 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
         }
         else if ( runInElseBody )
         {
-            final ComplexStep<?, ?, RESULT, PARENT> elseBodyStep =
+            final ComplexStep<?, ?, RESULT/*, PARENT*/> elseBodyStep =
                     ifElse.elseBodyComplexStep;
 
             if ( this.elseBodyComplexState == null )
@@ -141,7 +146,7 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
      * @see ComplexStepState#getStep()
      */
     @Override
-    public IfElse<RESULT, PARENT> getStep()
+    public IfElse<RESULT/*, PARENT*/> getStep()
     {
         return this.ifElse;
     }
@@ -150,9 +155,9 @@ implements ComplexStepState<IfElseState<RESULT, PARENT>, IfElse<RESULT, PARENT>,
      * @see HCloneable#createClone()
      */
     @Override
-    public IfElseState<RESULT, PARENT> createClone()
+    public IfElseState<RESULT/*, PARENT*/> createClone()
     {
-        final IfElseState<RESULT, PARENT> clone = new IfElseState<>( ifElse );
+        final IfElseState<RESULT/*, PARENT*/> clone = new IfElseState<>( ifElse );
 
         clone.runInCondition = runInCondition;
         clone.runInThenBody = runInThenBody;

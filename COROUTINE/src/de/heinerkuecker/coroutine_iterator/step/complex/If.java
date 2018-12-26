@@ -7,19 +7,24 @@ import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
-public class If<RESULT, PARENT extends CoroutineIterator<RESULT>>
-extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
+public class If<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+extends ComplexStep<
+    If<RESULT/*, PARENT*/>,
+    IfState<RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
-    final Condition<? super PARENT/*? super CoroutineIterator<RESULT>*/> condition;
-    final ComplexStep<?, ?, RESULT, PARENT/*CoroutineIterator<RESULT>*/> thenBodyComplexStep;
+    final Condition condition;
+    final ComplexStep<?, ?, RESULT /*, PARENT/*CoroutineIterator<RESULT>*/> thenBodyComplexStep;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public If(
-            final Condition<? super PARENT/*? super CoroutineIterator<RESULT>*/> condition ,
-            final CoroIterStep<RESULT, ? super PARENT/*CoroutineIterator<RESULT>*/> ... steps )
+            final Condition condition ,
+            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... steps )
     {
         super(
                 //creationStackOffset
@@ -30,7 +35,7 @@ extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
+            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
@@ -46,7 +51,7 @@ extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
      * @see ComplexStep#newState()
      */
     @Override
-    public IfState<RESULT, PARENT> newState()
+    public IfState<RESULT/*, PARENT*/> newState()
     {
         return new IfState<>( this );
     }
@@ -66,16 +71,16 @@ extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
     @Override
     public String toString(
             final String indent ,
-            final ComplexStepState<?, /*STEP*/?, RESULT, PARENT> lastStepExecuteState ,
-            final ComplexStepState<?, /*STEP*/?, RESULT, PARENT> nextStepExecuteState )
+            final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> lastStepExecuteState ,
+            final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
-        final IfState<RESULT, PARENT> lastIfExecuteState =
-                (IfState<RESULT, PARENT>) lastStepExecuteState;
+        final IfState<RESULT/*, PARENT*/> lastIfExecuteState =
+                (IfState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
-        final IfState<RESULT, PARENT> nextIfExecuteState =
-                (IfState<RESULT, PARENT>) nextStepExecuteState;
+        final IfState<RESULT/*, PARENT*/> nextIfExecuteState =
+                (IfState<RESULT/*, PARENT*/>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT, PARENT> lastThenBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastThenBodyState;
         if ( lastIfExecuteState != null )
         {
             lastThenBodyState = lastIfExecuteState.thenBodyComplexState;
@@ -85,7 +90,7 @@ extends ComplexStep<If<RESULT, PARENT>, IfState<RESULT, PARENT>, RESULT, PARENT>
             lastThenBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT, PARENT> nextThenBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextThenBodyState;
         if ( nextIfExecuteState != null )
         {
             nextThenBodyState = nextIfExecuteState.thenBodyComplexState;

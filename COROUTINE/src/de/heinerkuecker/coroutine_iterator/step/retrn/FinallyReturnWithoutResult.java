@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.step.retrn;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -14,7 +15,7 @@ import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
  * @author Heiner K&uuml;cker
  */
 public class FinallyReturnWithoutResult<RESULT>
-extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Constructor.
@@ -34,7 +35,7 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineIterator<RESULT> parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         return new CoroIterStepResult.FinallyReturnWithoutResult<>();
     }

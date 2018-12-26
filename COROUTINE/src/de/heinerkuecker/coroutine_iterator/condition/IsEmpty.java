@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine_iterator.condition;
 import java.util.Collection;
 import java.util.Map;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 
 /**
@@ -23,7 +24,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * TODO rename to VarIsEmpty
  */
 public class IsEmpty
-implements Condition<CoroutineIterator<?>>
+implements Condition/*<CoroutineIterator<?>>*/
 {
     /**
      * Name of a variable in
@@ -51,9 +52,9 @@ implements Condition<CoroutineIterator<?>>
      */
     @Override
     public boolean execute(
-            final CoroutineIterator<?> parent )
+            final CoroIteratorOrProcedure<?> parent )
     {
-        final Object varValue = parent.vars.get( varName );
+        final Object varValue = parent.vars().get( varName );
 
         if ( varValue == null )
         {

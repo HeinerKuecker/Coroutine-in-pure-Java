@@ -4,25 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
 abstract public class WhileOrDoWhile<
-    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT, PARENT>,
-    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT, PARENT>,
-    RESULT,
-    PARENT extends CoroutineIterator<RESULT>>
+    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/>,
+    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/>,
+    RESULT
+    //PARENT extends CoroutineIterator<RESULT>
+    >
 extends ComplexStep<
     /*WhileOrDoWhile<RESULT, PARENT>*/WHILE_OR_DO_WHILE,
     /*WhileOrDoWhileState<WhileOrDoWhile<RESULT, PARENT>, RESULT, PARENT>*/WHILE_OR_DO_WHILE_STATE,
-    RESULT,
-    PARENT>
+    RESULT
+    //PARENT
+    >
 {
     public final String label;
-    final Condition<? super PARENT> condition;
-    final ComplexStep<?, ?, RESULT, PARENT> bodyComplexStep;
+    final Condition condition;
+    final ComplexStep<?, ?, RESULT /*, PARENT*/> bodyComplexStep;
 
     ///**
     // * Constructor.
@@ -62,8 +63,8 @@ extends ComplexStep<
     @SafeVarargs
     public WhileOrDoWhile(
             final String label ,
-            final Condition<? super PARENT/*? super CoroutineIterator<RESULT>*/> condition ,
-            final CoroIterStep<? super RESULT, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
+            final Condition condition ,
+            final CoroIterStep<? extends RESULT /*, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
     {
         super(
                 //creationStackOffset
@@ -76,7 +77,7 @@ extends ComplexStep<
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
-            this.bodyComplexStep = (ComplexStep<?, ?, RESULT, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
+            this.bodyComplexStep = (ComplexStep<?, ?, RESULT /*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
@@ -126,16 +127,16 @@ extends ComplexStep<
     @Override
     final public String toString(
             final String indent ,
-            final ComplexStepState<?, ?, RESULT, PARENT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT, PARENT> nextStepExecuteState )
+            final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextStepExecuteState )
     {
-        final WhileOrDoWhileState<?, ?, RESULT, PARENT> lastWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, RESULT, PARENT>) lastStepExecuteState;
+        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/> lastWhileExecuteState =
+                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/>) lastStepExecuteState;
 
-        final WhileOrDoWhileState<?, ?, RESULT, PARENT> nextWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, RESULT, PARENT>) nextStepExecuteState;
+        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/> nextWhileExecuteState =
+                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT, PARENT> lastBodyState;
+        final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastBodyState;
         if ( lastWhileExecuteState != null )
         {
             lastBodyState = lastWhileExecuteState.bodyComplexState;
@@ -145,7 +146,7 @@ extends ComplexStep<
             lastBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT, PARENT> nextBodyState;
+        final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextBodyState;
         if ( nextWhileExecuteState != null )
         {
             nextBodyState = nextWhileExecuteState.bodyComplexState;

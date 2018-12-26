@@ -1,12 +1,12 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
 /**
  * Extern instruction pointer and stack
- * for {@link ComplexStep}s.
+ * for {@link ComplexStep}.
  *
  * @param <STEP>
  * @param <RESULT>
@@ -16,10 +16,11 @@ import de.heinerkuecker.util.HCloneable;
  * TODO rename to ComplexStepExecuteState
  */
 public interface ComplexStepState<
-    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT, PARENT>,
-    STEP extends ComplexStep<STEP, STEP_STATE, RESULT, PARENT>,
-    RESULT,
-    PARENT extends CoroutineIterator<RESULT>>
+    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT /*, PARENT*/>,
+    STEP extends ComplexStep<STEP, STEP_STATE, RESULT /*, PARENT*/>,
+    RESULT
+    //PARENT extends CoroIteratorOrProcedure<RESULT>
+>
 extends HCloneable<STEP_STATE>
 {
     /**
@@ -29,7 +30,8 @@ extends HCloneable<STEP_STATE>
      * @return object to return a value and to control the flow
      */
     CoroIterStepResult<RESULT> execute(
-            final PARENT parent );
+            //final PARENT parent
+            final CoroIteratorOrProcedure<RESULT> parent );
 
     /**
      * This method returns if all sub steps have been executed.

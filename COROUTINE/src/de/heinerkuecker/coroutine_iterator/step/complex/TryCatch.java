@@ -8,21 +8,26 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
-public class TryCatch<RESULT, PARENT extends CoroutineIterator<RESULT>>
-extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RESULT, PARENT>
+public class TryCatch<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+extends ComplexStep<
+    TryCatch<RESULT/*, PARENT*/>,
+    TryCatchState<RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
-    final ComplexStep<?, ?, RESULT, PARENT/*CoroutineIterator<RESULT>*/> tryBodyComplexStep;
+    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> tryBodyComplexStep;
     final Class<? extends Throwable> catchExceptionClass;
-    final ComplexStep<?, ?, RESULT, PARENT/*CoroutineIterator<RESULT>*/> catchBodyComplexStep;
+    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> catchBodyComplexStep;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public TryCatch(
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
-            final CoroIterStep<RESULT, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
+            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
     {
         super(
                 //creationStackOffset
@@ -31,7 +36,7 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
         if ( tryStep instanceof ComplexStep )
         {
             this.tryBodyComplexStep =
-                    (ComplexStep<?, ?, RESULT, PARENT>) tryStep;
+                    (ComplexStep<?, ?, RESULT/*, PARENT*/>) tryStep;
         }
         else
         {
@@ -50,7 +55,7 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
         if ( catchBodySteps.length == 1 &&
                 catchBodySteps[ 0 ] instanceof ComplexStep )
         {
-            this.catchBodyComplexStep = (ComplexStep<?, ?, RESULT, PARENT/*? super CoroutineIterator<RESULT>*/>) catchBodySteps[ 0 ];
+            this.catchBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) catchBodySteps[ 0 ];
         }
         else
         {
@@ -66,10 +71,10 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
      * Factroy method.
      */
     @SafeVarargs
-    public static <RESULT, PARENT extends CoroutineIterator<RESULT>> TryCatch<RESULT, PARENT> newTryCatch(
-            final CoroIterStep<RESULT, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
+    public static <RESULT/*, PARENT extends CoroutineIterator<RESULT>*/> TryCatch<RESULT/*, PARENT*/> newTryCatch(
+            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
-            final CoroIterStep<RESULT, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
+            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
     {
         return new TryCatch<>(
                 tryStep ,
@@ -81,9 +86,9 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
      * @see ComplexStep#newState()
      */
     @Override
-    public TryCatchState<RESULT, PARENT> newState()
+    public TryCatchState<RESULT/*, PARENT*/> newState()
     {
-        return new TryCatchState<RESULT, PARENT>( this );
+        return new TryCatchState<RESULT/*, PARENT*/>( this );
     }
 
     /**
@@ -113,16 +118,16 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
     @Override
     public String toString(
             String indent ,
-            ComplexStepState<?, ?, RESULT, PARENT> lastStepExecuteState ,
-            ComplexStepState<?, ?, RESULT, PARENT> nextStepExecuteState )
+            ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
+            ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
-        final TryCatchState<RESULT, PARENT> lastTryCatchExecuteState =
-                (TryCatchState<RESULT, PARENT>) lastStepExecuteState;
+        final TryCatchState<RESULT/*, PARENT*/> lastTryCatchExecuteState =
+                (TryCatchState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
-        final TryCatchState<RESULT, PARENT> nextTryCatchExecuteState =
-                (TryCatchState<RESULT, PARENT>) nextStepExecuteState;
+        final TryCatchState<RESULT/*, PARENT*/> nextTryCatchExecuteState =
+                (TryCatchState<RESULT/*, PARENT*/>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT, PARENT> lastTryBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastTryBodyState;
         if ( lastTryCatchExecuteState != null )
         {
             lastTryBodyState = lastTryCatchExecuteState.tryBodyComplexState;
@@ -132,7 +137,7 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
             lastTryBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT, PARENT> nextTryBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextTryBodyState;
         if ( nextTryCatchExecuteState != null )
         {
             nextTryBodyState = nextTryCatchExecuteState.tryBodyComplexState;
@@ -142,7 +147,7 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
             nextTryBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT, PARENT> lastCatchBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastCatchBodyState;
         if ( lastTryCatchExecuteState != null )
         {
             lastCatchBodyState = lastTryCatchExecuteState.catchBodyComplexState;
@@ -152,7 +157,7 @@ extends ComplexStep<TryCatch<RESULT, PARENT>, TryCatchState<RESULT, PARENT>, RES
             lastCatchBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT, PARENT> nextCatchBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextCatchBodyState;
         if ( nextTryCatchExecuteState != null )
         {
             nextCatchBodyState = nextTryCatchExecuteState.catchBodyComplexState;

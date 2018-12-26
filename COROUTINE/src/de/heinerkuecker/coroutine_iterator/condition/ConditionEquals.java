@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 
 /**
  * Xor {@link Condition}.
@@ -8,17 +8,17 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * @author Heiner K&uuml;cker
  */
 public class ConditionEquals
-implements Condition<CoroutineIterator<?>>
+implements Condition/*<CoroutineIterator<?>>*/
 {
-    private final Condition<CoroutineIterator<?>> lhs;
-    private final Condition<CoroutineIterator<?>> rhs;
+    private final Condition/*<CoroutineIterator<?>>*/ lhs;
+    private final Condition/*<CoroutineIterator<?>>*/ rhs;
 
     /**
      * Constructor.
      */
     public ConditionEquals(
-            final Condition<CoroutineIterator<?>> lhs ,
-            final Condition<CoroutineIterator<?>> rhs )
+            final Condition/*<CoroutineIterator<?>>*/ lhs ,
+            final Condition/*<CoroutineIterator<?>>*/ rhs )
     {
         this.lhs = lhs;
         this.rhs = rhs;
@@ -31,7 +31,7 @@ implements Condition<CoroutineIterator<?>>
      */
     @Override
     public boolean execute(
-            final CoroutineIterator<?> parent )
+            final CoroIteratorOrProcedure<?> parent )
     {
         return lhs.execute( parent ) == rhs.execute( parent );
     }

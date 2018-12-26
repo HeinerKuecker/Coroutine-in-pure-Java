@@ -25,7 +25,7 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new If<Integer, CoroutineIterator<Integer>>(
+                        new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
@@ -51,7 +51,7 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new If<Integer, CoroutineIterator<Integer>>(
+                        new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True()
                                 // steps
@@ -69,16 +69,16 @@ public class CoroutineIteratorIfTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>( "number" , 0 ) ,
-                        new While<Integer, CoroutineIterator<Integer>>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
-                                new If<Integer, CoroutineIterator<Integer>>(
+                                new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Equals( "number" , 0 ) ,
                                         // steps
                                         new YieldReturnValue<>( 0 ) ) ,
-                                new If<Integer, CoroutineIterator<Integer>>(
+                                new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Equals( "number" , 1 ) ,
                                         // steps

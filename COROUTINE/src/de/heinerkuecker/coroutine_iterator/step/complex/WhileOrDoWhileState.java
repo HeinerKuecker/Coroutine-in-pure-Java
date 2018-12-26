@@ -1,31 +1,34 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 abstract public class WhileOrDoWhileState<
-    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT, PARENT>,
-    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT, PARENT>,
-    RESULT,
-    PARENT extends CoroutineIterator<RESULT>>
+    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/>,
+    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT extends CoroutineIterator<RESULT>
+    >
 implements ComplexStepState<
     WHILE_OR_DO_WHILE_STATE,
     WHILE_OR_DO_WHILE,
-    RESULT,
-    PARENT>
+    RESULT
+    //PARENT
+    >
 {
-    protected final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT, PARENT> whileOrDoWhile;
+    protected final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/> whileOrDoWhile;
 
     // TODO getter
     protected boolean runInCondition;
     protected boolean runInBody;
-    protected ComplexStepState<?, ?, RESULT, PARENT> bodyComplexState;
+    protected ComplexStepState<?, ?, RESULT /*, PARENT*/> bodyComplexState;
 
     /**
      * Constructor.
      */
     protected WhileOrDoWhileState(
-            final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT, PARENT> whileOrDoWhile )
+            final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/> whileOrDoWhile )
     {
         this.whileOrDoWhile = whileOrDoWhile;
     }
@@ -35,7 +38,8 @@ implements ComplexStepState<
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final PARENT parent )
+            //final PARENT parent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         while ( true )
         {
@@ -63,7 +67,7 @@ implements ComplexStepState<
 
             if ( runInBody )
             {
-                final ComplexStep<?, ?, RESULT, PARENT> bodyStep =
+                final ComplexStep<?, ?, RESULT /*, PARENT*/> bodyStep =
                         whileOrDoWhile.bodyComplexStep;
 
                 if ( this.bodyComplexState == null )

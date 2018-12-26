@@ -2,13 +2,13 @@ package de.heinerkuecker.coroutine_iterator.step.simple;
 
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
-import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 // TODO rename to Negatevar
 public final class Negate<RESULT>
-extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to negate in
@@ -37,23 +37,22 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
     /**
      * Set variable.
      *
-     * @see CoroIterStep#execute(java.lang.Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            //final PARENT parent )
-            final CoroutineIterator<RESULT> parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        final Object varValue = parent.vars.get( varName );
+        final Object varValue = parent.vars().get( varName );
 
         if ( varValue instanceof Boolean )
         {
-            parent.vars.put( varName , ! (boolean) varValue );
+            parent.vars().put( varName , ! (boolean) varValue );
         }
         else
             // null or not boolean is handled as false
         {
-            parent.vars.put( varName , true );
+            parent.vars().put( varName , true );
         }
         return CoroIterStepResult.continueCoroutine();
     }

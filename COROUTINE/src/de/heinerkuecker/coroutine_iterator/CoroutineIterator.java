@@ -23,7 +23,7 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  */
 public class CoroutineIterator<RESULT>
-implements AbstrCoroIterator<RESULT, CoroutineIterator<RESULT>>
+implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Global switch to check
@@ -52,11 +52,11 @@ implements AbstrCoroIterator<RESULT, CoroutineIterator<RESULT>>
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStep<?, ?, RESULT, /*PARENT*/ CoroutineIterator<RESULT>> complexStep;
-    private ComplexStepState<?, ?, RESULT, CoroutineIterator<RESULT>> nextComplexStepState;
+    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> complexStep;
+    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> nextComplexStepState;
 
     // for debug
-    private ComplexStepState<?, ?, RESULT, CoroutineIterator<RESULT>> lastComplexStepState;
+    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> lastComplexStepState;
 
 
     private boolean finallyReturnRaised;
@@ -88,15 +88,15 @@ implements AbstrCoroIterator<RESULT, CoroutineIterator<RESULT>>
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Map<String, ? extends Object> params ,
-            final CoroIterStep<RESULT, /*PARENT*/ CoroutineIterator<RESULT>>... steps )
+            final Map<String, /*? extends*/ Object> params ,
+            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
             this.complexStep =
-                    (ComplexStep<?, ?, RESULT, CoroutineIterator<RESULT>>) steps[ 0 ];
+                    (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
@@ -122,12 +122,12 @@ implements AbstrCoroIterator<RESULT, CoroutineIterator<RESULT>>
      */
     @SafeVarargs
     public CoroutineIterator(
-            final CoroIterStep<RESULT, /*PARENT*/ CoroutineIterator<RESULT>>... steps )
+            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
-            this.complexStep = (ComplexStep<?, ?, RESULT, CoroutineIterator<RESULT>>) steps[ 0 ];
+            this.complexStep = (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
@@ -249,9 +249,22 @@ implements AbstrCoroIterator<RESULT, CoroutineIterator<RESULT>>
         return result;
     }
 
+    /**
+     * @see CoroIteratorOrProcedure#saveLastStepState()
+     */
+    @Override
     public void saveLastStepState()
     {
         this.lastComplexStepState = nextComplexStepState.createClone();
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#vars()
+     */
+    @Override
+    public Map<String, Object> vars()
+    {
+        return this.vars;
     }
 
     /**
@@ -272,6 +285,5 @@ implements AbstrCoroIterator<RESULT, CoroutineIterator<RESULT>>
                         this.lastComplexStepState ,
                         this.nextComplexStepState );
     }
-
 
 }

@@ -2,12 +2,12 @@ package de.heinerkuecker.coroutine_iterator.step.simple;
 
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
-import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 public final class SetVar<RESULT>
-extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to set in
@@ -44,13 +44,13 @@ extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
     /**
      * Set variable.
      *
-     * @see CoroIterStep#execute(java.lang.Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineIterator<RESULT> parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        parent.vars.put( varName , varValue );
+        parent.vars().put( varName , varValue );
         return CoroIterStepResult.continueCoroutine();
     }
 

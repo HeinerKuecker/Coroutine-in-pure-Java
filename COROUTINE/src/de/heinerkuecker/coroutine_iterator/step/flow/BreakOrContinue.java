@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
  */
 //public interface BreakOrContinue<RESULT>
 abstract public class BreakOrContinue<RESULT>
-extends SimpleStep<RESULT, CoroutineIterator<RESULT>>
+extends SimpleStep<RESULT /*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Constructor.

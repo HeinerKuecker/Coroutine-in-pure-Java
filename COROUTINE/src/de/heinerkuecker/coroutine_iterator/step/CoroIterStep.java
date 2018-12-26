@@ -10,7 +10,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-abstract public class CoroIterStep<RESULT, PARENT>
+abstract public class CoroIterStep<RESULT/*, PARENT*/>
 {
     ///**
     // * Execute one step.

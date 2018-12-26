@@ -2,27 +2,33 @@ package de.heinerkuecker.coroutine_iterator.step.complex;
 
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
 import de.heinerkuecker.util.HCloneable;
 
-public class TryCatchState<RESULT, PARENT extends CoroutineIterator<RESULT>>
-implements ComplexStepState<TryCatchState<RESULT, PARENT>, TryCatch<RESULT, PARENT>, RESULT, PARENT>
+public class TryCatchState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+implements ComplexStepState<
+    TryCatchState<RESULT/*, PARENT*/>,
+    TryCatch<RESULT/*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
-    private final TryCatch<RESULT, PARENT> tryCatch;
+    private final TryCatch<RESULT/*, PARENT*/> tryCatch;
 
     // TODO getter
     boolean runInTry = true;
     boolean runInCatch;
-    ComplexStepState<?, ?, RESULT, PARENT> tryBodyComplexState;
-    ComplexStepState<?, ?, RESULT, PARENT> catchBodyComplexState;
+    ComplexStepState<?, ?, RESULT/*, PARENT*/> tryBodyComplexState;
+    ComplexStepState<?, ?, RESULT/*, PARENT*/> catchBodyComplexState;
 
     /**
      * Constructor.
      */
     public TryCatchState(
-            final TryCatch<RESULT, PARENT> tryCatch )
+            final TryCatch<RESULT/*, PARENT*/> tryCatch )
     {
         this.tryCatch =
                 Objects.requireNonNull(
@@ -34,11 +40,11 @@ implements ComplexStepState<TryCatchState<RESULT, PARENT>, TryCatch<RESULT, PARE
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final PARENT parent)
+            final CoroIteratorOrProcedure<RESULT> parent)
     {
         if ( runInTry )
         {
-            final ComplexStep<?, ?, RESULT, PARENT> tryBodyStep =
+            final ComplexStep<?, ?, RESULT/*, PARENT*/> tryBodyStep =
                     tryCatch.tryBodyComplexStep;
 
             if ( this.tryBodyComplexState == null )
@@ -84,7 +90,7 @@ implements ComplexStepState<TryCatchState<RESULT, PARENT>, TryCatch<RESULT, PARE
 
         if ( runInCatch )
         {
-            final ComplexStep<?, ?, RESULT, PARENT> catchBodyStep =
+            final ComplexStep<?, ?, RESULT/*, PARENT*/> catchBodyStep =
                     tryCatch.catchBodyComplexStep;
 
             if ( this.catchBodyComplexState == null )
@@ -137,7 +143,7 @@ implements ComplexStepState<TryCatchState<RESULT, PARENT>, TryCatch<RESULT, PARE
      * @see ComplexStepState#getStep()
      */
     @Override
-    public TryCatch<RESULT, PARENT> getStep()
+    public TryCatch<RESULT/*, PARENT*/> getStep()
     {
         return this.tryCatch;
     }
@@ -146,9 +152,9 @@ implements ComplexStepState<TryCatchState<RESULT, PARENT>, TryCatch<RESULT, PARE
      * @see HCloneable#createClone()
      */
     @Override
-    public TryCatchState<RESULT, PARENT> createClone()
+    public TryCatchState<RESULT/*, PARENT*/> createClone()
     {
-        final TryCatchState<RESULT, PARENT> clone = new TryCatchState<>( tryCatch );
+        final TryCatchState<RESULT/*, PARENT*/> clone = new TryCatchState<>( tryCatch );
 
         clone.runInTry = runInTry;
         clone.runInCatch = runInCatch;

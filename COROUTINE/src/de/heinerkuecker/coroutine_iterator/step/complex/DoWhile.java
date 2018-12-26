@@ -1,15 +1,15 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
-public class DoWhile<RESULT, PARENT extends CoroutineIterator<RESULT>>
+public class DoWhile<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
 extends WhileOrDoWhile<
-    DoWhile<RESULT, PARENT>,
-    DoWhileState<RESULT, PARENT>,
-    RESULT,
-    PARENT>
+    DoWhile<RESULT /*, PARENT*/>,
+    DoWhileState<RESULT /*, PARENT*/>,
+    RESULT
+    //PARENT
+    >
 {
     /**
      * Constructor.
@@ -19,8 +19,8 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public DoWhile(
-            Condition<? super PARENT> condition ,
-            CoroIterStep<? super RESULT, PARENT>... steps )
+            Condition/*<? super PARENT>*/ condition ,
+            CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         super(
                 //label
@@ -39,8 +39,8 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             String label ,
-            Condition<? super PARENT> condition ,
-            CoroIterStep<? super RESULT, PARENT>... steps )
+            Condition/*<? super PARENT>*/ condition ,
+            CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         super(
                 label ,
@@ -52,7 +52,7 @@ extends WhileOrDoWhile<
      * @see ComplexStep#newState()
      */
     @Override
-    public DoWhileState<RESULT, PARENT> newState()
+    public DoWhileState<RESULT /*, PARENT*/> newState()
     {
         return new DoWhileState<>( this );
     }

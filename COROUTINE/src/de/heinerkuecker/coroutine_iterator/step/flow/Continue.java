@@ -1,11 +1,13 @@
 package de.heinerkuecker.coroutine_iterator.step.flow;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.complex.DoWhile;
 import de.heinerkuecker.coroutine_iterator.step.complex.For;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
+import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 
 /**
  * Step {@link CoroIterStep}
@@ -49,11 +51,11 @@ extends BreakOrContinue<RESULT>
     /**
      * Decrement variable.
      *
-     * @see CoroIterStep#execute(Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineIterator<RESULT> parent )
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         return new CoroIterStepResult.ContinueLoop<RESULT>( this.label );
     }
