@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
-import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 public final class ResetVar<RESULT>

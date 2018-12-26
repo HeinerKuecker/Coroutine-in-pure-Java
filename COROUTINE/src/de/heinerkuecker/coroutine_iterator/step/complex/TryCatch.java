@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 

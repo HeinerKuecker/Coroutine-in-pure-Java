@@ -1,6 +1,5 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
