@@ -1,9 +1,10 @@
 package de.heinerkuecker.coroutine_iterator.step;
 
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.util.HasCreationStackTraceElement;
 
 /**
- * Interface for one step
+ * Abstract super class for one step
  * in {@link CoroutineIterator}.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
@@ -11,6 +12,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * @author Heiner K&uuml;cker
  */
 abstract public class CoroIterStep<RESULT/*, PARENT*/>
+extends HasCreationStackTraceElement
 {
     ///**
     // * Execute one step.
@@ -21,22 +23,13 @@ abstract public class CoroIterStep<RESULT/*, PARENT*/>
     //CoroIterStepResult<RESULT> execute(
     //        final PARENT parent );
 
-    // TODO rename to creation source position
-    public final StackTraceElement creationStackTraceElement;
-
     /**
      * Constructor with safe creation line number optional.
      */
     protected CoroIterStep(
             final int creationStackOffset )
     {
-        if ( CoroutineIterator.safeCreationSourcePosition )
-        {
-            creationStackTraceElement = new Exception().getStackTrace()[ creationStackOffset ];
-        }
-        else
-        {
-            creationStackTraceElement = null;
-        }
+        super( creationStackOffset + 1 );
     }
+
 }
