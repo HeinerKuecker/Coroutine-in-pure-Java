@@ -4,33 +4,21 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
-import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-/**
- * Step {@link CoroIterStep} to
- * decrement an {@link Number}
- * variable in variables
- * {@link CoroutineIterator#vars}.
- *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
- * @author Heiner K&uuml;cker
- */
-public final class DecVar<RESULT>
+public final class NegateLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to decrement in
+     * Name of variable to negate in
      * {@link CoroutineIterator#vars}.
      */
     public final String varName;
 
     /**
      * Constructor.
-     *
-     * @param variable name
      */
-    public DecVar(
+    public NegateLocalVar(
             final String varName )
     {
         this.varName =
@@ -38,18 +26,33 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                         varName );
     }
 
+    public static <RESULT> NegateLocalVar<RESULT> negate(
+            final String varName )
+    {
+        return new NegateLocalVar<>(
+                varName );
+    }
+
     /**
-     * Decrement {@link Number}variable.
+     * Set variable.
      *
-     * @see CoroIterStep#execute(Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.vars().get( varName );
-        parent.vars().put( varName , var - 1 );
+        final Object varValue = parent.localVars().get( varName );
+
+        if ( varValue instanceof Boolean )
+        {
+            parent.localVars().put( varName , ! (boolean) varValue );
+        }
+        else
+            // null or not boolean is handled as false
+        {
+            parent.localVars().put( varName , true );
+        }
         return CoroIterStepResult.continueCoroutine();
     }
 
@@ -59,9 +62,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public String toString()
     {
-        return varName + "--" +
+        return varName + " = ! " + varName +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
     }
+
 }

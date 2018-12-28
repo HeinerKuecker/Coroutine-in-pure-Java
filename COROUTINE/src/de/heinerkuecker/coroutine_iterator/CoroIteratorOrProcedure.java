@@ -27,7 +27,17 @@ public interface CoroIteratorOrProcedure<RESULT>
     abstract public void saveLastStepState();
 
     /**
-     * @return Map with variables
+     * @return Map with local variables
      */
-    abstract public Map<String, Object> vars();
+    abstract public Map<String, Object> localVars();
+
+    /**
+     * @return Map with global variables
+     */
+    abstract public Map<String, Object> globalVars();
+
+    /**
+     * @return Map with procedure arguments
+     */
+    abstract public Map<String, Object> procedureArguments();
 }

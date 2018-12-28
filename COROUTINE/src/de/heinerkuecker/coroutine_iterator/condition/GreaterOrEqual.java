@@ -48,7 +48,7 @@ implements Condition/*<CoroutineIterator<?>>*/
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Comparable varValue = (Comparable) parent.vars().get( varName );
+        final Comparable varValue = (Comparable) parent.localVars().get( varName );
 
         if ( varValue == null )
         {

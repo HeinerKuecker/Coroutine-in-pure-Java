@@ -7,8 +7,8 @@ import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.IncVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.SetVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -85,12 +85,12 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new IncVar<>( "counter" ) ,
+                        new IncLocalVar<>( "counter" ) ,
                         new YieldReturnVar<>( "counter" ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetVar<>(
+                        new SetLocalVar<>(
                                 //varName
                                 "counter" ,
                                 //varValue
@@ -114,12 +114,12 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new SetVar<>(
+                        new SetLocalVar<>(
                                 //varName
                                 "counter" ,
                                 //varValue
                                 0 ) ,
-                        new IncVar<>( "counter" ) ,
+                        new IncLocalVar<>( "counter" ) ,
                         new YieldReturnVar<>( "counter" ) );
 
         final CoroutineIterator<Integer> coroIter =
@@ -143,12 +143,12 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new IncVar<>( "counter" ) ,
+                        new IncLocalVar<>( "counter" ) ,
                         new YieldReturnVar<>( "counter" ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetVar<>(
+                        new SetLocalVar<>(
                                 //varName
                                 "counter" ,
                                 //varValue

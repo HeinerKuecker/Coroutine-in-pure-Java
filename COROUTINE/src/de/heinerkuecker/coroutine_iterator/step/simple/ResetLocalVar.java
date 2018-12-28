@@ -6,12 +6,11 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-// TODO rename to Negatevar
-public final class Negate<RESULT>
+public final class ResetLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to negate in
+     * Name of variable to reset in
      * {@link CoroutineIterator#vars}.
      */
     public final String varName;
@@ -19,19 +18,12 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Constructor.
      */
-    public Negate(
+    public ResetLocalVar(
             final String varName )
     {
         this.varName =
                 Objects.requireNonNull(
                         varName );
-    }
-
-    public static <RESULT> Negate<RESULT> negate(
-            final String varName )
-    {
-        return new Negate<>(
-                varName );
     }
 
     /**
@@ -43,27 +35,17 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        final Object varValue = parent.vars().get( varName );
-
-        if ( varValue instanceof Boolean )
-        {
-            parent.vars().put( varName , ! (boolean) varValue );
-        }
-        else
-            // null or not boolean is handled as false
-        {
-            parent.vars().put( varName , true );
-        }
+        parent.localVars().remove( varName );
         return CoroIterStepResult.continueCoroutine();
     }
 
     /**
-     * @see Object#toString()
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " = ! " + varName +
+        return varName + " = null" +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

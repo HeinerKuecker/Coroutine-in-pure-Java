@@ -9,18 +9,18 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 /**
  * Step {@link CoroIterStep} to
- * increment an {@link Number}
+ * decrement an {@link Number}
  * variable in variables
  * {@link CoroutineIterator#vars}.
  *
- * @param <RESULT>
+ * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public final class IncVar<RESULT>
+public final class DecLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to increment in
+     * Name of variable to decrement in
      * {@link CoroutineIterator#vars}.
      */
     public final String varName;
@@ -30,7 +30,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      *
      * @param variable name
      */
-    public IncVar(
+    public DecLocalVar(
             final String varName )
     {
         this.varName =
@@ -39,17 +39,17 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * Increment variable.
+     * Decrement {@link Number}variable.
      *
-     * @see SimpleStep#execute
+     * @see CoroIterStep#execute(Object)
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.vars().get( varName );
-        parent.vars().put( varName , var + 1 );
+        final int var = (int) parent.localVars().get( varName );
+        parent.localVars().put( varName , var - 1 );
         return CoroIterStepResult.continueCoroutine();
     }
 
@@ -59,7 +59,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public String toString()
     {
-        return varName + "++" +
+        return varName + "--" +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

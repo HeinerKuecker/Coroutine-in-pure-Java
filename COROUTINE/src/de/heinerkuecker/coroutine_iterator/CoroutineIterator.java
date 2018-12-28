@@ -17,8 +17,9 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
  * Class to generate a sequence of values
  * with an emulated processor in the manner of
  * <a href="TODO">Wikipedia Coroutine</a>
- * without {@link Thread} or memory consuming
- * buffer or bytecode manipulation.
+ * without {@link Thread} or
+ * memory consuming buffer or
+ * bytecode manipulation.
  *
  * @author Heiner K&uuml;cker
  */
@@ -263,12 +264,31 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#vars()
+     * @see CoroIteratorOrProcedure#localVars()
      */
     @Override
-    public Map<String, Object> vars()
+    public Map<String, Object> localVars()
     {
         return this.vars;
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#globalVars()
+     */
+    @Override
+    public Map<String, Object> globalVars()
+    {
+        return this.vars;
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#procedureArguments()
+     */
+    @Override
+    public Map<String, Object> procedureArguments()
+    {
+        // TODO code smell ausgeschlagenes Erbe
+        return null;
     }
 
     /**

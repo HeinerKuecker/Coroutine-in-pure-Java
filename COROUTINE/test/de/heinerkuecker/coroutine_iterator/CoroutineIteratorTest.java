@@ -9,9 +9,9 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnValue;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.DecVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.IncVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.SetVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.DecLocalVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -116,7 +116,7 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<String>(
-                        new SetVar<>( "str" , "a" ) ,
+                        new SetLocalVar<>( "str" , "a" ) ,
                         new YieldReturnVar<String>( "str" ) );
 
         assertNext(
@@ -134,7 +134,7 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetVar<>( "number" , 0 ) ,
+                        new SetLocalVar<>( "number" , 0 ) ,
                         new YieldReturnVar<Integer>( "number" ) );
 
         Assert.assertTrue(
@@ -155,8 +155,8 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<>(
-                        new SetVar<>( "number" , 0 ) ,
-                        new IncVar<>( "number" ) ,
+                        new SetLocalVar<>( "number" , 0 ) ,
+                        new IncLocalVar<>( "number" ) ,
                         new YieldReturnVar<>( "number" ) );
 
         assertNext(
@@ -174,8 +174,8 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<>(
-                        new SetVar<>( "number" , 1 ) ,
-                        new DecVar<>( "number" ) ,
+                        new SetLocalVar<>( "number" , 1 ) ,
+                        new DecLocalVar<>( "number" ) ,
                         new YieldReturnVar<>( "number" ) );
 
         assertNext(

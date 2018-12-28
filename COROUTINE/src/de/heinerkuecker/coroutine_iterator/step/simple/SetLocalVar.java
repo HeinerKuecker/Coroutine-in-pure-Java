@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-public final class SetVar<RESULT>
+public final class SetLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
@@ -20,7 +20,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Constructor.
      */
-    public SetVar(
+    public SetLocalVar(
             final String varName ,
             final Object varValue )
     {
@@ -50,7 +50,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        parent.vars().put( varName , varValue );
+        parent.localVars().put( varName , varValue );
         return CoroIterStepResult.continueCoroutine();
     }
 

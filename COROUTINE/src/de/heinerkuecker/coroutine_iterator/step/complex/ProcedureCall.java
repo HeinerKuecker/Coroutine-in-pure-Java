@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -16,16 +18,19 @@ extends ComplexStep<
     >
 implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 {
-    /**
-     * Es muss ein ComplexStep sein,
-     * weil dieser mit ComplexStepState
-     * einen State hat, welcher bei
-     * einem SimpleStep nicht vorhanden
-     * ist und dessen State in dieser
-     * Klasse verwaltet werden müsste.
-     */
+    ///**
+    // * Es muss ein ComplexStep sein,
+    // * weil dieser mit ComplexStepState
+    // * einen State hat, welcher bei
+    // * einem SimpleStep nicht vorhanden
+    // * ist und dessen State in dieser
+    // * Klasse verwaltet werden müsste.
+    // */
     //final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
+
     final Procedure<RESULT> procedure;
+
+    private final Map<String, Object> procedureArguments;
 
     /**
      * Constructor.
@@ -35,7 +40,8 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     //@SafeVarargs
     public ProcedureCall(
             //final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps
-            final Procedure<RESULT> procedure )
+            final Procedure<RESULT> procedure ,
+            final ProcedureArgument... args )
     {
         super(
                 //creationStackOffset
@@ -62,6 +68,20 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         //}
 
         this.procedure = Objects.requireNonNull( procedure );
+
+        final LinkedHashMap<String, Object> argMap = new LinkedHashMap<>();
+
+        if ( args != null )
+        {
+            for ( ProcedureArgument arg : args )
+            {
+                argMap.put(
+                        Objects.requireNonNull( arg.getName() ) ,
+                        arg.getValue() );
+            }
+        }
+
+        this.procedureArguments = Collections.unmodifiableMap( argMap );
     }
 
     ///**
@@ -81,13 +101,33 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         throw new RuntimeException( "not implemented" );
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure#vars()
+    /**
+     * @see CoroIteratorOrProcedure#vars()
      */
     @Override
-    public Map<String, Object> vars() {
+    public Map<String, Object> localVars()
+    {
         // TODO Auto-generated method stub
         throw new RuntimeException( "not implemented" );
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#globalVars()
+     */
+    @Override
+    public Map<String, Object> globalVars()
+    {
+        // TODO Auto-generated method stub
+        throw new RuntimeException( "not implemented" );
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#procedureArguments()
+     */
+    @Override
+    public Map<String, Object> procedureArguments()
+    {
+        return this.procedureArguments;
     }
 
     /* (non-Javadoc)

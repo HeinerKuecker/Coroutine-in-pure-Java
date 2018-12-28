@@ -50,7 +50,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         @SuppressWarnings("unchecked")
-        final RESULT varValue = (RESULT) parent.vars().get( varName );
+        final RESULT varValue = (RESULT) parent.localVars().get( varName );
         return new CoroIterStepResult.FinallyReturnWithResult<RESULT>( varValue );
     }
 

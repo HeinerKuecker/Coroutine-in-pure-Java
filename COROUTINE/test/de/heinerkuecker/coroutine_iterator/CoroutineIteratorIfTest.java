@@ -8,8 +8,8 @@ import de.heinerkuecker.coroutine_iterator.step.complex.If;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
 import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnValue;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
-import de.heinerkuecker.coroutine_iterator.step.simple.IncVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.SetVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -68,7 +68,7 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetVar<>( "number" , 0 ) ,
+                        new SetLocalVar<>( "number" , 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
@@ -83,7 +83,7 @@ public class CoroutineIteratorIfTest
                                         new Equals( "number" , 1 ) ,
                                         // steps
                                         new FinallyReturnValue<>( 1 ) ) ,
-                                new IncVar<>( "number" ) ) );
+                                new IncLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

@@ -4,21 +4,33 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-public final class ResetVar<RESULT>
+/**
+ * Step {@link CoroIterStep} to
+ * increment an {@link Number}
+ * variable in variables
+ * {@link CoroutineIterator#vars}.
+ *
+ * @param <RESULT>
+ * @author Heiner K&uuml;cker
+ */
+public final class IncLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to reset in
+     * Name of variable to increment in
      * {@link CoroutineIterator#vars}.
      */
     public final String varName;
 
     /**
      * Constructor.
+     *
+     * @param variable name
      */
-    public ResetVar(
+    public IncLocalVar(
             final String varName )
     {
         this.varName =
@@ -27,7 +39,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * Set variable.
+     * Increment variable.
      *
      * @see SimpleStep#execute
      */
@@ -35,20 +47,21 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        parent.vars().remove( varName );
+        // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
+        final int var = (int) parent.localVars().get( varName );
+        parent.localVars().put( varName , var + 1 );
         return CoroIterStepResult.continueCoroutine();
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " = null" +
+        return varName + "++" +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
     }
-
 }
