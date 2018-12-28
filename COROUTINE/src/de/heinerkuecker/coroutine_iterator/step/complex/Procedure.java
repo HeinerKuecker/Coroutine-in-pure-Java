@@ -1,21 +1,15 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
-import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
-import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
+import de.heinerkuecker.util.HasCreationStackTraceElement;
 
-public class Procedure<RESULT/*, PARENT extends CoroIteratorOrProcedure<RESULT, PARENT>*/>
-extends ComplexStep<
-    Procedure<RESULT/*, PARENT*/> ,
-    ProcedureState<RESULT> ,
-    RESULT
-    //PARENT
-    >
-implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
+public class Procedure<RESULT>
+extends HasCreationStackTraceElement
 {
+    public final String name;
+
     /**
      * Es muss ein ComplexStep sein,
      * weil dieser mit ComplexStepState
@@ -33,11 +27,14 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @SafeVarargs
     public Procedure(
+            final String name ,
             final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps )
     {
         super(
                 //creationStackOffset
                 3 );
+
+        this.name = Objects.requireNonNull( name );
 
         if (bodySteps.length == 0 )
         {
@@ -58,100 +55,6 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
                             3 ,
                             bodySteps );
         }
-    }
-
-    ///**
-    // * @param creationStackOffset
-    // */
-    //protected Procedure(int creationStackOffset) {
-    //    super(creationStackOffset);
-    //    // TODO Auto-generated constructor stub
-    //}
-
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure#saveLastStepState()
-     */
-    @Override
-    public void saveLastStepState() {
-        // TODO Auto-generated method stub
-        throw new RuntimeException( "not implemented" );
-    }
-
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure#vars()
-     */
-    @Override
-    public Map<String, Object> vars() {
-        // TODO Auto-generated method stub
-        throw new RuntimeException( "not implemented" );
-    }
-
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep#newState()
-     */
-    @Override
-    public ProcedureState<RESULT> newState()
-    {
-        return new ProcedureState<>( this );
-    }
-
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
-    @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
-    {
-        return this.bodyComplexStep.getUnresolvedBreaksOrContinues();
-    }
-
-    /**
-     * @see ComplexStep#toString(String, ComplexStepState, ComplexStepState)
-     */
-    @Override
-    public String toString(
-            final String indent ,
-            final ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT> nextStepExecuteState )
-    {
-        final ProcedureState<RESULT /*, PARENT*/> lastProcExecuteState =
-                (ProcedureState<RESULT /*, PARENT*/>) lastStepExecuteState;
-
-        final ProcedureState<RESULT /*, PARENT*/> nextProcExecuteState =
-                (ProcedureState<RESULT /*, PARENT*/>) nextStepExecuteState;
-
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastBodyState;
-        if ( lastProcExecuteState != null )
-        {
-            lastBodyState = lastProcExecuteState.bodyComplexState;
-        }
-        else
-        {
-            lastBodyState = null;
-        }
-
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextBodyState;
-        if ( nextProcExecuteState != null )
-        {
-            nextBodyState = nextProcExecuteState.bodyComplexState;
-        }
-        else
-        {
-            nextBodyState = null;
-        }
-
-        return
-                indent +
-                //( this.label != null ? this.label + " : " : "" ) +
-                this.getClass().getSimpleName() +
-                //" (" +
-                ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
-                "\n" +
-                //conditionStr +
-                //" )\n" +
-                this.bodyComplexStep.toString(
-                        indent + " " ,
-                        lastBodyState ,
-                        nextBodyState );
     }
 
 }

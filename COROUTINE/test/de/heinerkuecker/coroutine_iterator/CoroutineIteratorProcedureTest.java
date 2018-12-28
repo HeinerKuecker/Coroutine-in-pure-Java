@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine_iterator;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine_iterator.step.complex.Procedure;
+import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnVar;
@@ -21,10 +22,14 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        final Procedure<Integer> empty_procedure =
+                new Procedure<>(
+                        "empty_procedure" );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new Procedure<Integer>(
-                                ) );
+                        new ProcedureCall<Integer>(
+                                empty_procedure ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -35,10 +40,15 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        new FinallyReturnWithoutResult<>() );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new Procedure<Integer>(
-                                new FinallyReturnWithoutResult<>() ) );
+                        new ProcedureCall<Integer>(
+                                procedure ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -49,10 +59,15 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        new YieldReturnValue<>( 0 ) );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new Procedure<Integer>(
-                                new YieldReturnValue<>( 0 ) ) );
+                        new ProcedureCall<Integer>(
+                                procedure ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -67,6 +82,12 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        new IncVar<>( "counter" ) ,
+                        new YieldReturnVar<>( "counter" ) );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetVar<>(
@@ -74,9 +95,8 @@ public class CoroutineIteratorProcedureTest
                                 "counter" ,
                                 //varValue
                                 0 ) ,
-                        new Procedure<Integer>(
-                                new IncVar<>( "counter" ) ,
-                                new YieldReturnVar<>( "counter" ) ) );
+                        new ProcedureCall<Integer>(
+                                procedure ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -91,16 +111,21 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        new SetVar<>(
+                                //varName
+                                "counter" ,
+                                //varValue
+                                0 ) ,
+                        new IncVar<>( "counter" ) ,
+                        new YieldReturnVar<>( "counter" ) );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new Procedure<Integer>(
-                                new SetVar<>(
-                                        //varName
-                                        "counter" ,
-                                        //varValue
-                                        0 ) ,
-                                new IncVar<>( "counter" ) ,
-                                new YieldReturnVar<>( "counter" ) ) );
+                        new ProcedureCall<Integer>(
+                                procedure ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -116,7 +141,8 @@ public class CoroutineIteratorProcedureTest
         CoroutineIterator.initializationChecks = true;
 
         final Procedure<Integer> procedure =
-                new Procedure<Integer>(
+                new Procedure<>(
+                        "procedure" ,
                         new IncVar<>( "counter" ) ,
                         new YieldReturnVar<>( "counter" ) );
 
@@ -127,8 +153,10 @@ public class CoroutineIteratorProcedureTest
                                 "counter" ,
                                 //varValue
                                 0 ) ,
-                        procedure ,
-                        procedure );
+                        new ProcedureCall<Integer>(
+                                procedure ) ,
+                        new ProcedureCall<Integer>(
+                                procedure ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

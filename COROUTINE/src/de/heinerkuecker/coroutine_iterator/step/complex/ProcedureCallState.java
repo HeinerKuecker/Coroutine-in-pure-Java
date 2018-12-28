@@ -6,15 +6,15 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-class ProcedureState<RESULT>
+class ProcedureCallState<RESULT>
 implements ComplexStepState<
-ProcedureState<RESULT>,
-Procedure<RESULT>,
+ProcedureCallState<RESULT>,
+ProcedureCall<RESULT>,
 RESULT
-//Procedure<RESULT>
+//ProcedureCall<RESULT>
 >
 {
-    private final Procedure<RESULT/*, PARENT*/> procedure;
+    private final ProcedureCall<RESULT/*, PARENT*/> procedureCall;
 
     boolean runInProcedure = true;
 
@@ -24,14 +24,14 @@ RESULT
     /**
      * Constructor.
      *
-     * @param procedure
+     * @param procedureCall
      */
-    protected ProcedureState(
-            final Procedure<RESULT> procedure )
+    protected ProcedureCallState(
+            final ProcedureCall<RESULT> procedureCall )
     {
-        this.procedure =
+        this.procedureCall =
                 Objects.requireNonNull(
-                        procedure );
+                        procedureCall );
     }
 
     /**
@@ -44,7 +44,7 @@ RESULT
         if ( runInProcedure )
         {
             final ComplexStep<?, ?, RESULT/*, PARENT*/> bodyComplexStep =
-                    procedure.bodyComplexStep;
+                    procedureCall.procedure.bodyComplexStep;
 
             if ( this.bodyComplexState == null )
                 // no existing state from previous execute call
@@ -95,18 +95,18 @@ RESULT
      * @see ComplexStepState#getStep()
      */
     @Override
-    public Procedure<RESULT> getStep()
+    public ProcedureCall<RESULT> getStep()
     {
-        return this.procedure;
+        return this.procedureCall;
     }
 
     /**
      * @see HCloneable#createClone()
      */
     @Override
-    public ProcedureState<RESULT> createClone()
+    public ProcedureCallState<RESULT> createClone()
     {
-        final ProcedureState<RESULT/*, PARENT*/> clone = new ProcedureState<>( procedure );
+        final ProcedureCallState<RESULT/*, PARENT*/> clone = new ProcedureCallState<>( procedureCall );
 
         clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
 

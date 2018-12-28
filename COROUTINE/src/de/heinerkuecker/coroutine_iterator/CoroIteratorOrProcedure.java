@@ -4,12 +4,12 @@ import java.util.Map;
 
 import de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState;
-import de.heinerkuecker.coroutine_iterator.step.complex.Procedure;
+import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
 
 /**
  * Common interface for
  * {@link CoroutineIterator} and
- * {@link Procedure}
+ * {@link ProcedureCall}
  * to satisfy Java generics.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
