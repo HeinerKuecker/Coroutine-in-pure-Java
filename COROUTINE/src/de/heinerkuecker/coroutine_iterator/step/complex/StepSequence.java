@@ -16,8 +16,12 @@ import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
  * @author Heiner K&uuml;cker
  */
 public class StepSequence<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
-//extends ComplexStep<StepSequence<RESULT, PARENT>, RESULT, PARENT>
-extends ComplexStep<StepSequence<RESULT /*, PARENT*/>, StepSequenceState<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
+extends ComplexStep<
+    StepSequence<RESULT /*, PARENT*/> ,
+    StepSequenceState<RESULT /*, PARENT*/> ,
+    RESULT /*,
+    PARENT*/
+    >
 {
     private final CoroIterStep<RESULT/*, PARENT*/>[] steps;
 
@@ -29,6 +33,7 @@ extends ComplexStep<StepSequence<RESULT /*, PARENT*/>, StepSequenceState<RESULT 
             final int creationStackOffset ,
             final CoroIterStep<RESULT /*, PARENT*/>... steps )
     {
+        // TODO HasCreationStackTraceElement.creationStackTraceElement never used
         super( creationStackOffset );
 
         for ( final CoroIterStep<RESULT /*, PARENT*/> step : steps )
