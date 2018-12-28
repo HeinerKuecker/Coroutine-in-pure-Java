@@ -27,7 +27,7 @@ implements ComplexStepState<
     /**
      * Constructor.
      */
-    public TryCatchState(
+    protected TryCatchState(
             final TryCatch<RESULT/*, PARENT*/> tryCatch )
     {
         this.tryCatch =
@@ -126,6 +126,8 @@ implements ComplexStepState<
     {
         this.runInTry = false;
         this.runInCatch = false;
+        this.tryBodyComplexState = null;
+        this.catchBodyComplexState = null;
     }
 
     /**

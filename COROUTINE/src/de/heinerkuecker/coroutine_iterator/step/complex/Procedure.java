@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
 public class Procedure<RESULT/*, PARENT extends CoroIteratorOrProcedure<RESULT, PARENT>*/>
@@ -16,12 +17,56 @@ extends ComplexStep<
 implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
+     * Es muss ein ComplexStep sein,
+     * weil dieser mit ComplexStepState
+     * einen State hat, welcher bei
+     * einem SimpleStep nicht vorhanden
+     * ist und dessen State in dieser
+     * Klasse verwaltet werden müsste.
+     */
+    final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
+
+    /**
+     * Constructor.
+     *
      * @param creationStackOffset
      */
-    protected Procedure(int creationStackOffset) {
-        super(creationStackOffset);
-        // TODO Auto-generated constructor stub
+    @SafeVarargs
+    public Procedure(
+            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps )
+    {
+        super(
+                //creationStackOffset
+                3 );
+
+        if (bodySteps.length == 0 )
+        {
+            throw new IllegalArgumentException( "procedure body is empty" );
+        }
+
+        if ( bodySteps.length == 1 &&
+                bodySteps[ 0 ] instanceof ComplexStep )
+        {
+            this.bodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) bodySteps[ 0 ];
+        }
+        else
+        {
+            this.bodyComplexStep =
+                    new StepSequence(
+                            // creationStackOffset
+                            3 ,
+                            bodySteps );
+        }
     }
+
+    ///**
+    // * @param creationStackOffset
+    // */
+    //protected Procedure(int creationStackOffset) {
+    //    super(creationStackOffset);
+    //    // TODO Auto-generated constructor stub
+    //}
 
     /* (non-Javadoc)
      * @see de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure#saveLastStepState()
@@ -29,7 +74,7 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public void saveLastStepState() {
         // TODO Auto-generated method stub
-
+        throw new RuntimeException( "not implemented" );
     }
 
     /* (non-Javadoc)
@@ -38,35 +83,75 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Object> vars() {
         // TODO Auto-generated method stub
-        return null;
+        throw new RuntimeException( "not implemented" );
     }
 
     /* (non-Javadoc)
      * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep#newState()
      */
     @Override
-    public ProcedureState<RESULT> newState() {
-        // TODO Auto-generated method stub
-        return null;
+    public ProcedureState<RESULT> newState()
+    {
+        return new ProcedureState<>( this );
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep#getUnresolvedBreaksOrContinues()
+    /**
+     * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues() {
-        // TODO Auto-generated method stub
-        return null;
+    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    {
+        return this.bodyComplexStep.getUnresolvedBreaksOrContinues();
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep#toString(java.lang.String, de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState, de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState)
+    /**
+     * @see ComplexStep#toString(String, ComplexStepState, ComplexStepState)
      */
     @Override
-    public String toString(String indent, ComplexStepState<?, ?, RESULT> lastStepExecuteState,
-            ComplexStepState<?, ?, RESULT> nextStepExecuteState) {
-        // TODO Auto-generated method stub
-        return null;
+    public String toString(
+            final String indent ,
+            final ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT> nextStepExecuteState )
+    {
+        final ProcedureState<RESULT /*, PARENT*/> lastProcExecuteState =
+                (ProcedureState<RESULT /*, PARENT*/>) lastStepExecuteState;
+
+        final ProcedureState<RESULT /*, PARENT*/> nextProcExecuteState =
+                (ProcedureState<RESULT /*, PARENT*/>) nextStepExecuteState;
+
+        final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastBodyState;
+        if ( lastProcExecuteState != null )
+        {
+            lastBodyState = lastProcExecuteState.bodyComplexState;
+        }
+        else
+        {
+            lastBodyState = null;
+        }
+
+        final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextBodyState;
+        if ( nextProcExecuteState != null )
+        {
+            nextBodyState = nextProcExecuteState.bodyComplexState;
+        }
+        else
+        {
+            nextBodyState = null;
+        }
+
+        return
+                indent +
+                //( this.label != null ? this.label + " : " : "" ) +
+                this.getClass().getSimpleName() +
+                //" (" +
+                ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
+                "\n" +
+                //conditionStr +
+                //" )\n" +
+                this.bodyComplexStep.toString(
+                        indent + " " ,
+                        lastBodyState ,
+                        nextBodyState );
     }
 
 }

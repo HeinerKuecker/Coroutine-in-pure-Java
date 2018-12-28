@@ -53,7 +53,10 @@ extends CoroIterStep<RESULT/*, PARENT*/>
     abstract public String toString(
             final String indent ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState );
+            //final STEP_STATE lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState
+            //final STEP_STATE nextStepExecuteState
+            );
 
     /**
      * @see Object#toString()

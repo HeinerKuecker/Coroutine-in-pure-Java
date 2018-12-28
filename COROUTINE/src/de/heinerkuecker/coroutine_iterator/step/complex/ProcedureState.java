@@ -1,49 +1,116 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
+import de.heinerkuecker.util.HCloneable;
 
 public class ProcedureState<RESULT>
 implements ComplexStepState<
-    ProcedureState<RESULT>,
-    Procedure<RESULT>,
-    RESULT
-    //Procedure<RESULT>
-    >
+ProcedureState<RESULT>,
+Procedure<RESULT>,
+RESULT
+//Procedure<RESULT>
+>
 {
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState#execute(de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure)
+    private final Procedure<RESULT/*, PARENT*/> procedure;
+
+    boolean runInProcedure = true;
+
+    // TODO getter
+    ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
+
+    /**
+     * Constructor.
+     *
+     * @param procedure
      */
-    @Override
-    public CoroIterStepResult<RESULT> execute(CoroIteratorOrProcedure<RESULT> parent) {
-        // TODO Auto-generated method stub
-        return null;
+    protected ProcedureState(
+            final Procedure<RESULT> procedure )
+    {
+        this.procedure =
+                Objects.requireNonNull(
+                        procedure );
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState#isFinished()
+    /**
+     * @see ComplexStepState#execute
      */
     @Override
-    public boolean isFinished() {
-        // TODO Auto-generated method stub
-        return false;
+    public CoroIterStepResult<RESULT> execute(
+            final CoroIteratorOrProcedure<RESULT> parent )
+    {
+        if ( runInProcedure )
+        {
+            final ComplexStep<?, ?, RESULT/*, PARENT*/> bodyComplexStep =
+                    procedure.bodyComplexStep;
+
+            if ( this.bodyComplexState == null )
+                // no existing state from previous execute call
+            {
+                this.bodyComplexState = bodyComplexStep.newState();
+            }
+
+            // TODO only before executing simple step: parent.saveLastStepState();
+
+            final CoroIterStepResult<RESULT> bodyExecuteResult =
+                    this.bodyComplexState.execute(
+                            parent );
+
+            if ( this.bodyComplexState.isFinished() )
+            {
+                finish();
+            }
+
+            if ( ! ( bodyExecuteResult == null ||
+                    bodyExecuteResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+            {
+                return bodyExecuteResult;
+            }
+
+            bodyComplexState = null;
+            return bodyExecuteResult;
+        }
+
+        return CoroIterStepResult.continueCoroutine();
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState#getStep()
-     */
-    @Override
-    public Procedure<RESULT> getStep() {
-        // TODO Auto-generated method stub
-        return null;
+    private void finish()
+    {
+        this.runInProcedure = false;
+        bodyComplexState = null;
     }
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.util.HCloneable#createClone()
+
+    /**
+     * @see ComplexStepState#isFinished()
      */
     @Override
-    public ProcedureState<RESULT> createClone() {
-        // TODO Auto-generated method stub
-        return null;
+    public boolean isFinished()
+    {
+        return ! runInProcedure;
+    }
+
+    /**
+     * @see ComplexStepState#getStep()
+     */
+    @Override
+    public Procedure<RESULT> getStep()
+    {
+        return this.procedure;
+    }
+
+    /**
+     * @see HCloneable#createClone()
+     */
+    @Override
+    public ProcedureState<RESULT> createClone()
+    {
+        final ProcedureState<RESULT/*, PARENT*/> clone = new ProcedureState<>( procedure );
+
+        clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
+
+        return clone;
     }
 
 }

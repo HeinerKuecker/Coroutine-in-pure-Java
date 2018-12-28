@@ -54,7 +54,8 @@ extends ComplexStep<
         if ( catchBodySteps.length == 1 &&
                 catchBodySteps[ 0 ] instanceof ComplexStep )
         {
-            this.catchBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) catchBodySteps[ 0 ];
+            this.catchBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) catchBodySteps[ 0 ];
         }
         else
         {

@@ -182,6 +182,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             this.nextComplexStepState = complexStep.newState();
         }
+        else if ( this.nextComplexStepState.isFinished() )
+        {
+            return false;
+        }
 
         final CoroIterStepResult<RESULT> executeResult =
                 this.nextComplexStepState.execute(
