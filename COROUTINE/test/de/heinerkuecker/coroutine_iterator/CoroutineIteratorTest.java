@@ -216,10 +216,13 @@ public class CoroutineIteratorTest
     public static void assertHasNextFalse(
             final CoroutineIterator<? extends Object> coroIter )
     {
-        System.out.println( coroIter );
+        //System.out.println( coroIter );
 
         Assert.assertFalse(
                 coroIter.hasNext() );
+
+        System.out.println( "hasNext: false" );
+        System.out.println();
 
         System.out.println( coroIter );
     }
