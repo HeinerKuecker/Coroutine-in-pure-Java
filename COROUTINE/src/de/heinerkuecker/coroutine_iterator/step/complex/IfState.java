@@ -5,7 +5,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-public class IfState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+class IfState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
 implements ComplexStepState<
     IfState<RESULT/*, PARENT*/>,
     If<RESULT/*, PARENT*/>,

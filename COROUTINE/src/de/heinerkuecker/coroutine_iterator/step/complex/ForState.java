@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-public class ForState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+class ForState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
 implements ComplexStepState<
     ForState<RESULT/*, PARENT*/>,
     For<RESULT/*, PARENT*/>,

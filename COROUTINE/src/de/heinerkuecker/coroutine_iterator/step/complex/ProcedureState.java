@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-public class ProcedureState<RESULT>
+class ProcedureState<RESULT>
 implements ComplexStepState<
 ProcedureState<RESULT>,
 Procedure<RESULT>,

@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-public class StepSequenceState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+class StepSequenceState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
 implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
 {
     private final StepSequence<RESULT /*, PARENT*/> sequence;

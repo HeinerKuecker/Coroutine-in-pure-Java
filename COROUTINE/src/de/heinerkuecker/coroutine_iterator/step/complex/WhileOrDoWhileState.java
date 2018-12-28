@@ -4,7 +4,7 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-abstract public class WhileOrDoWhileState<
+abstract class WhileOrDoWhileState<
     WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/>,
     WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/>,
     RESULT

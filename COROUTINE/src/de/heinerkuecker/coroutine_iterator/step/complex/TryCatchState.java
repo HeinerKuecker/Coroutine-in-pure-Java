@@ -8,7 +8,7 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
 import de.heinerkuecker.util.HCloneable;
 
-public class TryCatchState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+class TryCatchState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
 implements ComplexStepState<
     TryCatchState<RESULT/*, PARENT*/>,
     TryCatch<RESULT/*, PARENT*/>,

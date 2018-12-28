@@ -2,7 +2,7 @@ package de.heinerkuecker.coroutine_iterator.step.complex;
 
 import de.heinerkuecker.util.HCloneable;
 
-public class DoWhileState<
+class DoWhileState<
     RESULT
     //PARENT extends CoroutineIterator<RESULT>
     >
