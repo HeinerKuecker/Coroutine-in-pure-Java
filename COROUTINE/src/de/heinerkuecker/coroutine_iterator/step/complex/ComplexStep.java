@@ -41,6 +41,9 @@ extends CoroIterStep<RESULT/*, PARENT*/>
 
     abstract public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues();
 
+    abstract public void setRootParent(
+            final CoroutineIterator<RESULT> rootParent );
+
     /**
      * Returns formatted {@link String}
      * for debug purposes.

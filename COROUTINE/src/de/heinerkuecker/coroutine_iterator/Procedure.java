@@ -1,8 +1,10 @@
-package de.heinerkuecker.coroutine_iterator.step.complex;
+package de.heinerkuecker.coroutine_iterator;
 
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
+import de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep;
+import de.heinerkuecker.coroutine_iterator.step.complex.StepSequence;
 import de.heinerkuecker.util.HasCreationStackTraceElement;
 
 public class Procedure<RESULT>
@@ -18,7 +20,7 @@ extends HasCreationStackTraceElement
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
+    public final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
 
     /**
      * Constructor.

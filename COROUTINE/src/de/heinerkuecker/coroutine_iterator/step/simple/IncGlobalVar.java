@@ -3,21 +3,33 @@ package de.heinerkuecker.coroutine_iterator.step.simple;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-public final class ResetLocalVar<RESULT>
+/**
+ * Step {@link CoroIterStep} to
+ * increment an {@link Number}
+ * variable in variables
+ * {@link CoroIteratorOrProcedure#globalVars()}
+ *
+ * @param <RESULT>
+ * @author Heiner K&uuml;cker
+ */
+public final class IncGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to reset in
-     * {@link CoroIteratorOrProcedure#localVars()}
+     * Name of variable to increment in
+     * {@link CoroIteratorOrProcedure#globalVars()}
      */
     public final String varName;
 
     /**
      * Constructor.
+     *
+     * @param variable name
      */
-    public ResetLocalVar(
+    public IncGlobalVar(
             final String varName )
     {
         this.varName =
@@ -26,7 +38,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * Set variable.
+     * Increment variable.
      *
      * @see SimpleStep#execute
      */
@@ -34,20 +46,21 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        parent.localVars().remove( varName );
+        // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
+        final int var = (int) parent.globalVars().get( varName );
+        parent.globalVars().put( varName , var + 1 );
         return CoroIterStepResult.continueCoroutine();
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " = null" +
+        return varName + "++" +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
     }
-
 }

@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine_iterator.step.complex;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
@@ -87,6 +88,17 @@ extends ComplexStep<
                 elseBodyComplexStep.getUnresolvedBreaksOrContinues() );
 
         return result;
+    }
+
+    /**
+     * @see ComplexStep#setRootParent
+     */
+    @Override
+    public void setRootParent(
+            final CoroutineIterator<RESULT> rootParent )
+    {
+        this.thenBodyComplexStep.setRootParent( rootParent );
+        this.elseBodyComplexStep.setRootParent( rootParent );
     }
 
     /**

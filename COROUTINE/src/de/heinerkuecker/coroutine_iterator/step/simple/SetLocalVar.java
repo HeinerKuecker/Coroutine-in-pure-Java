@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine_iterator.step.simple;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 public final class SetLocalVar<RESULT>
@@ -11,7 +10,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to set in
-     * {@link CoroutineIterator#vars}.
+     * {@link CoroIteratorOrProcedure#localVars()}
      */
     public final String varName;
 

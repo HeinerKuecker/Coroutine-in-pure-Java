@@ -8,11 +8,11 @@ import de.heinerkuecker.util.HCloneable;
 
 class ProcedureCallState<RESULT>
 implements ComplexStepState<
-ProcedureCallState<RESULT>,
-ProcedureCall<RESULT>,
-RESULT
-//ProcedureCall<RESULT>
->
+    ProcedureCallState<RESULT>,
+    ProcedureCall<RESULT>,
+    RESULT
+    //ProcedureCall<RESULT>
+    >
 {
     private final ProcedureCall<RESULT/*, PARENT*/> procedureCall;
 
@@ -56,7 +56,8 @@ RESULT
 
             final CoroIterStepResult<RESULT> bodyExecuteResult =
                     this.bodyComplexState.execute(
-                            parent );
+                            //parent
+                            this.procedureCall );
 
             if ( this.bodyComplexState.isFinished() )
             {

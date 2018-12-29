@@ -8,36 +8,37 @@ import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 
 /**
  * Step {@link CoroIterStep} to
- * return a variable in variables
- * {@link CoroutineIterator#vars}
+ * return a procedure argument
+ * {@link CoroIteratorOrProcedure#procedureArguments()}
  * and suspend stepping.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class YieldReturnVar<RESULT>
+public class YieldReturnProcedureArgument<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to return in
-     * {@link CoroutineIterator#vars}.
+     * Name of procedure argument in
+     * {@link CoroIteratorOrProcedure#procedureArguments()}
+     * to return.
      */
-    public final String varName;
+    public final String procedureArgumentName;
 
     /**
      * Constructor.
      *
-     * @param variable name
+     * @param procedureArgumentName
      */
-    public YieldReturnVar(
-            final String varName )
+    public YieldReturnProcedureArgument(
+            final String procedureArgumentName )
     {
         super(
                 //creationStackOffset
                 //2
                 );
 
-        this.varName = varName;
+        this.procedureArgumentName = procedureArgumentName;
     }
 
     /**
@@ -50,19 +51,19 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         @SuppressWarnings("unchecked")
-        final RESULT varValue = (RESULT) parent.localVars().get( varName );
+        final RESULT varValue = (RESULT) parent.procedureArguments().get( procedureArgumentName );
         return new CoroIterStepResult.YieldReturnWithResult<RESULT>( varValue );
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()
     {
         return
                 this.getClass().getSimpleName() + " " +
-                varName +
+                procedureArgumentName +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

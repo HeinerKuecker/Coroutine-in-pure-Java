@@ -92,6 +92,22 @@ extends ComplexStep<
     }
 
     /**
+     * @see ComplexStep#setRootParent
+     */
+    @Override
+    public void setRootParent(
+            final CoroutineIterator<RESULT> rootParent )
+    {
+        for ( final CoroIterStep<RESULT> step : steps )
+        {
+            if ( step instanceof ComplexStep )
+            {
+                ((ComplexStep) step).setRootParent( rootParent );
+            }
+        }
+    }
+
+    /**
      * @see ComplexStep#toString
      */
     @Override

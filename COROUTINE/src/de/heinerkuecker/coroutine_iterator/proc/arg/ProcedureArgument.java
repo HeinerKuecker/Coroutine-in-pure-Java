@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine_iterator.step.complex;
+package de.heinerkuecker.coroutine_iterator.proc.arg;
 
 public interface ProcedureArgument
 {

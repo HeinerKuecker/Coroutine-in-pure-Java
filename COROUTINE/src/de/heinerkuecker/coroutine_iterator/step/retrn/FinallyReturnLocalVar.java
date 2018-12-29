@@ -9,13 +9,13 @@ import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 /**
  * Step {@link CoroIterStep} to
  * return a variable in variables
- * {@link CoroutineIterator#vars}
+ * {@link CoroIteratorOrProcedure#localVars()}
  * and stop stepping.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class FinallyReturnVar<RESULT>
+public class FinallyReturnLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
@@ -29,7 +29,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      *
      * @param variable name
      */
-    public FinallyReturnVar(
+    public FinallyReturnLocalVar(
             final String varName )
     {
         super(
@@ -55,7 +55,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()

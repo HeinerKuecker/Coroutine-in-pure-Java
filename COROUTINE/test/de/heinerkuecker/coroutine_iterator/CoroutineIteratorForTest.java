@@ -4,7 +4,7 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine_iterator.condition.Lesser;
 import de.heinerkuecker.coroutine_iterator.condition.LesserOrEqual;
 import de.heinerkuecker.coroutine_iterator.step.complex.For;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnVar;
+import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnLocalVar;
 import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine_iterator.step.simple.NoOperation;
 import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
@@ -31,7 +31,7 @@ public class CoroutineIteratorForTest
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
-                                new YieldReturnVar<>( "number" ) ) );
+                                new YieldReturnLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -57,7 +57,7 @@ public class CoroutineIteratorForTest
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>( "number" , 0 ) ,
-                        new YieldReturnVar<>( "number" ) ,
+                        new YieldReturnLocalVar<>( "number" ) ,
                         new For<>(
                                 // initialStep
                                 new NoOperation<>() ,
@@ -66,7 +66,7 @@ public class CoroutineIteratorForTest
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
-                                new YieldReturnVar<>( "number" ) ) );
+                                new YieldReturnLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -103,7 +103,7 @@ public class CoroutineIteratorForTest
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
-                                new YieldReturnVar<>( "number" ) ) );
+                                new YieldReturnLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -141,7 +141,7 @@ public class CoroutineIteratorForTest
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
                                 new IncLocalVar<>( "number" ) ,
-                                new YieldReturnVar<>( "number" ) ) );
+                                new YieldReturnLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

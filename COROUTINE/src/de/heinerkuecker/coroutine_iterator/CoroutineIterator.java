@@ -113,6 +113,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUnresolvedBreaksAndContinues();
         }
 
+        this.complexStep.setRootParent( this );
+
         this.vars.putAll( params );
     }
 
@@ -143,6 +145,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             checkForUnresolvedBreaksAndContinues();
         }
+
+        this.complexStep.setRootParent( this );
     }
 
     /**

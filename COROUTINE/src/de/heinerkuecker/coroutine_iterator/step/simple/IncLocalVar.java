@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine_iterator.step.simple;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
@@ -11,7 +10,7 @@ import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
  * Step {@link CoroIterStep} to
  * increment an {@link Number}
  * variable in variables
- * {@link CoroutineIterator#vars}.
+ * {@link CoroIteratorOrProcedure#localVars()}
  *
  * @param <RESULT>
  * @author Heiner K&uuml;cker
@@ -21,7 +20,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to increment in
-     * {@link CoroutineIterator#vars}.
+     * {@link CoroIteratorOrProcedure#localVars()}
      */
     public final String varName;
 

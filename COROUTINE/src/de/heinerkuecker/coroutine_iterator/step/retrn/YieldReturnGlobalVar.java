@@ -1,27 +1,27 @@
-package de.heinerkuecker.coroutine_iterator.step.simple;
-
-import java.util.Objects;
+package de.heinerkuecker.coroutine_iterator.step.retrn;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
+import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 
 /**
  * Step {@link CoroIterStep} to
- * decrement an {@link Number}
- * variable in variables
- * {@link CoroIteratorOrProcedure#localVars()}
+ * return a variable in variables
+ * {@link CoroIteratorOrProcedure#globalVars()}
+ * and suspend stepping.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public final class DecLocalVar<RESULT>
+public class YieldReturnGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Name of variable to decrement in
- * {@link CoroIteratorOrProcedure#localVars()}
+     * Name of variable in
+     * {@link CoroutineIterator#globalVars()}
+     * to return.
      */
     public final String varName;
 
@@ -30,27 +30,29 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      *
      * @param variable name
      */
-    public DecLocalVar(
+    public YieldReturnGlobalVar(
             final String varName )
     {
-        this.varName =
-                Objects.requireNonNull(
-                        varName );
+        super(
+                //creationStackOffset
+                //2
+                );
+
+        this.varName = varName;
     }
 
     /**
-     * Decrement {@link Number}variable.
+     * Decrement variable.
      *
-     * @see CoroIterStep#execute(Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.localVars().get( varName );
-        parent.localVars().put( varName , var - 1 );
-        return CoroIterStepResult.continueCoroutine();
+        @SuppressWarnings("unchecked")
+        final RESULT varValue = (RESULT) parent.globalVars().get( varName );
+        return new CoroIterStepResult.YieldReturnWithResult<RESULT>( varValue );
     }
 
     /**
@@ -59,7 +61,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public String toString()
     {
-        return varName + "--" +
+        return
+                this.getClass().getSimpleName() + " " +
+                varName +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

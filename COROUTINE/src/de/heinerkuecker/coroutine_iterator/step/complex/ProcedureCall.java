@@ -1,12 +1,16 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.Procedure;
+import de.heinerkuecker.coroutine_iterator.proc.arg.ProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
 public class ProcedureCall<RESULT/*, PARENT extends CoroIteratorOrProcedure<RESULT, PARENT>*/>
@@ -31,6 +35,13 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     final Procedure<RESULT> procedure;
 
     private final Map<String, Object> procedureArguments;
+
+    private CoroutineIterator<RESULT> rootParent;
+
+    /**
+     * Variables.
+     */
+    public final HashMap<String, Object> vars = new HashMap<>();
 
     /**
      * Constructor.
@@ -92,13 +103,23 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     //    // TODO Auto-generated constructor stub
     //}
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure#saveLastStepState()
+    /**
+     * @see CoroIteratorOrProcedure#saveLastStepState()
      */
     @Override
-    public void saveLastStepState() {
-        // TODO Auto-generated method stub
-        throw new RuntimeException( "not implemented" );
+    public void saveLastStepState()
+    {
+        this.rootParent.saveLastStepState();
+    }
+
+    /**
+     * @see ComplexStep#setRootParent
+     */
+    @Override
+    public void setRootParent(
+            final CoroutineIterator<RESULT> rootParent )
+    {
+        this.rootParent = rootParent;
     }
 
     /**
@@ -107,8 +128,7 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Object> localVars()
     {
-        // TODO Auto-generated method stub
-        throw new RuntimeException( "not implemented" );
+        return this.vars;
     }
 
     /**
@@ -117,8 +137,7 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Object> globalVars()
     {
-        // TODO Auto-generated method stub
-        throw new RuntimeException( "not implemented" );
+        return this.rootParent.globalVars();
     }
 
     /**
@@ -130,8 +149,8 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         return this.procedureArguments;
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep#newState()
+    /**
+     * @see ComplexStep#newState()
      */
     @Override
     public ProcedureCallState<RESULT> newState()
@@ -192,8 +211,9 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
                 //" (" +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +
-                //conditionStr +
-                //" )\n" +
+                indent +
+                "procedure arguments: " + this.procedureArguments +
+                "\n" +
                 this.procedure.bodyComplexStep.toString(
                         indent + " " ,
                         lastBodyState ,

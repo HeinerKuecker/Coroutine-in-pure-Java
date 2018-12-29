@@ -265,6 +265,26 @@ extends ComplexStep<
     }
 
     /**
+     * @see ComplexStep#setRootParent
+     */
+    @Override
+    public void setRootParent(
+            final CoroutineIterator<RESULT> rootParent )
+    {
+        this.bodyComplexStep.setRootParent( rootParent );
+
+        if ( this.initialStep instanceof ComplexStep )
+        {
+            ((ComplexStep) this.initialStep).setRootParent(rootParent);
+        }
+
+        if ( this.updateStep instanceof ComplexStep )
+        {
+            ((ComplexStep) this.updateStep).setRootParent(rootParent);
+        }
+    }
+
+    /**
      * @see ComplexStep#toString
      */
     @Override
