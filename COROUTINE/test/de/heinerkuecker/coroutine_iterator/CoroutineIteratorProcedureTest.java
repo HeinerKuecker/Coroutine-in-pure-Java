@@ -168,15 +168,15 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_2_0()
+    public void test_2_0_GlobalVar()
     {
         CoroutineIterator.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new IncLocalVar<>( "counter" ) ,
-                        new YieldReturnLocalVar<>( "counter" ) );
+                        new IncGlobalVar<>( "counter" ) ,
+                        new YieldReturnGlobalVar<>( "counter" ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
