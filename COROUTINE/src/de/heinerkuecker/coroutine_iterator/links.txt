@@ -1,2 +1,18 @@
 https://github.com/natanbc/java-coroutines
 
+uses threads
+https://github.com/esoco/coroutines
+
+uses java agent
+https://github.com/offbynull/coroutines
+
+https://dzone.com/articles/coroutines-in-pure-java
+https://medium.com/@esocogmbh/coroutines-in-pure-java-65661a379c85
+
+uses byte code instrumentation
+https://github.com/rendaw/java-coroutines-core
+
+https://www.reddit.com/r/java/comments/7ulmwn/coroutines_in_java/
+
+SAX parser example
+http://ssw.jku.at/General/Staff/LS/coro/CoroIntroduction.pdf
