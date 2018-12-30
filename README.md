@@ -22,3 +22,8 @@ Java8 lambdas and method references are usable but not necessary.
 
 Therefore, this code should also work with older Java versions, possibly with insignificant changes, such as removing the SafeVarargs annotation.
 
+
+The use cases for this library are coroutines with or without an iterator, where managing the state is too difficult for self-written code.
+
+In the coroutine is the full power of the Turing machine available, not just an state machine.
+
