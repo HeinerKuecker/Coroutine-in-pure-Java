@@ -2,10 +2,9 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.expression.GetGlobalVar;
-import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
-import de.heinerkuecker.coroutine_iterator.expression.Value;
-import de.heinerkuecker.coroutine_iterator.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.proc.arg.GlobalVarProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.proc.arg.LocalVarProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.proc.arg.ValueProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnGlobalVar;
@@ -221,13 +220,11 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         new ProcedureCall<Integer>(
                                 procedure ,
-                                new ProcedureArgument<>(
+                                new ValueProcedureArgument(
                                         // name
                                         "argument" ,
-                                        // expression
-                                        new Value<>(
-                                                // value
-                                                0 ) ) ) );
+                                        // value
+                                        0 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -256,13 +253,11 @@ public class CoroutineIteratorProcedureTest
                                 0 ) ,
                         new ProcedureCall<Integer>(
                                 procedure ,
-                                new ProcedureArgument<>(
+                                new LocalVarProcedureArgument(
                                         // procedureArgumentName
                                         "argument" ,
-                                        // expression
-                                        new GetLocalVar<>(
-                                                // localVarName
-                                                "number" ) ) ) );
+                                        // localVarName
+                                        "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -287,13 +282,11 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         new ProcedureCall<Integer>(
                                 procedure0 ,
-                                new ProcedureArgument<>(
+                                new GlobalVarProcedureArgument(
                                         // procedureArgumentName
                                         "argument" ,
-                                        // expression
-                                        new GetGlobalVar<>(
-                                                // globalVarName
-                                                "number" ) ) ) );
+                                        // localVarName
+                                        "number" ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(

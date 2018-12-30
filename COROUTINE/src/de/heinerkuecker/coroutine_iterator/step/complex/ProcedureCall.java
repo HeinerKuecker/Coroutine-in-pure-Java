@@ -76,15 +76,15 @@ extends ComplexStep<
 
         if ( args != null )
         {
-            for ( ProcedureArgument arg : args )
+            for ( ProcedureArgument<?> arg : args )
             {
-                if ( argMap.containsKey( Objects.requireNonNull( arg.getName() ) ) )
+                if ( argMap.containsKey( Objects.requireNonNull( arg.name ) ) )
                 {
-                    throw new IllegalArgumentException( "argument name " + arg.getName() + " already in use" );
+                    throw new IllegalArgumentException( "argument name " + arg.name + " already in use" );
                 }
 
                 argMap.put(
-                        Objects.requireNonNull( arg.getName() ) ,
+                        Objects.requireNonNull( arg.name ) ,
                         Objects.requireNonNull( arg ) );
             }
         }
@@ -112,7 +112,7 @@ extends ComplexStep<
         for ( ProcedureArgument arg : procedureArguments.values() )
         {
             procedureArgumentValues.put(
-                    arg.getName() ,
+                    arg.name ,
                     arg.getValue( parent ) );
         }
 
