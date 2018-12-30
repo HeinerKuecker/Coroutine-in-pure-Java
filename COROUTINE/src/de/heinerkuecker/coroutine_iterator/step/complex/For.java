@@ -6,6 +6,7 @@ import java.util.List;
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
+import de.heinerkuecker.coroutine_iterator.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine_iterator.condition.True;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
@@ -22,7 +23,7 @@ extends ComplexStep<
 {
     public final String label;
     final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> initialStep;
-    final Condition condition;
+    final ConditionOrBooleanExpression condition;
     final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> updateStep;
     final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
 
@@ -32,7 +33,7 @@ extends ComplexStep<
     @SafeVarargs
     public For(
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> initialStep ,
-            final Condition condition ,
+            final ConditionOrBooleanExpression condition ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> updateStep ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {

@@ -1,68 +1,58 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 
 /**
  * Equals {@link Condition}
- * to check equality of a
- * variable in
- * {@link CoroutineIterator}'s
- * variables {@link CoroutineIterator#vars}
- * and the specified object.
+ * to check equality of
+ * the results of two given
+ * {@link CoroExpression}.
  *
+ * @param <T> type of expression results to compare
  * @author Heiner K&uuml;cker
- *
- * TODO rename to VarEqualsVal
  */
-public class Equals
-implements Condition/*<CoroutineIterator<?>>*/
+public class Equals<T>
+implements ConditionOrBooleanExpression
 {
-    /**
-     * Name of a variable in
-     * {@link CoroutineIterator#vars}.
-     */
-    public final String varName;
-
-    public final Object equalValue;
+    public final CoroExpression<? extends T> lhs;
+    public final CoroExpression<? extends T> rhs;
 
     /**
-     * Constructor.
+     * @param lhs
+     * @param rhs
      */
     public Equals(
-            final String varName ,
-            final Object equalValue )
+            CoroExpression<? extends T> lhs,
+            CoroExpression<? extends T> rhs)
     {
-        this.varName = varName;
-        this.equalValue = equalValue;
+        this.lhs = Objects.requireNonNull( lhs );
+        this.rhs = Objects.requireNonNull( rhs );
     }
 
     /**
-     * Equals variable to {@link #equalValue}.
-     *
-     * @see Condition#execute(java.lang.Object)
+     * @see ConditionOrBooleanExpression#execute(CoroIteratorOrProcedure)
      */
     @Override
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Object varValue = parent.localVars().get( varName );
+        final T lhsResult = lhs.getValue( parent );
+        final T rhsResult = rhs.getValue( parent );
 
-        if ( varValue == null )
+        if ( lhsResult == null && rhsResult == null )
         {
-            return equalValue == null;
+            return true;
         }
 
-        return varValue.equals( equalValue );
-    }
+        if ( lhsResult == null )
+        {
+        return false;
+        }
 
-    /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return varName + " == " + equalValue;
+        return lhsResult.equals( rhsResult );
     }
 
 }

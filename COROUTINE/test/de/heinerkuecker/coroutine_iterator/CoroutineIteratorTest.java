@@ -6,9 +6,10 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnValue;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnLocalVar;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
+import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
+import de.heinerkuecker.coroutine_iterator.expression.Value;
+import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturn;
+import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine_iterator.step.simple.DecLocalVar;
 import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
@@ -45,7 +46,9 @@ public class CoroutineIteratorTest
         final CoroutineIterator<?> coroIter =
                 new CoroutineIterator<>(
                         params ,
-                        new YieldReturnLocalVar<>( "param" ) );
+                        new YieldReturn<>(
+                                new GetLocalVar<>(
+                                        "param" ) ) );
 
         assertNext(
                 coroIter ,
@@ -62,7 +65,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
-                        new YieldReturnValue<>( "a" ) );
+                        new YieldReturn<>(
+                                new Value<>(
+                                        "a" ) ) );
 
         assertNext(
                 coroIter ,
@@ -79,7 +84,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
-                        new FinallyReturnValue<>( "a" ) );
+                        new FinallyReturn<>(
+                                new Value<>(
+                                        "a" ) ) );
 
         assertNext(
                 coroIter ,
@@ -97,9 +104,13 @@ public class CoroutineIteratorTest
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
                         //parent -> new CoroIterStepResult.FinallyReturnWithResult<String>( "a" )
-                        new FinallyReturnValue<>( "a" ) ,
+                        new FinallyReturn<>(
+                                new Value<>(
+                                        "a" ) ) ,
                         // the second step is never executed
-                        new YieldReturnValue<>( "b" ) );
+                        new YieldReturn<>(
+                                new Value<>(
+                                        "b" ) ) );
 
         assertNext(
                 coroIter ,
@@ -116,8 +127,13 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<String>(
-                        new SetLocalVar<>( "str" , "a" ) ,
-                        new YieldReturnLocalVar<String>( "str" ) );
+                        new SetLocalVar<>(
+                                "str" ,
+                                new Value<>(
+                                        "a" ) ) ,
+                        new YieldReturn<>(
+                                new GetLocalVar<>(
+                                        "str" ) ) );
 
         assertNext(
                 coroIter ,
@@ -134,8 +150,13 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetLocalVar<>( "number" , 0 ) ,
-                        new YieldReturnLocalVar<Integer>( "number" ) );
+                        new SetLocalVar<>(
+                                "number" ,
+                                new Value<>(
+                                        0 ) ) ,
+                        new YieldReturn<>(
+                                new GetLocalVar<>(
+                                        "number" ) ) );
 
         Assert.assertTrue(
                 coroIter.hasNext() );
@@ -155,9 +176,14 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<>(
-                        new SetLocalVar<>( "number" , 0 ) ,
+                        new SetLocalVar<>(
+                                "number" ,
+                                new Value<>(
+                                        0 ) ) ,
                         new IncLocalVar<>( "number" ) ,
-                        new YieldReturnLocalVar<>( "number" ) );
+                        new YieldReturn<>(
+                                new GetLocalVar<>(
+                                        "number" ) ) );
 
         assertNext(
                 coroIter ,
@@ -174,9 +200,14 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<>(
-                        new SetLocalVar<>( "number" , 1 ) ,
+                        new SetLocalVar<>(
+                                "number" ,
+                                new Value<>(
+                                        1 ) ) ,
                         new DecLocalVar<>( "number" ) ,
-                        new YieldReturnLocalVar<>( "number" ) );
+                        new YieldReturn<>(
+                                new GetLocalVar<>(
+                                        "number" ) ) );
 
         assertNext(
                 coroIter ,

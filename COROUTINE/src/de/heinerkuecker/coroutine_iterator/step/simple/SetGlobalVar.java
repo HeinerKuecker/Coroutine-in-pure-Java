@@ -6,12 +6,12 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
-public final class SetLocalVar<RESULT>
+public final class SetGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to set in
-     * {@link CoroIteratorOrProcedure#localVars()}
+     * {@link CoroIteratorOrProcedure#globalVars()}
      */
     public final String varName;
 
@@ -20,7 +20,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Constructor.
      */
-    public SetLocalVar(
+    public SetGlobalVar(
             final String varName ,
             final CoroExpression<?> varValueExpression )
     {
@@ -44,7 +44,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         final Object varValue = varValueExpression.getValue( parent );
 
-        parent.localVars().put(
+        parent.globalVars().put(
                 varName ,
                 varValue );
 

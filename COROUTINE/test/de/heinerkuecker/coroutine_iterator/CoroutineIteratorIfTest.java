@@ -2,12 +2,13 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.condition.Equals;
+import de.heinerkuecker.coroutine_iterator.condition.LocalVarEqualsValue;
 import de.heinerkuecker.coroutine_iterator.condition.True;
+import de.heinerkuecker.coroutine_iterator.expression.Value;
 import de.heinerkuecker.coroutine_iterator.step.complex.If;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
-import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnValue;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
+import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturn;
+import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
 
@@ -29,8 +30,12 @@ public class CoroutineIteratorIfTest
                                 //condition
                                 new True() ,
                                 // steps
-                                new YieldReturnValue<>( 0 ) ,
-                                new FinallyReturnValue<>( 1 ) ) );
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                0 ) ) ,
+                                new FinallyReturn<>(
+                                        new Value<>(
+                                                1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -68,21 +73,28 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetLocalVar<>( "number" , 0 ) ,
+                        new SetLocalVar<>(
+                                "number" ,
+                                new Value<>(
+                                        0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 // steps
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new Equals( "number" , 0 ) ,
+                                        new LocalVarEqualsValue( "number" , 0 ) ,
                                         // steps
-                                        new YieldReturnValue<>( 0 ) ) ,
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        0 ) ) ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new Equals( "number" , 1 ) ,
+                                        new LocalVarEqualsValue( "number" , 1 ) ,
                                         // steps
-                                        new FinallyReturnValue<>( 1 ) ) ,
+                                        new FinallyReturn<>(
+                                                new Value<>(
+                                                        1 ) ) ) ,
                                 new IncLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(

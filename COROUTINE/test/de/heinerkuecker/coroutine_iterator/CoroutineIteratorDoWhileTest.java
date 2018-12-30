@@ -3,8 +3,9 @@ package de.heinerkuecker.coroutine_iterator;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine_iterator.condition.False;
+import de.heinerkuecker.coroutine_iterator.expression.Value;
 import de.heinerkuecker.coroutine_iterator.step.complex.DoWhile;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
+import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -24,8 +25,12 @@ public class CoroutineIteratorDoWhileTest
                                 // condition
                                 new False() ,
                                 // steps
-                                new YieldReturnValue<Integer>( 0 ) ) ,
-                        new YieldReturnValue<Integer>( 1 ) );
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                0 ) ) ) ,
+                        new YieldReturn<>(
+                                new Value<>(
+                                        1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -51,7 +56,9 @@ public class CoroutineIteratorDoWhileTest
                                 new False()
                                 // no steps
                                 ) ,
-                        new YieldReturnValue<Integer>( 1 ) );
+                        new YieldReturn<>(
+                                new Value<>(
+                                        1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

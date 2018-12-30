@@ -2,56 +2,50 @@ package de.heinerkuecker.coroutine_iterator.step.retrn;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 
 /**
  * Step {@link CoroIterStep} to
- * return a variable in variables
- * {@link CoroIteratorOrProcedure#localVars()}
- * and stop stepping.
+ * return a specified value
+ * and suspend stepping.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class FinallyReturnLocalVar<RESULT>
+public class YieldReturn<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
-    /**
-     * Name of variable to return in
-     * {@link CoroutineIterator#vars}.
-     */
-    public final String varName;
+    public final CoroExpression<RESULT> expression;
 
     /**
      * Constructor.
-     *
-     * @param variable name
      */
-    public FinallyReturnLocalVar(
-            final String varName )
+    public YieldReturn(
+            final CoroExpression<RESULT> expression )
     {
         super(
                 //creationStackOffset
                 //2
                 );
 
-        this.varName = varName;
+        this.expression = expression;
     }
 
     /**
-     * Decrement variable.
+     * Compute result value and wrap it in yield return.
      *
-     * @see CoroIterStep#execute(java.lang.Object)
+     * @see CoroIterStep#execute(Object)
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        @SuppressWarnings("unchecked")
-        final RESULT varValue = (RESULT) parent.localVars().get( varName );
-        return new CoroIterStepResult.FinallyReturnWithResult<RESULT>( varValue );
+        return new CoroIterStepResult.YieldReturnWithResult<RESULT>(
+                expression.getValue(
+                        parent ) );
     }
 
     /**
@@ -62,9 +56,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         return
                 this.getClass().getSimpleName() + " " +
-                varName +
+                expression +
                 ( this.creationStackTraceElement != null
-                    ? String.valueOf( this.creationStackTraceElement )
+                    ? " " + this.creationStackTraceElement
                     : "" );
     }
 }

@@ -1,18 +1,8 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 
-/**
- * Interface for condition
- * to control the flow in
- * {@link CoroutineIterator}.
- *
- * @param <PARENT> type the {@link CoroutineIterator} instance
- * @author Heiner K&uuml;cker
- */
-public interface Condition/*<PARENT>*/
-extends ConditionOrBooleanExpression
+public interface ConditionOrBooleanExpression
 {
     /**
      * Execute the condition and return the result.
@@ -20,7 +10,6 @@ extends ConditionOrBooleanExpression
      * @param parent the {@link CoroIteratorOrProcedure} instance
      * @return condition result
      */
-    @Override
     boolean execute(
             //final PARENT parent
             final CoroIteratorOrProcedure<?> parent );

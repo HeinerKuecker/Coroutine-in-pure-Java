@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.condition.Condition;
+import de.heinerkuecker.coroutine_iterator.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
@@ -16,7 +16,7 @@ extends ComplexStep<
     //PARENT
     >
 {
-    final Condition condition;
+    final ConditionOrBooleanExpression condition;
     final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> thenBodyComplexStep;
     final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> elseBodyComplexStep;
 
@@ -24,7 +24,7 @@ extends ComplexStep<
      * Constructor.
      */
     public IfElse(
-            final Condition condition ,
+            final ConditionOrBooleanExpression condition ,
             final CoroIterStep<RESULT/*, CoroutineIterator<RESULT>*/>[] thenSteps ,
             final CoroIterStep<RESULT/*, CoroutineIterator<RESULT>*/>[] elseSteps )
     {

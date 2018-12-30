@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine_iterator.condition.Condition;
+import de.heinerkuecker.coroutine_iterator.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
@@ -22,7 +22,7 @@ extends ComplexStep<
     >
 {
     public final String label;
-    final Condition condition;
+    final ConditionOrBooleanExpression condition;
     final ComplexStep<?, ?, RESULT /*, PARENT*/> bodyComplexStep;
 
     ///**
@@ -63,7 +63,7 @@ extends ComplexStep<
     @SafeVarargs
     public WhileOrDoWhile(
             final String label ,
-            final Condition condition ,
+            final ConditionOrBooleanExpression condition ,
             final CoroIterStep<? extends RESULT /*, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
     {
         super(

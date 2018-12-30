@@ -2,10 +2,12 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine_iterator.expression.Value;
 import de.heinerkuecker.coroutine_iterator.step.complex.StepSequence;
 import de.heinerkuecker.coroutine_iterator.step.complex.TryCatch;
 import de.heinerkuecker.coroutine_iterator.step.flow.Throw;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
+import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
+
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -44,11 +46,15 @@ public class CroutineIteratorTryCatchTest
                                         0 ,
                                         new Throw<Integer>( new TestException( "test" ) ) ,
                                         // this yield return is never executed
-                                        new YieldReturnValue<Integer>( 0 ) ) ,
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        0 ) ) ) ,
                                 // catchExceptionClass
                                 TestException.class ,
                                 // catchBodySteps
-                                new YieldReturnValue<Integer>( 1 ) ) );
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
