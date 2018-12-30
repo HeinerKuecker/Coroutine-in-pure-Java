@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -24,13 +26,20 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> thenBodyComplexState;
     ComplexStepState<?, ?, RESULT/*, PARENT*/> elseBodyComplexState;
 
+    private final CoroutineIterator<RESULT> rootParent;
+
     /**
      * Constructor.
      */
     public IfElseState(
-            final IfElse<RESULT/*, PARENT*/> ifElse )
+            final IfElse<RESULT/*, PARENT*/> ifElse ,
+            final CoroutineIterator<RESULT> rootParent )
     {
         this.ifElse = ifElse;
+
+        this.rootParent =
+                Objects.requireNonNull(
+                        rootParent );
     }
 
     /**
@@ -67,7 +76,9 @@ implements ComplexStepState<
             if ( this.thenBodyComplexState == null )
                 // no existing state from previous execute call
             {
-                this.thenBodyComplexState = thenBodyStep.newState();
+                this.thenBodyComplexState =
+                        thenBodyStep.newState(
+                                this.rootParent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -97,7 +108,9 @@ implements ComplexStepState<
             if ( this.elseBodyComplexState == null )
                 // no existing state from previous execute call
             {
-                this.elseBodyComplexState = elseBodyStep.newState();
+                this.elseBodyComplexState =
+                        elseBodyStep.newState(
+                                this.rootParent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -157,7 +170,10 @@ implements ComplexStepState<
     @Override
     public IfElseState<RESULT/*, PARENT*/> createClone()
     {
-        final IfElseState<RESULT/*, PARENT*/> clone = new IfElseState<>( ifElse );
+        final IfElseState<RESULT/*, PARENT*/> clone =
+                new IfElseState<>(
+                        ifElse ,
+                        this.rootParent );
 
         clone.runInCondition = runInCondition;
         clone.runInThenBody = runInThenBody;

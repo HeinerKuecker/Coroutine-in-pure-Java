@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 /**
  * Step {@link CoroIterStep} to
  * return a procedure argument
- * {@link CoroIteratorOrProcedure#procedureArguments()}
+ * {@link CoroIteratorOrProcedure#procedureArgumentValues()}
  * and suspend stepping.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
@@ -20,7 +20,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of procedure argument in
-     * {@link CoroIteratorOrProcedure#procedureArguments()}
+     * {@link CoroIteratorOrProcedure#procedureArgumentValues()}
      * to return.
      */
     public final String procedureArgumentName;
@@ -51,7 +51,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         @SuppressWarnings("unchecked")
-        final RESULT varValue = (RESULT) parent.procedureArguments().get( procedureArgumentName );
+        final RESULT varValue = (RESULT) parent.procedureArgumentValues().get( procedureArgumentName );
         return new CoroIterStepResult.YieldReturnWithResult<RESULT>( varValue );
     }
 

@@ -41,4 +41,6 @@ extends HCloneable<STEP_STATE>
     boolean isFinished();
 
     STEP getStep();
+
+    //abstract public void setRootParent( final CoroutineIterator<RESULT> rootParent );
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
@@ -61,9 +62,12 @@ extends ComplexStep<
      * @see ComplexStep#newState()
      */
     @Override
-    public StepSequenceState<RESULT /*, PARENT*/> newState()
+    public StepSequenceState<RESULT /*, PARENT*/> newState(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return new StepSequenceState<>( this );
+        return new StepSequenceState<>(
+                this ,
+                parent.getRootParent() );
     }
 
     /**
@@ -91,21 +95,21 @@ extends ComplexStep<
         return result;
     }
 
-    /**
-     * @see ComplexStep#setRootParent
-     */
-    @Override
-    public void setRootParent(
-            final CoroutineIterator<RESULT> rootParent )
-    {
-        for ( final CoroIterStep<RESULT> step : steps )
-        {
-            if ( step instanceof ComplexStep )
-            {
-                ((ComplexStep) step).setRootParent( rootParent );
-            }
-        }
-    }
+    ///**
+    // * @see ComplexStep#setRootParent
+    // */
+    //@Override
+    //public void setRootParent(
+    //        final CoroutineIterator<RESULT> rootParent )
+    //{
+    //    for ( final CoroIterStep<RESULT> step : steps )
+    //    {
+    //        if ( step instanceof ComplexStep )
+    //        {
+    //            ((ComplexStep) step).setRootParent( rootParent );
+    //        }
+    //    }
+    //}
 
     /**
      * @see ComplexStep#toString

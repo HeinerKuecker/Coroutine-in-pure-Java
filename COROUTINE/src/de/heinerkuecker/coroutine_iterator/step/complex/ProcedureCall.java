@@ -1,14 +1,12 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.Procedure;
 import de.heinerkuecker.coroutine_iterator.proc.arg.ProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
@@ -20,7 +18,7 @@ extends ComplexStep<
     RESULT
     //PARENT
     >
-implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
+//implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     ///**
     // * Es muss ein ComplexStep sein,
@@ -34,14 +32,8 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 
     final Procedure<RESULT> procedure;
 
-    private final Map<String, Object> procedureArguments;
-
-    private CoroutineIterator<RESULT> rootParent;
-
-    /**
-     * Variables.
-     */
-    public final HashMap<String, Object> vars = new HashMap<>();
+    // TODO getter
+    final Map<String, ProcedureArgument> procedureArguments;
 
     /**
      * Constructor.
@@ -80,15 +72,20 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 
         this.procedure = Objects.requireNonNull( procedure );
 
-        final LinkedHashMap<String, Object> argMap = new LinkedHashMap<>();
+        final LinkedHashMap<String, ProcedureArgument> argMap = new LinkedHashMap<>();
 
         if ( args != null )
         {
             for ( ProcedureArgument arg : args )
             {
+                if ( argMap.containsKey( Objects.requireNonNull( arg.getName() ) ) )
+                {
+                    throw new IllegalArgumentException( "argument name " + arg.getName() + " already in use" );
+                }
+
                 argMap.put(
                         Objects.requireNonNull( arg.getName() ) ,
-                        arg.getValue() );
+                        Objects.requireNonNull( arg ) );
             }
         }
 
@@ -104,58 +101,28 @@ implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     //}
 
     /**
-     * @see CoroIteratorOrProcedure#saveLastStepState()
+     * @see ComplexStep#newState
      */
     @Override
-    public void saveLastStepState()
+    public ProcedureCallState<RESULT> newState(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        this.rootParent.saveLastStepState();
-    }
+        final Map<String, Object> procedureArgumentValues = new LinkedHashMap<>();
 
-    /**
-     * @see ComplexStep#setRootParent
-     */
-    @Override
-    public void setRootParent(
-            final CoroutineIterator<RESULT> rootParent )
-    {
-        this.rootParent = rootParent;
-    }
+        for ( ProcedureArgument arg : procedureArguments.values() )
+        {
+            procedureArgumentValues.put(
+                    arg.getName() ,
+                    arg.getValue( parent ) );
+        }
 
-    /**
-     * @see CoroIteratorOrProcedure#vars()
-     */
-    @Override
-    public Map<String, Object> localVars()
-    {
-        return this.vars;
-    }
+        final ProcedureCallState<RESULT> procedureCallState =
+                new ProcedureCallState<>(
+                        this ,
+                        parent.getRootParent() ,
+                        procedureArgumentValues );
 
-    /**
-     * @see CoroIteratorOrProcedure#globalVars()
-     */
-    @Override
-    public Map<String, Object> globalVars()
-    {
-        return this.rootParent.globalVars();
-    }
-
-    /**
-     * @see CoroIteratorOrProcedure#procedureArguments()
-     */
-    @Override
-    public Map<String, Object> procedureArguments()
-    {
-        return this.procedureArguments;
-    }
-
-    /**
-     * @see ComplexStep#newState()
-     */
-    @Override
-    public ProcedureCallState<RESULT> newState()
-    {
-        return new ProcedureCallState<>( this );
+        return procedureCallState;
     }
 
     /**

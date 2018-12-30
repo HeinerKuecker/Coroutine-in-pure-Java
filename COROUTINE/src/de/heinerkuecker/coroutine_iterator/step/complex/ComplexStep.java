@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine_iterator.step.complex;
 
 import java.util.List;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
@@ -37,12 +38,10 @@ extends CoroIterStep<RESULT/*, PARENT*/>
 
     // TODO rename to newExecuteState
     //abstract public ComplexStepState<ComplexStepState<?, STEP, RESULT, PARENT>, STEP, RESULT, PARENT> newState();
-    abstract public STEP_STATE newState();
+    abstract public STEP_STATE newState(
+            final CoroIteratorOrProcedure<RESULT> parent );
 
     abstract public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues();
-
-    abstract public void setRootParent(
-            final CoroutineIterator<RESULT> rootParent );
 
     /**
      * Returns formatted {@link String}

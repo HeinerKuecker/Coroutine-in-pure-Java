@@ -3,7 +3,7 @@ package de.heinerkuecker.coroutine_iterator.step.complex;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
@@ -68,9 +68,12 @@ extends ComplexStep<
      * @see ComplexStep#newState()
      */
     @Override
-    public IfElseState<RESULT/*, PARENT*/> newState()
+    public IfElseState<RESULT/*, PARENT*/> newState(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return new IfElseState<>( this );
+        return new IfElseState<>(
+                this ,
+                parent.getRootParent() );
     }
 
     /**
@@ -90,16 +93,16 @@ extends ComplexStep<
         return result;
     }
 
-    /**
-     * @see ComplexStep#setRootParent
-     */
-    @Override
-    public void setRootParent(
-            final CoroutineIterator<RESULT> rootParent )
-    {
-        this.thenBodyComplexStep.setRootParent( rootParent );
-        this.elseBodyComplexStep.setRootParent( rootParent );
-    }
+    ///**
+    // * @see ComplexStep#setRootParent
+    // */
+    //@Override
+    //public void setRootParent(
+    //        final CoroutineIterator<RESULT> rootParent )
+    //{
+    //    this.thenBodyComplexStep.setRootParent( rootParent );
+    //    this.elseBodyComplexStep.setRootParent( rootParent );
+    //}
 
     /**
      * @see ComplexStep#toString

@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -22,13 +24,20 @@ implements ComplexStepState<
     // TODO getter
     ComplexStepState<?, ?, RESULT/*, PARENT*/> thenBodyComplexState;
 
+    private final CoroutineIterator<RESULT> rootParent;
+
     /**
      * Constructor.
      */
     public IfState(
-            final If<RESULT/*, PARENT*/> _if )
+            final If<RESULT/*, PARENT*/> _if ,
+            final CoroutineIterator<RESULT> rootParent )
     {
         this._if = _if;
+
+        this.rootParent =
+                Objects.requireNonNull(
+                        rootParent );
     }
 
     /**
@@ -66,7 +75,9 @@ implements ComplexStepState<
             if ( this.thenBodyComplexState == null )
                 // no existing state from previous execute call
             {
-                this.thenBodyComplexState = thenBodyStep.newState();
+                this.thenBodyComplexState =
+                        thenBodyStep.newState(
+                                this.rootParent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -126,7 +137,10 @@ implements ComplexStepState<
     public IfState<RESULT/*, PARENT*/> createClone()
     {
         //throw new RuntimeException( "not implemented" );
-        final IfState<RESULT/*, PARENT*/> clone = new IfState<>( _if );
+        final IfState<RESULT/*, PARENT*/> clone =
+                new IfState<>(
+                        _if ,
+                        this.rootParent );
 
         clone.runInCondition = runInCondition;
         clone.runInThenBody = runInThenBody;

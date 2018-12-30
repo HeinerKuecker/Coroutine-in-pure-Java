@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine_iterator.step.complex;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.condition.True;
@@ -223,12 +224,15 @@ extends ComplexStep<
     }
 
     /**
-     * @see ComplexStep#newState()
+     * @see ComplexStep#newState
      */
     @Override
-    public ForState<RESULT/*, PARENT*/> newState()
+    public ForState<RESULT/*, PARENT*/> newState(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return new ForState<>( this );
+        return new ForState<>(
+                this ,
+                parent.getRootParent() );
     }
 
     /**
@@ -264,25 +268,25 @@ extends ComplexStep<
         return result;
     }
 
-    /**
-     * @see ComplexStep#setRootParent
-     */
-    @Override
-    public void setRootParent(
-            final CoroutineIterator<RESULT> rootParent )
-    {
-        this.bodyComplexStep.setRootParent( rootParent );
-
-        if ( this.initialStep instanceof ComplexStep )
-        {
-            ((ComplexStep) this.initialStep).setRootParent(rootParent);
-        }
-
-        if ( this.updateStep instanceof ComplexStep )
-        {
-            ((ComplexStep) this.updateStep).setRootParent(rootParent);
-        }
-    }
+    ///**
+    // * @see ComplexStep#setRootParent
+    // */
+    //@Override
+    //public void setRootParent(
+    //        final CoroutineIterator<RESULT> rootParent )
+    //{
+    //    this.bodyComplexStep.setRootParent( rootParent );
+    //
+    //    if ( this.initialStep instanceof ComplexStep )
+    //    {
+    //        ((ComplexStep) this.initialStep).setRootParent(rootParent);
+    //    }
+    //
+    //    if ( this.updateStep instanceof ComplexStep )
+    //    {
+    //        ((ComplexStep) this.updateStep).setRootParent(rootParent);
+    //    }
+    //}
 
     /**
      * @see ComplexStep#toString

@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine_iterator.proc.arg.LocalVarProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.proc.arg.ValueProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnWithoutResult;
@@ -203,7 +204,7 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_Argument_0_1()
+    public void test_ValueProcedureArgument_0_1()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -221,6 +222,39 @@ public class CoroutineIteratorProcedureTest
                                         "argument" ,
                                         // value
                                         0 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_LocalVarProcedureArgument_0_0()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        new YieldReturnProcedureArgument<>( "argument" ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new SetLocalVar<>(
+                                //varName
+                                "number" ,
+                                //varValue
+                                0 ) ,
+                        new ProcedureCall<Integer>(
+                                procedure ,
+                                new LocalVarProcedureArgument(
+                                        // procedureArgumentName
+                                        "argument" ,
+                                        // localVarName
+                                        "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

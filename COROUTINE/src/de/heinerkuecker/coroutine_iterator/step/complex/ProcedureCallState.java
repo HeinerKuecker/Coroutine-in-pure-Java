@@ -1,8 +1,12 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
@@ -12,7 +16,8 @@ implements ComplexStepState<
     ProcedureCall<RESULT>,
     RESULT
     //ProcedureCall<RESULT>
-    >
+    > ,
+CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     private final ProcedureCall<RESULT/*, PARENT*/> procedureCall;
 
@@ -21,17 +26,36 @@ implements ComplexStepState<
     // TODO getter
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
 
+    private final CoroutineIterator<RESULT> rootParent;
+
+    final Map<String, Object> procedureArgumentValues;
+
+    /**
+     * Variables.
+     */
+    public final HashMap<String, Object> vars = new HashMap<>();
+
     /**
      * Constructor.
      *
      * @param procedureCall
      */
     protected ProcedureCallState(
-            final ProcedureCall<RESULT> procedureCall )
+            final ProcedureCall<RESULT> procedureCall ,
+            final CoroutineIterator<RESULT> rootParent ,
+            final Map<String, Object> procedureArgumentValues )
     {
         this.procedureCall =
                 Objects.requireNonNull(
                         procedureCall );
+
+        this.rootParent =
+                Objects.requireNonNull(
+                        rootParent );
+
+        this.procedureArgumentValues =
+                Collections.unmodifiableMap(
+                        procedureArgumentValues );
     }
 
     /**
@@ -49,7 +73,9 @@ implements ComplexStepState<
             if ( this.bodyComplexState == null )
                 // no existing state from previous execute call
             {
-                this.bodyComplexState = bodyComplexStep.newState();
+                this.bodyComplexState =
+                        bodyComplexStep.newState(
+                                this.rootParent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -57,7 +83,7 @@ implements ComplexStepState<
             final CoroIterStepResult<RESULT> bodyExecuteResult =
                     this.bodyComplexState.execute(
                             //parent
-                            this.procedureCall );
+                            this );
 
             if ( this.bodyComplexState.isFinished() )
             {
@@ -107,11 +133,72 @@ implements ComplexStepState<
     @Override
     public ProcedureCallState<RESULT> createClone()
     {
-        final ProcedureCallState<RESULT/*, PARENT*/> clone = new ProcedureCallState<>( procedureCall );
+        final ProcedureCallState<RESULT/*, PARENT*/> clone =
+                new ProcedureCallState<>(
+                        this.procedureCall ,
+                        this.rootParent ,
+                        this.procedureArgumentValues );
 
         clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
 
+        clone.vars.putAll( this.vars );
+
         return clone;
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#saveLastStepState()
+     */
+    @Override
+    public void saveLastStepState()
+    {
+        this.rootParent.saveLastStepState();
+    }
+
+    ///**
+    // * @see ComplexStep#setRootParent
+    // */
+    //@Override
+    //public void setRootParent(
+    //        final CoroutineIterator<RESULT> rootParent )
+    //{
+    //    this.rootParent = rootParent;
+    //}
+
+    /**
+     * @see CoroIteratorOrProcedure#vars()
+     */
+    @Override
+    public Map<String, Object> localVars()
+    {
+        return this.vars;
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#globalVars()
+     */
+    @Override
+    public Map<String, Object> globalVars()
+    {
+        return this.rootParent.globalVars();
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#procedureArgumentValues()
+     */
+    @Override
+    public Map<String, Object> procedureArgumentValues()
+    {
+        return this.procedureArgumentValues;
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#getRootParent()
+     */
+    @Override
+    public CoroutineIterator<RESULT> getRootParent()
+    {
+        return this.rootParent;
     }
 
 }

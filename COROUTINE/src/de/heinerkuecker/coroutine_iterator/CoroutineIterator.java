@@ -113,7 +113,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUnresolvedBreaksAndContinues();
         }
 
-        this.complexStep.setRootParent( this );
+        //this.complexStep.setRootParent( this );
 
         this.vars.putAll( params );
     }
@@ -146,7 +146,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUnresolvedBreaksAndContinues();
         }
 
-        this.complexStep.setRootParent( this );
+        //this.complexStep.setRootParent( this );
     }
 
     /**
@@ -185,7 +185,9 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( this.nextComplexStepState == null )
             // no existing state from previous execute call
         {
-            this.nextComplexStepState = complexStep.newState();
+            this.nextComplexStepState =
+                    complexStep.newState(
+                            this );
         }
         else if ( this.nextComplexStepState.isFinished() )
         {
@@ -286,13 +288,23 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#procedureArguments()
+     * @see CoroIteratorOrProcedure#procedureArgumentValues()
      */
     @Override
-    public Map<String, Object> procedureArguments()
+    public Map<String, Object> procedureArgumentValues()
     {
         // TODO code smell ausgeschlagenes Erbe
-        return null;
+        //return null;
+        throw new IllegalStateException( this.getClass().getSimpleName() + " has no procedure arguments" );
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#getRootParent()
+     */
+    @Override
+    public CoroutineIterator<RESULT> getRootParent()
+    {
+        return this;
     }
 
     /**

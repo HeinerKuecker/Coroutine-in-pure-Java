@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.condition.Condition;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
@@ -52,9 +53,12 @@ extends WhileOrDoWhile<
      * @see ComplexStep#newState()
      */
     @Override
-    public DoWhileState<RESULT /*, PARENT*/> newState()
+    public DoWhileState<RESULT /*, PARENT*/> newState(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return new DoWhileState<>( this );
+        return new DoWhileState<>(
+                this ,
+                parent.getRootParent() );
     }
 
 }

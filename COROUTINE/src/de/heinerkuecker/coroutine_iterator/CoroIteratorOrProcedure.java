@@ -19,8 +19,6 @@ import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
 //public interface CoroIteratorOrProcedure<RESULT, /*PARENT*/ THIS extends CoroIteratorOrProcedure<RESULT, /*PARENT*/ THIS>>
 public interface CoroIteratorOrProcedure<RESULT>
 {
-    // no implementation
-
     /**
      * Save last step state for {@link ComplexStep#toString(String, ComplexStepState, ComplexStepState)}
      */
@@ -39,5 +37,7 @@ public interface CoroIteratorOrProcedure<RESULT>
     /**
      * @return Map with procedure arguments
      */
-    abstract public Map<String, Object> procedureArguments();
+    abstract public Map<String, Object> procedureArgumentValues();
+
+    abstract CoroutineIterator<RESULT> getRootParent();
 }

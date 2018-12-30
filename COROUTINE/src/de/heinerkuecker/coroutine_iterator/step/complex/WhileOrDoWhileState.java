@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
@@ -24,13 +26,20 @@ implements ComplexStepState<
     protected boolean runInBody;
     protected ComplexStepState<?, ?, RESULT /*, PARENT*/> bodyComplexState;
 
+    protected final CoroutineIterator<RESULT> rootParent;
+
     /**
      * Constructor.
      */
     protected WhileOrDoWhileState(
-            final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/> whileOrDoWhile )
+            final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/> whileOrDoWhile ,
+            final CoroutineIterator<RESULT> rootParent )
     {
         this.whileOrDoWhile = whileOrDoWhile;
+
+        this.rootParent =
+                Objects.requireNonNull(
+                        rootParent );
     }
 
     /**
@@ -73,7 +82,9 @@ implements ComplexStepState<
                 if ( this.bodyComplexState == null )
                     // no existing state from previous execute call
                 {
-                    this.bodyComplexState = bodyStep.newState();
+                    this.bodyComplexState =
+                            bodyStep.newState(
+                                    this.rootParent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();

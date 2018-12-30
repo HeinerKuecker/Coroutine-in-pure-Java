@@ -2,25 +2,25 @@ package de.heinerkuecker.coroutine_iterator.proc.arg;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 
-public class ValueProcedureArgument
+public class LocalVarProcedureArgument
 implements ProcedureArgument
 {
     public final String procedureArgumentName;
 
-    public final Object value;
+    public final String localVarName;
 
     /**
      * Constructor.
      *
-     * @param name
-     * @param value
+     * @param procedureArgumentName
+     * @param localVarName
      */
-    public ValueProcedureArgument(
+    public LocalVarProcedureArgument(
             final String procedureArgumentName ,
-            final Object value )
+            final String localVarName )
     {
         this.procedureArgumentName = procedureArgumentName;
-        this.value = value;
+        this.localVarName = localVarName;
     }
 
     /**
@@ -33,13 +33,13 @@ implements ProcedureArgument
     }
 
     /**
-     * @see ProcedureArgument#getValue
+     * @see ProcedureArgument#getValue()
      */
     @Override
     public Object getValue(
             final CoroIteratorOrProcedure<?> parent )
     {
-        return value;
+        return parent.localVars().get( localVarName );
     }
 
     /**
@@ -52,7 +52,7 @@ implements ProcedureArgument
                 this.getClass().getSimpleName() +
                 "[" +
                 "procedureArgumentName=" + this.procedureArgumentName + ", " +
-                "value=" + this.value +
+                "localVarName=" + this.localVarName +
                 "]";
     }
 

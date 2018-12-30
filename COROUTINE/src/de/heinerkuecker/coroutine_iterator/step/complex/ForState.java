@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
@@ -28,13 +30,20 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
     private ComplexStepState<?, ?, RESULT/*, ? super PARENT*/> updateComplexStepState;
 
+    private final CoroutineIterator<RESULT> rootParent;
+
     /**
      * Constructor.
      */
     public ForState(
-            final For<RESULT/*, PARENT*/> _for )
+            final For<RESULT/*, PARENT*/> _for ,
+            final CoroutineIterator<RESULT> rootParent )
     {
         this._for = _for;
+
+        this.rootParent =
+                Objects.requireNonNull(
+                        rootParent );
     }
 
     /**
@@ -72,7 +81,9 @@ implements ComplexStepState<
                 if ( this.initializerComplexStepState == null )
                     // no existing state from previous execute call
                 {
-                    this.initializerComplexStepState = initializerComplexStep.newState();
+                    this.initializerComplexStepState =
+                            initializerComplexStep.newState(
+                                    this.rootParent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
@@ -121,7 +132,9 @@ implements ComplexStepState<
                     this.runInCondition = false;
                     this.runInBody = true;
                     // for toString
-                    this.bodyComplexState = _for.bodyComplexStep.newState();
+                    this.bodyComplexState =
+                            _for.bodyComplexStep.newState(
+                                    this.rootParent );
                 }
                 else
                 {
@@ -138,7 +151,9 @@ implements ComplexStepState<
                 if ( this.bodyComplexState == null )
                     // no existing state from previous execute call
                 {
-                    this.bodyComplexState = bodyComplexStep.newState();
+                    this.bodyComplexState =
+                            bodyComplexStep.newState(
+                                    this.rootParent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
@@ -217,7 +232,9 @@ implements ComplexStepState<
                     if ( this.updateComplexStepState == null )
                         // no existing state from previous execute call
                     {
-                        this.updateComplexStepState = updateComplexStep.newState();
+                        this.updateComplexStepState =
+                                updateComplexStep.newState(
+                                        this.rootParent );
                     }
 
                     // TODO only before executing simple step: parent.saveLastStepState();
@@ -290,7 +307,10 @@ implements ComplexStepState<
     @Override
     public ForState<RESULT/*, PARENT*/> createClone()
     {
-        final ForState<RESULT/*, PARENT*/> clone = new ForState<>( _for ) ;
+        final ForState<RESULT/*, PARENT*/> clone =
+                new ForState<>(
+                        _for ,
+                        this.rootParent ) ;
 
         clone.runInInitializer = runInInitializer;
         clone.runInCondition = runInCondition;
