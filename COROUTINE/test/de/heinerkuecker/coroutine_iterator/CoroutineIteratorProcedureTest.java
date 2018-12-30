@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine_iterator.proc.arg.GlobalVarProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.proc.arg.LocalVarProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.proc.arg.ValueProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
@@ -12,6 +13,7 @@ import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnProcedureArgume
 import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturnValue;
 import de.heinerkuecker.coroutine_iterator.step.simple.IncGlobalVar;
 import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine_iterator.step.simple.NoOperation;
 import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
 
 /**
@@ -153,7 +155,8 @@ public class CoroutineIteratorProcedureTest
                                 //varValue
                                 0 ) ,
                         new IncLocalVar<>( "counter" ) ,
-                        new YieldReturnLocalVar<>( "counter" ) );
+                        new YieldReturnLocalVar<>( "counter" ) ,
+                        new NoOperation<>() );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -255,6 +258,45 @@ public class CoroutineIteratorProcedureTest
                                         "argument" ,
                                         // localVarName
                                         "number" ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_GlobalVarProcedureArgument_0_0()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure0 =
+                new Procedure<>(
+                        "procedure" ,
+                        new YieldReturnProcedureArgument<>( "argument" ) );
+
+        final Procedure<Integer> procedure1 =
+                new Procedure<>(
+                        "procedure" ,
+                        new ProcedureCall<Integer>(
+                                procedure0 ,
+                                new GlobalVarProcedureArgument(
+                                        // procedureArgumentName
+                                        "argument" ,
+                                        // localVarName
+                                        "number" ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new SetLocalVar<>(
+                                //varName
+                                "number" ,
+                                //varValue
+                                0 ) ,
+                        new ProcedureCall<Integer>(
+                                procedure1 ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

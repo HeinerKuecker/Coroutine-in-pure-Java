@@ -169,6 +169,22 @@ extends ComplexStep<
             nextBodyState = null;
         }
 
+        final String procedureBodyComplexStepStr;
+        if ( lastBodyState == null &&
+                nextBodyState == null )
+        {
+            procedureBodyComplexStepStr = "";
+        }
+        else
+            // print procedure body only when next or last source position is in procedure
+        {
+            procedureBodyComplexStepStr =
+                    this.procedure.bodyComplexStep.toString(
+                            indent + " " ,
+                            lastBodyState ,
+                            nextBodyState );
+        }
+
         return
                 indent +
                 //( this.label != null ? this.label + " : " : "" ) +
@@ -181,10 +197,7 @@ extends ComplexStep<
                 indent +
                 "procedure arguments: " + this.procedureArguments +
                 "\n" +
-                this.procedure.bodyComplexStep.toString(
-                        indent + " " ,
-                        lastBodyState ,
-                        nextBodyState );
+                procedureBodyComplexStepStr;
     }
 
 }
