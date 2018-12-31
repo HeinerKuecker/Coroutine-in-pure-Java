@@ -1,43 +1,31 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
-import java.util.Collection;
-import java.util.Map;
-
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 
 /**
  * Is <code>null</code> {@link Condition}
- * to check nullness of a variable in
- * {@link CoroutineIterator}'s
- * variables {@link CoroutineIterator#vars}.
- *
- * Checks variable is
- * empty array,
- * empty {@link String},
- * empty {@link Map} or
- * empty {@link Collection}.
+ * to check nullness of the result
+ * of the specified
+ * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
- *
- * TODO rename to VarIsNull
  */
 public class IsNull
-implements Condition/*<CoroutineIterator<?>>*/
+implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 {
     /**
-     * Name of a variable in
-     * {@link CoroutineIterator#vars}.
+     * Expression to check.
      */
-    public final String varName;
+    public final CoroExpression<?> expression;
 
     /**
      * Constructor.
      */
     public IsNull(
-            final String varName )
+            final CoroExpression<?> expression )
     {
-        this.varName = varName;
+        this.expression = expression;
     }
 
     /**
@@ -49,7 +37,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Object varValue = parent.localVars().get( varName );
+        //final Object varValue = parent.localVars().get( varName );
+        final Object varValue = expression.getValue( parent );
 
         return varValue == null;
     }
@@ -60,7 +49,7 @@ implements Condition/*<CoroutineIterator<?>>*/
     @Override
     public String toString()
     {
-        return varName + " == null";
+        return expression + " == null";
     }
 
 }

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine_iterator.condition.Lesser;
 import de.heinerkuecker.coroutine_iterator.condition.True;
+import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
 import de.heinerkuecker.coroutine_iterator.expression.Value;
 import de.heinerkuecker.coroutine_iterator.step.complex.For;
 import de.heinerkuecker.coroutine_iterator.step.complex.StepSequence;
@@ -77,7 +78,7 @@ public class CoroutineIteratorBreakTest
                                 //label
                                 "outer_for" ,
                                 // initialStep
-                                new NoOperation<>() ,
+                                new NoOperation<Integer>() ,
                                 // condition
                                 new True() ,
                                 // updateStep
@@ -303,17 +304,17 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         new Value<>(
                                                 0 ) ) ,
-                                new For<>(
+                                new For<Integer>(
                                         //label
                                         "for" ,
                                         // initialStep
-                                        new NoOperation<>() ,
+                                        new NoOperation<Integer>() ,
                                         // condition
                                         new True() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
-                                         new Break<>( "wrong" ) ) ) );
+                                        new Break<>( "wrong" ) ) ) );
 
         coroIter.hasNext();
     }
@@ -333,7 +334,7 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         new Value<>(
                                                 0 ) ) ,
-                                new For<>(
+                                new For<Integer>(
                                         //label
                                         "for" ,
                                         // initialStep
@@ -343,7 +344,7 @@ public class CoroutineIteratorBreakTest
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
-                                         new Break<>( "wrong" ) ) ) );
+                                        new Break<>( "wrong" ) ) ) );
 
         coroIter.hasNext();
     }
@@ -402,19 +403,23 @@ public class CoroutineIteratorBreakTest
                                 //label
                                 "outer_while" ,
                                 //condition
-                                new Lesser(
+                                new Lesser<>(
+                                        new GetLocalVar<>(
                                         //varName
-                                        "number" ,
+                                                "number" ) ,
+                                        new Value<>(
                                         //compareValue
-                                        2 ) ,
+                                                2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new Lesser(
+                                        new Lesser<>(
+                                                new GetLocalVar<>(
                                                 //varName
-                                                "number" ,
+                                                        "number" ) ,
+                                                new Value<>(
                                                 //compareValue
-                                                1 ) ,
+                                                        1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 //label
@@ -454,19 +459,23 @@ public class CoroutineIteratorBreakTest
                                 //label
                                 "outer_while" ,
                                 //condition
-                                new Lesser(
+                                new Lesser<>(
+                                        new GetLocalVar<>(
                                         //varName
-                                        "number" ,
+                                                "number" ) ,
+                                        new Value<>(
                                         //compareValue
-                                        2 ) ,
+                                                2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new Lesser(
+                                        new Lesser<>(
+                                                new GetLocalVar<>(
                                                 //varName
-                                                "number" ,
+                                                        "number" ) ,
+                                                new Value<>(
                                                 //compareValue
-                                                1 ) ,
+                                                        1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 //label
@@ -501,19 +510,23 @@ public class CoroutineIteratorBreakTest
                                 //label
                                 "outer_while" ,
                                 //condition
-                                new Lesser(
+                                new Lesser<>(
+                                        new GetLocalVar<>(
                                         //varName
-                                        "number" ,
+                                                "number" ) ,
+                                        new Value<>(
                                         //compareValue
-                                        2 ) ,
+                                                2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new Lesser(
+                                        new Lesser<>(
+                                                new GetLocalVar<>(
                                                 //varName
-                                                "number" ,
+                                                        "number" ) ,
+                                                new Value<>(
                                                 //compareValue
-                                                1 ) ,
+                                                        1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 //label

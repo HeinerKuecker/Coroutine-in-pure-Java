@@ -1,34 +1,33 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 
 /**
  * Is <code>true</code> {@link Condition}
- * to check trueness of a variable in
- * {@link CoroutineIterator}'s
- * variables {@link CoroutineIterator#vars}.
+ * to check trueness of the result
+ * of the specified
+ * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
  *
  * TODO rename to VarIsTrue
  */
 public class IsTrue
-implements Condition/*<CoroutineIterator<?>>*/
+implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 {
     /**
-     * Name of a variable in
-     * {@link CoroutineIterator#vars}.
+     * Expression to check.
      */
-    public final String varName;
+    public final CoroExpression<Boolean> expression;
 
     /**
      * Constructor.
      */
     public IsTrue(
-            final String varName )
+            final CoroExpression<Boolean> expression )
     {
-        this.varName = varName;
+        this.expression = expression;
     }
 
     /**
@@ -40,7 +39,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Object varValue = parent.localVars().get( varName );
+        //final Object varValue = parent.localVars().get( varName );
+        final Object varValue = expression.getValue( parent );
 
         if ( varValue instanceof Boolean )
         {
@@ -50,12 +50,12 @@ implements Condition/*<CoroutineIterator<?>>*/
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " == true";
+        return expression + " == true";
     }
 
 }

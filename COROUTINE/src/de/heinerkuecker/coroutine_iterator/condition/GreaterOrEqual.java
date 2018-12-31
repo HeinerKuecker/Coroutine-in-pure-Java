@@ -1,70 +1,77 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.Objects;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 
 /**
- * Compare {@link Condition}
- * to check greaterness or
- * equality of a variable in
- * {@link CoroutineIterator}'s
- * variables {@link CoroutineIterator#vars}
- * and the specified object.
+ * Compare {@link ConditionOrBooleanExpression}
+ * to check greaterness or equality of result
+ * of the left
+ * expression {@link CoroExpression}
+ * to the result of the right
+ * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
- *
- * TODO rename to VarGreaterOrEqualVal
  */
-@SuppressWarnings("rawtypes")
-public class GreaterOrEqual
-implements Condition/*<CoroutineIterator<?>>*/
+public class GreaterOrEqual<T extends Comparable<T>>
+implements ConditionOrBooleanExpression
 {
-    /**
-     * Name of a variable in
-     * {@link CoroutineIterator#vars}.
-     */
-    public final String varName;
-
-    public final Comparable compareValue;
+    public final CoroExpression<? extends T> lhs;
+    public final CoroExpression<? extends T> rhs;
 
     /**
      * Constructor.
+     *
+     * @param lhs
+     * @param rhs
      */
     public GreaterOrEqual(
-            final String varName ,
-            final Comparable compareValue )
+            CoroExpression<? extends T> lhs ,
+            CoroExpression<? extends T> rhs )
     {
-        this.varName = varName;
-        this.compareValue = compareValue;
+        this.lhs = Objects.requireNonNull( lhs );
+        this.rhs = Objects.requireNonNull( rhs );
     }
 
     /**
-     * Compars variable to {@link #compareValue}.
-     *
-     * @see Condition#execute(java.lang.Object)
+     * @see ConditionOrBooleanExpression#execute(CoroIteratorOrProcedure)
      */
-    @SuppressWarnings("unchecked")
     @Override
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Comparable varValue = (Comparable) parent.localVars().get( varName );
+        final T lhsResult = lhs.getValue( parent );
+        final T rhsResult = rhs.getValue( parent );
 
-        if ( varValue == null )
+        if ( lhsResult == null && rhsResult == null )
         {
-            return compareValue == null;
+            return true;
         }
 
-        return varValue.compareTo( compareValue ) >= 0;
+        if ( lhsResult == null )
+            // null is lesser
+        {
+            return false;
+        }
+
+        if ( rhsResult == null )
+            // null is lesser
+        {
+            return true;
+        }
+
+        return lhsResult.compareTo( rhsResult ) >= 0;
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " >= " + compareValue;
+        return lhs + " >= " + rhs;
     }
 
 }

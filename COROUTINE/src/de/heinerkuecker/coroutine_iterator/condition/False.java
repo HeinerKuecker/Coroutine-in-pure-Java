@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
  * @author Heiner K&uuml;cker
  */
 public class False
-implements Condition/*<CoroutineIterator<?>>*/
+implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 {
     /**
      * Returns always false.

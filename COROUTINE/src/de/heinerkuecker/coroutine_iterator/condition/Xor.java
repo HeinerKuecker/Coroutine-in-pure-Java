@@ -6,21 +6,19 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
  * Xor {@link Condition}.
  *
  * @author Heiner K&uuml;cker
- *
- * TODO rename to XorValVal
  */
 public class Xor
-implements Condition/*<CoroutineIterator<?>>*/
+implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 {
-    private final Condition/*<CoroutineIterator<?>>*/ lhs;
-    private final Condition/*<CoroutineIterator<?>>*/ rhs;
+    private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs;
+    private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs;
 
     /**
      * Constructor.
      */
     public Xor(
-            final Condition/*<CoroutineIterator<?>>*/ lhs ,
-            final Condition/*<CoroutineIterator<?>>*/ rhs )
+            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs ,
+            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs )
     {
         this.lhs = lhs;
         this.rhs = rhs;
@@ -36,6 +34,15 @@ implements Condition/*<CoroutineIterator<?>>*/
             final CoroIteratorOrProcedure<?> parent )
     {
         return lhs.execute( parent ) != rhs.execute( parent );
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return lhs + " != " + rhs;
     }
 
 }

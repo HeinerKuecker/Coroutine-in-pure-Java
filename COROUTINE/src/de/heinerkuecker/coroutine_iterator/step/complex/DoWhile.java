@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine_iterator.step.complex;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.condition.Condition;
+import de.heinerkuecker.coroutine_iterator.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
 public class DoWhile<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
@@ -20,7 +20,7 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public DoWhile(
-            Condition/*<? super PARENT>*/ condition ,
+            ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
             CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         super(
@@ -40,7 +40,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             String label ,
-            Condition/*<? super PARENT>*/ condition ,
+            ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
             CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         super(

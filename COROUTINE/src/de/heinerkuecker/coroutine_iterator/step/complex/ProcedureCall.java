@@ -33,7 +33,7 @@ extends ComplexStep<
     final Procedure<RESULT> procedure;
 
     // TODO getter
-    final Map<String, ProcedureArgument> procedureArguments;
+    final Map<String, ProcedureArgument<?>> procedureArguments;
 
     /**
      * Constructor.
@@ -44,7 +44,7 @@ extends ComplexStep<
     public ProcedureCall(
             //final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps
             final Procedure<RESULT> procedure ,
-            final ProcedureArgument... args )
+            final ProcedureArgument<?>... args )
     {
         super(
                 //creationStackOffset
@@ -72,7 +72,7 @@ extends ComplexStep<
 
         this.procedure = Objects.requireNonNull( procedure );
 
-        final LinkedHashMap<String, ProcedureArgument> argMap = new LinkedHashMap<>();
+        final LinkedHashMap<String, ProcedureArgument<?>> argMap = new LinkedHashMap<>();
 
         if ( args != null )
         {
@@ -109,7 +109,7 @@ extends ComplexStep<
     {
         final Map<String, Object> procedureArgumentValues = new LinkedHashMap<>();
 
-        for ( ProcedureArgument arg : procedureArguments.values() )
+        for ( ProcedureArgument<?> arg : procedureArguments.values() )
         {
             procedureArgumentValues.put(
                     arg.name ,

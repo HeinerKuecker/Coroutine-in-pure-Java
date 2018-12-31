@@ -2,8 +2,9 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.condition.LocalVarEqualsValue;
+import de.heinerkuecker.coroutine_iterator.condition.Equals;
 import de.heinerkuecker.coroutine_iterator.condition.True;
+import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
 import de.heinerkuecker.coroutine_iterator.expression.Value;
 import de.heinerkuecker.coroutine_iterator.step.complex.If;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
@@ -83,14 +84,22 @@ public class CoroutineIteratorIfTest
                                 // steps
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new LocalVarEqualsValue( "number" , 0 ) ,
+                                        new Equals<>(
+                                                new GetLocalVar<>(
+                                                        "number" ) ,
+                                                new Value<>(
+                                                        0 ) ) ,
                                         // steps
                                         new YieldReturn<>(
                                                 new Value<>(
                                                         0 ) ) ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new LocalVarEqualsValue( "number" , 1 ) ,
+                                        new Equals<>(
+                                                new GetLocalVar<>(
+                                                        "number" ) ,
+                                                new Value<>(
+                                                        1 ) ) ,
                                         // steps
                                         new FinallyReturn<>(
                                                 new Value<>(

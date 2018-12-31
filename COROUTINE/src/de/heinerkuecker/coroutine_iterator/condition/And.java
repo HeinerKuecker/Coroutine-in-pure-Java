@@ -12,14 +12,14 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 public class And
 implements Condition/*<CoroutineIterator<?>>*/
 {
-    private final Condition/*<CoroutineIterator<?>>*/[] conditionsToAnd;
+    private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/[] conditionsToAnd;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public And(
-            final Condition/*<CoroutineIterator<?>>*/... conditionsToAnd )
+            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/... conditionsToAnd )
     {
         this.conditionsToAnd = conditionsToAnd;
     }
@@ -33,7 +33,7 @@ implements Condition/*<CoroutineIterator<?>>*/
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        for ( final Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        for ( final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         {
             if ( ! condition.execute( parent ) )
             {

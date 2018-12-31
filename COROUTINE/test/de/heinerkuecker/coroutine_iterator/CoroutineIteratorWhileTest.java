@@ -2,11 +2,11 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine_iterator.condition.Equals;
 import de.heinerkuecker.coroutine_iterator.condition.False;
 import de.heinerkuecker.coroutine_iterator.condition.Greater;
 import de.heinerkuecker.coroutine_iterator.condition.IsTrue;
 import de.heinerkuecker.coroutine_iterator.condition.Lesser;
-import de.heinerkuecker.coroutine_iterator.condition.LocalVarEqualsValue;
 import de.heinerkuecker.coroutine_iterator.condition.Not;
 import de.heinerkuecker.coroutine_iterator.condition.Or;
 import de.heinerkuecker.coroutine_iterator.condition.True;
@@ -41,9 +41,13 @@ public class CoroutineIteratorWhileTest
                                 "number" ,
                                 new Value<>(
                                         0 ) ) ,
-                        new While<>(
+                        new While<Integer>(
                                 // condition
-                                new LocalVarEqualsValue( "number" , 0 ) ,
+                                new Equals<Integer>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                0 ) ) ,
                                 // steps
                                 new IncLocalVar<Integer>( "number" ) ) ,
                         new YieldReturn<>(
@@ -71,7 +75,11 @@ public class CoroutineIteratorWhileTest
                                         0 ) ) ,
                         new While<>(
                                 // condition
-                                new Lesser( "number" , 3 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                3 ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -107,7 +115,11 @@ public class CoroutineIteratorWhileTest
                                         0 ) ) ,
                         new While<>(
                                 // condition
-                                new LocalVarEqualsValue( "number" , 0 ) ,
+                                new Equals<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                0 ) ) ,
                                 // steps
                                 new IncLocalVar<>( "number" ) ,
                                 new IncLocalVar<>( "number" ) ) ,
@@ -137,7 +149,11 @@ public class CoroutineIteratorWhileTest
                         new While<>(
                                 //condition
                                 new Not(
-                                        new LocalVarEqualsValue( "number" , 0 ) ) ,
+                                        new Equals<>(
+                                                new GetLocalVar<>(
+                                                        "number" ) ,
+                                                new Value<>(
+                                                        0 ) ) ) ,
                                 // steps
                                 new DecLocalVar<>( "number" ) ) ,
                         new YieldReturn<>(
@@ -260,7 +276,11 @@ public class CoroutineIteratorWhileTest
                                         0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
-                                new Lesser( "number" , 3 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                3 ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -297,8 +317,16 @@ public class CoroutineIteratorWhileTest
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Or(
-                                        new Greater( "number" , 0 ) ,
-                                        new LocalVarEqualsValue( "number" , 0 ) ) ,
+                                        new Greater<>(
+                                                new GetLocalVar<>(
+                                                        "number" ) ,
+                                                new Value<>(
+                                                        0 ) ) ,
+                                        new Equals<>(
+                                                new GetLocalVar<>(
+                                                        "number" ) ,
+                                                new Value<>(
+                                                        0 ) ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -339,7 +367,9 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new IfElse<>(
                                 //condition
-                                new IsTrue( "first" ) ,
+                                new IsTrue(
+                                        new GetLocalVar<>(
+                                                "first" ) ) ,
                                 // thenSteps
                                 (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                 {

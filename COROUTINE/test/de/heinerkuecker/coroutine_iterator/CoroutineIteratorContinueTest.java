@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine_iterator.condition.Lesser;
 import de.heinerkuecker.coroutine_iterator.condition.True;
+import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
 import de.heinerkuecker.coroutine_iterator.expression.Value;
 import de.heinerkuecker.coroutine_iterator.step.complex.For;
 import de.heinerkuecker.coroutine_iterator.step.complex.While;
@@ -83,11 +84,11 @@ public class CoroutineIteratorContinueTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new Lesser(
-                                        //varName
-                                        "number" ,
-                                        //compareValue
-                                        1 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                1 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
@@ -240,11 +241,11 @@ public class CoroutineIteratorContinueTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new Lesser(
-                                        //varName
-                                        "number" ,
-                                        //compareValue
-                                        1 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                1 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
@@ -284,11 +285,11 @@ public class CoroutineIteratorContinueTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new Lesser(
-                                        //varName
-                                        "number" ,
-                                        //compareValue
-                                        1 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                1 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
@@ -367,11 +368,11 @@ public class CoroutineIteratorContinueTest
                                 //label
                                 "outer_while" ,
                                 //condition
-                                new Lesser(
-                                        //varName
-                                        "number" ,
-                                        //compareValue
-                                        1 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                1 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -403,11 +404,11 @@ public class CoroutineIteratorContinueTest
                                 //label
                                 "outer_while" ,
                                 //condition
-                                new Lesser(
-                                        //varName
-                                        "number" ,
-                                        //compareValue
-                                        1 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                1 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -438,11 +439,11 @@ public class CoroutineIteratorContinueTest
                                 //label
                                 "outer_while" ,
                                 //condition
-                                new Lesser(
-                                        //varName
-                                        "number" ,
-                                        //compareValue
-                                        1 ) ,
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                "number" ) ,
+                                        new Value<>(
+                                                1 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition

@@ -21,12 +21,14 @@ implements ConditionOrBooleanExpression
     public final CoroExpression<? extends T> rhs;
 
     /**
+     * Constructor.
+     *
      * @param lhs
      * @param rhs
      */
     public Equals(
-            CoroExpression<? extends T> lhs,
-            CoroExpression<? extends T> rhs)
+            CoroExpression<? extends T> lhs ,
+            CoroExpression<? extends T> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -49,10 +51,19 @@ implements ConditionOrBooleanExpression
 
         if ( lhsResult == null )
         {
-        return false;
+            return false;
         }
 
         return lhsResult.equals( rhsResult );
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return lhs + " == " + rhs;
     }
 
 }

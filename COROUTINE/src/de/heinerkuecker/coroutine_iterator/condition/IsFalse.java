@@ -1,34 +1,33 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 
 /**
  * Is <code>false</code> {@link Condition}
- * to check falseness of a variable in
- * {@link CoroutineIterator}'s
- * variables {@link CoroutineIterator#vars}.
+ * to check falseness of the result
+ * of the specified
+ * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
  *
- * TODO rename to VarIsFalse
+ * TODO rename to VarIsTrue
  */
 public class IsFalse
-implements Condition/*<CoroutineIterator<?>>*/
+implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 {
     /**
-     * Name of a variable in
-     * {@link CoroutineIterator#vars}.
+     * Expression to check.
      */
-    public final String varName;
+    public final CoroExpression<Boolean> expression;
 
     /**
      * Constructor.
      */
     public IsFalse(
-            final String varName )
+            final CoroExpression<Boolean> expression )
     {
-        this.varName = varName;
+        this.expression = expression;
     }
 
     /**
@@ -40,7 +39,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Object varValue = parent.localVars().get( varName );
+        //final Object varValue = parent.localVars().get( varName );
+        final Object varValue = expression.getValue( parent );
 
         if ( varValue instanceof Boolean )
         {
@@ -52,12 +52,12 @@ implements Condition/*<CoroutineIterator<?>>*/
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " == true";
+        return expression + " == false";
     }
 
 }

@@ -5,13 +5,16 @@ import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 public class Not
 implements Condition/*<CoroutineIterator<?>>*/
 {
-    public final Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
+    /**
+     * Expression to negate.
+     */
+    public final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
 
     /**
      * Constructor.
      */
     public Not(
-            final Condition/*<CoroutineIterator<?>>*/ conditionToNegate )
+            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate )
     {
         this.conditionToNegate = conditionToNegate;
     }

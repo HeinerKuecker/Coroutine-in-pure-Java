@@ -4,41 +4,37 @@ import java.util.Collection;
 import java.util.Map;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
 
 /**
  * Is empty {@link Condition}
- * to check emptiness of a
- * variable in
- * {@link CoroutineIterator}'s
- * variables {@link CoroutineIterator#vars}.
+ * to check emptiness of the result
+ * of the specified
+ * expression {@link CoroExpression}.
  *
- * Checks variable is
+ * Checks is
  * empty array,
  * empty {@link String},
  * empty {@link Map} or
  * empty {@link Collection}.
  *
  * @author Heiner K&uuml;cker
- *
- * TODO rename to VarIsEmpty
  */
 public class IsEmpty
-implements Condition/*<CoroutineIterator<?>>*/
+implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 {
     /**
-     * Name of a variable in
-     * {@link CoroutineIterator#vars}.
+     * Expression to check.
      */
-    public final String varName;
+    public final CoroExpression<?> expression;
 
     /**
      * Constructor.
      */
     public IsEmpty(
-            final String varName )
+            final CoroExpression<?> expression )
     {
-        this.varName = varName;
+        this.expression = expression;
     }
 
     /**
@@ -54,7 +50,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Object varValue = parent.localVars().get( varName );
+        //final Object varValue = parent.localVars().get( varName );
+        final Object varValue = expression.getValue( parent );
 
         if ( varValue == null )
         {
@@ -130,7 +127,7 @@ implements Condition/*<CoroutineIterator<?>>*/
     @Override
     public String toString()
     {
-        return varName + " is empty";
+        return expression + " is empty";
     }
 
 }
