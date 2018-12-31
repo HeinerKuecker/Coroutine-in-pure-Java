@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.condition.ConditionOrBooleanExpression;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
@@ -89,6 +90,26 @@ extends ComplexStep<
 
         result.addAll(
                 elseBodyComplexStep.getUnresolvedBreaksOrContinues() );
+
+        return result;
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+
+        result.addAll(
+                condition.getProcedureArgumentGetsNotInProcedure() );
+
+        result.addAll(
+                thenBodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
+
+        result.addAll(
+                elseBodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
     }

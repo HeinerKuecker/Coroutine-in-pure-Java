@@ -1,8 +1,12 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 public final class ResetLocalVar<RESULT>
@@ -48,6 +52,15 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return Collections.emptyList();
     }
 
 }

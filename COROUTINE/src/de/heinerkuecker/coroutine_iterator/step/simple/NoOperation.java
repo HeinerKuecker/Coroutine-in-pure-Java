@@ -1,7 +1,11 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import java.util.Collections;
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
@@ -29,6 +33,15 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
+     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return Collections.emptyList();
+    }
+
+    /**
      * @see Object#toString()
      */
     @Override
@@ -39,4 +52,5 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                     ? " " + this.creationStackTraceElement
                     : "" );
     }
+
 }

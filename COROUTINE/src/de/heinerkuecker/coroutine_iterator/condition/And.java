@@ -1,6 +1,11 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
 /**
  * And {@link Condition}.
@@ -41,6 +46,23 @@ implements Condition/*<CoroutineIterator<?>>*/
             }
         }
         return true;
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+
+        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        {
+            result.addAll(
+                    condition.getProcedureArgumentGetsNotInProcedure() );
+        }
+
+        return result;
     }
 
 }

@@ -1,6 +1,9 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
 
 public interface ConditionOrBooleanExpression
 {
@@ -13,4 +16,6 @@ public interface ConditionOrBooleanExpression
     boolean execute(
             //final PARENT parent
             final CoroIteratorOrProcedure<?> parent );
+
+    abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgumentNotInProcedureException;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine_iterator.step.complex.ComplexStepState;
@@ -112,6 +114,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
+            checkForGetProcedureArgumentNotInProcedure();
         }
 
         this.vars.putAll( initialVariableValues );
@@ -143,6 +146,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
+            checkForGetProcedureArgumentNotInProcedure();
         }
     }
 
@@ -156,8 +160,24 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( ! unresolvedBreaksOrContinues.isEmpty() )
         {
             throw new IllegalArgumentException(
-                    "unresolved breaks or continues" +
+                    "unresolved breaks or continues: " +
                     unresolvedBreaksOrContinues );
+        }
+    }
+
+    /**
+     * Check for {@link GetProcedureArgument} outside of procedure.
+     */
+    private void checkForGetProcedureArgumentNotInProcedure()
+    {
+        final List<GetProcedureArgument<?>> getProcedureArgumentsNotInProcedure =
+                complexStep.getProcedureArgumentGetsNotInProcedure();
+
+        if ( ! getProcedureArgumentsNotInProcedure.isEmpty() )
+        {
+            throw new GetProcedureArgumentNotInProcedureException(
+                    "ProcedureArguments not in procedure: " +
+                    getProcedureArgumentsNotInProcedure );
         }
     }
 

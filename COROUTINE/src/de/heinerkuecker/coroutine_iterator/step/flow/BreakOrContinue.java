@@ -1,6 +1,11 @@
 package de.heinerkuecker.coroutine_iterator.step.flow;
 
+import java.util.Collections;
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.simple.SimpleStep;
 
 /**
@@ -30,4 +35,14 @@ extends SimpleStep<RESULT /*, CoroutineIterator<RESULT>*/>
     }
 
     abstract public String getLabel();
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return Collections.emptyList();
+    }
+
 }

@@ -1,5 +1,8 @@
 package de.heinerkuecker.coroutine_iterator.expression;
 
+import java.util.Collections;
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 
 public class Value<T>
@@ -26,6 +29,15 @@ implements CoroExpression<T>
             final CoroIteratorOrProcedure<?> parent )
     {
         return this.value;
+    }
+
+    /**
+     * @see CoroExpression#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return Collections.emptyList();
     }
 
     /**

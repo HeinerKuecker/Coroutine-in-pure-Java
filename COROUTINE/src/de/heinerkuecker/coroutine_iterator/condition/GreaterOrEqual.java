@@ -1,9 +1,13 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
 /**
  * Compare {@link ConditionOrBooleanExpression}
@@ -63,6 +67,23 @@ implements ConditionOrBooleanExpression
         }
 
         return lhsResult.compareTo( rhsResult ) >= 0;
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+
+        result.addAll(
+                lhs.getProcedureArgumentGetsNotInProcedure() );
+
+        result.addAll(
+                rhs.getProcedureArgumentGetsNotInProcedure() );
+
+        return result;
     }
 
     /**

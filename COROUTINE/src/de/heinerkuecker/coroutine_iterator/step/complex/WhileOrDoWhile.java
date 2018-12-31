@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.condition.ConditionOrBooleanExpression;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.flow.BreakOrContinue;
 
@@ -119,6 +120,15 @@ extends ComplexStep<
         }
 
         return result;
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        throw new RuntimeException( "not implemented" );
     }
 
     ///**

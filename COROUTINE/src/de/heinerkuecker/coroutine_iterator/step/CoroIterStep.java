@@ -1,6 +1,9 @@
 package de.heinerkuecker.coroutine_iterator.step;
 
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
 import de.heinerkuecker.util.HasCreationStackTraceElement;
 
 /**
@@ -32,4 +35,5 @@ extends HasCreationStackTraceElement
         super( creationStackOffset + 1 );
     }
 
+    abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 }

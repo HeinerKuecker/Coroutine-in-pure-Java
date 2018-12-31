@@ -1,6 +1,10 @@
 package de.heinerkuecker.coroutine_iterator.expression;
 
+import java.util.Arrays;
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
 public class GetProcedureArgument<T>
 implements CoroExpression<T>
@@ -40,6 +44,15 @@ implements CoroExpression<T>
     public String toString()
     {
         return this.getClass().getSimpleName() + "[procedureArgumentName=" + this.procedureArgumentName + "]";
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return Arrays.asList( this );
     }
 
 }

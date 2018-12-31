@@ -1,7 +1,11 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
 /**
  * Is <code>false</code> {@link Condition}
@@ -49,6 +53,15 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
         // undefined
         return false;
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return this.expression.getProcedureArgumentGetsNotInProcedure();
     }
 
     /**

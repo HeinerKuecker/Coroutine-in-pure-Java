@@ -1,9 +1,12 @@
 package de.heinerkuecker.coroutine_iterator.step.simple;
 
+import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 import de.heinerkuecker.coroutine_iterator.step.result.CoroIterStepResult;
 
 public final class SetGlobalVar<RESULT>
@@ -52,7 +55,16 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return this.varValueExpression.getProcedureArgumentGetsNotInProcedure();
+    }
+
+    /**
+     * @see Object#toString()
      */
     @Override
     public String toString()

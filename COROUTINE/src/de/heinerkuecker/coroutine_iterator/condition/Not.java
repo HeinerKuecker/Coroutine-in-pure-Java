@@ -1,6 +1,10 @@
 package de.heinerkuecker.coroutine_iterator.condition;
 
+import java.util.List;
+
 import de.heinerkuecker.coroutine_iterator.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
 
 public class Not
 implements Condition/*<CoroutineIterator<?>>*/
@@ -30,5 +34,15 @@ implements Condition/*<CoroutineIterator<?>>*/
     {
         return ! conditionToNegate.execute( parent );
     }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return this.conditionToNegate.getProcedureArgumentGetsNotInProcedure();
+    }
+
 
 }
