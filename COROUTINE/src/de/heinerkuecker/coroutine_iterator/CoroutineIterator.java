@@ -84,12 +84,12 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Constructor.
      *
-     * @param params parameter key value pairs to put initial in variables {@link #vars}
+     * @param initialVariableValues key value pairs to put initial in variables {@link #vars}
      * @param steps steps for coroutine processor
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Map<String, /*? extends*/ Object> params ,
+            final Map<String, /*? extends*/ Object> initialVariableValues ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
@@ -115,7 +115,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         //this.complexStep.setRootParent( this );
 
-        this.vars.putAll( params );
+        this.vars.putAll( initialVariableValues );
     }
 
     /**
