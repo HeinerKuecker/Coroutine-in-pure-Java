@@ -67,6 +67,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      * of method {@link #hasNext()}.
      *
      * <code>null</code> enforces calling lookahead code in {@link #hasNext()}.
+     * Non <code>null</code> is the computed and cached result.
      */
     private Boolean hasNext;
 
@@ -113,8 +114,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUnresolvedBreaksAndContinues();
         }
 
-        //this.complexStep.setRootParent( this );
-
         this.vars.putAll( initialVariableValues );
     }
 
@@ -145,8 +144,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             checkForUnresolvedBreaksAndContinues();
         }
-
-        //this.complexStep.setRootParent( this );
     }
 
     /**
@@ -200,7 +197,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         if ( executeResult == null ||
                 executeResult instanceof CoroIterStepResult.ContinueCoroutine )
-            // end of sub sequence without result
+            // end of sub complex state without result
         {
             // Iterator ends
             this.hasNext = false;
@@ -293,7 +290,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Object> procedureArgumentValues()
     {
-        // TODO code smell ausgeschlagenes Erbe
+        // TODO code smell ausgeschlagenes Erbe Refused bequest
         //return null;
         throw new IllegalStateException( this.getClass().getSimpleName() + " has no procedure arguments" );
     }
