@@ -89,7 +89,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Map<String, /*? extends*/ Object> initialVariableValues ,
+            final Map<String, ? extends Object> initialVariableValues ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
