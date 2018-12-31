@@ -40,6 +40,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     /**
      * Checks variable is
+     * <code>null</code>,
      * empty array,
      * empty {@link String},
      * empty {@link Map} or
