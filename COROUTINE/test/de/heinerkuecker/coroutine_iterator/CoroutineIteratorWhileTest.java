@@ -373,18 +373,18 @@ public class CoroutineIteratorWhileTest
                                                 "first" ) ) ,
                                 // thenSteps
                                 (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
-                                {
-                                        new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ,
-                                } ,
-                                // elseSteps
-                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
-                                {
-                                        new FinallyReturn<>(
-                                                new Value<>(
-                                                        1 ) ) ,
-                                } ) ,
+                                        {
+                                                new YieldReturn<>(
+                                                        new Value<>(
+                                                                0 ) ) ,
+                                        } ,
+                                        // elseSteps
+                                        (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
+                                                {
+                                                        new FinallyReturn<>(
+                                                                new Value<>(
+                                                                        1 ) ) ,
+                                                } ) ,
                         new NegateLocalVar<>( "first" ) ) );
 
         CoroutineIteratorTest.assertNext(
