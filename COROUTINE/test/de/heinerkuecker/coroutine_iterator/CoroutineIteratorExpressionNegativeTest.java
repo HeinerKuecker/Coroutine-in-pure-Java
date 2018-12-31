@@ -21,17 +21,13 @@ public class CoroutineIteratorExpressionNegativeTest
     {
         CoroutineIterator.initializationChecks = true;
 
-        final CoroutineIterator<?> coroIter =
-                new CoroutineIterator<Object>(
-                        new If<>(
-                                new IsNull(
-                                        new GetProcedureArgument<>(
-                                                //procedureArgumentName
-                                                "wrong" ) ) ,
-                                new NoOperation<>() ) );
-
-        CoroutineIteratorTest.assertHasNextFalse(
-                coroIter );
+        new CoroutineIterator<Object>(
+                new If<>(
+                        new IsNull(
+                                new GetProcedureArgument<>(
+                                        //procedureArgumentName
+                                        "wrong" ) ) ,
+                        new NoOperation<>() ) );
     }
 
 }
