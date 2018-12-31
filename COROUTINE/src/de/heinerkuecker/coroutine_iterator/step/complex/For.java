@@ -275,7 +275,21 @@ extends ComplexStep<
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
-        throw new RuntimeException( "not implemented" );
+        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+
+        result.addAll(
+                initialStep.getProcedureArgumentGetsNotInProcedure() );
+
+        result.addAll(
+                condition.getProcedureArgumentGetsNotInProcedure() );
+
+        result.addAll(
+                updateStep.getProcedureArgumentGetsNotInProcedure() );
+
+        result.addAll(
+                bodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
+
+        return result;
     }
 
     ///**
