@@ -2,26 +2,27 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.condition.Equals;
-import de.heinerkuecker.coroutine_iterator.condition.False;
-import de.heinerkuecker.coroutine_iterator.condition.Greater;
-import de.heinerkuecker.coroutine_iterator.condition.IsTrue;
-import de.heinerkuecker.coroutine_iterator.condition.Lesser;
-import de.heinerkuecker.coroutine_iterator.condition.Not;
-import de.heinerkuecker.coroutine_iterator.condition.Or;
-import de.heinerkuecker.coroutine_iterator.condition.True;
-import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
-import de.heinerkuecker.coroutine_iterator.expression.Value;
-import de.heinerkuecker.coroutine_iterator.step.CoroIterStep;
-import de.heinerkuecker.coroutine_iterator.step.complex.IfElse;
-import de.heinerkuecker.coroutine_iterator.step.complex.While;
-import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturn;
-import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnWithoutResult;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine_iterator.step.simple.DecLocalVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.NegateLocalVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.condition.Equals;
+import de.heinerkuecker.coroutine.condition.False;
+import de.heinerkuecker.coroutine.condition.Greater;
+import de.heinerkuecker.coroutine.condition.IsTrue;
+import de.heinerkuecker.coroutine.condition.Lesser;
+import de.heinerkuecker.coroutine.condition.Not;
+import de.heinerkuecker.coroutine.condition.Or;
+import de.heinerkuecker.coroutine.condition.True;
+import de.heinerkuecker.coroutine.expression.GetLocalVar;
+import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.coroutine.step.complex.IfElse;
+import de.heinerkuecker.coroutine.step.complex.While;
+import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
+import de.heinerkuecker.coroutine.step.retrn.FinallyReturnWithoutResult;
+import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DecLocalVar;
+import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine.step.simple.NegateLocalVar;
+import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

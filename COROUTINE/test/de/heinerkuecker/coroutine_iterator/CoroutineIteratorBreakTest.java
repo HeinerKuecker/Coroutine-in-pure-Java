@@ -2,17 +2,18 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.condition.Lesser;
-import de.heinerkuecker.coroutine_iterator.condition.True;
-import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
-import de.heinerkuecker.coroutine_iterator.expression.Value;
-import de.heinerkuecker.coroutine_iterator.step.complex.For;
-import de.heinerkuecker.coroutine_iterator.step.complex.StepSequence;
-import de.heinerkuecker.coroutine_iterator.step.complex.While;
-import de.heinerkuecker.coroutine_iterator.step.flow.Break;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine_iterator.step.simple.NoOperation;
-import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.condition.Lesser;
+import de.heinerkuecker.coroutine.condition.True;
+import de.heinerkuecker.coroutine.expression.GetLocalVar;
+import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.step.complex.For;
+import de.heinerkuecker.coroutine.step.complex.StepSequence;
+import de.heinerkuecker.coroutine.step.complex.While;
+import de.heinerkuecker.coroutine.step.flow.Break;
+import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.NoOperation;
+import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

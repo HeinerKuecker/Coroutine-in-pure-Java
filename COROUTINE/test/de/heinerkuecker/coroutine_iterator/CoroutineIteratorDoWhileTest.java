@@ -2,10 +2,11 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.condition.False;
-import de.heinerkuecker.coroutine_iterator.expression.Value;
-import de.heinerkuecker.coroutine_iterator.step.complex.DoWhile;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.condition.False;
+import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.step.complex.DoWhile;
+import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

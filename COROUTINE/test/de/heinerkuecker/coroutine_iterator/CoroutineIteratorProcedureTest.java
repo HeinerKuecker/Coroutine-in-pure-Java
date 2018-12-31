@@ -2,18 +2,20 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.expression.GetGlobalVar;
-import de.heinerkuecker.coroutine_iterator.expression.GetLocalVar;
-import de.heinerkuecker.coroutine_iterator.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine_iterator.expression.Value;
-import de.heinerkuecker.coroutine_iterator.proc.arg.ProcedureArgument;
-import de.heinerkuecker.coroutine_iterator.step.complex.ProcedureCall;
-import de.heinerkuecker.coroutine_iterator.step.retrn.FinallyReturnWithoutResult;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine_iterator.step.simple.IncGlobalVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.IncLocalVar;
-import de.heinerkuecker.coroutine_iterator.step.simple.NoOperation;
-import de.heinerkuecker.coroutine_iterator.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.expression.GetGlobalVar;
+import de.heinerkuecker.coroutine.expression.GetLocalVar;
+import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
+import de.heinerkuecker.coroutine.step.retrn.FinallyReturnWithoutResult;
+import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.IncGlobalVar;
+import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine.step.simple.NoOperation;
+import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

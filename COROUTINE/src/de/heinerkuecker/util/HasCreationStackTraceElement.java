@@ -1,6 +1,6 @@
 package de.heinerkuecker.util;
 
-import de.heinerkuecker.coroutine_iterator.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineIterator;
 
 public abstract class HasCreationStackTraceElement
 {

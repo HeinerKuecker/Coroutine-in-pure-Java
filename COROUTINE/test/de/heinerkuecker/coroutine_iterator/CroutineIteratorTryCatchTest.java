@@ -2,11 +2,12 @@ package de.heinerkuecker.coroutine_iterator;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine_iterator.expression.Value;
-import de.heinerkuecker.coroutine_iterator.step.complex.StepSequence;
-import de.heinerkuecker.coroutine_iterator.step.complex.TryCatch;
-import de.heinerkuecker.coroutine_iterator.step.flow.Throw;
-import de.heinerkuecker.coroutine_iterator.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.step.complex.StepSequence;
+import de.heinerkuecker.coroutine.step.complex.TryCatch;
+import de.heinerkuecker.coroutine.step.flow.Throw;
+import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 
 
 /**
