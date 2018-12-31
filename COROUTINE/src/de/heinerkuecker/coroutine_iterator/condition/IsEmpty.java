@@ -13,6 +13,7 @@ import de.heinerkuecker.coroutine_iterator.expression.CoroExpression;
  * expression {@link CoroExpression}.
  *
  * Checks is
+ * <code>null</code>,
  * empty array,
  * empty {@link String},
  * empty {@link Map} or
