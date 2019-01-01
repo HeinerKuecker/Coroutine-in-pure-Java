@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.List;
+import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
@@ -42,6 +43,9 @@ extends CoroIterStep<RESULT/*, PARENT*/>
             final CoroIteratorOrProcedure<RESULT> parent );
 
     abstract public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues();
+
+    abstract public void checkLabelAlreadyInUse(
+            final Set<String> labels );
 
     /**
      * Returns formatted {@link String}

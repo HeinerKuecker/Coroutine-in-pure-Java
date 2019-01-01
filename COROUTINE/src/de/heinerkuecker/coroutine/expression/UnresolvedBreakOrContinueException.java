@@ -1,15 +1,21 @@
 package de.heinerkuecker.coroutine.expression;
 
+import de.heinerkuecker.coroutine.step.flow.Break;
+import de.heinerkuecker.coroutine.step.flow.Continue;
+
 /**
  * Exception is throwing
- * when a expression
- * {@link GetProcedureArgument}
+ * when a {@link Break}
+ * or {@link Continue}
  * is used outside of an
- * procedure.
+ * loop or the label of
+ * the {@link Break}
+ * or {@link Continue}
+ * is unknown.
  *
  * @author Heiner K&uuml;cker
  */
-public class GetProcedureArgumentNotInProcedureException
+public class UnresolvedBreakOrContinueException
 extends IllegalArgumentException
 {
     /**
@@ -22,7 +28,7 @@ extends IllegalArgumentException
      *
      * @param s
      */
-    public GetProcedureArgumentNotInProcedureException(
+    public UnresolvedBreakOrContinueException(
             final String s )
     {
         super(s);

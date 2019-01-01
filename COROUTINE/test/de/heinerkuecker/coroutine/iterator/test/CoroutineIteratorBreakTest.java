@@ -6,6 +6,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
+import de.heinerkuecker.coroutine.expression.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
@@ -320,7 +321,7 @@ public class CoroutineIteratorBreakTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test( expected = UnresolvedBreakOrContinueException.class )
     public void test_Negative_For_Break_wrong_labeled_with_initialization_checks()
     {
         CoroutineIterator.initializationChecks = true;
@@ -496,7 +497,7 @@ public class CoroutineIteratorBreakTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test( expected = UnresolvedBreakOrContinueException.class )
     public void test_Negative_While_Break_wrong_labeled_with_initialization_checks()
     {
         CoroutineIterator.initializationChecks = true;

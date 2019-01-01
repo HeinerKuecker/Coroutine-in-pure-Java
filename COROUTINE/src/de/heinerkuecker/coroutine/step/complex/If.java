@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
@@ -85,6 +86,16 @@ extends ComplexStep<
                 thenBodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
+    }
+
+    /**
+     * @see ComplexStep#checkLabelAlreadyInUse(Set)
+     */
+    @Override
+    public void checkLabelAlreadyInUse(
+            final Set<String> labels )
+    {
+        this.thenBodyComplexStep.checkLabelAlreadyInUse( labels );
     }
 
     ///**

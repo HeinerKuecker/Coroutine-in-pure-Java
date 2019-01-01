@@ -2,12 +2,14 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
@@ -22,9 +24,15 @@ extends ComplexStep<
     >
 {
     public final String label;
+
+    // TODO nur SimpleStep oder ProcedureCall erlauben
     final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> initialStep;
+
     final ConditionOrBooleanExpression condition;
+
+    // TODO nur SimpleStep oder ProcedureCall erlauben
     final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> updateStep;
+
     final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
 
     /**
@@ -290,6 +298,25 @@ extends ComplexStep<
                 bodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
+    }
+
+    /**
+     * @see ComplexStep#checkLabelAlreadyInUse(Set)
+     */
+    @Override
+    public void checkLabelAlreadyInUse(
+            final Set<String> labels )
+    {
+        if ( label != null )
+        {
+            if ( labels.contains( label ) )
+            {
+                throw new LabelAlreadyInUseException(
+                        label );
+            }
+            labels.add( label );
+        }
+        this.bodyComplexStep.checkLabelAlreadyInUse( labels );
     }
 
     ///**

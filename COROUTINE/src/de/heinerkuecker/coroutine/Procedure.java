@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine;
 
+import java.util.HashSet;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -57,6 +58,15 @@ extends HasCreationStackTraceElement
                             3 ,
                             bodySteps );
         }
+    }
+
+    /**
+     *
+     */
+    public void checkLabelAlreadyInUse()
+    {
+        this.bodyComplexStep.checkLabelAlreadyInUse(
+                new HashSet<>() );
     }
 
 }

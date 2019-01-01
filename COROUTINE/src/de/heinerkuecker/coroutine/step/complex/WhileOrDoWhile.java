@@ -3,9 +3,11 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 
@@ -137,6 +139,25 @@ extends ComplexStep<
                 bodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
+    }
+
+    /**
+     * @see ComplexStep#checkLabelAlreadyInUse(Set)
+     */
+    @Override
+    public void checkLabelAlreadyInUse(
+            final Set<String> labels )
+    {
+    	if ( label != null )
+    	{
+    		if ( labels.contains( label ) )
+    		{
+    			throw new LabelAlreadyInUseException(
+    					label );
+    		}
+    		labels.add( label );
+    	}
+        this.bodyComplexStep.checkLabelAlreadyInUse( labels );
     }
 
     ///**

@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
@@ -111,6 +112,22 @@ extends ComplexStep<
         }
 
         return result;
+    }
+
+    /**
+     * @see ComplexStep#checkLabelAlreadyInUse(Set)
+     */
+    @Override
+    public void checkLabelAlreadyInUse(
+            final Set<String> labels )
+    {
+        for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
+        {
+            if ( step instanceof ComplexStep )
+            {
+                ((ComplexStep) step).checkLabelAlreadyInUse( labels );
+            }
+        }
     }
 
     ///**

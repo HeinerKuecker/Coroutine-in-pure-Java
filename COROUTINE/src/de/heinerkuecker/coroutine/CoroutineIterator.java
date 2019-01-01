@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.NoSuchElementException;
 
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgumentNotInProcedureException;
+import de.heinerkuecker.coroutine.expression.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
@@ -115,6 +117,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             checkForUnresolvedBreaksAndContinues();
             checkForGetProcedureArgumentNotInProcedure();
+            this.complexStep.checkLabelAlreadyInUse( new HashSet<>() );
         }
 
         this.vars.putAll( initialVariableValues );
@@ -147,6 +150,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             checkForUnresolvedBreaksAndContinues();
             checkForGetProcedureArgumentNotInProcedure();
+            this.complexStep.checkLabelAlreadyInUse( new HashSet<>() );
         }
     }
 
@@ -159,7 +163,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         if ( ! unresolvedBreaksOrContinues.isEmpty() )
         {
-            throw new IllegalArgumentException(
+            throw new UnresolvedBreakOrContinueException(
                     "unresolved breaks or continues: " +
                     unresolvedBreaksOrContinues );
         }

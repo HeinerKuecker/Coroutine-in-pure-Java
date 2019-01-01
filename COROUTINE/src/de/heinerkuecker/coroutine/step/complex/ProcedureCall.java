@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.Procedure;
@@ -134,6 +135,16 @@ extends ComplexStep<
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
     {
         return this.procedure.bodyComplexStep.getUnresolvedBreaksOrContinues();
+    }
+
+    /**
+     * @see ComplexStep#checkLabelAlreadyInUse(Set)
+     */
+    @Override
+    public void checkLabelAlreadyInUse(
+            final Set<String> labels )
+    {
+        this.procedure.checkLabelAlreadyInUse();
     }
 
     /**
