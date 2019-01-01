@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine_iterator;
+package de.heinerkuecker.coroutine.iterator.test;
 
 import java.util.HashMap;
 import java.util.Map;

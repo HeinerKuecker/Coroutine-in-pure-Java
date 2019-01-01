@@ -1,6 +1,5 @@
-package de.heinerkuecker.coroutine_iterator;
+package de.heinerkuecker.coroutine.iterator.test;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
@@ -9,10 +8,10 @@ import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.For;
+import de.heinerkuecker.coroutine.step.complex.StepSequence;
 import de.heinerkuecker.coroutine.step.complex.While;
-import de.heinerkuecker.coroutine.step.flow.Continue;
+import de.heinerkuecker.coroutine.step.flow.Break;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -21,17 +20,16 @@ import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
  *
  * @author Heiner K&uuml;cker
  */
-public class CoroutineIteratorContinueTest
+public class CoroutineIteratorBreakTest
 {
     @Test
-    public void test_For_Continue()
+    public void test_For_Break()
     {
         CoroutineIterator.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetLocalVar<>(
-                                "number" ,
+                        new SetLocalVar<>( "number" ,
                                 new Value<>(
                                         0 ) ) ,
                         new For<>(
@@ -48,28 +46,26 @@ public class CoroutineIteratorContinueTest
                                 new YieldReturn<>(
                                         new Value<>(
                                                 1 ) ) ,
-                                new Continue<>() ,
-                                // this step is never executed
-                                new NoOperation<>() ) );
+                                new Break<>() ,
+                                // the third yield return is never executed
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                2 ) ) ) );
 
-        for ( int i = 0 ; i < 3 ; i++ )
-            // limited count of repetitions, but can run endless
-        {
-            CoroutineIteratorTest.assertNext(
-                    coroIter ,
-                    0 );
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
 
-            CoroutineIteratorTest.assertNext(
-                    coroIter ,
-                    1 );
-        }
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
 
-        Assert.assertTrue(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
-    public void test_For_Continue_Label()
+    public void test_For_Break_Label()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -83,15 +79,11 @@ public class CoroutineIteratorContinueTest
                                 //label
                                 "outer_for" ,
                                 // initialStep
-                                new NoOperation<>() ,
+                                new NoOperation<Integer>() ,
                                 // condition
-                                new Lesser<>(
-                                        new GetLocalVar<>(
-                                                "number" ) ,
-                                        new Value<>(
-                                                1 ) ) ,
+                                new True() ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new NoOperation<>() ,
                                 // steps
                                 new For<>(
                                         // initialStep
@@ -101,20 +93,29 @@ public class CoroutineIteratorContinueTest
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
-                                        new Continue<>(
-                                                //label
-                                                "outer_for" ) ,
+                                        new Break<>( "outer_for" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>(
                                                 new Value<>(
-                                                        1 ) ) ) ) );
+                                                        0 ) ) ) ,
+                                // this yield return is never executed
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                1 ) ) ) ,
+                        new YieldReturn<>(
+                                new Value<>(
+                                        2 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                2 );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_Negative_For_Continue_in_Initializer()
+    public void test_Negative_For_Break_in_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -130,7 +131,7 @@ public class CoroutineIteratorContinueTest
                                                 0 ) ) ,
                                 new For<>(
                                         // initialStep
-                                        new Continue<>() ,
+                                        new Break<>() ,
                                         // condition
                                         new True() ,
                                         // updateStep
@@ -142,7 +143,7 @@ public class CoroutineIteratorContinueTest
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_Negative_For_Continue_labeled_in_Initializer()
+    public void test_Negative_For_Break_in_complex_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -156,9 +157,13 @@ public class CoroutineIteratorContinueTest
                                         "number" ,
                                         new Value<>(
                                                 0 ) ) ,
-                                new For<>(
+                                new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
-                                        new Continue<>( "any" ) ,
+                                        new StepSequence<>(
+                                                // creationStackOffset
+                                                1 ,
+                                                // steps
+                                                new Break<>() ) ,
                                         // condition
                                         new True() ,
                                         // updateStep
@@ -170,7 +175,7 @@ public class CoroutineIteratorContinueTest
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_Negative_For_Continue_in_Update()
+    public void test_Negative_For_Break_labeled_in_Initializer()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -186,11 +191,11 @@ public class CoroutineIteratorContinueTest
                                                 0 ) ) ,
                                 new For<>(
                                         // initialStep
-                                        new NoOperation<>() ,
+                                        new Break<>( "wrong" ) ,
                                         // condition
                                         new True() ,
                                         // updateStep
-                                        new Continue<>() ,
+                                        new NoOperation<>() ,
                                         // steps
                                         new NoOperation<>() ) ) );
 
@@ -198,7 +203,7 @@ public class CoroutineIteratorContinueTest
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_Negative_For_Continue_labeled_in_Update()
+    public void test_Negative_For_Break_in_Update()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -218,7 +223,67 @@ public class CoroutineIteratorContinueTest
                                         // condition
                                         new True() ,
                                         // updateStep
-                                        new Continue<>( "any" ) ,
+                                        new Break<>() ,
+                                        // steps
+                                        new NoOperation<>() ) ) );
+
+        coroIter.hasNext();
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void test_Negative_For_Break_in_Complex_Update()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                                //condition
+                                new True() ,
+                                // steps
+                                new SetLocalVar<>(
+                                        "number" ,
+                                        new Value<>(
+                                                0 ) ) ,
+                                new For<Integer/*, CoroutineIterator<Integer>*/>(
+                                        // initialStep
+                                        new NoOperation<>() ,
+                                        // condition
+                                        new True() ,
+                                        // updateStep
+                                        new StepSequence<>(
+                                                // creationStackOffset
+                                                1 ,
+                                                // steps
+                                                new Break<>() ) ,
+                                        // steps
+                                        new NoOperation<>() ) ) );
+
+        coroIter.hasNext();
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void test_Negative_For_Break_labeled_in_Update()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                                //condition
+                                new True() ,
+                                // steps
+                                new SetLocalVar<>(
+                                        "number" ,
+                                        new Value<>(
+                                                0 ) ) ,
+                                new For<>(
+                                        // initialStep
+                                        new NoOperation<>() ,
+                                        // condition
+                                        new True() ,
+                                        // updateStep
+                                        new Break<>( "any" ) ,
                                         // steps
                                         new NoOperation<>() ) ) );
 
@@ -226,75 +291,53 @@ public class CoroutineIteratorContinueTest
     }
 
     @Test( expected = IllegalStateException.class )
-    public void test_Negative_For_Continue_wrong_labeled()
+    public void test_Negative_For_Break_wrong_labeled()
     {
         CoroutineIterator.initializationChecks = false;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetLocalVar<>(
-                                "number" ,
-                                new Value<>(
-                                        0 ) ) ,
-                        new For<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
-                                "outer_for" ,
-                                // initialStep
-                                new NoOperation<>() ,
-                                // condition
-                                new Lesser<>(
-                                        new GetLocalVar<>(
-                                                "number" ) ,
-                                        new Value<>(
-                                                1 ) ) ,
-                                // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                                //condition
+                                new True() ,
                                 // steps
-                                new For<>(
+                                new SetLocalVar<>(
+                                        "number" ,
+                                        new Value<>(
+                                                0 ) ) ,
+                                new For<Integer>(
+                                        //label
+                                        "for" ,
                                         // initialStep
-                                        new NoOperation<>() ,
+                                        new NoOperation<Integer>() ,
                                         // condition
                                         new True() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
-                                        new Continue<>(
-                                                //label
-                                                "wrong" ) ,
-                                        // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>(
-                                                        1 ) ) ) ) );
+                                        new Break<>( "wrong" ) ) ) );
 
         coroIter.hasNext();
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_Negative_For_Continue_wrong_labeled_with_initialization_checks()
+    public void test_Negative_For_Break_wrong_labeled_with_initialization_checks()
     {
         CoroutineIterator.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
-                        new SetLocalVar<>(
-                                "number" ,
-                                new Value<>(
-                                        0 ) ) ,
-                        new For<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
-                                "outer_for" ,
-                                // initialStep
-                                new NoOperation<>() ,
-                                // condition
-                                new Lesser<>(
-                                        new GetLocalVar<>(
-                                                "number" ) ,
-                                        new Value<>(
-                                                1 ) ) ,
-                                // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                                //condition
+                                new True() ,
                                 // steps
-                                new For<>(
+                                new SetLocalVar<>(
+                                        "number" ,
+                                        new Value<>(
+                                                0 ) ) ,
+                                new For<Integer>(
+                                        //label
+                                        "for" ,
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
@@ -302,19 +345,13 @@ public class CoroutineIteratorContinueTest
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
-                                        new Continue<>(
-                                                //label
-                                                "wrong" ) ,
-                                        // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>(
-                                                        1 ) ) ) ) );
+                                        new Break<>( "wrong" ) ) ) );
 
         coroIter.hasNext();
     }
 
     @Test
-    public void test_While_Continue()
+    public void test_While_Break()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -334,28 +371,26 @@ public class CoroutineIteratorContinueTest
                                 new YieldReturn<>(
                                         new Value<>(
                                                 1 ) ) ,
-                                new Continue<>() ,
-                                // this step is never executed
-                                new NoOperation<>() ) );
+                                new Break<>() ,
+                                // the third yield return is never executed
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                2 ) ) ) );
 
-        for ( int i = 0 ; i < 3 ; i++ )
-            // limited count of repetitions, but can run endless
-        {
-            CoroutineIteratorTest.assertNext(
-                    coroIter ,
-                    0 );
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
 
-            CoroutineIteratorTest.assertNext(
-                    coroIter ,
-                    1 );
-        }
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
 
-        Assert.assertTrue(
-                coroIter.hasNext() );
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
     }
 
     @Test
-    public void test_While_Continue_Label()
+    public void test_While_Break_Label()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -371,27 +406,47 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
+                                        //varName
                                                 "number" ) ,
                                         new Value<>(
-                                                1 ) ) ,
+                                        //compareValue
+                                                2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new True() ,
+                                        new Lesser<>(
+                                                new GetLocalVar<>(
+                                                //varName
+                                                        "number" ) ,
+                                                new Value<>(
+                                                //compareValue
+                                                        1 ) ) ,
                                         //steps
-                                        new IncLocalVar<>( "number" ) ,
-                                        new Continue<>(
+                                        new Break<>(
                                                 //label
                                                 "outer_while" ) ,
-                                        // this step is never executed
-                                        new NoOperation<>() ) ) );
+                                        // this yield return is never executed
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        0 ) ) ) ,
+                                // this yield return is never executed
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                1 ) ) ) ,
+                        new YieldReturn<>(
+                                new Value<>(
+                                        2 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                2 );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
     }
 
     @Test( expected = IllegalStateException.class )
-    public void test_Negative_While_Continue_wrong_labeled()
+    public void test_Negative_While_Break_wrong_labeled()
     {
         CoroutineIterator.initializationChecks = false;
 
@@ -407,26 +462,42 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
+                                        //varName
                                                 "number" ) ,
                                         new Value<>(
-                                                1 ) ) ,
+                                        //compareValue
+                                                2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new True() ,
+                                        new Lesser<>(
+                                                new GetLocalVar<>(
+                                                //varName
+                                                        "number" ) ,
+                                                new Value<>(
+                                                //compareValue
+                                                        1 ) ) ,
                                         //steps
-                                        new IncLocalVar<>( "number" ) ,
-                                        new Continue<>(
+                                        new Break<>(
                                                 //label
                                                 "wrong" ) ,
-                                        // this step is never executed
-                                        new NoOperation<>() ) ) );
+                                        // this yield return is never executed
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        0 ) ) ) ,
+                                // this yield return is never executed
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                1 ) ) ) ,
+                        new YieldReturn<>(
+                                new Value<>(
+                                        2 ) ) );
 
         coroIter.hasNext();
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_Negative_While_Continue_wrong_labeled_with_initialization_checks()
+    public void test_Negative_While_Break_wrong_labeled_with_initialization_checks()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -442,20 +513,36 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
+                                        //varName
                                                 "number" ) ,
                                         new Value<>(
-                                                1 ) ) ,
+                                        //compareValue
+                                                2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
-                                        new True() ,
+                                        new Lesser<>(
+                                                new GetLocalVar<>(
+                                                //varName
+                                                        "number" ) ,
+                                                new Value<>(
+                                                //compareValue
+                                                        1 ) ) ,
                                         //steps
-                                        new IncLocalVar<>( "number" ) ,
-                                        new Continue<>(
+                                        new Break<>(
                                                 //label
                                                 "wrong" ) ,
-                                        // this step is never executed
-                                        new NoOperation<>() ) ) );
+                                        // this yield return is never executed
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        0 ) ) ) ,
+                                // this yield return is never executed
+                                new YieldReturn<>(
+                                        new Value<>(
+                                                1 ) ) ) ,
+                        new YieldReturn<>(
+                                new Value<>(
+                                        2 ) ) );
 
         coroIter.hasNext();
     }
