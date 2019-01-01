@@ -3,8 +3,8 @@ package de.heinerkuecker.coroutine.step;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.util.HasCreationStackTraceElement;
 
 /**
  * Abstract super class for one step

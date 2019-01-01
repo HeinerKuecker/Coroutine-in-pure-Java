@@ -1,10 +1,7 @@
-package de.heinerkuecker.util;
-
-import de.heinerkuecker.coroutine.CoroutineIterator;
+package de.heinerkuecker.coroutine;
 
 public abstract class HasCreationStackTraceElement
 {
-
     // TODO rename to creation source position
     public final StackTraceElement creationStackTraceElement;
 

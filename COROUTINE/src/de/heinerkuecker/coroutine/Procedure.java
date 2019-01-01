@@ -6,7 +6,6 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
-import de.heinerkuecker.util.HasCreationStackTraceElement;
 
 public class Procedure<RESULT>
 extends HasCreationStackTraceElement
