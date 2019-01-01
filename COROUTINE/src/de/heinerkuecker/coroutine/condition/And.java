@@ -11,8 +11,6 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
  * And {@link Condition}.
  *
  * @author Heiner K&uuml;cker
- *
- * TODO rename to AndVals
  */
 public class And
 implements Condition/*<CoroutineIterator<?>>*/
@@ -63,6 +61,26 @@ implements Condition/*<CoroutineIterator<?>>*/
         }
 
         return result;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        final StringBuilder buff = new StringBuilder();
+
+        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        {
+            if ( buff.length() > 0 )
+            {
+                buff.append( " && " );
+            }
+            buff.append( condition );
+        }
+
+        return "! ( " + buff + " )";
     }
 
 }

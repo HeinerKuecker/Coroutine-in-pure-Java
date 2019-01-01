@@ -4,7 +4,15 @@ import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import javafx.beans.binding.BooleanExpression;
 
+/**
+ * Common interface for
+ * {@link Condition} and
+ * {@link BooleanExpression}.
+ *
+ * @author Heiner K&uuml;cker
+ */
 public interface ConditionOrBooleanExpression
 {
     /**

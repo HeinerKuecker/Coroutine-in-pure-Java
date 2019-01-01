@@ -44,5 +44,14 @@ implements Condition/*<CoroutineIterator<?>>*/
         return this.conditionToNegate.getProcedureArgumentGetsNotInProcedure();
     }
 
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        //return "Not [conditionToNegate=" + this.conditionToNegate + "]";
+        return "! ( " + this.conditionToNegate + " )";
+    }
 
 }

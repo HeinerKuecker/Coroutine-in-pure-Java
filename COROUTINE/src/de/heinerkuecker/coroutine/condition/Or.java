@@ -63,4 +63,24 @@ implements Condition/*<CoroutineIterator<?>>*/
         return result;
     }
 
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        final StringBuilder buff = new StringBuilder();
+
+        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        {
+            if ( buff.length() > 0 )
+            {
+                buff.append( " || " );
+            }
+            buff.append( condition );
+        }
+
+        return "! ( " + buff + " )";
+    }
+
 }
