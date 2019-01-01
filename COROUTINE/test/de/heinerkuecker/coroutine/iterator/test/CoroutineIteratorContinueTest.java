@@ -7,7 +7,6 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.expression.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.For;
@@ -314,40 +313,6 @@ public class CoroutineIteratorContinueTest
                                                         1 ) ) ) ) );
 
         coroIter.hasNext();
-    }
-
-    @Test( expected = LabelAlreadyInUseException.class )
-    public void test_Negative_LabelAlreadyInUse()
-    {
-        CoroutineIterator.initializationChecks = true;
-
-        new CoroutineIterator<Integer>(
-                new SetLocalVar<>(
-                        "number" ,
-                        new Value<>(
-                                0 ) ) ,
-                new While<Integer/*, CoroutineIterator<Integer>*/>(
-                        //label
-                        "label_already_in_use" ,
-                        //condition
-                        new Lesser<>(
-                                new GetLocalVar<>(
-                                        "number" ) ,
-                                new Value<>(
-                                        1 ) ) ,
-                        //steps
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
-                                "label_already_in_use" ,
-                                //condition
-                                new True() ,
-                                //steps
-                                new IncLocalVar<>( "number" ) ,
-                                new Continue<>(
-                                        //label
-                                        "label_already_in_use" ) ,
-                                // this step is never executed
-                                new NoOperation<>() ) ) );
     }
 
     @Test
