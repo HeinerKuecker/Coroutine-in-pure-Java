@@ -14,7 +14,7 @@ public abstract class HasCreationStackTraceElement
     protected HasCreationStackTraceElement(
             final int creationStackOffset )
     {
-        if ( CoroutineIterator.safeCreationSourcePosition )
+        if ( CoroutineIterator.saveCreationSourcePosition )
         {
             creationStackTraceElement = new Exception().getStackTrace()[ creationStackOffset ];
         }

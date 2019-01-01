@@ -47,7 +47,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      * For better performance of well tested
      * coroutines switch this off.
      */
-    public static boolean safeCreationSourcePosition = true;
+    public static boolean saveCreationSourcePosition = true;
 
     /**
      * Es muss ein ComplexStep sein,
