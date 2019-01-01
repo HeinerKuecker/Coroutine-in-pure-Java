@@ -46,7 +46,12 @@ implements CoroExpression<T>
     @Override
     public String toString()
     {
-        return this.getClass().getSimpleName() + "[value=" + this.value + "]";
+        return
+                this.getClass().getSimpleName() +
+                "[" +
+                //"value=" +
+                this.value +
+                "]";
     }
 
 }

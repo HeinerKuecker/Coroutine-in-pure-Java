@@ -198,6 +198,20 @@ extends ComplexStep<
                             nextBodyState );
         }
 
+        final String procedureVariablesStr;
+        if ( nextProcExecuteState == null )
+        {
+            procedureVariablesStr = "";
+        }
+        else
+        {
+            procedureVariablesStr =
+                    indent +
+                    "procedure variables: " +
+                    nextProcExecuteState.vars +
+                    "\n";
+        }
+
         return
                 indent +
                 //( this.label != null ? this.label + " : " : "" ) +
@@ -210,6 +224,7 @@ extends ComplexStep<
                 indent +
                 "procedure arguments: " + this.procedureArguments +
                 "\n" +
+                procedureVariablesStr +
                 procedureBodyComplexStepStr;
     }
 

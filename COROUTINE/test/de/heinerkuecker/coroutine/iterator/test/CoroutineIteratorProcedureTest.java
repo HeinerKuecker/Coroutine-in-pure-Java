@@ -297,14 +297,14 @@ public class CoroutineIteratorProcedureTest
 
         final Procedure<Integer> procedure0 =
                 new Procedure<>(
-                        "procedure" ,
+                        "procedure0" ,
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ) ) );
 
         final Procedure<Integer> procedure1 =
                 new Procedure<>(
-                        "procedure" ,
+                        "procedure1" ,
                         new ProcedureCall<Integer>(
                                 procedure0 ,
                                 new ProcedureArgument<>(
