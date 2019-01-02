@@ -26,20 +26,24 @@ implements ComplexStepState<
     protected boolean runInBody;
     protected ComplexStepState<?, ?, RESULT /*, PARENT*/> bodyComplexState;
 
-    protected final CoroutineIterator<RESULT> rootParent;
+    //protected final CoroutineIterator<RESULT> rootParent;
+    protected final CoroIteratorOrProcedure<RESULT> parent;
 
     /**
      * Constructor.
      */
     protected WhileOrDoWhileState(
             final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/> whileOrDoWhile ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.whileOrDoWhile = whileOrDoWhile;
 
-        this.rootParent =
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
                 Objects.requireNonNull(
-                        rootParent );
+                        parent );
     }
 
     /**
@@ -84,7 +88,8 @@ implements ComplexStepState<
                 {
                     this.bodyComplexState =
                             bodyStep.newState(
-                                    this.rootParent );
+                                    //this.rootParent
+                                    this.parent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();

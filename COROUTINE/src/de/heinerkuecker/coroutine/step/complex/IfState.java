@@ -24,20 +24,24 @@ implements ComplexStepState<
     // TODO getter
     ComplexStepState<?, ?, RESULT/*, PARENT*/> thenBodyComplexState;
 
-    private final CoroutineIterator<RESULT> rootParent;
+    //private final CoroutineIterator<RESULT> rootParent;
+    private final CoroIteratorOrProcedure<RESULT> parent;
 
     /**
      * Constructor.
      */
     public IfState(
             final If<RESULT/*, PARENT*/> _if ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this._if = _if;
 
-        this.rootParent =
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
                 Objects.requireNonNull(
-                        rootParent );
+                        parent );
     }
 
     /**
@@ -77,7 +81,8 @@ implements ComplexStepState<
             {
                 this.thenBodyComplexState =
                         thenBodyStep.newState(
-                                this.rootParent );
+                                //this.rootParent
+                                this.parent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -140,7 +145,8 @@ implements ComplexStepState<
         final IfState<RESULT/*, PARENT*/> clone =
                 new IfState<>(
                         _if ,
-                        this.rootParent );
+                        //this.rootParent
+                        this.parent );
 
         clone.runInCondition = runInCondition;
         clone.runInThenBody = runInThenBody;

@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -201,12 +202,15 @@ extends ComplexStep<
      */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         if ( initialStep instanceof ComplexStep )
         {
             final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                    ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues( parent );
+                    ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues(
+                            alreadyCheckedProcedureNames ,
+                            parent );
 
             if ( ! unresolvedBreaksOrContinues.isEmpty() )
             {
@@ -219,7 +223,9 @@ extends ComplexStep<
         if ( updateStep instanceof ComplexStep )
         {
             final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                    ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues( parent );
+                    ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues(
+                            alreadyCheckedProcedureNames ,
+                            parent );
 
             if ( ! unresolvedBreaksOrContinues.isEmpty() )
             {
@@ -233,10 +239,14 @@ extends ComplexStep<
 
         if ( initialStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) initialStep).getUnresolvedBreaksOrContinues( parent ) );
+            result.addAll( ((ComplexStep) initialStep).getUnresolvedBreaksOrContinues(
+                    alreadyCheckedProcedureNames ,
+                    parent ) );
         }
 
-        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues( parent ) )
+        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
+                alreadyCheckedProcedureNames ,
+                parent ) )
         {
             final String label = unresolvedBreakOrContinue.getLabel();
 
@@ -250,7 +260,9 @@ extends ComplexStep<
 
         if ( updateStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) updateStep).getUnresolvedBreaksOrContinues( parent ) );
+            result.addAll( ((ComplexStep) updateStep).getUnresolvedBreaksOrContinues(
+                    alreadyCheckedProcedureNames ,
+                    parent ) );
         }
 
         return result;
@@ -284,6 +296,7 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
@@ -297,6 +310,7 @@ extends ComplexStep<
             labels.add( label );
         }
         this.bodyComplexStep.checkLabelAlreadyInUse(
+                alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
     }

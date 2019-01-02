@@ -24,22 +24,26 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> tryBodyComplexState;
     ComplexStepState<?, ?, RESULT/*, PARENT*/> catchBodyComplexState;
 
-    private final CoroutineIterator<RESULT> rootParent;
+    //private final CoroutineIterator<RESULT> rootParent;
+    private final CoroIteratorOrProcedure<RESULT> parent;
 
     /**
      * Constructor.
      */
     protected TryCatchState(
             final TryCatch<RESULT/*, PARENT*/> tryCatch ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.tryCatch =
                 Objects.requireNonNull(
                         tryCatch );
 
-        this.rootParent =
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
                 Objects.requireNonNull(
-                        rootParent );
+                        parent );
     }
 
     /**
@@ -59,7 +63,8 @@ implements ComplexStepState<
             {
                 this.tryBodyComplexState =
                         tryBodyStep.newState(
-                                this.rootParent );
+                                //this.rootParent
+                                this.parent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -107,7 +112,8 @@ implements ComplexStepState<
             {
                 this.catchBodyComplexState =
                         catchBodyStep.newState(
-                                this.rootParent );
+                                //this.rootParent
+                                this.parent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -170,7 +176,8 @@ implements ComplexStepState<
         final TryCatchState<RESULT/*, PARENT*/> clone =
                 new TryCatchState<>(
                         tryCatch ,
-                        this.rootParent );
+                        //this.rootParent
+                        this.parent );
 
         clone.runInTry = runInTry;
         clone.runInCatch = runInCatch;

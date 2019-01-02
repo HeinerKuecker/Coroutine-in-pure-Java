@@ -121,9 +121,16 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             for ( final Procedure<RESULT> procedure : procedures )
             {
-            this.procedures.put(
-                    procedure.name ,
-                    procedure );
+                if ( this.procedures.containsKey( procedure.name ) )
+                {
+                    throw new IllegalArgumentException(
+                            "procedure name already in use: " +
+                            procedure.name );
+                }
+
+                this.procedures.put(
+                        procedure.name ,
+                        procedure );
             }
         }
 
@@ -137,6 +144,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUnresolvedBreaksAndContinues();
             checkForGetProcedureArgumentNotInProcedure();
             this.complexStep.checkLabelAlreadyInUse(
+                    new HashSet<>() ,
                     this ,
                     new HashSet<>() );
         }
@@ -170,6 +178,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUnresolvedBreaksAndContinues();
             checkForGetProcedureArgumentNotInProcedure();
             this.complexStep.checkLabelAlreadyInUse(
+                    new HashSet<>() ,
                     this ,
                     new HashSet<>() );
         }
@@ -204,6 +213,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
                 complexStep.getUnresolvedBreaksOrContinues(
+                        new HashSet<>() ,
                         this );
 
         if ( ! unresolvedBreaksOrContinues.isEmpty() )

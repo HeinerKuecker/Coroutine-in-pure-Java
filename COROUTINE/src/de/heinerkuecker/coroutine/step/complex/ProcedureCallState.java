@@ -27,7 +27,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     // TODO getter
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
 
-    private final CoroutineIterator<RESULT> rootParent;
+    //private final CoroutineIterator<RESULT> rootParent;
+    private final CoroIteratorOrProcedure<RESULT> parent;
 
     final Map<String, Object> procedureArgumentValues;
 
@@ -43,20 +44,23 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     protected ProcedureCallState(
             final ProcedureCall<RESULT> procedureCall ,
-            final CoroutineIterator<RESULT> rootParent ,
-            final Map<String, Object> procedureArgumentValues )
+            final Map<String, Object> procedureArgumentValues ,
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.procedureCall =
                 Objects.requireNonNull(
                         procedureCall );
 
-        this.rootParent =
-                Objects.requireNonNull(
-                        rootParent );
-
         this.procedureArgumentValues =
                 Collections.unmodifiableMap(
                         procedureArgumentValues );
+
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
+                Objects.requireNonNull(
+                        parent );
     }
 
     /**
@@ -70,14 +74,15 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             final ComplexStep<?, ?, RESULT/*, PARENT*/> bodyComplexStep =
                     //procedureCall.procedure.bodyComplexStep;
-                    this.rootParent.getProcedure( procedureCall.procedureName ).bodyComplexStep;
+                    this.parent.getRootParent().getProcedure( procedureCall.procedureName ).bodyComplexStep;
 
             if ( this.bodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.bodyComplexState =
                         bodyComplexStep.newState(
-                                this.rootParent );
+                                //this.rootParent
+                                this );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -138,8 +143,9 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         final ProcedureCallState<RESULT/*, PARENT*/> clone =
                 new ProcedureCallState<>(
                         this.procedureCall ,
-                        this.rootParent ,
-                        this.procedureArgumentValues );
+                        this.procedureArgumentValues ,
+                        //this.rootParent ,
+                        this.parent );
 
         clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
 
@@ -154,7 +160,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public void saveLastStepState()
     {
-        this.rootParent.saveLastStepState();
+        this.parent.getRootParent().saveLastStepState();
     }
 
     ///**
@@ -182,7 +188,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Object> globalVars()
     {
-        return this.rootParent.globalVars();
+        return this.parent.getRootParent().globalVars();
     }
 
     /**
@@ -200,7 +206,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public CoroutineIterator<RESULT> getRootParent()
     {
-        return this.rootParent;
+        return this.parent.getRootParent();
     }
 
     /**

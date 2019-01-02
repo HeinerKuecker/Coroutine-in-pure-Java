@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.step.complex;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.util.HCloneable;
 
 class DoWhileState<
@@ -20,11 +20,13 @@ extends WhileOrDoWhileState<
      */
     protected DoWhileState(
             final DoWhile<RESULT/*, PARENT*/> doWhile ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         super(
                 doWhile ,
-                rootParent );
+                //rootParent
+                parent );
         this.runInCondition = false;
         this.runInBody = true;
     }
@@ -47,7 +49,8 @@ extends WhileOrDoWhileState<
         final DoWhileState<RESULT/*, PARENT*/> clone =
                 new DoWhileState<RESULT/*, PARENT*/>(
                         getStep() ,
-                        super.rootParent );
+                        //super.rootParent
+                        super.parent );
 
         clone.runInCondition = runInCondition;
         clone.runInBody = runInBody;

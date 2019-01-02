@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -69,7 +70,7 @@ extends ComplexStep<
     {
         return new StepSequenceState<>(
                 this ,
-                parent.getRootParent() );
+                parent );
     }
 
     /**
@@ -77,6 +78,7 @@ extends ComplexStep<
      */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
@@ -91,7 +93,9 @@ extends ComplexStep<
             else if ( step instanceof ComplexStep )
             {
                 result.addAll(
-                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) step).getUnresolvedBreaksOrContinues( parent ) );
+                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) step).getUnresolvedBreaksOrContinues(
+                                alreadyCheckedProcedureNames ,
+                                parent ) );
             }
         }
 
@@ -116,10 +120,11 @@ extends ComplexStep<
     }
 
     /**
-     * @see ComplexStep#checkLabelAlreadyInUse(Set)
+     * @see ComplexStep#checkLabelAlreadyInUse
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
@@ -128,6 +133,7 @@ extends ComplexStep<
             if ( step instanceof ComplexStep )
             {
                 ((ComplexStep) step).checkLabelAlreadyInUse(
+                        alreadyCheckedProcedureNames ,
                         parent ,
                         labels );
             }

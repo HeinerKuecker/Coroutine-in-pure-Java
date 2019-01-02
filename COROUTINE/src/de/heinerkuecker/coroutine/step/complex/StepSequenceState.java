@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
@@ -18,20 +17,24 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
     int currentStepIndex;
     ComplexStepState<?, ?, RESULT /*, ? super PARENT*/> currentComplexState;
 
-    private final CoroutineIterator<RESULT> rootParent;
+    //private final CoroutineIterator<RESULT> rootParent;
+    private final CoroIteratorOrProcedure<RESULT> parent;
 
     /**
      *
      */
     public StepSequenceState(
             final StepSequence<RESULT /*, PARENT*/> sequence ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.sequence = sequence;
 
-        this.rootParent =
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
                 Objects.requireNonNull(
-                        rootParent );
+                        parent );
     }
 
     /**
@@ -71,7 +74,8 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
                 {
                     this.currentComplexState =
                             currentComplexStep.newState(
-                                    this.rootParent );
+                                    //this.rootParent
+                                    this.parent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
@@ -95,7 +99,8 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
                 this.currentComplexState =
                         ( (ComplexStep) sequence.getStep(
                                 this.currentStepIndex ) ).newState(
-                                        this.rootParent);
+                                        //this.rootParent
+                                        this.parent );
             }
 
             if ( ! ( executeResult == null ||
@@ -134,7 +139,8 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
         final StepSequenceState<RESULT /*, PARENT*/> clone =
                 new StepSequenceState<>(
                         sequence ,
-                        this.rootParent );
+                        //this.rootParent
+                        this.parent );
 
         clone.currentStepIndex = currentStepIndex;
         clone.currentComplexState = ( currentComplexState != null ? currentComplexState.createClone() : null );

@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,14 +119,16 @@ extends ComplexStep<
         {
             procedureArgumentValues.put(
                     arg.name ,
-                    arg.getValue( parent ) );
+                    arg.getValue(
+                            parent ) );
         }
 
         final ProcedureCallState<RESULT> procedureCallState =
                 new ProcedureCallState<>(
                         this ,
-                        parent.getRootParent() ,
-                        procedureArgumentValues );
+                        procedureArgumentValues ,
+                        //parent.getRootParent() ,
+                        parent );
 
         return procedureCallState;
     }
@@ -135,10 +138,20 @@ extends ComplexStep<
      */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent )
     {
+        if ( alreadyCheckedProcedureNames.contains( procedureName ) )
+        {
+            return Collections.emptyList();
+        }
+
+        alreadyCheckedProcedureNames.add( procedureName );
+
         //return this.procedure.bodyComplexStep.getUnresolvedBreaksOrContinues( parent );
-        return parent.getProcedure( this.procedureName ).bodyComplexStep.getUnresolvedBreaksOrContinues( parent );
+        return parent.getProcedure( this.procedureName ).bodyComplexStep.getUnresolvedBreaksOrContinues(
+                alreadyCheckedProcedureNames ,
+                parent );
     }
 
     /**
@@ -146,11 +159,21 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
+        if ( alreadyCheckedProcedureNames.contains( procedureName ) )
+        {
+            return;
+        }
+
+        alreadyCheckedProcedureNames.add( procedureName );
+
         //this.procedure.checkLabelAlreadyInUse();
-        parent.getProcedure( this.procedureName ).checkLabelAlreadyInUse( parent );
+        parent.getProcedure( this.procedureName ).checkLabelAlreadyInUse(
+                alreadyCheckedProcedureNames ,
+                parent );
     }
 
     /**

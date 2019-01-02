@@ -26,20 +26,24 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> thenBodyComplexState;
     ComplexStepState<?, ?, RESULT/*, PARENT*/> elseBodyComplexState;
 
-    private final CoroutineIterator<RESULT> rootParent;
+    //private final CoroutineIterator<RESULT> rootParent;
+    private final CoroIteratorOrProcedure<RESULT> parent;
 
     /**
      * Constructor.
      */
     public IfElseState(
             final IfElse<RESULT/*, PARENT*/> ifElse ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.ifElse = ifElse;
 
-        this.rootParent =
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
                 Objects.requireNonNull(
-                        rootParent );
+                        parent );
     }
 
     /**
@@ -78,7 +82,8 @@ implements ComplexStepState<
             {
                 this.thenBodyComplexState =
                         thenBodyStep.newState(
-                                this.rootParent );
+                                //this.rootParent
+                                this.parent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -110,7 +115,8 @@ implements ComplexStepState<
             {
                 this.elseBodyComplexState =
                         elseBodyStep.newState(
-                                this.rootParent );
+                                //this.rootParent
+                                this.parent );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
@@ -173,7 +179,8 @@ implements ComplexStepState<
         final IfElseState<RESULT/*, PARENT*/> clone =
                 new IfElseState<>(
                         ifElse ,
-                        this.rootParent );
+                        //this.rootParent
+                        this.parent );
 
         clone.runInCondition = runInCondition;
         clone.runInThenBody = runInThenBody;

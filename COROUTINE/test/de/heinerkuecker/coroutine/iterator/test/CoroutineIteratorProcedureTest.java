@@ -6,12 +6,16 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.condition.Lesser;
+import de.heinerkuecker.coroutine.expression.Add;
 import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
+import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.IncGlobalVar;
@@ -363,6 +367,75 @@ public class CoroutineIteratorProcedureTest
         CoroutineIteratorTest.assertNext(
                 coroIter ,
                 0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_ValueProcedureArgument_Recursive()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<Integer>(
+                        "procedure" ,
+                        new If<Integer>(
+                                new Lesser<>(
+                                        new GetProcedureArgument<>(
+                                                //procedureArgumentName
+                                                "argument" ) ,
+                                        new Value<>(
+                                                3 ) ) ,
+                        new YieldReturn<>(
+                                new GetProcedureArgument<>(
+                                        "argument" ) ) ,
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new ProcedureArgument<>(
+                                        // name
+                                        "argument" ,
+                                        // expression
+                                        new Add<>(
+                                                new GetProcedureArgument<>(
+                                                        "argument" ) ,
+                                                new Value<>(
+                                                        // value
+                                                        1 ) ) ) ) ) ,
+                        new FinallyReturn<>(
+                                new GetProcedureArgument<>(
+                                        "argument" ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new ProcedureArgument<>(
+                                        // name
+                                        "argument" ,
+                                        // expression
+                                        new Value<>(
+                                                // value
+                                                0 ) ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                2 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                3 );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );

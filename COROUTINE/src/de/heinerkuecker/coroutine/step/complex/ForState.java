@@ -30,20 +30,24 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
     private ComplexStepState<?, ?, RESULT/*, ? super PARENT*/> updateComplexStepState;
 
-    private final CoroutineIterator<RESULT> rootParent;
+    //private final CoroutineIterator<RESULT> rootParent;
+    private final CoroIteratorOrProcedure<RESULT> parent;
 
     /**
      * Constructor.
      */
     public ForState(
             final For<RESULT/*, PARENT*/> _for ,
-            final CoroutineIterator<RESULT> rootParent )
+            //final CoroutineIterator<RESULT> rootParent
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this._for = _for;
 
-        this.rootParent =
+        //this.rootParent = Objects.requireNonNull( rootParent );
+
+        this.parent =
                 Objects.requireNonNull(
-                        rootParent );
+                        parent );
     }
 
     /**
@@ -83,7 +87,8 @@ implements ComplexStepState<
                 {
                     this.initializerComplexStepState =
                             initializerComplexStep.newState(
-                                    this.rootParent );
+                                    //this.rootParent
+                                    this.parent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
@@ -134,7 +139,8 @@ implements ComplexStepState<
                     // for toString
                     this.bodyComplexState =
                             _for.bodyComplexStep.newState(
-                                    this.rootParent );
+                                    //this.rootParent
+                                    this.parent );
                 }
                 else
                 {
@@ -153,7 +159,8 @@ implements ComplexStepState<
                 {
                     this.bodyComplexState =
                             bodyComplexStep.newState(
-                                    this.rootParent );
+                                    //this.rootParent
+                                    this.parent );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
@@ -234,7 +241,8 @@ implements ComplexStepState<
                     {
                         this.updateComplexStepState =
                                 updateComplexStep.newState(
-                                        this.rootParent );
+                                        //this.rootParent
+                                        this.parent );
                     }
 
                     // TODO only before executing simple step: parent.saveLastStepState();
@@ -310,7 +318,8 @@ implements ComplexStepState<
         final ForState<RESULT/*, PARENT*/> clone =
                 new ForState<>(
                         _for ,
-                        this.rootParent ) ;
+                        //this.rootParent
+                        this.parent ) ;
 
         clone.runInInitializer = runInInitializer;
         clone.runInCondition = runInCondition;

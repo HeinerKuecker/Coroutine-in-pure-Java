@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -94,7 +95,7 @@ extends ComplexStep<
     {
         return new TryCatchState<RESULT/*, PARENT*/>(
                 this ,
-                parent.getRootParent() );
+                parent );
     }
 
     /**
@@ -102,18 +103,23 @@ extends ComplexStep<
      */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
         if ( tryBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) tryBodyComplexStep).getUnresolvedBreaksOrContinues( parent ) );
+            result.addAll( ((ComplexStep) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
+                    alreadyCheckedProcedureNames ,
+                    parent ) );
         }
 
         if ( catchBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) catchBodyComplexStep).getUnresolvedBreaksOrContinues( parent ) );
+            result.addAll( ((ComplexStep) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
+                    alreadyCheckedProcedureNames ,
+                    parent ) );
         }
 
         return result;
@@ -141,14 +147,17 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
         this.tryBodyComplexStep.checkLabelAlreadyInUse(
+                alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
 
         this.catchBodyComplexStep.checkLabelAlreadyInUse(
+                alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
     }

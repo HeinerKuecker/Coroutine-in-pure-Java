@@ -43,7 +43,12 @@ implements CoroExpression<T>
     @Override
     public String toString()
     {
-        return this.getClass().getSimpleName() + "[procedureArgumentName=" + this.procedureArgumentName + "]";
+        return
+                this.getClass().getSimpleName() +
+                "[" +
+                //"procedureArgumentName=" +
+                this.procedureArgumentName +
+                "]";
     }
 
     /**

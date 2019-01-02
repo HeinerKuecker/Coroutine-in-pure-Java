@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -59,7 +60,7 @@ extends ComplexStep<
     {
         return new IfState<>(
                 this ,
-                parent.getRootParent() );
+                parent );
     }
 
     /**
@@ -67,9 +68,12 @@ extends ComplexStep<
      */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return thenBodyComplexStep.getUnresolvedBreaksOrContinues( parent );
+        return thenBodyComplexStep.getUnresolvedBreaksOrContinues(
+                alreadyCheckedProcedureNames ,
+                parent );
     }
 
     /**
@@ -94,10 +98,12 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
         this.thenBodyComplexStep.checkLabelAlreadyInUse(
+                alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
     }
