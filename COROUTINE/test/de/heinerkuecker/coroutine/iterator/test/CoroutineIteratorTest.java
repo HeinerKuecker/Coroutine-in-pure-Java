@@ -46,6 +46,8 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<?> coroIter =
                 new CoroutineIterator<>(
+                        //procedures
+                        null ,
                         params ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(

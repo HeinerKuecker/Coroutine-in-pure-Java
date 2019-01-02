@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
@@ -68,7 +69,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( runInProcedure )
         {
             final ComplexStep<?, ?, RESULT/*, PARENT*/> bodyComplexStep =
-                    procedureCall.procedure.bodyComplexStep;
+                    //procedureCall.procedure.bodyComplexStep;
+                    this.rootParent.getProcedure( procedureCall.procedureName ).bodyComplexStep;
 
             if ( this.bodyComplexState == null )
                 // no existing state from previous execute call
@@ -199,6 +201,16 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroutineIterator<RESULT> getRootParent()
     {
         return this.rootParent;
+    }
+
+    /**
+     * @see CoroIteratorOrProcedure#getProcedure(String)
+     */
+    @Override
+    public Procedure<RESULT> getProcedure(
+            final String procedureName )
+    {
+        return this.getRootParent().getProcedure( procedureName );
     }
 
 }

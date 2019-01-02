@@ -86,14 +86,18 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     public final HashMap<String, Object> vars = new HashMap<>();
 
+    private final HashMap<String, Procedure<RESULT>> procedures = new HashMap<>();
+
     /**
      * Constructor.
      *
-     * @param initialVariableValues key value pairs to put initial in variables {@link #vars}
+     * @param procedures can be <code>null</code>
+     * @param initialVariableValues key value pairs to put initial in variables {@link #vars}, can be <code>null</code>
      * @param steps steps for coroutine processor
      */
     @SafeVarargs
     public CoroutineIterator(
+            final Iterable<Procedure<RESULT>> procedures ,
             final Map<String, ? extends Object> initialVariableValues ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
@@ -113,14 +117,29 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                             steps );
         }
 
+        if ( procedures != null )
+        {
+            for ( final Procedure<RESULT> procedure : procedures )
+            {
+            this.procedures.put(
+                    procedure.name ,
+                    procedure );
+            }
+        }
+
+        if ( initialVariableValues != null )
+        {
+            this.vars.putAll( initialVariableValues );
+        }
+
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
             checkForGetProcedureArgumentNotInProcedure();
-            this.complexStep.checkLabelAlreadyInUse( new HashSet<>() );
+            this.complexStep.checkLabelAlreadyInUse(
+                    this ,
+                    new HashSet<>() );
         }
-
-        this.vars.putAll( initialVariableValues );
     }
 
     /**
@@ -150,8 +169,32 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             checkForUnresolvedBreaksAndContinues();
             checkForGetProcedureArgumentNotInProcedure();
-            this.complexStep.checkLabelAlreadyInUse( new HashSet<>() );
+            this.complexStep.checkLabelAlreadyInUse(
+                    this ,
+                    new HashSet<>() );
         }
+    }
+
+    // TODO remove
+    //public void add(
+    //        final Procedure<RESULT> procedureToAdd )
+    //{
+    //    if ( this.procedures.containsKey( procedureToAdd.name ) )
+    //    {
+    //        throw new IllegalArgumentException(
+    //                "procedure already added: " +
+    //                procedureToAdd.name );
+    //    }
+    //    this.procedures.put(
+    //            procedureToAdd.name ,
+    //            procedureToAdd );
+    //}
+
+    @Override
+    public Procedure<RESULT> getProcedure(
+            final String procedureName )
+    {
+        return this.procedures.get( procedureName );
     }
 
     /**
@@ -159,7 +202,9 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     private void checkForUnresolvedBreaksAndContinues()
     {
-        final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues = complexStep.getUnresolvedBreaksOrContinues();
+        final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+                complexStep.getUnresolvedBreaksOrContinues(
+                        this );
 
         if ( ! unresolvedBreaksOrContinues.isEmpty() )
         {
@@ -341,6 +386,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 "next=" + this.next + ", " +
                 "vars=" + this.vars + "\n" +
                 this.complexStep.toString(
+                        //parent
+                        this ,
                         //indent min length for last and next
                         "     " ,
                         this.lastComplexStepState ,

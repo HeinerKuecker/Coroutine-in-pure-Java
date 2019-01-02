@@ -101,18 +101,19 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
         if ( tryBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) tryBodyComplexStep).getUnresolvedBreaksOrContinues() );
+            result.addAll( ((ComplexStep) tryBodyComplexStep).getUnresolvedBreaksOrContinues( parent ) );
         }
 
         if ( catchBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) catchBodyComplexStep).getUnresolvedBreaksOrContinues() );
+            result.addAll( ((ComplexStep) catchBodyComplexStep).getUnresolvedBreaksOrContinues( parent ) );
         }
 
         return result;
@@ -140,10 +141,16 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
-        this.tryBodyComplexStep.checkLabelAlreadyInUse( labels );
-        this.catchBodyComplexStep.checkLabelAlreadyInUse( labels );
+        this.tryBodyComplexStep.checkLabelAlreadyInUse(
+                parent ,
+                labels );
+
+        this.catchBodyComplexStep.checkLabelAlreadyInUse(
+                parent ,
+                labels );
     }
 
     ///**
@@ -162,6 +169,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             String indent ,
             ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
@@ -218,11 +226,13 @@ extends ComplexStep<
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +
                 this.tryBodyComplexStep.toString(
+                        parent ,
                         indent + " " ,
                         lastTryBodyState ,
                         nextTryBodyState ) +
                 indent + "catch ( " + this.catchExceptionClass.getName() + " )" + "\n" +
                 this.catchBodyComplexStep.toString(
+                        parent ,
                         indent + " " ,
                         lastCatchBodyState ,
                         nextCatchBodyState );

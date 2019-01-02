@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.LabelAlreadyInUseException;
@@ -105,11 +106,12 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    final public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    final public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
-        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues() )
+        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues( parent ) )
         {
             final String label = unresolvedBreakOrContinue.getLabel();
 
@@ -146,18 +148,21 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
-    	if ( label != null )
-    	{
-    		if ( labels.contains( label ) )
-    		{
-    			throw new LabelAlreadyInUseException(
-    					label );
-    		}
-    		labels.add( label );
-    	}
-        this.bodyComplexStep.checkLabelAlreadyInUse( labels );
+        if ( label != null )
+        {
+            if ( labels.contains( label ) )
+            {
+                throw new LabelAlreadyInUseException(
+                        label );
+            }
+            labels.add( label );
+        }
+        this.bodyComplexStep.checkLabelAlreadyInUse(
+                parent ,
+                labels );
     }
 
     ///**
@@ -175,6 +180,7 @@ extends ComplexStep<
      */
     @Override
     final public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextStepExecuteState )
@@ -240,6 +246,7 @@ extends ComplexStep<
                 "\n" +
                 conditionStr + " )\n" +
                 this.bodyComplexStep.toString(
+                        parent ,
                         indent + " " ,
                         lastBodyState ,
                         nextBodyState );

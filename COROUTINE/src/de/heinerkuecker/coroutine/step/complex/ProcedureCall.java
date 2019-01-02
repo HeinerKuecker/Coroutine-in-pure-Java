@@ -8,7 +8,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -33,7 +32,8 @@ extends ComplexStep<
     // */
     //final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
 
-    final Procedure<RESULT> procedure;
+    //final Procedure<RESULT> procedure;
+    final String procedureName;
 
     // TODO getter
     final Map<String, ProcedureArgument<?>> procedureArguments;
@@ -46,7 +46,8 @@ extends ComplexStep<
     //@SafeVarargs
     public ProcedureCall(
             //final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps
-            final Procedure<RESULT> procedure ,
+            //final Procedure<RESULT> procedure
+            final String procedureName ,
             final ProcedureArgument<?>... args )
     {
         super(
@@ -73,7 +74,8 @@ extends ComplexStep<
         //                    bodySteps );
         //}
 
-        this.procedure = Objects.requireNonNull( procedure );
+        //this.procedure = Objects.requireNonNull( procedure );
+        this.procedureName = Objects.requireNonNull( procedureName );
 
         final LinkedHashMap<String, ProcedureArgument<?>> argMap = new LinkedHashMap<>();
 
@@ -132,9 +134,11 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return this.procedure.bodyComplexStep.getUnresolvedBreaksOrContinues();
+        //return this.procedure.bodyComplexStep.getUnresolvedBreaksOrContinues( parent );
+        return parent.getProcedure( this.procedureName ).bodyComplexStep.getUnresolvedBreaksOrContinues( parent );
     }
 
     /**
@@ -142,9 +146,11 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
-        this.procedure.checkLabelAlreadyInUse();
+        //this.procedure.checkLabelAlreadyInUse();
+        parent.getProcedure( this.procedureName ).checkLabelAlreadyInUse( parent );
     }
 
     /**
@@ -152,6 +158,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT> nextStepExecuteState )
@@ -192,7 +199,9 @@ extends ComplexStep<
             // print procedure body only when next or last source position is in procedure
         {
             procedureBodyComplexStepStr =
-                    this.procedure.bodyComplexStep.toString(
+                    //this.procedure.bodyComplexStep.toString(
+                    parent.getProcedure(this.procedureName).bodyComplexStep.toString(
+                            parent ,
                             indent + " " ,
                             lastBodyState ,
                             nextBodyState );
@@ -217,7 +226,7 @@ extends ComplexStep<
                 //( this.label != null ? this.label + " : " : "" ) +
                 this.getClass().getSimpleName() +
                 " " +
-                this.procedure.name +
+                this.procedureName +
                 //" (" +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +

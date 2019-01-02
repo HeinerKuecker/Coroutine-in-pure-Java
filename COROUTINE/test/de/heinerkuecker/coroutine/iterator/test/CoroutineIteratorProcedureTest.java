@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine.iterator.test;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
@@ -35,8 +37,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( empty_procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new ProcedureCall<Integer>(
-                                empty_procedure ) );
+                                "empty_procedure" ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -54,8 +59,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new ProcedureCall<Integer>(
-                                procedure ) );
+                                "procedure" ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -74,8 +82,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new ProcedureCall<Integer>(
-                                procedure ) );
+                                "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -106,8 +117,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new ProcedureCall<Integer>(
-                                procedure ) );
+                                "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -132,6 +146,9 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
@@ -139,7 +156,7 @@ public class CoroutineIteratorProcedureTest
                                         //varValue
                                         0 ) ) ,
                         new ProcedureCall<Integer>(
-                                procedure ) );
+                                "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -171,8 +188,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new ProcedureCall<Integer>(
-                                procedure ) );
+                                "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -197,6 +217,9 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
@@ -204,9 +227,9 @@ public class CoroutineIteratorProcedureTest
                                         //varValue
                                         0 ) ) ,
                         new ProcedureCall<Integer>(
-                                procedure ) ,
+                                "procedure" ) ,
                         new ProcedureCall<Integer>(
-                                procedure ) );
+                                "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -234,8 +257,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new ProcedureCall<Integer>(
-                                procedure ,
+                                "procedure" ,
                                 new ProcedureArgument<>(
                                         // name
                                         "argument" ,
@@ -266,6 +292,9 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
                         new SetLocalVar<>(
                                 //varName
                                 "number" ,
@@ -273,7 +302,7 @@ public class CoroutineIteratorProcedureTest
                                         //varValue
                                         0 ) ) ,
                         new ProcedureCall<Integer>(
-                                procedure ,
+                                "procedure" ,
                                 new ProcedureArgument<>(
                                         // procedureArgumentName
                                         "argument" ,
@@ -306,7 +335,7 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<>(
                         "procedure1" ,
                         new ProcedureCall<Integer>(
-                                procedure0 ,
+                                "procedure0" ,
                                 new ProcedureArgument<>(
                                         // procedureArgumentName
                                         "argument" ,
@@ -317,6 +346,11 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        Arrays.asList(
+                                procedure0 ,
+                                procedure1 ) ,
+                        //initialVariableValues
+                        null ,
                         new SetLocalVar<>(
                                 //varName
                                 "number" ,
@@ -324,7 +358,7 @@ public class CoroutineIteratorProcedureTest
                                         //varValue
                                         0 ) ) ,
                         new ProcedureCall<Integer>(
-                                procedure1 ) );
+                                "procedure1" ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

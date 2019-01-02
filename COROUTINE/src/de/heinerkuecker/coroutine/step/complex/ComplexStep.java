@@ -42,9 +42,11 @@ extends CoroIterStep<RESULT/*, PARENT*/>
     abstract public STEP_STATE newState(
             final CoroIteratorOrProcedure<RESULT> parent );
 
-    abstract public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues();
+    abstract public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent );
 
     abstract public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels );
 
     /**
@@ -57,6 +59,7 @@ extends CoroIterStep<RESULT/*, PARENT*/>
      * @return formatted {@link String}
      */
     abstract public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             //final STEP_STATE lastStepExecuteState ,
@@ -71,6 +74,8 @@ extends CoroIterStep<RESULT/*, PARENT*/>
     public final String toString()
     {
         return toString(
+                //parent
+                null ,
                 //indent
                 "" ,
                 //lastStepExecuteState

@@ -2,10 +2,10 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
@@ -64,21 +64,9 @@ extends ComplexStep<
         }
         else
         {
-            this.initialStep = initialStep;
-
-            if ( CoroutineIterator.initializationChecks &&
-                    initialStep instanceof ComplexStep )
-            {
-                final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues();
-
-                if ( ! unresolvedBreaksOrContinues.isEmpty() )
-                {
-                    throw new IllegalArgumentException(
-                            "unpermitted breaks or continues in initial step" +
-                            unresolvedBreaksOrContinues );
-                }
-            }
+            this.initialStep =
+                    Objects.requireNonNull(
+                            initialStep );
         }
 
         if ( condition == null )
@@ -105,21 +93,9 @@ extends ComplexStep<
         }
         else
         {
-            this.updateStep = updateStep;
-
-            if ( CoroutineIterator.initializationChecks &&
-                    updateStep instanceof ComplexStep )
-            {
-                final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
-
-                if ( ! unresolvedBreaksOrContinues.isEmpty() )
-                {
-                    throw new IllegalArgumentException(
-                            "unpermitted breaks or continues in update step" +
-                            unresolvedBreaksOrContinues );
-                }
-            }
+            this.updateStep =
+                    Objects.requireNonNull(
+                            updateStep );
         }
 
         if ( steps.length == 1 &&
@@ -163,21 +139,9 @@ extends ComplexStep<
         }
         else
         {
-            this.initialStep = initialStep;
-
-            if ( CoroutineIterator.initializationChecks &&
-                    initialStep instanceof ComplexStep )
-            {
-                final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues();
-
-                if ( ! unresolvedBreaksOrContinues.isEmpty() )
-                {
-                    throw new IllegalArgumentException(
-                            "unpermitted breaks or continues in initial step" +
-                            unresolvedBreaksOrContinues );
-                }
-            }
+            this.initialStep =
+                    Objects.requireNonNull(
+                            initialStep );
         }
 
         if ( condition == null )
@@ -198,21 +162,9 @@ extends ComplexStep<
         }
         else
         {
-            this.updateStep = updateStep;
-
-            if ( CoroutineIterator.initializationChecks &&
-                    updateStep instanceof ComplexStep )
-            {
-                final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
-                        ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues();
-
-                if ( ! unresolvedBreaksOrContinues.isEmpty() )
-                {
-                    throw new IllegalArgumentException(
-                            "unpermitted breaks or continues in update step" +
-                            unresolvedBreaksOrContinues );
-                }
-            }
+            this.updateStep =
+                    Objects.requireNonNull(
+                            updateStep );
         }
 
         if ( steps.length == 1 &&
@@ -248,16 +200,43 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
+        if ( initialStep instanceof ComplexStep )
+        {
+            final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+                    ( (ComplexStep<?, ?, RESULT/*, /*PARENT * / ? super CoroutineIterator<RESULT>*/>) initialStep ).getUnresolvedBreaksOrContinues( parent );
+
+            if ( ! unresolvedBreaksOrContinues.isEmpty() )
+            {
+                throw new IllegalArgumentException(
+                        "unpermitted breaks or continues in initial step" +
+                        unresolvedBreaksOrContinues );
+            }
+        }
+
+        if ( updateStep instanceof ComplexStep )
+        {
+            final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+                    ( (ComplexStep<?, ?, RESULT/*, PARENT /*? super CoroutineIterator<RESULT>*/>) updateStep ).getUnresolvedBreaksOrContinues( parent );
+
+            if ( ! unresolvedBreaksOrContinues.isEmpty() )
+            {
+                throw new IllegalArgumentException(
+                        "unpermitted breaks or continues in update step" +
+                        unresolvedBreaksOrContinues );
+            }
+        }
+
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
         if ( initialStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) initialStep).getUnresolvedBreaksOrContinues() );
+            result.addAll( ((ComplexStep) initialStep).getUnresolvedBreaksOrContinues( parent ) );
         }
 
-        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues() )
+        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues( parent ) )
         {
             final String label = unresolvedBreakOrContinue.getLabel();
 
@@ -271,7 +250,7 @@ extends ComplexStep<
 
         if ( updateStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) updateStep).getUnresolvedBreaksOrContinues() );
+            result.addAll( ((ComplexStep) updateStep).getUnresolvedBreaksOrContinues( parent ) );
         }
 
         return result;
@@ -305,6 +284,7 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
         if ( label != null )
@@ -316,7 +296,9 @@ extends ComplexStep<
             }
             labels.add( label );
         }
-        this.bodyComplexStep.checkLabelAlreadyInUse( labels );
+        this.bodyComplexStep.checkLabelAlreadyInUse(
+                parent ,
+                labels );
     }
 
     ///**
@@ -344,6 +326,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
@@ -469,6 +452,7 @@ extends ComplexStep<
                 conditionStr + " ;\n" +
                 updateStepStr + " )\n" +
                 this.bodyComplexStep.toString(
+                        parent ,
                         indent + " " ,
                         lastBodyState ,
                         nextBodyState );

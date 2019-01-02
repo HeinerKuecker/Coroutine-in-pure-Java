@@ -62,9 +62,11 @@ extends HasCreationStackTraceElement
     /**
      *
      */
-    public void checkLabelAlreadyInUse()
+    public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.bodyComplexStep.checkLabelAlreadyInUse(
+                parent ,
                 new HashSet<>() );
     }
 

@@ -76,7 +76,8 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
@@ -90,7 +91,7 @@ extends ComplexStep<
             else if ( step instanceof ComplexStep )
             {
                 result.addAll(
-                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) step).getUnresolvedBreaksOrContinues() );
+                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) step).getUnresolvedBreaksOrContinues( parent ) );
             }
         }
 
@@ -119,13 +120,16 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
         for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
         {
             if ( step instanceof ComplexStep )
             {
-                ((ComplexStep) step).checkLabelAlreadyInUse( labels );
+                ((ComplexStep) step).checkLabelAlreadyInUse(
+                        parent ,
+                        labels );
             }
         }
     }
@@ -151,6 +155,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
@@ -192,7 +197,8 @@ extends ComplexStep<
                 }
 
                 buff.append(
-                        ( (ComplexStep<?, ?, ? /*, ?*/>) step ).toString(
+                        ( (ComplexStep<?, ?, RESULT /*, ?*/>) step ).toString(
+                                parent ,
                                 //indent
                                 indent /*+ " "*/ ,
                                 lastSubStepExecuteState ,

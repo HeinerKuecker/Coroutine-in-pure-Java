@@ -66,9 +66,10 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues()
+    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+            final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return thenBodyComplexStep.getUnresolvedBreaksOrContinues();
+        return thenBodyComplexStep.getUnresolvedBreaksOrContinues( parent );
     }
 
     /**
@@ -93,9 +94,12 @@ extends ComplexStep<
      */
     @Override
     public void checkLabelAlreadyInUse(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
-        this.thenBodyComplexStep.checkLabelAlreadyInUse( labels );
+        this.thenBodyComplexStep.checkLabelAlreadyInUse(
+                parent ,
+                labels );
     }
 
     ///**
@@ -113,6 +117,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
+            final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> nextStepExecuteState )
@@ -177,6 +182,7 @@ extends ComplexStep<
                 "\n" +
                 conditionStr + " )\n" +
                 this.thenBodyComplexStep.toString(
+                        parent ,
                         indent + " " ,
                         lastThenBodyState ,
                         nextThenBodyState );

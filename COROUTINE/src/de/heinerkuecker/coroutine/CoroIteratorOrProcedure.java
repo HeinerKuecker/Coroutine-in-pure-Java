@@ -40,4 +40,7 @@ public interface CoroIteratorOrProcedure<RESULT>
     abstract public Map<String, Object> procedureArgumentValues();
 
     abstract CoroutineIterator<RESULT> getRootParent();
+
+    abstract public Procedure<RESULT> getProcedure(
+            final String procedureName );
 }
