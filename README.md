@@ -28,4 +28,8 @@ In the coroutine is the full power of the Turing machine available, not just an 
 
 In the coroutine procedures can be used, which can call themselves recursively or each other.
 
+The toString() method returns debug information such as the last and next steps, global and local variables, and procedure parameters.
+
+In the toString() method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
+
 For users of Kotlin, this library is probably useless because Kotlin himself has coroutines.
