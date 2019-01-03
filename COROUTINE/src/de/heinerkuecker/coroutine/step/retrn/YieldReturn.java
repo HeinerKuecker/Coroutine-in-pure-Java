@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.retrn;
 
 import java.util.List;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
@@ -34,7 +35,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 //2
                 );
 
-        this.expression = expression;
+        this.expression =
+                Objects.requireNonNull(
+                        expression );
     }
 
     /**
@@ -58,8 +61,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public String toString()
     {
         return
-                this.getClass().getSimpleName() + " " +
+                this.getClass().getSimpleName() +
+                "[" +
                 expression +
+                "]" +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

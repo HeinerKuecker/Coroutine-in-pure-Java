@@ -212,6 +212,37 @@ extends ComplexStep<
             nextBodyState = null;
         }
 
+        final String procedureArgumentsStr;
+        //if ( nextProcExecuteState == null )
+        if ( lastBodyState == null &&
+                nextBodyState == null )
+        {
+            procedureArgumentsStr = "";
+        }
+        else
+        {
+            procedureArgumentsStr =
+                    indent + " " +
+                    "procedure arguments: " + this.procedureArguments +
+                    "\n";
+        }
+
+        final String procedureVariablesStr;
+        if ( nextProcExecuteState == null ||
+                ( lastBodyState == null &&
+                nextBodyState == null ) )
+        {
+            procedureVariablesStr = "";
+        }
+        else
+        {
+            procedureVariablesStr =
+                    indent + " " +
+                    "procedure variables: " +
+                    nextProcExecuteState.vars +
+                    "\n";
+        }
+
         final String procedureBodyComplexStepStr;
         if ( lastBodyState == null &&
                 nextBodyState == null )
@@ -230,20 +261,6 @@ extends ComplexStep<
                             nextBodyState );
         }
 
-        final String procedureVariablesStr;
-        if ( nextProcExecuteState == null )
-        {
-            procedureVariablesStr = "";
-        }
-        else
-        {
-            procedureVariablesStr =
-                    indent +
-                    "procedure variables: " +
-                    nextProcExecuteState.vars +
-                    "\n";
-        }
-
         return
                 indent +
                 //( this.label != null ? this.label + " : " : "" ) +
@@ -253,9 +270,7 @@ extends ComplexStep<
                 //" (" +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +
-                indent +
-                "procedure arguments: " + this.procedureArguments +
-                "\n" +
+                procedureArgumentsStr +
                 procedureVariablesStr +
                 procedureBodyComplexStepStr;
     }
