@@ -61,12 +61,12 @@ implements CoroExpression<T>
 
         if ( lhsResult == null )
         {
-            throw new NullPointerException( "lhs" );
+            throw new NullPointerException( "lhs: " + lhs );
         }
 
         if ( rhsResult == null )
         {
-            throw new NullPointerException( "rhs" );
+            throw new NullPointerException( "rhs: " + rhs );
         }
 
         if ( lhsResult instanceof Byte ||
