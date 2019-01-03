@@ -8,6 +8,7 @@ https://github.com/offbynull/coroutines
 
 https://dzone.com/articles/coroutines-in-pure-java
 https://medium.com/@esocogmbh/coroutines-in-pure-java-65661a379c85
+https://dzone.com/articles/coroutines-in-pure-java
 
 uses byte code instrumentation
 https://github.com/rendaw/java-coroutines-core
