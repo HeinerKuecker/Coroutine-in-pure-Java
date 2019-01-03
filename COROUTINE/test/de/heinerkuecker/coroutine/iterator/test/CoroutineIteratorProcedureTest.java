@@ -377,10 +377,10 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
-                new Procedure<Integer>(
+        final Procedure<Long> procedure =
+                new Procedure<Long>(
                         "procedure" ,
-                        new If<Integer>(
+                        new If<Long>(
                                 new Lesser<>(
                                         new GetProcedureArgument<>(
                                                 //procedureArgumentName
@@ -390,7 +390,7 @@ public class CoroutineIteratorProcedureTest
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ) ) ,
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<Long>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
                                         // name
@@ -401,17 +401,17 @@ public class CoroutineIteratorProcedureTest
                                                         "argument" ) ,
                                                 new Value<>(
                                                         // value
-                                                        1 ) ) ) ) ) ,
+                                                        1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ) ) );
 
-        final CoroutineIterator<Integer> coroIter =
-                new CoroutineIterator<Integer>(
+        final CoroutineIterator<Long> coroIter =
+                new CoroutineIterator<Long>(
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<Long>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
                                         // name
