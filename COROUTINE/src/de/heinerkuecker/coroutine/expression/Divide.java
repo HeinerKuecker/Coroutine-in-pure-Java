@@ -12,15 +12,15 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
- * Add
- * result of the right
+ * Divide
+ * result of the left
  * expression {@link CoroExpression}
- * to the result of the left
+ * by the result of the right
  * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
  */
-public class Add<T extends Number>
+public class Divide<T extends Number>
 implements CoroExpression<T>
 {
     /**
@@ -29,7 +29,7 @@ implements CoroExpression<T>
     public final CoroExpression<? extends T> lhs;
 
     /**
-     * Right hand side expression to add.
+     * Right hand side expression to divide by.
      */
     public final CoroExpression<? extends T> rhs;
 
@@ -39,7 +39,7 @@ implements CoroExpression<T>
      * @param lhs
      * @param rhs
      */
-    public Add(
+    public Divide(
             CoroExpression<? extends T> lhs ,
             CoroExpression<? extends T> rhs )
     {
@@ -84,24 +84,24 @@ implements CoroExpression<T>
                     rhsResult instanceof Long ||
                     rhsResult instanceof AtomicLong )
             {
-                return (T) (Long) ( ( (long) lhsLong ) + rhsResult.longValue() );
+                return (T) (Long) ( ( (long) lhsLong ) / rhsResult.longValue() );
             }
             else if ( rhsResult instanceof Float ||
                     rhsResult instanceof Double )
             {
-                return (T) (Double) ( ( (double) lhsLong ) + rhsResult.doubleValue() );
+                return (T) (Double) ( ( (double) lhsLong ) / rhsResult.doubleValue() );
             }
             else if ( rhsResult instanceof BigInteger )
             {
-                return (T) BigInteger.valueOf( lhsLong ).add( ( (BigInteger) rhsResult ) );
+                return (T) BigInteger.valueOf( lhsLong ).divide( ( (BigInteger) rhsResult ) );
             }
             else if ( rhsResult instanceof BigDecimal )
             {
-                return (T) BigDecimal.valueOf( lhsLong ).add( ( (BigDecimal) rhsResult ) );
+                return (T) BigDecimal.valueOf( lhsLong ).divide( ( (BigDecimal) rhsResult ) );
             }
         }
 
-        return (T) (Double) ( lhsResult.doubleValue() + rhsResult.doubleValue() );
+        return (T) (Double) ( lhsResult.doubleValue() / rhsResult.doubleValue() );
     }
 
     /**
@@ -127,7 +127,7 @@ implements CoroExpression<T>
     @Override
     public String toString()
     {
-        return lhs + " + " + rhs;
+        return lhs + " / " + rhs;
     }
 
 }
