@@ -386,7 +386,7 @@ public class CoroutineIteratorProcedureTest
                                                 //procedureArgumentName
                                                 "argument" ) ,
                                         new Value<>(
-                                                3 ) ) ,
+                                                3L ) ) ,
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ) ) ,
@@ -419,23 +419,23 @@ public class CoroutineIteratorProcedureTest
                                         // expression
                                         new Value<>(
                                                 // value
-                                                0 ) ) ) );
+                                                0L ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
-                0 );
+                0L );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
-                1 );
+                1L );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
-                2 );
+                2L );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
-                3 );
+                3L );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
