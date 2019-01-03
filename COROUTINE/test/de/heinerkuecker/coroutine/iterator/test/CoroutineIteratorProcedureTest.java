@@ -481,8 +481,9 @@ public class CoroutineIteratorProcedureTest
                                                         // value
                                                         1L ) ) ) ) ) ,
                         new FinallyReturn<>(
-                                new GetProcedureArgument<>(
-                                        "argument" ) ) );
+                                new GetLocalVar<>(
+                                        //localVarName
+                                        "variable" ) ) );
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
