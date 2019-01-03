@@ -61,6 +61,11 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         this.parent =
                 Objects.requireNonNull(
                         parent );
+
+        // for toString
+        this.bodyComplexState =
+                this.parent.getRootParent().getProcedure( procedureCall.procedureName ).bodyComplexStep.newState(
+                        this );
     }
 
     /**
