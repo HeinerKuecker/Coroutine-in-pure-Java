@@ -8,8 +8,6 @@ try {
 
 }
 
-Procedure
-
 SAX parser
 
 Fibonacci generator
