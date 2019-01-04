@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.step.result;
+package de.heinerkuecker.coroutine.step;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;

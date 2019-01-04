@@ -11,11 +11,11 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgumentNotInProcedureException;
 import de.heinerkuecker.coroutine.expression.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
-import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
 
 /**
  * Class to generate a sequence of values

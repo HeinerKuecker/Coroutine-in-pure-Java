@@ -7,7 +7,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 public final class ResetLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 abstract class WhileOrDoWhileState<
     WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/>,

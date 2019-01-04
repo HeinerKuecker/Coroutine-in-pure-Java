@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 /**
  * Step {@link CoroIterStep} to

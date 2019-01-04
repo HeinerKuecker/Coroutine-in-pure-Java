@@ -3,10 +3,10 @@ package de.heinerkuecker.coroutine.step.flow;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
 import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.complex.While;
-import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 
 /**

@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.result.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 public final class SetLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
