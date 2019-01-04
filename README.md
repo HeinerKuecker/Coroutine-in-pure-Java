@@ -17,6 +17,7 @@ This lib needs
 
 Just pure java.
 
+For users of Kotlin, this library is probably useless because Kotlin himself has coroutines.
 
 Java8 lambdas and method references are usable but not necessary.
 
@@ -24,12 +25,14 @@ Therefore, this code should also work with older Java versions, possibly with in
 
 The use cases for this library are coroutines with or without an iterator, where managing the state is too difficult for self-written code.
 
+There are symmetric and asymmetrical coroutines, this library only supports asymmetric coroutines because I have no use for symmetric coroutines.
+
 In the coroutine is the full power of the Turing machine available, not just an state machine.
 
-In the coroutine procedures can be used, which can call themselves recursively or each other.
+In the coroutine procedures can be used, which can call themselves or each other recursively.
 
 The toString() method returns debug information such as the last and next steps, global and local variables, and procedure parameters.
 
 In the toString() method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
 
-For users of Kotlin, this library is probably useless because Kotlin himself has coroutines.
+The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code (steps).
