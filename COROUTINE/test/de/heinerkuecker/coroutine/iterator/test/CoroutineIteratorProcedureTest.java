@@ -387,21 +387,21 @@ public class CoroutineIteratorProcedureTest
                                                 "argument" ) ,
                                         new Value<>(
                                                 3L ) ) ,
-                        new YieldReturn<>(
-                                new GetProcedureArgument<>(
-                                        "argument" ) ) ,
-                        new ProcedureCall<Long>(
-                                "procedure" ,
-                                new ProcedureArgument<>(
-                                        // name
-                                        "argument" ,
-                                        // expression
-                                        new Add<>(
-                                                new GetProcedureArgument<>(
-                                                        "argument" ) ,
-                                                new Value<>(
-                                                        // value
-                                                        1L ) ) ) ) ) ,
+                                new YieldReturn<>(
+                                        new GetProcedureArgument<>(
+                                                "argument" ) ) ,
+                                new ProcedureCall<Long>(
+                                        "procedure" ,
+                                        new ProcedureArgument<>(
+                                                // name
+                                                "argument" ,
+                                                // expression
+                                                new Add<>(
+                                                        new GetProcedureArgument<>(
+                                                                "argument" ) ,
+                                                        new Value<>(
+                                                                // value
+                                                                1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ) ) );
@@ -463,23 +463,23 @@ public class CoroutineIteratorProcedureTest
                                                 "variable" ) ,
                                         new Value<>(
                                                 3L ) ) ,
-                        new YieldReturn<>(
-                                new GetLocalVar<>(
-                                        //localVarName
-                                        "variable" ) ) ,
-                        new ProcedureCall<Long>(
-                                "procedure" ,
-                                new ProcedureArgument<>(
-                                        // name
-                                        "argument" ,
-                                        // expression
-                                        new Add<>(
-                                                new GetLocalVar<>(
-                                                        //localVarName
-                                                        "variable" ) ,
-                                                new Value<>(
-                                                        // value
-                                                        1L ) ) ) ) ) ,
+                                new YieldReturn<>(
+                                        new GetLocalVar<>(
+                                                //localVarName
+                                                "variable" ) ) ,
+                                new ProcedureCall<Long>(
+                                        "procedure" ,
+                                        new ProcedureArgument<>(
+                                                // name
+                                                "argument" ,
+                                                // expression
+                                                new Add<>(
+                                                        new GetLocalVar<>(
+                                                                //localVarName
+                                                                "variable" ) ,
+                                                        new Value<>(
+                                                                // value
+                                                                1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetLocalVar<>(
                                         //localVarName
