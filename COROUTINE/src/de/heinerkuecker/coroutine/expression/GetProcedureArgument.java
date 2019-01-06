@@ -2,11 +2,14 @@ package de.heinerkuecker.coroutine.expression;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class GetProcedureArgument<T>
+extends HasCreationStackTraceElement
 implements CoroExpression<T>
 {
     /**
@@ -17,13 +20,31 @@ implements CoroExpression<T>
     public final String procedureArgumentName;
 
     /**
+     * For type check.
+     *
+     * Solve unchecked cast.
+     */
+    public final Class<T> type;
+
+    /**
      * Constructor.
      * @param procedureArgumentName
      */
     public GetProcedureArgument(
-            final String procedureArgumentName )
+            final String procedureArgumentName ,
+            final Class<T> type )
     {
-        this.procedureArgumentName = procedureArgumentName;
+        super(
+                //creationStackOffset
+                2 );
+
+        this.procedureArgumentName =
+                Objects.requireNonNull(
+                        procedureArgumentName );
+
+        this.type =
+                Objects.requireNonNull(
+                        type );
     }
 
     /**
@@ -34,7 +55,20 @@ implements CoroExpression<T>
     public T getValue(
             final CoroIteratorOrProcedure<?> parent )
     {
-        return (T) parent.procedureArgumentValues().get( procedureArgumentName );
+        final Object procArgValue = parent.procedureArgumentValues().get( procedureArgumentName );
+
+        if ( procArgValue != null &&
+                ! type.isInstance( procArgValue ) )
+        {
+            throw new ClassCastException(
+                    procArgValue.getClass().toString() +
+                    ( this.creationStackTraceElement != null
+                        ? " " + this.creationStackTraceElement
+                        : "" )
+                    );
+        }
+
+        return (T) procArgValue;
     }
 
     /**

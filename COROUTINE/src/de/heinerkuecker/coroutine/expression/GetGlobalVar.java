@@ -2,23 +2,44 @@ package de.heinerkuecker.coroutine.expression;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class GetGlobalVar<T>
+extends HasCreationStackTraceElement
 implements CoroExpression<T>
 {
     public final String globalVarName;
+
+    /**
+     * For type check.
+     *
+     * Solve unchecked cast.
+     */
+    public final Class<T> type;
 
     /**
      * Constructor.
      * @param globalVarName
      */
     public GetGlobalVar(
-            final String globalVarName )
+            final String globalVarName ,
+            final Class<T> type )
     {
-        this.globalVarName = globalVarName;
+        super(
+                //creationStackOffset
+                2 );
+
+        this.globalVarName =
+                Objects.requireNonNull(
+                        globalVarName );
+
+        this.type =
+                Objects.requireNonNull(
+                        type );
     }
 
     /**
@@ -29,7 +50,20 @@ implements CoroExpression<T>
     public T getValue(
             final CoroIteratorOrProcedure<?> parent )
     {
-        return (T) parent.globalVars().get( globalVarName );
+        final Object globalVarValue = parent.globalVars().get( globalVarName );
+
+        if ( globalVarValue != null &&
+                ! type.isInstance( globalVarValue ) )
+        {
+            throw new ClassCastException(
+                    globalVarValue.getClass().toString() +
+                    ( this.creationStackTraceElement != null
+                        ? " " + this.creationStackTraceElement
+                        : "" )
+                    );
+        }
+
+        return (T) globalVarValue;
     }
 
     /**
@@ -38,7 +72,12 @@ implements CoroExpression<T>
     @Override
     public String toString()
     {
-        return this.getClass().getSimpleName() + "[globalVarName=" + this.globalVarName + "]";
+        return
+                this.getClass().getSimpleName() +
+                "[" +
+                //"globalVarName=" +
+                this.globalVarName +
+                "]";
     }
 
     /**

@@ -84,7 +84,7 @@ extends ComplexStep<
         if ( updateStep == null )
         {
             // C style default
-            this.updateStep = new NoOperation();
+            this.updateStep = new NoOperation<RESULT>();
         }
         else if ( updateStep instanceof BreakOrContinue )
         {
@@ -109,7 +109,7 @@ extends ComplexStep<
         {
             this.bodyComplexStep =
                     //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
-                    new StepSequence(
+                    new StepSequence<RESULT>(
                             // creationStackOffset
                             3 ,
                             steps );
@@ -178,7 +178,7 @@ extends ComplexStep<
         {
             this.bodyComplexStep =
                     //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
-                    new StepSequence(
+                    new StepSequence<RESULT>(
                             // creationStackOffset
                             3 ,
                             steps );
@@ -239,9 +239,10 @@ extends ComplexStep<
 
         if ( initialStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) initialStep).getUnresolvedBreaksOrContinues(
-                    alreadyCheckedProcedureNames ,
-                    parent ) );
+            result.addAll(
+                    ( (ComplexStep<?, ?, RESULT>) initialStep ).getUnresolvedBreaksOrContinues(
+                            alreadyCheckedProcedureNames ,
+                            parent ) );
         }
 
         for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
@@ -260,9 +261,10 @@ extends ComplexStep<
 
         if ( updateStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) updateStep).getUnresolvedBreaksOrContinues(
-                    alreadyCheckedProcedureNames ,
-                    parent ) );
+            result.addAll(
+                    ( (ComplexStep<?, ?, RESULT>) updateStep ).getUnresolvedBreaksOrContinues(
+                            alreadyCheckedProcedureNames ,
+                            parent ) );
         }
 
         return result;
@@ -315,26 +317,6 @@ extends ComplexStep<
                 labels );
     }
 
-    ///**
-    // * @see ComplexStep#setRootParent
-    // */
-    //@Override
-    //public void setRootParent(
-    //        final CoroutineIterator<RESULT> rootParent )
-    //{
-    //    this.bodyComplexStep.setRootParent( rootParent );
-    //
-    //    if ( this.initialStep instanceof ComplexStep )
-    //    {
-    //        ((ComplexStep) this.initialStep).setRootParent(rootParent);
-    //    }
-    //
-    //    if ( this.updateStep instanceof ComplexStep )
-    //    {
-    //        ((ComplexStep) this.updateStep).setRootParent(rootParent);
-    //    }
-    //}
-
     /**
      * @see ComplexStep#toString
      */
@@ -342,8 +324,8 @@ extends ComplexStep<
     public String toString(
             final CoroIteratorOrProcedure<RESULT> parent ,
             final String indent ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
+            ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
+            ComplexStepState<?, ?, RESULT> nextStepExecuteState )
     {
         final ForState<RESULT/*, PARENT*/> lastForExecuteState =
                 (ForState<RESULT/*, PARENT*/>) lastStepExecuteState;
@@ -374,6 +356,7 @@ extends ComplexStep<
         final String initialStepStr;
         if ( initialStep instanceof ComplexStep )
         {
+            // TODO
             initialStepStr = "???";
         }
         else if ( initialStep instanceof SimpleStep )
@@ -430,6 +413,7 @@ extends ComplexStep<
         final String updateStepStr;
         if ( updateStep instanceof ComplexStep )
         {
+            // TODO
             updateStepStr = "???";
         }
         else if ( updateStep instanceof SimpleStep )

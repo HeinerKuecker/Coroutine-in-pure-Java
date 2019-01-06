@@ -88,7 +88,8 @@ public class CoroutineIteratorContinueTest
                                 // condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                                "number" ) ,
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
                                                 1 ) ) ,
                                 // updateStep
@@ -246,7 +247,8 @@ public class CoroutineIteratorContinueTest
                                 // condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                                "number" ) ,
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
                                                 1 ) ) ,
                                 // updateStep
@@ -290,7 +292,8 @@ public class CoroutineIteratorContinueTest
                                 // condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                                "number" ) ,
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
                                                 1 ) ) ,
                                 // updateStep
@@ -373,7 +376,8 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                                "number" ) ,
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
                                                 1 ) ) ,
                                 //steps
@@ -409,7 +413,8 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                                "number" ) ,
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
                                                 1 ) ) ,
                                 //steps
@@ -444,7 +449,8 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                                "number" ) ,
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
                                                 1 ) ) ,
                                 //steps

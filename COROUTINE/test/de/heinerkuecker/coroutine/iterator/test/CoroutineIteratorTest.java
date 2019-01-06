@@ -51,7 +51,8 @@ public class CoroutineIteratorTest
                         params ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "param" ) ) );
+                                        "param" ,
+                                        Object.class ) ) );
 
         assertNext(
                 coroIter ,
@@ -136,7 +137,8 @@ public class CoroutineIteratorTest
                                         "a" ) ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "str" ) ) );
+                                        "str" ,
+                                        String.class ) ) );
 
         assertNext(
                 coroIter ,
@@ -159,7 +161,8 @@ public class CoroutineIteratorTest
                                         0 ) ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "number" ) ) );
+                                        "number" ,
+                                        Integer.class ) ) );
 
         Assert.assertTrue(
                 coroIter.hasNext() );
@@ -186,7 +189,8 @@ public class CoroutineIteratorTest
                         new IncLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "number" ) ) );
+                                        "number" ,
+                                        Integer.class ) ) );
 
         assertNext(
                 coroIter ,
@@ -210,7 +214,8 @@ public class CoroutineIteratorTest
                         new DecLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "number" ) ) );
+                                        "number" ,
+                                        Integer.class ) ) );
 
         assertNext(
                 coroIter ,
@@ -223,9 +228,9 @@ public class CoroutineIteratorTest
     /**
      * @param coroIter
      */
-    public static void assertNext(
-            final CoroutineIterator<? extends Object> coroIter ,
-            final Object expected )
+    public static <T> void assertNext(
+            final CoroutineIterator<? extends T> coroIter ,
+            final T expected )
     {
         //System.out.println( coroIter );
 
@@ -248,7 +253,8 @@ public class CoroutineIteratorTest
      * @param coroIter
      */
     public static void assertHasNextFalse(
-            final CoroutineIterator<? extends Object> coroIter )
+            //final CoroutineIterator<? extends Object> coroIter
+            final CoroutineIterator<?> coroIter )
     {
         //System.out.println( coroIter );
 

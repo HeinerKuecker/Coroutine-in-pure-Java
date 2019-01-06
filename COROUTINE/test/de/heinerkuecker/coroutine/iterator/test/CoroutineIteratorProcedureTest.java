@@ -117,7 +117,8 @@ public class CoroutineIteratorProcedureTest
                         new IncLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "counter" ) ) );
+                                        "counter" ,
+                                        Integer.class ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -146,7 +147,8 @@ public class CoroutineIteratorProcedureTest
                         new IncGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
-                                        "counter" ) ) );
+                                        "counter" ,
+                                        Integer.class ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -187,7 +189,8 @@ public class CoroutineIteratorProcedureTest
                         new IncLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
-                                        "counter" ) ) ,
+                                        "counter" ,
+                                        Integer.class ) ) ,
                         new NoOperation<>() );
 
         final CoroutineIterator<Integer> coroIter =
@@ -217,7 +220,8 @@ public class CoroutineIteratorProcedureTest
                         new IncGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
-                                        "counter" ) ) );
+                                        "counter" ,
+                                        Integer.class ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -257,7 +261,8 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
-                                        "argument" ) ) );
+                                        "argument" ,
+                                        Integer.class ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -292,7 +297,8 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
-                                        "argument" ) ) );
+                                        "argument" ,
+                                        Integer.class ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -313,7 +319,8 @@ public class CoroutineIteratorProcedureTest
                                         // expression
                                         new GetLocalVar<>(
                                                 // localVarName
-                                                "number" ) ) ) );
+                                                "number" ,
+                                                Integer.class ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -333,7 +340,8 @@ public class CoroutineIteratorProcedureTest
                         "procedure0" ,
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
-                                        "argument" ) ) );
+                                        "argument" ,
+                                        Integer.class ) ) );
 
         final Procedure<Integer> procedure1 =
                 new Procedure<>(
@@ -346,7 +354,8 @@ public class CoroutineIteratorProcedureTest
                                         // expression
                                         new GetGlobalVar<>(
                                                 // globalVarName
-                                                "number" ) ) ) );
+                                                "number" ,
+                                                Integer.class ) ) ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -384,12 +393,14 @@ public class CoroutineIteratorProcedureTest
                                 new Lesser<>(
                                         new GetProcedureArgument<>(
                                                 //procedureArgumentName
-                                                "argument" ) ,
+                                                "argument" ,
+                                                Long.class ) ,
                                         new Value<>(
                                                 3L ) ) ,
                                 new YieldReturn<>(
                                         new GetProcedureArgument<>(
-                                                "argument" ) ) ,
+                                                "argument" ,
+                                                Long.class ) ) ,
                                 new ProcedureCall<Long>(
                                         "procedure" ,
                                         new ProcedureArgument<>(
@@ -398,13 +409,15 @@ public class CoroutineIteratorProcedureTest
                                                 // expression
                                                 new Add<>(
                                                         new GetProcedureArgument<>(
-                                                                "argument" ) ,
+                                                                "argument" ,
+                                                                Long.class ) ,
                                                         new Value<>(
                                                                 // value
                                                                 1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetProcedureArgument<>(
-                                        "argument" ) ) );
+                                        "argument" ,
+                                        Long.class ) ) );
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
@@ -442,7 +455,7 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_ValueProcedureArgument_LocalVariable_Recursive()
+    public void test_ValueProcedureArgument_LocalVariable_Recursive_Long()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -455,18 +468,21 @@ public class CoroutineIteratorProcedureTest
                                 //varValueExpression
                                 new GetProcedureArgument<>(
                                         //procedureArgumentName
-                                        "argument" ) ) ,
+                                        "argument" ,
+                                        Long.class ) ) ,
                         new If<Long>(
                                 new Lesser<>(
                                         new GetLocalVar<>(
                                                 //localVarName
-                                                "variable" ) ,
+                                                "variable" ,
+                                                Long.class ) ,
                                         new Value<>(
                                                 3L ) ) ,
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 //localVarName
-                                                "variable" ) ) ,
+                                                "variable" ,
+                                                Long.class ) ) ,
                                 new ProcedureCall<Long>(
                                         "procedure" ,
                                         new ProcedureArgument<>(
@@ -476,14 +492,16 @@ public class CoroutineIteratorProcedureTest
                                                 new Add<>(
                                                         new GetLocalVar<>(
                                                                 //localVarName
-                                                                "variable" ) ,
+                                                                "variable" ,
+                                                                Long.class ) ,
                                                         new Value<>(
                                                                 // value
                                                                 1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetLocalVar<>(
                                         //localVarName
-                                        "variable" ) ) );
+                                        "variable" ,
+                                        Long.class ) ) );
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
@@ -518,6 +536,99 @@ public class CoroutineIteratorProcedureTest
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
+    }
+
+    @Test
+    public void test_ValueProcedureArgument_LocalVariable_Recursive_Int()
+    {
+        try
+        {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<Integer>(
+                        "procedure" ,
+                        new SetLocalVar<>(
+                                //varName
+                                "variable" ,
+                                //varValueExpression
+                                new GetProcedureArgument<>(
+                                        //procedureArgumentName
+                                        "argument" ,
+                                        Long.class ) ) ,
+                        new If<>(
+                                new Lesser<>(
+                                        new GetLocalVar<>(
+                                                //localVarName
+                                                "variable" ,
+                                                Integer.class ) ,
+                                        new Value<>(
+                                                3 ) ) ,
+                                new YieldReturn<>(
+                                        new GetLocalVar<>(
+                                                //localVarName
+                                                "variable" ,
+                                                Integer.class ) ) ,
+                                new ProcedureCall<Integer>(
+                                        "procedure" ,
+                                        new ProcedureArgument<>(
+                                                // name
+                                                "argument" ,
+                                                // expression
+                                                new Add<>(
+                                                        new GetLocalVar<>(
+                                                                //localVarName
+                                                                "variable" ,
+                                                                Integer.class ) ,
+                                                        new Value<>(
+                                                                // value
+                                                                1 ) ) ) ) ) ,
+                        new FinallyReturn<>(
+                                new GetLocalVar<>(
+                                        //localVarName
+                                        "variable" ,
+                                        Integer.class ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new ProcedureArgument<>(
+                                        // name
+                                        "argument" ,
+                                        // expression
+                                        new Value<>(
+                                                // value
+                                                0L ) ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                2 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                3 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+        }
+        catch ( Throwable t )
+        {
+            System.err.println( t.getMessage() );
+            t.printStackTrace();
+            throw t;
+        }
     }
 
 }

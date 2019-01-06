@@ -35,7 +35,8 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                         //condition
                         new Lesser<>(
                                 new GetLocalVar<>(
-                                        "number" ) ,
+                                        "number" ,
+                                        Integer.class ) ,
                                 new Value<>(
                                         1 ) ) ,
                         //steps
@@ -69,7 +70,8 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                         //condition
                         new Lesser<>(
                                 new GetLocalVar<>(
-                                        "number" ) ,
+                                        "number" ,
+                                        Integer.class ) ,
                                 new Value<>(
                                         1 ) ) ,
                         //steps
@@ -105,7 +107,8 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                         // condition
                         new Lesser<>(
                                 new GetLocalVar<>(
-                                        "number" ) ,
+                                        "number" ,
+                                        Integer.class ) ,
                                 new Value<>(
                                         1 ) ) ,
                         // updateStep

@@ -26,7 +26,8 @@ public class CoroutineIteratorExpressionNegativeTest
                         new IsNull(
                                 new GetProcedureArgument<>(
                                         //procedureArgumentName
-                                        "wrong" ) ) ,
+                                        "wrong" ,
+                                        Object.class ) ) ,
                         new NoOperation<>() ) );
     }
 

@@ -87,7 +87,8 @@ public class CoroutineIteratorIfTest
                                         //condition
                                         new Equals<>(
                                                 new GetLocalVar<>(
-                                                        "number" ) ,
+                                                        "number" ,
+                                                        Integer.class ) ,
                                                 new Value<>(
                                                         0 ) ) ,
                                         // steps
@@ -98,7 +99,8 @@ public class CoroutineIteratorIfTest
                                         //condition
                                         new Equals<>(
                                                 new GetLocalVar<>(
-                                                        "number" ) ,
+                                                        "number" ,
+                                                        Integer.class ) ,
                                                 new Value<>(
                                                         1 ) ) ,
                                         // steps

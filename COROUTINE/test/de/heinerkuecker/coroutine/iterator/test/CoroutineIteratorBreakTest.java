@@ -49,9 +49,9 @@ public class CoroutineIteratorBreakTest
                                                 1 ) ) ,
                                 new Break<>() ,
                                 // the third yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>(
-                                                2 ) ) ) );
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        2 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -374,9 +374,9 @@ public class CoroutineIteratorBreakTest
                                                 1 ) ) ,
                                 new Break<>() ,
                                 // the third yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>(
-                                                2 ) ) ) );
+                                        new YieldReturn<>(
+                                                new Value<>(
+                                                        2 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -407,20 +407,22 @@ public class CoroutineIteratorBreakTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                        //varName
-                                                "number" ) ,
+                                                //varName
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
-                                        //compareValue
+                                                //compareValue
                                                 2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser<>(
                                                 new GetLocalVar<>(
-                                                //varName
-                                                        "number" ) ,
+                                                        //varName
+                                                        "number" ,
+                                                        Integer.class ) ,
                                                 new Value<>(
-                                                //compareValue
+                                                        //compareValue
                                                         1 ) ) ,
                                         //steps
                                         new Break<>(
@@ -463,20 +465,22 @@ public class CoroutineIteratorBreakTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                        //varName
-                                                "number" ) ,
+                                                //varName
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
-                                        //compareValue
+                                                //compareValue
                                                 2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser<>(
                                                 new GetLocalVar<>(
-                                                //varName
-                                                        "number" ) ,
+                                                        //varName
+                                                        "number" ,
+                                                        Integer.class ) ,
                                                 new Value<>(
-                                                //compareValue
+                                                        //compareValue
                                                         1 ) ) ,
                                         //steps
                                         new Break<>(
@@ -514,20 +518,22 @@ public class CoroutineIteratorBreakTest
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
-                                        //varName
-                                                "number" ) ,
+                                                //varName
+                                                "number" ,
+                                                Integer.class ) ,
                                         new Value<>(
-                                        //compareValue
+                                                //compareValue
                                                 2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser<>(
                                                 new GetLocalVar<>(
-                                                //varName
-                                                        "number" ) ,
+                                                        //varName
+                                                        "number" ,
+                                                        Integer.class ) ,
                                                 new Value<>(
-                                                //compareValue
+                                                        //compareValue
                                                         1 ) ) ,
                                         //steps
                                         new Break<>(
