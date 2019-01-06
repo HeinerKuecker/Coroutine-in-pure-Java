@@ -45,13 +45,11 @@ public class CoroutineIteratorBreakTest
                                         new Value<>(
                                                 0 ) ) ,
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ,
+                                        new Value<>( 1 ) ) ,
                                 new Break<>() ,
                                 // the third yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>(
-                                                        2 ) ) ) );
+                                new YieldReturn<>(
+                                        new Value<>( 2 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -97,12 +95,10 @@ public class CoroutineIteratorBreakTest
                                         new Break<>( "outer_for" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // this yield return is never executed
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) ,
+                                        new Value<>( 1 ) ) ) ,
                         new YieldReturn<>(
                                 new Value<>(
                                         2 ) ) );
@@ -128,8 +124,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<>(
                                         // initialStep
                                         new Break<>() ,
@@ -156,8 +151,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
                                         new StepSequence<>(
@@ -188,8 +182,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<>(
                                         // initialStep
                                         new Break<>( "wrong" ) ,
@@ -216,8 +209,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<>(
                                         // initialStep
                                         new NoOperation<>() ,
@@ -244,8 +236,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
                                         new NoOperation<>() ,
@@ -276,8 +267,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<>(
                                         // initialStep
                                         new NoOperation<>() ,
@@ -304,8 +294,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<Integer>(
                                         //label
                                         "for" ,
@@ -334,8 +323,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new For<Integer>(
                                         //label
                                         "for" ,
@@ -360,23 +348,19 @@ public class CoroutineIteratorBreakTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
                                 //steps
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ,
+                                        new Value<>( 1 ) ) ,
                                 new Break<>() ,
                                 // the third yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>(
-                                                        2 ) ) ) );
+                                new YieldReturn<>(
+                                        new Value<>( 2 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -399,8 +383,7 @@ public class CoroutineIteratorBreakTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
@@ -410,9 +393,8 @@ public class CoroutineIteratorBreakTest
                                                 //varName
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                //compareValue
-                                                2 ) ) ,
+                                        //compareValue
+                                        new Value<>( 2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -421,24 +403,20 @@ public class CoroutineIteratorBreakTest
                                                         //varName
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        //compareValue
-                                                        1 ) ) ,
+                                                //compareValue
+                                                new Value<>( 1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 //label
                                                 "outer_while" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // this yield return is never executed
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) ,
+                                        new Value<>( 1 ) ) ) ,
                         new YieldReturn<>(
-                                new Value<>(
-                                        2 ) ) );
+                                new Value<>( 2 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -457,8 +435,7 @@ public class CoroutineIteratorBreakTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
@@ -468,9 +445,8 @@ public class CoroutineIteratorBreakTest
                                                 //varName
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                //compareValue
-                                                2 ) ) ,
+                                        //compareValue
+                                        new Value<>( 2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -479,24 +455,20 @@ public class CoroutineIteratorBreakTest
                                                         //varName
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        //compareValue
-                                                        1 ) ) ,
+                                                //compareValue
+                                                new Value<>( 1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 //label
                                                 "wrong" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // this yield return is never executed
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) ,
+                                        new Value<>( 1 ) ) ) ,
                         new YieldReturn<>(
-                                new Value<>(
-                                        2 ) ) );
+                                new Value<>( 2 ) ) );
 
         coroIter.hasNext();
     }
@@ -510,8 +482,7 @@ public class CoroutineIteratorBreakTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
@@ -521,9 +492,8 @@ public class CoroutineIteratorBreakTest
                                                 //varName
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                //compareValue
-                                                2 ) ) ,
+                                        //compareValue
+                                        new Value<>( 2 ) ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -532,24 +502,20 @@ public class CoroutineIteratorBreakTest
                                                         //varName
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        //compareValue
-                                                        1 ) ) ,
+                                                //compareValue
+                                                new Value<>( 1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 //label
                                                 "wrong" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // this yield return is never executed
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) ,
+                                        new Value<>( 1 ) ) ) ,
                         new YieldReturn<>(
-                                new Value<>(
-                                        2 ) ) );
+                                new Value<>( 2 ) ) );
 
         coroIter.hasNext();
     }
