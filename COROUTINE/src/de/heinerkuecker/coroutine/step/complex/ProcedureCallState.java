@@ -1,13 +1,14 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
@@ -35,7 +36,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Variables.
      */
-    public final HashMap<String, Object> vars = new HashMap<>();
+    //public final HashMap<String, Object> vars = new HashMap<>();
+    public final Variables variables = new Variables();
 
     /**
      * Constructor.
@@ -154,7 +156,13 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 
         clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
 
-        clone.vars.putAll( this.vars );
+        //clone.vars.putAll( this.vars );
+        for ( Entry<String, ? extends Object> initialVariableEntry : this.variables )
+        {
+            clone.variables.set(
+                    initialVariableEntry.getKey() ,
+                    initialVariableEntry.getValue() );
+        }
 
         return clone;
     }
@@ -168,30 +176,22 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         this.parent.getRootParent().saveLastStepState();
     }
 
-    ///**
-    // * @see ComplexStep#setRootParent
-    // */
-    //@Override
-    //public void setRootParent(
-    //        final CoroutineIterator<RESULT> rootParent )
-    //{
-    //    this.rootParent = rootParent;
-    //}
-
     /**
-     * @see CoroIteratorOrProcedure#vars()
+     * @see CoroIteratorOrProcedure#localVars()
      */
     @Override
-    public Map<String, Object> localVars()
+    //public Map<String, Object> localVars()
+    public Variables localVars()
     {
-        return this.vars;
+        return this.variables;
     }
 
     /**
      * @see CoroIteratorOrProcedure#globalVars()
      */
     @Override
-    public Map<String, Object> globalVars()
+    //public Map<String, Object> globalVars()
+    public Variables globalVars()
     {
         return this.parent.getRootParent().globalVars();
     }

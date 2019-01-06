@@ -52,7 +52,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
         final int var = (int) parent.localVars().get( varName );
-        parent.localVars().put( varName , var - 1 );
+        parent.localVars().set(
+                varName ,
+                var - 1 );
         return CoroIterStepResult.continueCoroutine();
     }
 

@@ -47,7 +47,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         final Object varValue = varValueExpression.getValue( parent );
 
-        parent.localVars().put(
+        parent.localVars().set(
                 varName ,
                 varValue );
 
@@ -55,7 +55,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()

@@ -27,12 +27,14 @@ public interface CoroIteratorOrProcedure<RESULT>
     /**
      * @return Map with local variables
      */
-    abstract public Map<String, Object> localVars();
+    //abstract public Map<String, Object> localVars();
+    abstract public Variables localVars();
 
     /**
      * @return Map with global variables
      */
-    abstract public Map<String, Object> globalVars();
+    //abstract public Map<String, Object> globalVars();
+    abstract public Variables globalVars();
 
     /**
      * @return Map with procedure arguments

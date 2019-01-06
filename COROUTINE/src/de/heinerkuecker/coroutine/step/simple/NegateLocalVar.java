@@ -49,12 +49,16 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
         if ( varValue instanceof Boolean )
         {
-            parent.localVars().put( varName , ! (boolean) varValue );
+            parent.localVars().set(
+                    varName ,
+                    ! (boolean) varValue );
         }
         else
             // null or not boolean is handled as false
         {
-            parent.localVars().put( varName , true );
+            parent.localVars().set(
+                    varName ,
+                    true );
         }
         return CoroIterStepResult.continueCoroutine();
     }

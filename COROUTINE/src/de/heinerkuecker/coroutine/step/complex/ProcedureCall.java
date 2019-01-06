@@ -223,7 +223,8 @@ extends ComplexStep<
         {
             procedureArgumentsStr =
                     indent + " " +
-                    "procedure arguments: " + this.procedureArguments +
+                    "procedure arguments: " +
+                    this.procedureArguments +
                     "\n";
         }
 
@@ -239,7 +240,7 @@ extends ComplexStep<
             procedureVariablesStr =
                     indent + " " +
                     "procedure variables: " +
-                    nextProcExecuteState.vars +
+                    nextProcExecuteState.variables +
                     "\n";
         }
 
@@ -254,7 +255,7 @@ extends ComplexStep<
         {
             procedureBodyComplexStepStr =
                     //this.procedure.bodyComplexStep.toString(
-                    parent.getProcedure(this.procedureName).bodyComplexStep.toString(
+                    parent.getProcedure( this.procedureName ).bodyComplexStep.toString(
                             parent ,
                             indent + " " ,
                             lastBodyState ,

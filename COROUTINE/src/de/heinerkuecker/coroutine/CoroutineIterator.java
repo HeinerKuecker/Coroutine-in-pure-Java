@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
@@ -84,9 +85,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Variables.
      */
-    public final HashMap<String, Object> vars = new HashMap<>();
+    //public final HashMap<String, Object> vars = new HashMap<>();
+    public final Variables variables = new Variables();
 
-    private final HashMap<String, Procedure<RESULT>> procedures = new HashMap<>();
+    private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
 
     /**
      * Constructor.
@@ -136,7 +138,13 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         if ( initialVariableValues != null )
         {
-            this.vars.putAll( initialVariableValues );
+            //this.vars.putAll( initialVariableValues );
+            for ( Entry<String, ? extends Object> initialVariableEntry : initialVariableValues.entrySet() )
+            {
+                this.variables.set(
+                        initialVariableEntry.getKey() ,
+                        initialVariableEntry.getValue() );
+            }
         }
 
         if ( initializationChecks )
@@ -349,18 +357,20 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      * @see CoroIteratorOrProcedure#localVars()
      */
     @Override
-    public Map<String, Object> localVars()
+    //public Map<String, Object> localVars()
+    public Variables localVars()
     {
-        return this.vars;
+        return this.variables;
     }
 
     /**
      * @see CoroIteratorOrProcedure#globalVars()
      */
     @Override
-    public Map<String, Object> globalVars()
+    //public Map<String, Object> globalVars()
+    public Variables globalVars()
     {
-        return this.vars;
+        return this.variables;
     }
 
     /**
@@ -394,7 +404,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 "finallyReturnRaised=" + this.finallyReturnRaised + ", " +
                 "hasNext=" + this.hasNext + ", " +
                 "next=" + this.next + ", " +
-                "vars=" + this.vars + "\n" +
+                "variables=" + this.variables + "\n" +
                 this.complexStep.toString(
                         //parent
                         this ,

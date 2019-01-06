@@ -47,7 +47,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         final Object varValue = varValueExpression.getValue( parent );
 
-        parent.globalVars().put(
+        parent.globalVars().set(
                 varName ,
                 varValue );
 

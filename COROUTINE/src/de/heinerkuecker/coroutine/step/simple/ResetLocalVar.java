@@ -38,12 +38,13 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        parent.localVars().remove( varName );
+        //parent.localVars().remove( varName );
+        parent.localVars().set( varName , null );
         return CoroIterStepResult.continueCoroutine();
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString()

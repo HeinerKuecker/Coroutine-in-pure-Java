@@ -18,6 +18,7 @@ import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncGlobalVar;
 import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
@@ -548,9 +549,12 @@ public class CoroutineIteratorProcedureTest
             final Procedure<Integer> procedure =
                     new Procedure<Integer>(
                             "procedure" ,
-                            new SetLocalVar<>(
+                            //new SetLocalVar<>(
+                            new DeclareLocalVar<>(
                                     //varName
                                     "variable" ,
+                                    // type
+                                    Integer.class ,
                                     //varValueExpression
                                     new GetProcedureArgument<>(
                                             //procedureArgumentName
