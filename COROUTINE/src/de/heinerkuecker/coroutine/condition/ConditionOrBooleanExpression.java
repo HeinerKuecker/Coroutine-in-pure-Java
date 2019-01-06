@@ -1,9 +1,7 @@
 package de.heinerkuecker.coroutine.condition;
 
-import java.util.List;
-
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
-import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.CoroExpression;
 import javafx.beans.binding.BooleanExpression;
 
 /**
@@ -14,6 +12,7 @@ import javafx.beans.binding.BooleanExpression;
  * @author Heiner K&uuml;cker
  */
 public interface ConditionOrBooleanExpression
+extends CoroExpression<Boolean>
 {
     /**
      * Execute the condition and return the result.
@@ -25,5 +24,15 @@ public interface ConditionOrBooleanExpression
             //final PARENT parent
             final CoroIteratorOrProcedure<?> parent );
 
-    abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
+    /**
+     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     */
+    @Override
+    default public Boolean getValue(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        return execute( parent );
+    }
+
+    //abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 }
