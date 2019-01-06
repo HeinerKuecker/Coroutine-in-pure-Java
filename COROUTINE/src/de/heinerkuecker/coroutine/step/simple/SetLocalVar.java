@@ -60,10 +60,13 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public String toString()
     {
-        return varName + " = " + varValueExpression +
+        return
+                varName +
+                " = " +
+                varValueExpression +
                 ( this.creationStackTraceElement != null
-                ? " " + this.creationStackTraceElement
-                        : "" );
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
     /**

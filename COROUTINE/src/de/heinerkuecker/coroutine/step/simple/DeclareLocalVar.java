@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.step.simple;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,6 +96,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
+        if ( this.varValueExpression == null )
+        {
+            return Collections.emptyList();
+        }
         return this.varValueExpression.getProcedureArgumentGetsNotInProcedure();
     }
 
