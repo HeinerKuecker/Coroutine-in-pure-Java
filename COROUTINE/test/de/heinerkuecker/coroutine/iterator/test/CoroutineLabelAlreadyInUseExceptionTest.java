@@ -27,8 +27,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         new CoroutineIterator<Integer>(
                 new SetLocalVar<>(
                         "number" ,
-                        new Value<>(
-                                0 ) ) ,
+                        new Value<>( 0 ) ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                         //label
                         "label_already_in_use" ,
@@ -37,8 +36,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
-                                new Value<>(
-                                        1 ) ) ,
+                                new Value<>( 1 ) ) ,
                         //steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
@@ -62,8 +60,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         new CoroutineIterator<Integer>(
                 new SetLocalVar<>(
                         "number" ,
-                        new Value<>(
-                                0 ) ) ,
+                        new Value<>( 0 ) ) ,
                 new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
                         //label
                         "label_already_in_use" ,
@@ -72,8 +69,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
-                                new Value<>(
-                                        1 ) ) ,
+                                new Value<>( 1 ) ) ,
                         //steps
                         new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
@@ -97,8 +93,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         new CoroutineIterator<Integer>(
                 new SetLocalVar<>(
                         "number" ,
-                        new Value<>(
-                                0 ) ) ,
+                        new Value<>( 0 ) ) ,
                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                         //label
                         "label_already_in_use" ,
@@ -109,8 +104,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
-                                new Value<>(
-                                        1 ) ) ,
+                                new Value<>( 1 ) ) ,
                         // updateStep
                         new IncLocalVar<>( "number" ) ,
                         // steps
@@ -129,8 +123,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         "label_already_in_use" ) ,
                                 // this yield return is never executed
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) ) );
+                                        new Value<>( 1 ) ) ) ) );
     }
 
 }

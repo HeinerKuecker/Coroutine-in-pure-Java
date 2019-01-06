@@ -70,8 +70,7 @@ public class CoroutineIteratorTest
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
                         new YieldReturn<>(
-                                new Value<>(
-                                        "a" ) ) );
+                                new Value<>( "a" ) ) );
 
         assertNext(
                 coroIter ,
@@ -89,8 +88,7 @@ public class CoroutineIteratorTest
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
                         new FinallyReturn<>(
-                                new Value<>(
-                                        "a" ) ) );
+                                new Value<>( "a" ) ) );
 
         assertNext(
                 coroIter ,
@@ -109,12 +107,10 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         //parent -> new CoroIterStepResult.FinallyReturnWithResult<String>( "a" )
                         new FinallyReturn<>(
-                                new Value<>(
-                                        "a" ) ) ,
+                                new Value<>( "a" ) ) ,
                         // the second step is never executed
                         new YieldReturn<>(
-                                new Value<>(
-                                        "b" ) ) );
+                                new Value<>( "b" ) ) );
 
         assertNext(
                 coroIter ,
@@ -133,8 +129,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<String>(
                         new SetLocalVar<>(
                                 "str" ,
-                                new Value<>(
-                                        "a" ) ) ,
+                                new Value<>( "a" ) ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "str" ,
@@ -157,8 +152,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "number" ,
@@ -184,8 +178,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new IncLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -209,8 +202,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        1 ) ) ,
+                                new Value<>( 1 ) ) ,
                         new DecLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(

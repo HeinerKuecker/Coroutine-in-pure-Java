@@ -40,16 +40,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<Integer>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer>(
                                 // condition
                                 new Equals<Integer>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 // steps
                                 new IncLocalVar<Integer>( "number" ) ) ,
                         new YieldReturn<>(
@@ -74,16 +72,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<Integer>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<>(
                                 // condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                3 ) ) ,
+                                        new Value<>( 3 ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -116,16 +112,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<>(
                                 // condition
                                 new Equals<>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 // steps
                                 new IncLocalVar<>( "number" ) ,
                                 new IncLocalVar<>( "number" ) ) ,
@@ -151,8 +145,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        3 ) ) ,
+                                new Value<>( 3 ) ) ,
                         new While<>(
                                 //condition
                                 new Not(
@@ -160,8 +153,7 @@ public class CoroutineIteratorWhileTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // steps
                                 new DecLocalVar<>(
                                         "number" ) ) ,
@@ -190,11 +182,9 @@ public class CoroutineIteratorWhileTest
                                 new True() ,
                                 // steps
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new FinallyReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) );
+                                        new Value<>( 1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -254,11 +244,9 @@ public class CoroutineIteratorWhileTest
                                 new True() ,
                                 // steps
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ,
+                                        new Value<>( 1 ) ) ,
                                 new FinallyReturnWithoutResult<>() ) );
 
         CoroutineIteratorTest.assertNext(
@@ -282,16 +270,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                3 ) ) ,
+                                        new Value<>( 3 ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -324,8 +310,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        2 ) ) ,
+                                new Value<>( 2 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Or(
@@ -333,14 +318,12 @@ public class CoroutineIteratorWhileTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        0 ) ) ,
+                                                new Value<>( 0 ) ) ,
                                         new Equals<>(
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -373,10 +356,10 @@ public class CoroutineIteratorWhileTest
         @SuppressWarnings("unchecked")
         final CoroutineIterator<Integer> coroIter =
         new CoroutineIterator<Integer>(
-                new SetLocalVar<>(
+                new SetLocalVar<Integer>(
                         "first" ,
-                        new Value<>(
-                                Boolean.TRUE ) ) ,
+                        //new Value<>( Boolean.TRUE )
+                        new True() ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                         //condition
                         new True() ,
@@ -391,15 +374,13 @@ public class CoroutineIteratorWhileTest
                                 (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                         {
                                                 new YieldReturn<>(
-                                                        new Value<>(
-                                                                0 ) ) ,
+                                                        new Value<>( 0 ) ) ,
                                         } ,
                                         // elseSteps
                                         (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                                 {
                                                         new FinallyReturn<>(
-                                                                new Value<>(
-                                                                        1 ) ) ,
+                                                                new Value<>( 1 ) ) ,
                                                 } ) ,
                         new NegateLocalVar<>( "first" ) ) );
 

@@ -31,15 +31,13 @@ public class CoroutineIteratorForTest
                                 // initialStep
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 // condition
                                 new Lesser<>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                3 ) ) ,
+                                        new Value<>( 3 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
@@ -73,8 +71,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "number" ,
@@ -87,8 +84,7 @@ public class CoroutineIteratorForTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                3 ) ) ,
+                                        new Value<>( 3 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
@@ -128,15 +124,13 @@ public class CoroutineIteratorForTest
                                 // initialStep
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 // condition
                                 new LesserOrEqual<>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                3 ) ) ,
+                                        new Value<>( 3 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps
@@ -176,15 +170,13 @@ public class CoroutineIteratorForTest
                                 // initialStep
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 // condition
                                 new LesserOrEqual<>(
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>(
-                                                6 ) ) ,
+                                        new Value<>( 6 ) ) ,
                                 // updateStep
                                 new IncLocalVar<>( "number" ) ,
                                 // steps

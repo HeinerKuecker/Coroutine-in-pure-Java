@@ -27,11 +27,9 @@ public class CoroutineIteratorDoWhileTest
                                 new False() ,
                                 // steps
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                0 ) ) ) ,
+                                        new Value<>( 0 ) ) ) ,
                         new YieldReturn<>(
-                                new Value<>(
-                                        1 ) ) );
+                                new Value<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -58,8 +56,7 @@ public class CoroutineIteratorDoWhileTest
                                 // no steps
                                 ) ,
                         new YieldReturn<>(
-                                new Value<>(
-                                        1 ) ) );
+                                new Value<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

@@ -48,14 +48,12 @@ public class CroutineIteratorTryCatchTest
                                         new Throw<Integer>( new TestException( "test" ) ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 // catchExceptionClass
                                 TestException.class ,
                                 // catchBodySteps
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) );
+                                        new Value<>( 1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

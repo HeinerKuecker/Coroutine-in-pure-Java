@@ -33,11 +33,9 @@ public class CoroutineIteratorIfTest
                                 new True() ,
                                 // steps
                                 new YieldReturn<>(
-                                        new Value<>(
-                                                0 ) ) ,
+                                        new Value<>( 0 ) ) ,
                                 new FinallyReturn<>(
-                                        new Value<>(
-                                                1 ) ) ) );
+                                        new Value<>( 1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -77,8 +75,7 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
@@ -89,24 +86,20 @@ public class CoroutineIteratorIfTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        0 ) ) ,
+                                                new Value<>( 0 ) ) ,
                                         // steps
                                         new YieldReturn<>(
-                                                new Value<>(
-                                                        0 ) ) ) ,
+                                                new Value<>( 0 ) ) ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Equals<>(
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>(
-                                                        1 ) ) ,
+                                                new Value<>( 1 ) ) ,
                                         // steps
                                         new FinallyReturn<>(
-                                                new Value<>(
-                                                        1 ) ) ) ,
+                                                new Value<>( 1 ) ) ) ,
                                 new IncLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(

@@ -112,9 +112,8 @@ public class CoroutineIteratorProcedureTest
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
-                                new Value<>(
-                                        //varValue
-                                        0 ) ) ,
+                                //varValue
+                                new Value<>( 0 ) ) ,
                         new IncLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -159,9 +158,8 @@ public class CoroutineIteratorProcedureTest
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
-                                new Value<>(
-                                        //varValue
-                                        0 ) ) ,
+                                //varValue
+                                new Value<>( 0 ) ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -184,9 +182,8 @@ public class CoroutineIteratorProcedureTest
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
-                                new Value<>(
-                                        //varValue
-                                        0 ) ) ,
+                                //varValue
+                                new Value<>( 0 ) ) ,
                         new IncLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -232,9 +229,8 @@ public class CoroutineIteratorProcedureTest
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
-                                new Value<>(
-                                        //varValue
-                                        0 ) ) ,
+                                //varValue
+                                new Value<>( 0 ) ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) ,
                         new ProcedureCall<Integer>(
@@ -276,9 +272,7 @@ public class CoroutineIteratorProcedureTest
                                         // name
                                         "argument" ,
                                         // expression
-                                        new Value<>(
-                                                // value
-                                                0 ) ) ) );
+                                        new Value<>( 0 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -309,9 +303,8 @@ public class CoroutineIteratorProcedureTest
                         new SetLocalVar<>(
                                 //varName
                                 "number" ,
-                                new Value<>(
-                                        //varValue
-                                        0 ) ) ,
+                                //varValue
+                                new Value<>( 0 ) ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -368,9 +361,8 @@ public class CoroutineIteratorProcedureTest
                         new SetLocalVar<>(
                                 //varName
                                 "number" ,
-                                new Value<>(
-                                        //varValue
-                                        0 ) ) ,
+                                //varValue
+                                new Value<>( 0 ) ) ,
                         new ProcedureCall<Integer>(
                                 "procedure1" ) );
 
@@ -396,8 +388,7 @@ public class CoroutineIteratorProcedureTest
                                                 //procedureArgumentName
                                                 "argument" ,
                                                 Long.class ) ,
-                                        new Value<>(
-                                                3L ) ) ,
+                                        new Value<>( 3L ) ) ,
                                 new YieldReturn<>(
                                         new GetProcedureArgument<>(
                                                 "argument" ,
@@ -412,9 +403,7 @@ public class CoroutineIteratorProcedureTest
                                                         new GetProcedureArgument<>(
                                                                 "argument" ,
                                                                 Long.class ) ,
-                                                        new Value<>(
-                                                                // value
-                                                                1L ) ) ) ) ) ,
+                                                        new Value<>( 1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -431,9 +420,7 @@ public class CoroutineIteratorProcedureTest
                                         // name
                                         "argument" ,
                                         // expression
-                                        new Value<>(
-                                                // value
-                                                0L ) ) ) );
+                                        new Value<>( 0L ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -477,8 +464,7 @@ public class CoroutineIteratorProcedureTest
                                                 //localVarName
                                                 "variable" ,
                                                 Long.class ) ,
-                                        new Value<>(
-                                                3L ) ) ,
+                                        new Value<>( 3L ) ) ,
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 //localVarName
@@ -495,9 +481,7 @@ public class CoroutineIteratorProcedureTest
                                                                 //localVarName
                                                                 "variable" ,
                                                                 Long.class ) ,
-                                                        new Value<>(
-                                                                // value
-                                                                1L ) ) ) ) ) ,
+                                                        new Value<>( 1L ) ) ) ) ) ,
                         new FinallyReturn<>(
                                 new GetLocalVar<>(
                                         //localVarName
@@ -515,9 +499,7 @@ public class CoroutineIteratorProcedureTest
                                         // name
                                         "argument" ,
                                         // expression
-                                        new Value<>(
-                                                // value
-                                                0L ) ) ) );
+                                        new Value<>( 0L ) ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -566,8 +548,7 @@ public class CoroutineIteratorProcedureTest
                                                     //localVarName
                                                     "variable" ,
                                                     Integer.class ) ,
-                                            new Value<>(
-                                                    3 ) ) ,
+                                            new Value<>( 3 ) ) ,
                                     new YieldReturn<>(
                                             new GetLocalVar<>(
                                                     //localVarName
@@ -584,9 +565,7 @@ public class CoroutineIteratorProcedureTest
                                                                     //localVarName
                                                                     "variable" ,
                                                                     Integer.class ) ,
-                                                            new Value<>(
-                                                                    // value
-                                                                    1 ) ) ) ) ) ,
+                                                            new Value<>( 1 ) ) ) ) ) ,
                             new FinallyReturn<>(
                                     new GetLocalVar<>(
                                             //localVarName
@@ -604,9 +583,7 @@ public class CoroutineIteratorProcedureTest
                                             // name
                                             "argument" ,
                                             // expression
-                                            new Value<>(
-                                                    // value
-                                                    0L ) ) ) );
+                                            new Value<>( 0L ) ) ) );
 
             CoroutineIteratorTest.assertNext(
                     coroIter ,
