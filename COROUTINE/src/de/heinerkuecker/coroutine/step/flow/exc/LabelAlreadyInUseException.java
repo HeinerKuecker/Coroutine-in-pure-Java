@@ -1,15 +1,20 @@
-package de.heinerkuecker.coroutine.expression;
+package de.heinerkuecker.coroutine.step.flow.exc;
+
+import de.heinerkuecker.coroutine.step.flow.Break;
+import de.heinerkuecker.coroutine.step.flow.Continue;
 
 /**
  * Exception is throwing
- * when a expression
- * {@link GetProcedureArgument}
- * is used outside of an
- * procedure.
+ * when a loop lable for
+ * {@link Break} or
+ * {@link Continue}
+ * is already in use
+ * in the current
+ * coroutine or procedure.
  *
  * @author Heiner K&uuml;cker
  */
-public class GetProcedureArgumentNotInProcedureException
+public class LabelAlreadyInUseException
 extends IllegalArgumentException
 {
     /**
@@ -22,7 +27,7 @@ extends IllegalArgumentException
      *
      * @param s
      */
-    public GetProcedureArgumentNotInProcedureException(
+    public LabelAlreadyInUseException(
             final String s )
     {
         super(s);

@@ -10,9 +10,9 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine.expression.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.step.flow.exc.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 

@@ -9,9 +9,9 @@ import java.util.Set;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine.expression.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.step.flow.exc.LabelAlreadyInUseException;
 
 abstract public class WhileOrDoWhile<
     WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/>,
