@@ -5,10 +5,16 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+/**
+ * Variables {@link Map} with
+ * type check at runtime.
+ *
+ * @author Heiner K&uuml;cker
+ */
 public class Variables
 implements Iterable<Entry<String, Object>>
 {
-    private final HashMap<String, Object> innerVars = new HashMap<>();
+    private final HashMap<String, Object> values = new HashMap<>();
 
     private final HashMap<String, Class<?>> types = new HashMap<>();
 
@@ -17,7 +23,7 @@ implements Iterable<Entry<String, Object>>
             final String variableName )
     {
         // TODO throw exception, when variableName is unknown
-        return this.innerVars.get(
+        return this.values.get(
                 Objects.requireNonNull(
                         variableName ) );
     }
@@ -67,7 +73,7 @@ implements Iterable<Entry<String, Object>>
     {
         if ( value == null )
         {
-            this.innerVars.remove(
+            this.values.remove(
                     Objects.requireNonNull(
                             variableName ) );
         }
@@ -81,7 +87,7 @@ implements Iterable<Entry<String, Object>>
                 }
             }
 
-            this.innerVars.put(
+            this.values.put(
                     Objects.requireNonNull(
                             variableName ) ,
                     value );
@@ -95,7 +101,7 @@ implements Iterable<Entry<String, Object>>
     public String toString()
     {
         //return "Variables [innerVars=" + this.innerVars + "]";
-        return String.valueOf( this.innerVars );
+        return String.valueOf( this.values );
     }
 
     /**
@@ -104,7 +110,7 @@ implements Iterable<Entry<String, Object>>
     @Override
     public Iterator<Entry<String, Object>> iterator()
     {
-        return this.innerVars.entrySet().iterator();
+        return this.values.entrySet().iterator();
     }
 
     /**
