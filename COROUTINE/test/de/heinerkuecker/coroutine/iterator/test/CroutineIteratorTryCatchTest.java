@@ -34,7 +34,7 @@ public class CroutineIteratorTryCatchTest
             public TestException(
                     final String message )
             {
-                super(message);
+                super( message );
             }
         }
 

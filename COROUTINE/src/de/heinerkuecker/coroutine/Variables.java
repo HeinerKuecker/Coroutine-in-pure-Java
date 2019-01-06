@@ -34,7 +34,7 @@ implements Iterable<Entry<String, Object>>
     {
         if ( types.containsKey( variableName ) )
         {
-            throw new VariableAlreadyDeclaredException(
+            throw new Variables.VariableAlreadyDeclaredException(
                     variableName );
         }
 
@@ -84,7 +84,7 @@ implements Iterable<Entry<String, Object>>
                 if ( ! types.get( variableName ).isInstance( value ) )
                 {
                     //throw new ClassCastException( value.getClass().toString() );
-                    throw new WrongVariableClassException(
+                    throw new Variables.WrongVariableClassException(
                             variableName ,
                             // expectedClass
                             types.get( variableName ) ,

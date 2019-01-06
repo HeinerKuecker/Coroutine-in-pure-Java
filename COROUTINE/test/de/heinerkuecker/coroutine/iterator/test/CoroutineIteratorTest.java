@@ -44,7 +44,7 @@ public class CoroutineIteratorTest
                 "param" ,
                 "x" );
 
-        final CoroutineIterator<?> coroIter =
+        final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
                         //procedures
                         null ,
@@ -52,7 +52,7 @@ public class CoroutineIteratorTest
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "param" ,
-                                        Object.class ) ) );
+                                        String.class ) ) );
 
         assertNext(
                 coroIter ,
@@ -221,7 +221,7 @@ public class CoroutineIteratorTest
      * @param coroIter
      */
     public static <T> void assertNext(
-            final CoroutineIterator<? extends T> coroIter ,
+            final CoroutineIterator</*? extends*/ T> coroIter ,
             final T expected )
     {
         //System.out.println( coroIter );
