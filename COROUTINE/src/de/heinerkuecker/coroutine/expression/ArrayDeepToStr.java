@@ -1,6 +1,5 @@
 package de.heinerkuecker.coroutine.expression;
 
-import java.util.Collections;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
