@@ -28,7 +28,11 @@ public class CoroutineIteratorTest
         CoroutineIterator.initializationChecks = true;
 
         final CoroutineIterator<?> coroIter =
-                new CoroutineIterator<>();
+                new CoroutineIterator<>(
+                        // type
+                        Object.class
+                        // steps
+                        );
 
         assertHasNextFalse(
                 coroIter );
@@ -46,9 +50,12 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
+                        // type
+                        String.class ,
                         //procedures
                         null ,
                         params ,
+                        // steps
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "param" ,
@@ -69,6 +76,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
+                        // type
+                        String.class ,
+                        // steps
                         new YieldReturn<>(
                                 new Value<>( "a" ) ) );
 
@@ -87,6 +97,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
+                        // type
+                        String.class ,
+                        // steps
                         new FinallyReturn<>(
                                 new Value<>( "a" ) ) );
 
@@ -105,6 +118,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
+                        // type
+                        String.class ,
+                        // steps
                         //parent -> new CoroIterStepResult.FinallyReturnWithResult<String>( "a" )
                         new FinallyReturn<>(
                                 new Value<>( "a" ) ) ,
@@ -127,6 +143,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<String>(
+                        // type
+                        String.class ,
+                        // steps
                         new SetLocalVar<>(
                                 "str" ,
                                 new Value<>( "a" ) ) ,
@@ -150,6 +169,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new SetLocalVar<>(
                                 "number" ,
                                 new Value<>( 0 ) ) ,
@@ -176,6 +198,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new SetLocalVar<>(
                                 "number" ,
                                 new Value<>( 0 ) ) ,
@@ -200,6 +225,9 @@ public class CoroutineIteratorTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new SetLocalVar<>(
                                 "number" ,
                                 new Value<>( 1 ) ) ,

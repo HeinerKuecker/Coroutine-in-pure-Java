@@ -25,6 +25,9 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         CoroutineIterator.initializationChecks = true;
 
         new CoroutineIterator<Integer>(
+                // type
+                Integer.class ,
+                // steps
                 new SetLocalVar<>(
                         "number" ,
                         new Value<>( 0 ) ) ,
@@ -58,6 +61,9 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         CoroutineIterator.initializationChecks = true;
 
         new CoroutineIterator<Integer>(
+                // type
+                Integer.class ,
+                // steps
                 new SetLocalVar<>(
                         "number" ,
                         new Value<>( 0 ) ) ,
@@ -91,6 +97,9 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         CoroutineIterator.initializationChecks = true;
 
         new CoroutineIterator<Integer>(
+                // type
+                Integer.class ,
+                // steps
                 new SetLocalVar<>(
                         "number" ,
                         new Value<>( 0 ) ) ,

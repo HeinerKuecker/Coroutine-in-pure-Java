@@ -22,6 +22,9 @@ public class CoroutineIteratorDoWhileTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new DoWhile<>(
                                 // condition
                                 new False() ,
@@ -50,6 +53,9 @@ public class CoroutineIteratorDoWhileTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new DoWhile<>(
                                 // condition
                                 new False()

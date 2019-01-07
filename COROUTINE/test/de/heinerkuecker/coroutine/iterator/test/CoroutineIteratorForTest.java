@@ -27,6 +27,9 @@ public class CoroutineIteratorForTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new For<>(
                                 // initialStep
                                 new SetLocalVar<>(
@@ -69,6 +72,9 @@ public class CoroutineIteratorForTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new SetLocalVar<>(
                                 "number" ,
                                 new Value<>( 0 ) ) ,
@@ -120,6 +126,9 @@ public class CoroutineIteratorForTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new For<>(
                                 // initialStep
                                 new SetLocalVar<>(
@@ -166,6 +175,9 @@ public class CoroutineIteratorForTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new For<>(
                                 // initialStep
                                 new SetLocalVar<>(

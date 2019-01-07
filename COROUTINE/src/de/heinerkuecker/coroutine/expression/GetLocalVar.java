@@ -19,7 +19,7 @@ implements CoroExpression<T>
      *
      * Solve unchecked cast.
      */
-    public final Class<T> type;
+    public final Class<? extends T> type;
 
     /**
      * Constructor.
@@ -27,7 +27,7 @@ implements CoroExpression<T>
      */
     public GetLocalVar(
             final String localVarName ,
-            final Class<T> type )
+            final Class<? extends T> type )
     {
         super(
                 //creationStackOffset
@@ -45,7 +45,7 @@ implements CoroExpression<T>
     /**
      * @see CoroExpression#getValue(CoroIteratorOrProcedure)
      */
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     @Override
     public T getValue(
             final CoroIteratorOrProcedure<?> parent )
@@ -63,7 +63,8 @@ implements CoroExpression<T>
                     );
         }
 
-        return (T) localVarValue;
+        //return (T) localVarValue;
+        return type.cast( localVarValue );
     }
 
     /**
@@ -77,6 +78,8 @@ implements CoroExpression<T>
                 "[" +
                 //"localVarName=" +
                 this.localVarName +
+                ":" +
+                this.type.getName() +
                 "]";
     }
 

@@ -1,24 +1,28 @@
 package de.heinerkuecker.coroutine.expression;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 
-public class Value<T>
+public class IteratorNext<T>
 implements CoroExpression<T>
 {
-    public final T value;
+    /**
+     * Expression to get {@link Iterator}.
+     */
+    public final CoroExpression<Iterator<T>> iteratorExpression;
 
     /**
      * Constructor.
      *
      * @param value
      */
-    public Value(
-            final T value )
+    public IteratorNext(
+            final CoroExpression<Iterator<T>> iteratorExpression )
     {
-        this.value = value;
+        this.iteratorExpression = iteratorExpression;
     }
 
     /**
@@ -28,7 +32,9 @@ implements CoroExpression<T>
     public T getValue(
             final CoroIteratorOrProcedure<?> parent )
     {
-        return this.value;
+        final Iterator<T> iterator = iteratorExpression.getValue( parent );
+
+        return iterator.next();
     }
 
     /**
@@ -46,12 +52,7 @@ implements CoroExpression<T>
     @Override
     public String toString()
     {
-        return
-                //this.getClass().getSimpleName() +
-                //"[" +
-                //"value=" +
-                String.valueOf( this.value );
-                //"]";
+        return this.iteratorExpression + ".next()";
     }
 
 }

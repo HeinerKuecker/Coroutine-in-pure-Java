@@ -42,9 +42,12 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( empty_procedure ) ,
                         //initialVariableValues
                         null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "empty_procedure" ) );
 
@@ -64,6 +67,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -87,6 +92,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -122,6 +129,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -152,6 +161,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -193,6 +204,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -223,6 +236,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -263,6 +278,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -297,6 +314,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -353,6 +372,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         Arrays.asList(
                                 procedure0 ,
                                 procedure1 ) ,
@@ -411,6 +432,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
+                        // type
+                        Long.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -490,6 +513,8 @@ public class CoroutineIteratorProcedureTest
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
+                        // type
+                        Long.class ,
                         Arrays.asList( procedure ) ,
                         //initialVariableValues
                         null ,
@@ -574,6 +599,8 @@ public class CoroutineIteratorProcedureTest
 
             final CoroutineIterator<Integer> coroIter =
                     new CoroutineIterator<Integer>(
+                            // type
+                            Integer.class ,
                             Arrays.asList( procedure ) ,
                             //initialVariableValues
                             null ,

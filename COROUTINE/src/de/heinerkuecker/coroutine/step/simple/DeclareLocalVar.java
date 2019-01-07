@@ -121,9 +121,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         }
 
         return
+                type.getName() +
+                " " +
                 varName +
-                " : " +
-                type +
                 initializationStr +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement

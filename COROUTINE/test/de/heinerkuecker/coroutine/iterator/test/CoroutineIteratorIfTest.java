@@ -28,6 +28,9 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
@@ -56,6 +59,9 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True()
@@ -73,6 +79,9 @@ public class CoroutineIteratorIfTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         new SetLocalVar<>(
                                 "number" ,
                                 new Value<>( 0 ) ) ,

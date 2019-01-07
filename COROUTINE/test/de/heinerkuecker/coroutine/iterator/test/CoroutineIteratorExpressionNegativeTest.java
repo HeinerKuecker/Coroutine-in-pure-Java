@@ -26,6 +26,9 @@ public class CoroutineIteratorExpressionNegativeTest
         CoroutineIterator.initializationChecks = true;
 
         new CoroutineIterator<Object>(
+                // type
+                Object.class ,
+                // steps
                 new If<>(
                         new IsNull(
                                 new GetProcedureArgument<>(
@@ -42,6 +45,8 @@ public class CoroutineIteratorExpressionNegativeTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         // steps
                         new DeclareLocalVar<>(
                                 // varName ,

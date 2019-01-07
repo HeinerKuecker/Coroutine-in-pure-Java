@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.GetProcedureArgumentNotInProcedureException;
@@ -83,6 +84,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     private RESULT next;
 
     /**
+     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     */
+    private final Class<? extends RESULT> type;
+
+    /**
      * Variables.
      */
     //public final HashMap<String, Object> vars = new HashMap<>();
@@ -99,11 +105,17 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @SafeVarargs
     public CoroutineIterator(
+            final Class<? extends RESULT> type ,
             final Iterable<Procedure<RESULT>> procedures ,
             final Map<String, ? extends Object> initialVariableValues ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
+
+        this.type =
+                Objects.requireNonNull(
+                        type );
+
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
@@ -165,8 +177,13 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @SafeVarargs
     public CoroutineIterator(
+            final Class<? extends RESULT> type ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
+        this.type =
+                Objects.requireNonNull(
+                        type );
+
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
@@ -295,7 +312,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIterStepResult.YieldReturnWithResult<RESULT> yieldReturnWithResult =
                     (CoroIterStepResult.YieldReturnWithResult<RESULT>) executeResult;
 
-            this.next = yieldReturnWithResult.result;
+            this.next =
+                    type.cast(
+                            yieldReturnWithResult.result );
+
             this.hasNext = true;
         }
         else if ( executeResult instanceof CoroIterStepResult.FinallyReturnWithResult )
@@ -303,7 +323,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIterStepResult.FinallyReturnWithResult<RESULT> yieldReturnWithResult =
                     (CoroIterStepResult.FinallyReturnWithResult<RESULT>) executeResult;
 
-            this.next = yieldReturnWithResult.result;
+
+            this.next =
+                    type.cast(
+                            yieldReturnWithResult.result );
+
             this.hasNext = true;
             finallyReturnRaised = true;
             this.nextComplexStepState = null;

@@ -40,6 +40,9 @@ public class CroutineIteratorTryCatchTest
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
                         TryCatch.<Integer/*, CoroutineIterator<Integer>*/>newTryCatch(
                                 // tryStep
                                 new StepSequence<Integer/*, CoroutineIterator<Integer>*/>(
