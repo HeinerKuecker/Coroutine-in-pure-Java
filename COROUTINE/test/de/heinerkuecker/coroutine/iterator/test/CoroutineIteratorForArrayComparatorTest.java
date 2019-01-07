@@ -8,13 +8,16 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.IteratorHasNext;
+import de.heinerkuecker.coroutine.expression.ArrayDeepToStr;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.IteratorNext;
 import de.heinerkuecker.coroutine.expression.NewArray;
+import de.heinerkuecker.coroutine.expression.StrConcat;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.step.simple.SystemOutPrintln;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 public class CoroutineIteratorForArrayComparatorTest
@@ -149,7 +152,7 @@ public class CoroutineIteratorForArrayComparatorTest
     {
         final Iterable<Integer[]> intArrDim1CoroIterable =
                 new Iterable<Integer[]>()
-                {
+        {
 
                     @Override
                     public Iterator<Integer[]> iterator()
@@ -166,7 +169,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         new YieldReturn<>( new Value<>( new Integer[] { 0 , 1 } ) ) ,
                                         new YieldReturn<>( new Value<>( new Integer[] { 1 , 0 } ) ) );
                     }
-                };
+        };
 
         final Class<? extends Iterator<Integer[]>> iteratorOfQuestionmarkClass = (Class<? extends Iterator<Integer[]>>) Iterator.class;
 
@@ -201,35 +204,53 @@ public class CoroutineIteratorForArrayComparatorTest
                                                         "iter0" ,
                                                         //type
                                                         iteratorOfQuestionmarkClass ) ) ) ,
+                                new SystemOutPrintln<Integer[][]>(
+                                        new StrConcat(
+                                                new Value<>( "subArr0: " ) ,
+                                                new ArrayDeepToStr(
+                                                        new GetLocalVar<Integer[]>(
+                                                                //localVarName
+                                                                "subArr0" ,
+                                                                //type
+                                                                Integer[].class ) ) ) ) ,
                                 new SetLocalVar<>(
                                         //varName
                                         "iter1" ,
                                         //varValueExpression
                                         new Value<>( intArrDim1CoroIterable.iterator() ) ) ,
-                                new While<>(
-                                        // condition
-                                        new IteratorHasNext(
-                                                new GetLocalVar<Iterator<?>>(
-                                                        //localVarName
-                                                        "iter1" ,
-                                                        //type
-                                                        iteratorOfQuestionmarkClass ) ) ,
-                                        // steps
-                                        new YieldReturn<Integer[][]>(
-                                                new NewArray<Integer[]>(
-                                                        // componentClass
-                                                        Integer[].class ,
-                                                        new GetLocalVar<Integer[]>(
+                                new SystemOutPrintln<Integer[][]>(
+                                        new StrConcat(
+                                                new Value<>( "iter1 hasNext: " ) ,
+                                                new IteratorHasNext(
+                                                        new GetLocalVar<Iterator<?>>(
                                                                 //localVarName
-                                                                "subArr0" ,
+                                                                "iter1" ,
                                                                 //type
-                                                                Integer[].class ) ,
-                                                        new IteratorNext<Integer[]>(
-                                                                new GetLocalVar<Iterator<Integer[]>>(
-                                                                        //localVarName
-                                                                        "iter1" ,
-                                                                        //type
-                                                                        iteratorOfQuestionmarkClass ) ) ) ) ) ) );
+                                                                iteratorOfQuestionmarkClass ) ) ) ) ) ,
+                        new While<>(
+                                // condition
+                                new IteratorHasNext(
+                                        new GetLocalVar<Iterator<?>>(
+                                                //localVarName
+                                                "iter1" ,
+                                                //type
+                                                iteratorOfQuestionmarkClass ) ) ,
+                                // steps
+                                new YieldReturn<Integer[][]>(
+                                        new NewArray<Integer[]>(
+                                                // componentClass
+                                                Integer[].class ,
+                                                new GetLocalVar<Integer[]>(
+                                                        //localVarName
+                                                        "subArr0" ,
+                                                        //type
+                                                        Integer[].class ) ,
+                                                new IteratorNext<Integer[]>(
+                                                        new GetLocalVar<Iterator<Integer[]>>(
+                                                                //localVarName
+                                                                "iter1" ,
+                                                                //type
+                                                                iteratorOfQuestionmarkClass ) ) ) ) ) );
 
         assertNext(
                 intArrDim2CoroIter ,
