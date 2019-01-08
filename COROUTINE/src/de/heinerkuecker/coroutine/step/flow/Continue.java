@@ -6,6 +6,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
 import de.heinerkuecker.coroutine.step.complex.For;
+import de.heinerkuecker.coroutine.step.complex.ForEach;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 
@@ -13,6 +14,7 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * Step {@link CoroIterStep}
  * to continue current loop like
  * {@link For},
+ * {@link ForEach},
  * {@link While} or
  * {@link DoWhile}.
  *

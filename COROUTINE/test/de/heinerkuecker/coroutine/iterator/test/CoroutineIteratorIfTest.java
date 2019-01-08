@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 public class CoroutineIteratorIfTest
 {
     @Test
-    public void test_If_True()
+    public void test_If_True_0()
     {
         CoroutineIterator.initializationChecks = true;
 
@@ -34,6 +34,47 @@ public class CoroutineIteratorIfTest
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
+                                // steps
+                                new YieldReturn<>(
+                                        new Value<>( 0 ) ) ,
+                                new FinallyReturn<>(
+                                        new Value<>( 1 ) ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_If_True_1()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
+                        new SetLocalVar<>(
+                                //varName
+                                "condition_var" ,
+                                //varValueExpression
+                                new True() ) ,
+                        new If<Integer/*, CoroutineIterator<Integer>*/>(
+                                //condition
+                                //new True() ,
+                                new GetLocalVar<>(
+                                        // localVarName
+                                        "condition_var" ,
+                                        // type
+                                        Boolean.class ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new Value<>( 0 ) ) ,

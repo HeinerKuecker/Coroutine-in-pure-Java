@@ -7,6 +7,7 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
@@ -38,6 +39,21 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         this.expression =
                 Objects.requireNonNull(
                         expression );
+    }
+
+    /**
+     * Constructor.
+     */
+    public FinallyReturn(
+            final RESULT value )
+    {
+        super(
+                //creationStackOffset
+                //2
+                );
+
+        this.expression =
+                new Value<>( value );
     }
 
     /**

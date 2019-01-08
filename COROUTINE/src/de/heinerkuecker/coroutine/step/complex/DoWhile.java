@@ -2,6 +2,8 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
+import de.heinerkuecker.coroutine.condition.IsTrue;
+import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class DoWhile<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
@@ -20,12 +22,50 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public DoWhile(
-            ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
-            CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
+            final ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
+            final CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         super(
                 //label
                 null ,
+                condition ,
+                steps );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param condition
+     * @param steps
+     */
+    @SafeVarargs
+    public DoWhile(
+            final CoroExpression<Boolean> condition ,
+            final CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
+    {
+        super(
+                //label
+                null ,
+                new IsTrue(
+                        condition ) ,
+                steps );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param label
+     * @param condition
+     * @param steps
+     */
+    @SafeVarargs
+    public DoWhile(
+            final String label ,
+            final ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
+            final CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
+    {
+        super(
+                label ,
                 condition ,
                 steps );
     }
@@ -39,13 +79,14 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public DoWhile(
-            String label ,
-            ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
-            CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
+            final String label ,
+            final CoroExpression<Boolean> condition ,
+            final CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         super(
                 label ,
-                condition ,
+                new IsTrue(
+                        condition ) ,
                 steps );
     }
 

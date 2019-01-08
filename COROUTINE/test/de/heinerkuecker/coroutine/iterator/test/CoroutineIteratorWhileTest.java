@@ -7,7 +7,6 @@ import de.heinerkuecker.coroutine.condition.Equals;
 import de.heinerkuecker.coroutine.condition.False;
 import de.heinerkuecker.coroutine.condition.Greater;
 import de.heinerkuecker.coroutine.condition.GreaterOrEqual;
-import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.Not;
 import de.heinerkuecker.coroutine.condition.Or;
@@ -469,21 +468,18 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new IfElse<>(
                                 //condition
-                                new IsTrue(
-                                        new GetLocalVar<>(
-                                                "first" ,
-                                                Boolean.class ) ) ,
+                                new GetLocalVar<>(
+                                        "first" ,
+                                        Boolean.class ) ,
                                 // thenSteps
                                 (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                         {
-                                                new YieldReturn<>(
-                                                        new Value<>( 0 ) ) ,
+                                                new YieldReturn<>( 0 ) ,
                                         } ,
                                         // elseSteps
                                         (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
                                                 {
-                                                        new FinallyReturn<>(
-                                                                new Value<>( 1 ) ) ,
+                                                        new FinallyReturn<>( 1 ) ,
                                                 } ) ,
                         new NegateLocalVar<>( "first" ) ) );
 

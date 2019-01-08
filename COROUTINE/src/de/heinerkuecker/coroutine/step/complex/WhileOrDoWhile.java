@@ -66,7 +66,7 @@ extends ComplexStep<
      * Constructor.
      */
     @SafeVarargs
-    public WhileOrDoWhile(
+    WhileOrDoWhile(
             final String label ,
             final ConditionOrBooleanExpression condition ,
             final CoroIterStep<? extends RESULT /*, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
