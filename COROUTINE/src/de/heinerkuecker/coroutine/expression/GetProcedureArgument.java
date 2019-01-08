@@ -68,7 +68,7 @@ implements CoroExpression<T>
                     );
         }
 
-        return (T) procArgValue;
+        return type.cast( procArgValue );
     }
 
     /**

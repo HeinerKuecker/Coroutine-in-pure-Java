@@ -63,7 +63,6 @@ implements CoroExpression<T>
                     );
         }
 
-        //return (T) localVarValue;
         return type.cast( localVarValue );
     }
 

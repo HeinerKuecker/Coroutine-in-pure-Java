@@ -63,7 +63,7 @@ implements CoroExpression<T>
                     );
         }
 
-        return (T) globalVarValue;
+        return type.cast( globalVarValue );
     }
 
     /**
