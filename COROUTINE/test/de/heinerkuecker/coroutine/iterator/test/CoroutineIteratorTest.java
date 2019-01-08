@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DecLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -231,7 +231,7 @@ public class CoroutineIteratorTest
                         new SetLocalVar<>(
                                 "number" ,
                                 new Value<>( 1 ) ) ,
-                        new DecLocalVar<>( "number" ) ,
+                        new DecrementLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "number" ,

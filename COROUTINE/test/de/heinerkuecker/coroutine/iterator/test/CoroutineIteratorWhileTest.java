@@ -23,8 +23,8 @@ import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DecLocalVar;
 import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NegateLocalVar;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
@@ -172,7 +172,7 @@ public class CoroutineIteratorWhileTest
                                                         Integer.class ) ,
                                                 new Value<>( 0 ) ) ) ,
                                 // steps
-                                new DecLocalVar<>(
+                                new DecrementLocalVar<>(
                                         "number" ) ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -236,9 +236,9 @@ public class CoroutineIteratorWhileTest
                                                                 new GetLocalVar<>(
                                                                         "number1" ,
                                                                         Integer.class ) ) ) ) ,
-                                        new DecLocalVar<>(
+                                        new DecrementLocalVar<>(
                                                 "number1" ) ) ,
-                                new DecLocalVar<>(
+                                new DecrementLocalVar<>(
                                         "number0" ) ) );
 
         for ( int i = 15 ; i >= 0 ; i-- )
@@ -429,7 +429,7 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ) ,
-                                new DecLocalVar<>(
+                                new DecrementLocalVar<>(
                                         "number" ) ) );
 
         CoroutineIteratorTest.assertNext(

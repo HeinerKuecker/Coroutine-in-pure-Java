@@ -19,7 +19,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public final class DecLocalVar<RESULT>
+public final class DecrementLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
@@ -33,7 +33,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      *
      * @param variable name
      */
-    public DecLocalVar(
+    public DecrementLocalVar(
             final String varName )
     {
         this.varName =

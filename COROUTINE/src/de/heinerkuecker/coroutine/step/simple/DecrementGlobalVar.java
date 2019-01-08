@@ -18,7 +18,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @param <RESULT>
  * @author Heiner K&uuml;cker
  */
-public final class DecGlobalVar<RESULT>
+public final class DecrementGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
@@ -32,7 +32,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      *
      * @param variable name
      */
-    public DecGlobalVar(
+    public DecrementGlobalVar(
             final String varName )
     {
         this.varName =
