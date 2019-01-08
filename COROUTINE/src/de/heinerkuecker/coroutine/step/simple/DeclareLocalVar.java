@@ -80,7 +80,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         }
         else
         {
-            final T varValue = initialVarValueExpression.getValue( parent );
+            final T varValue = initialVarValueExpression.evaluate( parent );
 
             parent.localVars().declare(
                     varName ,

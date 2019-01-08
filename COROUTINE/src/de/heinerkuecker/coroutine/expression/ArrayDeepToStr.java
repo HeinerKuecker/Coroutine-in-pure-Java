@@ -20,13 +20,13 @@ implements CoroExpression<String>
     }
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public String getValue(
+    public String evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Object[] array = arrayExpression.getValue( parent );
+        final Object[] array = arrayExpression.evaluate( parent );
 
         return
                 ArrayDeepToString.deepToString(

@@ -50,14 +50,14 @@ implements CoroExpression<T>
     /**
      * Add.
      *
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public T getValue(
+    public T evaluate(
             final CoroIteratorOrProcedure<?> parent)
     {
-        final T lhsResult = lhs.getValue( parent );
-        final T rhsResult = rhs.getValue( parent );
+        final T lhsResult = lhs.evaluate( parent );
+        final T rhsResult = rhs.evaluate( parent );
 
         if ( lhsResult == null )
         {

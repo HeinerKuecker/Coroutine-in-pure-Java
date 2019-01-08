@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 
 public interface CoroExpression<T>
 {
-    T getValue(
+    T evaluate(
             final CoroIteratorOrProcedure<?> parent );
 
     abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();

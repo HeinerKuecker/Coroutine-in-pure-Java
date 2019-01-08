@@ -50,7 +50,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         return new CoroIterStepResult.FinallyReturnWithResult<RESULT>(
-                expression.getValue(
+                expression.evaluate(
                         parent ) );
     }
 

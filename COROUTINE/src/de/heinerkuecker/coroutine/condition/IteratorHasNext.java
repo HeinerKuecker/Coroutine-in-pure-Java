@@ -43,7 +43,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
             final CoroIteratorOrProcedure<?> parent )
     {
         //final Object varValue = parent.localVars().get( varName );
-        final Iterator<?> iterator = iteratorExpression.getValue( parent );
+        final Iterator<?> iterator = iteratorExpression.evaluate( parent );
 
         // TODO null handling
         return iterator.hasNext();

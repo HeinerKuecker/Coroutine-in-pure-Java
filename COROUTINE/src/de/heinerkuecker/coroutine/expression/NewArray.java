@@ -37,10 +37,10 @@ implements CoroExpression<ELEMENT[]>
     }
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public ELEMENT[] getValue(
+    public ELEMENT[] evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
         final Class<? extends ELEMENT> componentClass = elementClass;
@@ -50,7 +50,7 @@ implements CoroExpression<ELEMENT[]>
 
         for ( int i = 0 ; i < this.arrayElementExpressions.length ; i++ )
         {
-            result[ i ] = this.arrayElementExpressions[ i ].getValue( parent );
+            result[ i ] = this.arrayElementExpressions[ i ].evaluate( parent );
         }
 
         return result;

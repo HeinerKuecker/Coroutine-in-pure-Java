@@ -45,8 +45,8 @@ implements ConditionOrBooleanExpression
     public boolean execute(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final T lhsResult = lhs.getValue( parent );
-        final T rhsResult = rhs.getValue( parent );
+        final T lhsResult = lhs.evaluate( parent );
+        final T rhsResult = rhs.evaluate( parent );
 
         if ( lhsResult == null && rhsResult == null )
         {

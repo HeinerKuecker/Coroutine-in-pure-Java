@@ -31,7 +31,7 @@ public /*interface*/class ProcedureArgument<T>
     public T getValue(
             final CoroIteratorOrProcedure<?> parent )
     {
-        return this.expression.getValue( parent );
+        return this.expression.evaluate( parent );
     }
 
     /**

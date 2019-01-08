@@ -23,10 +23,10 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public T getValue(
+    public T evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
         return this.value;

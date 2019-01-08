@@ -25,10 +25,10 @@ extends CoroExpression<Boolean>
             final CoroIteratorOrProcedure<?> parent );
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    default public Boolean getValue(
+    default public Boolean evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
         return execute( parent );

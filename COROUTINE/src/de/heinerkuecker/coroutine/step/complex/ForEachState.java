@@ -61,7 +61,7 @@ implements ComplexStepState<
         {
             parent.saveLastStepState();
 
-            final Iterable<ELEMENT> iterable = forEach.iterableExpression.getValue( parent );
+            final Iterable<ELEMENT> iterable = forEach.iterableExpression.evaluate( parent );
             this.iterator = iterable.iterator();
 
             if ( ! iterator.hasNext() )

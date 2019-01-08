@@ -38,14 +38,14 @@ implements CoroExpression<String>
     /**
      * Add.
      *
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public String getValue(
+    public String evaluate(
             final CoroIteratorOrProcedure<?> parent)
     {
-        final Object lhsResult = lhs.getValue( parent );
-        final Object rhsResult = rhs.getValue( parent );
+        final Object lhsResult = lhs.evaluate( parent );
+        final Object rhsResult = rhs.evaluate( parent );
 
 
         return lhsResult + "" + rhsResult;

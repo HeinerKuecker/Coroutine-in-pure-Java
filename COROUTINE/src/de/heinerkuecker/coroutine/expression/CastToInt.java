@@ -33,13 +33,13 @@ implements CoroExpression<Integer>
     /**
      * Add.
      *
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public Integer getValue(
+    public Integer evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Number numberExpressionResult = numberExpression.getValue( parent );
+        final Number numberExpressionResult = numberExpression.evaluate( parent );
 
         if ( numberExpressionResult == null )
         {

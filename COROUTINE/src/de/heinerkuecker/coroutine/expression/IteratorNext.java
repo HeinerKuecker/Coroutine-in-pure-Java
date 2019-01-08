@@ -26,13 +26,13 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
-    public T getValue(
+    public T evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Iterator<T> iterator = iteratorExpression.getValue( parent );
+        final Iterator<T> iterator = iteratorExpression.evaluate( parent );
 
         return iterator.next();
     }

@@ -45,7 +45,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        final Object varValue = varValueExpression.getValue( parent );
+        final Object varValue = varValueExpression.evaluate( parent );
 
         parent.localVars().set(
                 varName ,

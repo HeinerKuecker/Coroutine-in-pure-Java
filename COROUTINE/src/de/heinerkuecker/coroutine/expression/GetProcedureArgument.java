@@ -48,11 +48,11 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T getValue(
+    public T evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
         final Object procArgValue = parent.procedureArgumentValues().get( procedureArgumentName );

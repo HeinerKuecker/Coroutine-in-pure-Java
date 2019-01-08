@@ -54,7 +54,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        System.out.println( outputExpression.getValue( parent ) );
+        System.out.println( outputExpression.evaluate( parent ) );
         return CoroIterStepResult.continueCoroutine();
     }
 

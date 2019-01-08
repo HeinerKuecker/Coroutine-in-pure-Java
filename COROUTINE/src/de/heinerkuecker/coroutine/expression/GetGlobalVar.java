@@ -43,11 +43,11 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroExpression#getValue(CoroIteratorOrProcedure)
+     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T getValue(
+    public T evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
         final Object globalVarValue = parent.globalVars().get( globalVarName );
