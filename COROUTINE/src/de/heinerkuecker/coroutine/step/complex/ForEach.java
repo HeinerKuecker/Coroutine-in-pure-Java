@@ -13,10 +13,10 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.LabelAlreadyInUseException;
 
-public class ForEach<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, T>
+public class ForEach<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, ELEMENT>
 extends ComplexStep<
-    ForEach<RESULT/*, PARENT*/, T>,
-    ForEachState<RESULT/*, PARENT*/, T>,
+    ForEach<RESULT/*, PARENT*/, ELEMENT>,
+    ForEachState<RESULT/*, PARENT*/, ELEMENT>,
     RESULT
     //PARENT
     >
@@ -25,7 +25,7 @@ extends ComplexStep<
 
     public final String variableName;
 
-    final CoroExpression<Iterable<T>> iterableExpression;
+    final CoroExpression<Iterable<ELEMENT>> iterableExpression;
 
     final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
 
@@ -35,7 +35,7 @@ extends ComplexStep<
     @SafeVarargs
     public ForEach(
             final String variableName ,
-            final CoroExpression<Iterable<T>> iterableExpression ,
+            final CoroExpression<Iterable<ELEMENT>> iterableExpression ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
         super(
@@ -76,7 +76,7 @@ extends ComplexStep<
     public ForEach(
             final String label ,
             final String variableName ,
-            final CoroExpression<Iterable<T>> iterableExpression ,
+            final CoroExpression<Iterable<ELEMENT>> iterableExpression ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
         super(
@@ -114,7 +114,7 @@ extends ComplexStep<
      * @see ComplexStep#newState
      */
     @Override
-    public ForEachState<RESULT/*, PARENT*/, T> newState(
+    public ForEachState<RESULT/*, PARENT*/, ELEMENT> newState(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         return new ForEachState<>(
@@ -200,11 +200,11 @@ extends ComplexStep<
             ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             ComplexStepState<?, ?, RESULT> nextStepExecuteState )
     {
-        final ForEachState<RESULT/*, PARENT*/, T> lastForExecuteState =
-                (ForEachState<RESULT/*, PARENT*/, T>) lastStepExecuteState;
+        final ForEachState<RESULT/*, PARENT*/, ELEMENT> lastForExecuteState =
+                (ForEachState<RESULT/*, PARENT*/, ELEMENT>) lastStepExecuteState;
 
-        final ForEachState<RESULT/*, PARENT*/, T> nextForExecuteState =
-                (ForEachState<RESULT/*, PARENT*/, T>) nextStepExecuteState;
+        final ForEachState<RESULT/*, PARENT*/, ELEMENT> nextForExecuteState =
+                (ForEachState<RESULT/*, PARENT*/, ELEMENT>) nextStepExecuteState;
 
         final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastBodyState;
         if ( lastForExecuteState != null )

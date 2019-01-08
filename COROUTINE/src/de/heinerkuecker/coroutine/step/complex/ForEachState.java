@@ -8,15 +8,15 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-class ForEachState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/, T>
+class ForEachState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/, ELEMENT>
 implements ComplexStepState<
-    ForEachState<RESULT/*, PARENT*/, T>,
-    ForEach<RESULT/*, PARENT*/, T>,
+    ForEachState<RESULT/*, PARENT*/, ELEMENT>,
+    ForEach<RESULT/*, PARENT*/, ELEMENT>,
     RESULT
     //PARENT
     >
 {
-    private final ForEach<RESULT/*, PARENT*/, T> forEach;
+    private final ForEach<RESULT/*, PARENT*/, ELEMENT> forEach;
 
     // TODO getter
     boolean runInInitializer = true;
@@ -26,9 +26,9 @@ implements ComplexStepState<
     // TODO getter
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
 
-    private Iterator<T> iterator;
+    private Iterator<ELEMENT> iterator;
 
-    private T variableValue;
+    private ELEMENT variableValue;
 
     //private final CoroutineIterator<RESULT> rootParent;
     private final CoroIteratorOrProcedure<RESULT> parent;
@@ -37,7 +37,7 @@ implements ComplexStepState<
      * Constructor.
      */
     public ForEachState(
-            final ForEach<RESULT/*, PARENT*/, T> forEach ,
+            final ForEach<RESULT/*, PARENT*/, ELEMENT> forEach ,
             //final CoroutineIterator<RESULT> rootParent
             final CoroIteratorOrProcedure<RESULT> parent )
     {
@@ -61,7 +61,7 @@ implements ComplexStepState<
         {
             parent.saveLastStepState();
 
-            final Iterable<T> iterable = forEach.iterableExpression.getValue( parent );
+            final Iterable<ELEMENT> iterable = forEach.iterableExpression.getValue( parent );
             this.iterator = iterable.iterator();
 
             if ( ! iterator.hasNext() )
@@ -196,7 +196,7 @@ implements ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public ForEach<RESULT/*, PARENT*/, T> getStep()
+    public ForEach<RESULT/*, PARENT*/, ELEMENT> getStep()
     {
         return forEach;
     }
@@ -205,9 +205,9 @@ implements ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public ForEachState<RESULT/*, PARENT*/, T> createClone()
+    public ForEachState<RESULT/*, PARENT*/, ELEMENT> createClone()
     {
-        final ForEachState<RESULT/*, PARENT*/, T> clone =
+        final ForEachState<RESULT/*, PARENT*/, ELEMENT> clone =
                 new ForEachState<>(
                         forEach ,
                         //this.rootParent
