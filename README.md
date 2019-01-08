@@ -31,8 +31,20 @@ In the coroutine is the full power of the Turing machine available, not just an 
 
 In the coroutine procedures can be used, which can call themselves or each other recursively.
 
+The programming of functions is not possible and not planned.
+
 The toString() method returns debug information such as the last and next steps, global and local variables, and procedure parameters.
 
 In the toString() method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
 
 The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code (steps).
+
+This repository contains an eclipse project to import in your ide.
+
+To extend this library for your own tasks, you can extend the Java classes SimpleStep and CoroExpression classes using the existing code.
+
+Local and global variables are stored in HashMaps.
+
+The parameters of the procedures are stored in immutable maps because I am a supporter of immutable parameters.
+
+
