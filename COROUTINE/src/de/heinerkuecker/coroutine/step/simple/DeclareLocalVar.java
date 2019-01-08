@@ -22,7 +22,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     public final Class<T> type;
 
-    public final CoroExpression<T> varValueExpression;
+    public final CoroExpression<T> initialVarValueExpression;
 
     /**
      * Constructor.
@@ -30,7 +30,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public DeclareLocalVar(
             final String varName ,
             final Class<T> type ,
-            final CoroExpression<T> varValueExpression )
+            final CoroExpression<T> initialVarValueExpression )
     {
         this.varName =
                 Objects.requireNonNull(
@@ -40,9 +40,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 Objects.requireNonNull(
                         type );
 
-        this.varValueExpression =
+        this.initialVarValueExpression =
                 Objects.requireNonNull(
-                        varValueExpression );
+                        initialVarValueExpression );
     }
 
     /**
@@ -60,7 +60,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 Objects.requireNonNull(
                         type );
 
-        this.varValueExpression = null;
+        this.initialVarValueExpression = null;
     }
 
     /**
@@ -72,7 +72,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        if ( this.varValueExpression == null )
+        if ( this.initialVarValueExpression == null )
         {
             parent.localVars().declare(
                     varName ,
@@ -80,7 +80,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         }
         else
         {
-            final T varValue = varValueExpression.getValue( parent );
+            final T varValue = initialVarValueExpression.getValue( parent );
 
             parent.localVars().declare(
                     varName ,
@@ -97,11 +97,11 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
-        if ( this.varValueExpression == null )
+        if ( this.initialVarValueExpression == null )
         {
             return Collections.emptyList();
         }
-        return this.varValueExpression.getProcedureArgumentGetsNotInProcedure();
+        return this.initialVarValueExpression.getProcedureArgumentGetsNotInProcedure();
     }
 
     /**
@@ -111,14 +111,14 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public String toString()
     {
         final String initializationStr;
-        if ( this.varValueExpression == null )
+        if ( this.initialVarValueExpression == null )
         {
             initializationStr = "";
         }
         else
         {
             initializationStr =
-                    " = " + varValueExpression;
+                    " = " + initialVarValueExpression;
         }
 
         return
