@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.util.ArrayDeepToString;
 
 public class Value<T>
 implements CoroExpression<T>
@@ -50,7 +51,8 @@ implements CoroExpression<T>
                 //this.getClass().getSimpleName() +
                 //"[" +
                 //"value=" +
-                String.valueOf( this.value );
+                //String.valueOf( this.value )
+                ArrayDeepToString.deepToString( this.value );
                 //"]";
     }
 

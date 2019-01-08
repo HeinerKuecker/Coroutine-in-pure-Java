@@ -9,6 +9,7 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.util.ArrayTypeName;
 
 public final class DeclareLocalVar<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
@@ -121,7 +122,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         }
 
         return
-                type.getName() +
+                //type.getName() +
+                ArrayTypeName.toStr( this.type ) +
                 " " +
                 varName +
                 initializationStr +

@@ -7,6 +7,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.util.ArrayTypeName;
 
 public class GetLocalVar<T>
 extends HasCreationStackTraceElement
@@ -78,7 +79,8 @@ implements CoroExpression<T>
                 //"localVarName=" +
                 this.localVarName +
                 ":" +
-                this.type.getName() +
+                //this.type.getName() +
+                ArrayTypeName.toStr( this.type ) +
                 "]";
     }
 

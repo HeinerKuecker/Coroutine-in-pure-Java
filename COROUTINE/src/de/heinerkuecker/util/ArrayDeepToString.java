@@ -26,11 +26,82 @@ public final class ArrayDeepToString
                 objToStr.getClass().isArray() &&
                 ! objToStr.getClass().getComponentType().isPrimitive() )
         {
-            return deepToString(
+            return
+                    getFinalComponentClassName( (Object[]) objToStr ) +
+                    deepToString(
                     (Object[]) objToStr );
+        }
+        else if ( objToStr instanceof boolean[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (boolean[]) objToStr );
+        }
+        else if ( objToStr instanceof byte[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (byte[]) objToStr );
+        }
+        else if ( objToStr instanceof short[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (short[]) objToStr );
+        }
+        else if ( objToStr instanceof char[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (char[]) objToStr );
+        }
+        else if ( objToStr instanceof int[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (int[]) objToStr );
+        }
+        else if ( objToStr instanceof long[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (long[]) objToStr );
+        }
+        else if ( objToStr instanceof float[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (float[]) objToStr );
+        }
+        else if ( objToStr instanceof double[] )
+        {
+            return
+                    objToStr.getClass().getComponentType().getName() +
+                    Arrays.toString(
+                            (double[]) objToStr );
         }
 
         return String.valueOf( objToStr );
+    }
+
+    private static String getFinalComponentClassName(
+            final Object[] arr )
+    {
+        Class<?> componentType = arr.getClass().getComponentType();
+
+        while ( componentType.isArray() )
+        {
+            componentType = componentType.getComponentType();
+        }
+
+        return componentType.getName();
     }
 
     /**
@@ -77,48 +148,64 @@ public final class ArrayDeepToString
             else if ( elementToStr instanceof boolean[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (boolean[]) elementToStr ) );
             }
             else if ( elementToStr instanceof byte[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (byte[]) elementToStr ) );
             }
             else if ( elementToStr instanceof short[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (short[]) elementToStr ) );
             }
             else if ( elementToStr instanceof char[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (char[]) elementToStr ) );
             }
             else if ( elementToStr instanceof int[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (int[]) elementToStr ) );
             }
             else if ( elementToStr instanceof long[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (long[]) elementToStr ) );
             }
             else if ( elementToStr instanceof float[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (float[]) elementToStr ) );
             }
             else if ( elementToStr instanceof double[] )
             {
                 buff.append(
+                        // TODO print primitive type name as string literal
+                        elementToStr.getClass().getComponentType().getName() +
                         Arrays.toString(
                                 (double[]) elementToStr ) );
             }
