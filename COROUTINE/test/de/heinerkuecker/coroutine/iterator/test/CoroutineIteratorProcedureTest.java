@@ -19,8 +19,8 @@ import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
-import de.heinerkuecker.coroutine.step.simple.IncGlobalVar;
-import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine.step.simple.IncrementGlobalVar;
+import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -121,7 +121,7 @@ public class CoroutineIteratorProcedureTest
                                 "counter" ,
                                 //varValue
                                 new Value<>( 0 ) ) ,
-                        new IncLocalVar<>( "counter" ) ,
+                        new IncrementLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "counter" ,
@@ -153,7 +153,7 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new IncGlobalVar<>( "counter" ) ,
+                        new IncrementGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
                                         "counter" ,
@@ -195,7 +195,7 @@ public class CoroutineIteratorProcedureTest
                                 "counter" ,
                                 //varValue
                                 new Value<>( 0 ) ) ,
-                        new IncLocalVar<>( "counter" ) ,
+                        new IncrementLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "counter" ,
@@ -228,7 +228,7 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new IncGlobalVar<>( "counter" ) ,
+                        new IncrementGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
                                         "counter" ,

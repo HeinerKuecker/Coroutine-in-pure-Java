@@ -18,7 +18,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @param <RESULT>
  * @author Heiner K&uuml;cker
  */
-public final class IncGlobalVar<RESULT>
+public final class IncrementGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
@@ -32,7 +32,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      *
      * @param variable name
      */
-    public IncGlobalVar(
+    public IncrementGlobalVar(
             final String varName )
     {
         this.varName =

@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -42,7 +42,7 @@ public class CoroutineIteratorForTest
                                                 Integer.class ) ,
                                         new Value<>( 3 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -92,7 +92,7 @@ public class CoroutineIteratorForTest
                                                 Integer.class ) ,
                                         new Value<>( 3 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -141,7 +141,7 @@ public class CoroutineIteratorForTest
                                                 Integer.class ) ,
                                         new Value<>( 3 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -190,9 +190,9 @@ public class CoroutineIteratorForTest
                                                 Integer.class ) ,
                                         new Value<>( 6 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 "number" ,

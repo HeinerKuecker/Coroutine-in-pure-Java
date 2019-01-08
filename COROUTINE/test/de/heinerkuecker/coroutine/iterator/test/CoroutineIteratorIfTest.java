@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
@@ -109,7 +109,7 @@ public class CoroutineIteratorIfTest
                                         // steps
                                         new FinallyReturn<>(
                                                 new Value<>( 1 ) ) ) ,
-                                new IncLocalVar<>( "number" ) ) );
+                                new IncrementLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

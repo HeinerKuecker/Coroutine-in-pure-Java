@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.flow.Continue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.IncLocalVar;
+import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -94,7 +94,7 @@ public class CoroutineIteratorContinueTest
                                                 Integer.class ) ,
                                         new Value<>( 1 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
                                 new For<>(
                                         // initialStep
@@ -261,7 +261,7 @@ public class CoroutineIteratorContinueTest
                                                 Integer.class ) ,
                                         new Value<>( 1 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
                                 new For<>(
                                         // initialStep
@@ -306,7 +306,7 @@ public class CoroutineIteratorContinueTest
                                                 Integer.class ) ,
                                         new Value<>( 1 ) ) ,
                                 // updateStep
-                                new IncLocalVar<>( "number" ) ,
+                                new IncrementLocalVar<>( "number" ) ,
                                 // steps
                                 new For<>(
                                         // initialStep
@@ -394,7 +394,7 @@ public class CoroutineIteratorContinueTest
                                         //condition
                                         new True() ,
                                         //steps
-                                        new IncLocalVar<>( "number" ) ,
+                                        new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
                                                 //label
                                                 "outer_while" ) ,
@@ -432,7 +432,7 @@ public class CoroutineIteratorContinueTest
                                         //condition
                                         new True() ,
                                         //steps
-                                        new IncLocalVar<>( "number" ) ,
+                                        new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
                                                 //label
                                                 "wrong" ) ,
@@ -469,7 +469,7 @@ public class CoroutineIteratorContinueTest
                                         //condition
                                         new True() ,
                                         //steps
-                                        new IncLocalVar<>( "number" ) ,
+                                        new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
                                                 //label
                                                 "wrong" ) ,
