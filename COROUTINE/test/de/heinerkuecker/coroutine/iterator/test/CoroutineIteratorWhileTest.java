@@ -54,7 +54,7 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 // steps
                                 new IncrementLocalVar<Integer>( "number" ) ) ,
                         new YieldReturn<>(
@@ -132,7 +132,7 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 // steps
                                 new IncrementLocalVar<>( "number" ) ,
                                 new IncrementLocalVar<>( "number" ) ) ,
@@ -169,7 +169,7 @@ public class CoroutineIteratorWhileTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>( 0 ) ) ) ,
+                                                0 ) ) ,
                                 // steps
                                 new DecrementLocalVar<>(
                                         "number" ) ) ,
@@ -422,7 +422,7 @@ public class CoroutineIteratorWhileTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>( 0 ) ) ) ,
+                                                0 ) ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(

@@ -136,7 +136,7 @@ public class CoroutineIteratorIfTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>( 0 ) ) ,
+                                                0 ) ,
                                         // steps
                                         new YieldReturn<>(
                                                 new Value<>( 0 ) ) ) ,
@@ -146,7 +146,7 @@ public class CoroutineIteratorIfTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>( 1 ) ) ,
+                                                1 ) ,
                                         // steps
                                         new FinallyReturn<>(
                                                 new Value<>( 1 ) ) ) ,

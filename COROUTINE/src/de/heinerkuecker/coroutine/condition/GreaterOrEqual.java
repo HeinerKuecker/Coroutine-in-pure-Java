@@ -32,8 +32,8 @@ implements ConditionOrBooleanExpression
      * @param rhs
      */
     public GreaterOrEqual(
-            CoroExpression<? extends T> lhs ,
-            CoroExpression<? extends T> rhs )
+            final CoroExpression<? extends T> lhs ,
+            final CoroExpression<? extends T> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
