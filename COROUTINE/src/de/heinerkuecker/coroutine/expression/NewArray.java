@@ -2,33 +2,34 @@ package de.heinerkuecker.coroutine.expression;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
-public class NewArray<T>
-implements CoroExpression<T[]>
+public class NewArray<ELEMENT>
+implements CoroExpression<ELEMENT[]>
 {
-    private final Class<? extends T> componentClass;
+    private final Class<? extends ELEMENT> elementClass;
 
-    private final CoroExpression<T>[] arrayElementExpressions;
+    private final CoroExpression<ELEMENT>[] arrayElementExpressions;
 
     /**
      * Constructor.
      *
-     * @param componentClass
+     * @param elementClass
      * @param arrayElementExpressions
      */
     @SafeVarargs
     public NewArray(
-            final Class<? extends T> componentClass ,
-            CoroExpression<T>... arrayElementExpressions )
+            final Class<? extends ELEMENT> elementClass ,
+            CoroExpression<ELEMENT>... arrayElementExpressions )
     {
-        this.componentClass =
+        this.elementClass =
                 Objects.requireNonNull(
-                        componentClass );
+                        elementClass );
 
         this.arrayElementExpressions =
                 Objects.requireNonNull(
@@ -39,11 +40,13 @@ implements CoroExpression<T[]>
      * @see CoroExpression#getValue(CoroIteratorOrProcedure)
      */
     @Override
-    public T[] getValue(
+    public ELEMENT[] getValue(
             final CoroIteratorOrProcedure<?> parent )
     {
+        final Class<? extends ELEMENT> componentClass = elementClass;
+
         @SuppressWarnings("unchecked")
-        final T[] result = (T[]) Array.newInstance( componentClass ,  this.arrayElementExpressions.length );
+        final ELEMENT[] result = (ELEMENT[]) Array.newInstance( componentClass ,  this.arrayElementExpressions.length );
 
         for ( int i = 0 ; i < this.arrayElementExpressions.length ; i++ )
         {
@@ -61,13 +64,27 @@ implements CoroExpression<T[]>
     {
         final List<GetProcedureArgument<?>> result = new ArrayList<>();
 
-        for ( final CoroExpression<T> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
             result.addAll(
                     arrayElementExpression.getProcedureArgumentGetsNotInProcedure() );
         }
 
         return result;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return
+                this.getClass().getSimpleName() +
+                "<" +
+                this.elementClass.getName() +
+                ">" +
+                Arrays.toString( this.arrayElementExpressions );
     }
 
 }
