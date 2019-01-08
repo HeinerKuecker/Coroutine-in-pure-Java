@@ -10,6 +10,7 @@ import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 
@@ -68,6 +69,38 @@ extends ComplexStep<
         this.condition =
                 new IsTrue(
                         condition );
+
+        if ( steps.length == 1 &&
+                steps[ 0 ] instanceof ComplexStep )
+        {
+            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
+        }
+        else
+        {
+            this.thenBodyComplexStep =
+                    new StepSequence(
+                            // creationStackOffset
+                            3 ,
+                            steps );
+        }
+    }
+
+    /**
+     * Constructor.
+     */
+    @SafeVarargs
+    public If(
+            final Boolean condition ,
+            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... steps )
+    {
+        super(
+                //creationStackOffset
+                3 );
+
+        this.condition =
+                new IsTrue(
+                        new Value<Boolean>(
+                                condition ) );
 
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )

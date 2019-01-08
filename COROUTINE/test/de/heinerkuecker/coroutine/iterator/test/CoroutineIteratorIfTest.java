@@ -33,7 +33,8 @@ public class CoroutineIteratorIfTest
                         // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
-                                new True() ,
+                                //new True()
+                                true ,
                                 // steps
                                 new YieldReturn<>(
                                         new Value<>( 0 ) ) ,
