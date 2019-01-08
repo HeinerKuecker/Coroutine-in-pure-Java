@@ -42,7 +42,7 @@ public class CoroutineIteratorForTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 3 ) ) ,
+                                        3 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
                                 // steps
@@ -92,7 +92,7 @@ public class CoroutineIteratorForTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 3 ) ) ,
+                                        3 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
                                 // steps
@@ -141,7 +141,7 @@ public class CoroutineIteratorForTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 3 ) ) ,
+                                        3 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
                                 // steps
@@ -190,7 +190,7 @@ public class CoroutineIteratorForTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 6 ) ) ,
+                                        6 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
                                 // steps

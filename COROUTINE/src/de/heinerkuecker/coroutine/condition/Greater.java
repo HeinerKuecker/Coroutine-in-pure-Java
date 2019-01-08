@@ -7,6 +7,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
@@ -36,6 +37,48 @@ implements ConditionOrBooleanExpression
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param lhs
+     * @param rhs
+     */
+    public Greater(
+            final T lhsValue ,
+            final CoroExpression<? extends T> rhs )
+    {
+        this.lhs = new Value<T>( lhsValue );
+        this.rhs = Objects.requireNonNull( rhs );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param lhs
+     * @param rhs
+     */
+    public Greater(
+            final CoroExpression<? extends T> lhs ,
+            final T rhsValue )
+    {
+        this.lhs = Objects.requireNonNull( lhs );
+        this.rhs = new Value<T>( rhsValue );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param lhs
+     * @param rhs
+     */
+    public Greater(
+            final T lhsValue ,
+            final T rhsValue )
+    {
+        this.lhs = new Value<T>( lhsValue );
+        this.rhs = new Value<T>( rhsValue );
     }
 
     /**

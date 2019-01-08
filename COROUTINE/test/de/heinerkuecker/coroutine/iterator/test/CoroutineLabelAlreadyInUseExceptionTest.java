@@ -39,7 +39,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
-                                new Value<>( 1 ) ) ,
+                                1 ) ,
                         //steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
@@ -75,7 +75,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
-                                new Value<>( 1 ) ) ,
+                                1 ) ,
                         //steps
                         new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
@@ -113,7 +113,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
-                                new Value<>( 1 ) ) ,
+                                1 ) ,
                         // updateStep
                         new IncrementLocalVar<>( "number" ) ,
                         // steps

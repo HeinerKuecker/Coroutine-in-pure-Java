@@ -89,7 +89,7 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 3 ) ) ,
+                                        3 ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -211,7 +211,7 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "number0" ,
                                                 Integer.class ) ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number1" ,
@@ -222,7 +222,7 @@ public class CoroutineIteratorWhileTest
                                                 new GetLocalVar<>(
                                                         "number1" ,
                                                         Integer.class ) ,
-                                                new Value<>( 0 ) ) ,
+                                                0 ) ,
                                         // steps
                                         new YieldReturn<Integer>(
                                                 new CastToInt<>(
@@ -373,7 +373,7 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "number" ,
                                                 Integer.class ) ,
-                                        new Value<>( 3 ) ) ,
+                                        3 ) ,
                                 // steps
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
@@ -417,7 +417,7 @@ public class CoroutineIteratorWhileTest
                                                 new GetLocalVar<>(
                                                         "number" ,
                                                         Integer.class ) ,
-                                                new Value<>( 0 ) ) ,
+                                                0 ) ,
                                         new Equals<>(
                                                 new GetLocalVar<>(
                                                         "number" ,

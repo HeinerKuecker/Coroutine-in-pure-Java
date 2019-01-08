@@ -430,7 +430,7 @@ public class CoroutineIteratorBreakTest
                                                 "number" ,
                                                 Integer.class ) ,
                                         //compareValue
-                                        new Value<>( 2 ) ) ,
+                                        2 ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -440,7 +440,7 @@ public class CoroutineIteratorBreakTest
                                                         "number" ,
                                                         Integer.class ) ,
                                                 //compareValue
-                                                new Value<>( 1 ) ) ,
+                                                1 ) ,
                                         //steps
                                         new Break<>(
                                                 //label
@@ -485,7 +485,7 @@ public class CoroutineIteratorBreakTest
                                                 "number" ,
                                                 Integer.class ) ,
                                         //compareValue
-                                        new Value<>( 2 ) ) ,
+                                        2 ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
@@ -495,7 +495,7 @@ public class CoroutineIteratorBreakTest
                                                         "number" ,
                                                         Integer.class ) ,
                                                 //compareValue
-                                                new Value<>( 1 ) ) ,
+                                                1 ) ,
                                         //steps
                                         new Break<>(
                                                 //label
@@ -535,7 +535,7 @@ public class CoroutineIteratorBreakTest
                                                 "number" ,
                                                 Integer.class ) ,
                                         //compareValue
-                                        new Value<>( 2 ) ) ,
+                                        2 ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition

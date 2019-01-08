@@ -409,7 +409,7 @@ public class CoroutineIteratorProcedureTest
                                                 //procedureArgumentName
                                                 "argument" ,
                                                 Long.class ) ,
-                                        new Value<>( 3L ) ) ,
+                                        3L ) ,
                                 new YieldReturn<>(
                                         new GetProcedureArgument<>(
                                                 "argument" ,
@@ -487,7 +487,7 @@ public class CoroutineIteratorProcedureTest
                                                 //localVarName
                                                 "variable" ,
                                                 Long.class ) ,
-                                        new Value<>( 3L ) ) ,
+                                        3L ) ,
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 //localVarName
@@ -573,7 +573,7 @@ public class CoroutineIteratorProcedureTest
                                                     //localVarName
                                                     "variable" ,
                                                     Integer.class ) ,
-                                            new Value<>( 3 ) ) ,
+                                            3 ) ,
                                     new YieldReturn<>(
                                             new GetLocalVar<>(
                                                     //localVarName
