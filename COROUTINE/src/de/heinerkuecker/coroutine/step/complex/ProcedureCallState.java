@@ -31,6 +31,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     //private final CoroutineIterator<RESULT> rootParent;
     private final CoroIteratorOrProcedure<RESULT> parent;
 
+    // TODO immutable map
     final Map<String, Object> procedureArgumentValues;
 
     /**
