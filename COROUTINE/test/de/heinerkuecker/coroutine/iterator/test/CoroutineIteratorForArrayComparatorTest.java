@@ -147,13 +147,13 @@ public class CoroutineIteratorForArrayComparatorTest
     @Test
     public void testCmpblArrDim2()
     {
-        final Iterable<Integer> intIterable =
+        final Iterable<Integer> integerIterable =
                 Arrays.asList(
                         null ,
                         0 ,
                         1 );
 
-        final Iterable<Integer[]> intArrDim1Iterable =
+        final Iterable<Integer[]> integerArrDim1Iterable =
                 new Iterable<Integer[]>()
         {
                     @Override
@@ -172,7 +172,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 // variableName
                                                 "intValue" ,
                                                 // iterableExpression
-                                                new Value<>( intIterable ) ,
+                                                new Value<>( integerIterable ) ,
                                                 // steps
                                                 new YieldReturn<Integer[]>(
                                                         new NewArray<Integer>(
@@ -189,13 +189,13 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 // variableName
                                                 "intValue0" ,
                                                 // iterableExpression
-                                                new Value<>( intIterable ) ,
+                                                new Value<>( integerIterable ) ,
                                                 // steps
                                                 new ForEach<>(
                                                         // variableName
                                                         "intValue1" ,
                                                         // iterableExpression
-                                                        new Value<>( intIterable ) ,
+                                                        new Value<>( integerIterable ) ,
                                                         new YieldReturn<>(
                                                                 new NewArray<Integer>(
                                                                         // elementClass
@@ -211,22 +211,53 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                                 //type
                                                                                 Integer.class ) ) ) ) ) );
                     }
+
+                    @Override
+                    public String toString()
+                    {
+                        return "integerArrDim1Iterable";
+                    }
+
         };
 
-        final Class<? extends Iterator<Integer[]>> iteratorOfQuestionmarkClass = (Class<? extends Iterator<Integer[]>>) Iterator.class;
+        //final Class<? extends Iterator<Integer[]>> iteratorOfQuestionmarkClass = (Class<? extends Iterator<Integer[]>>) Iterator.class;
 
-        final CoroutineIterator<Integer[][]> intArrDim2CoroIter =
+        final CoroutineIterator<Integer[][]> integerArrDim2CoroIter =
                 new CoroutineIterator<>(
                         // type
                         Integer[][].class ,
                         // steps
                         new YieldReturn<>( new Value<>( null ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[ 0 ][ 0 ] ) ) ,
+                        new YieldReturn<>( new Value<>( new Integer[][] { null } ) ) ,
+                        new ForEach<Integer[][], Integer[]>(
+                                // variableName
+                                "subArr" ,
+                                // iterableExpression
+                                new Value<>( integerArrDim1Iterable ) ,
+                                // steps
+                                new SystemOutPrintln<Integer[][]>(
+                                        new StrConcat(
+                                                new Value<>( "subArr: " ) ,
+                                                new ArrayDeepToStr(
+                                                        new GetLocalVar<Integer[]>(
+                                                                //localVarName
+                                                                "subArr" ,
+                                                                //type
+                                                                Integer[].class ) ) ) ) ,
+                                new YieldReturn<Integer[][]>(
+                                        new NewArray<Integer[]>(
+                                                // componentClass
+                                                Integer[].class ,
+                                                new GetLocalVar<Integer[]>(
+                                                        //localVarName
+                                                        "subArr" ,
+                                                        //type
+                                                        Integer[].class ) ) ) ) ,
                         new ForEach<Integer[][], Integer[]>(
                                 // variableName
                                 "subArr0" ,
                                 // iterableExpression
-                                new Value<>( intArrDim1Iterable ) ,
+                                new Value<>( integerArrDim1Iterable ) ,
                                 // steps
                                 new SystemOutPrintln<Integer[][]>(
                                         new StrConcat(
@@ -241,7 +272,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // variableName
                                         "subArr1" ,
                                         // iterableExpression
-                                        new Value<>( intArrDim1Iterable ) ,
+                                        new Value<>( integerArrDim1Iterable ) ,
                                         // steps
                                         new SystemOutPrintln<Integer[][]>(
                                                 new StrConcat(
@@ -267,245 +298,255 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                 //type
                                                                 Integer[].class ) ) ) ) ) );
 
-
         // TODO assert with nested for loops
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 null );
 
         assertNext(
-                intArrDim2CoroIter ,
-                new Integer[ 0 ][ 0 ] );
+                integerArrDim2CoroIter ,
+                new Integer[][] { null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
+                new Integer[][] { {} } );
+
+        for ( Integer integer : integerIterable )
+        {
+            assertNext(
+                    integerArrDim2CoroIter ,
+                    new Integer[][] { { integer } } );
+        }
+
+        assertNext(
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { null , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { null , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { null , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 0 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 0 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 1 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 1 , 1 } } );
 
         // -----
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { null , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { null , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { null , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 0 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 0 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 1 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 1 , 1 } } );
 
         // -----
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { null , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { null , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { null , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 0 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 0 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 1 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { null } , { 1 , 1 } } );
 
         // -----
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { null , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { null , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { null , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 0 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 0 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 1 , null } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 1 , 1 } } );
 
         // -----
@@ -513,135 +554,135 @@ public class CoroutineIteratorForArrayComparatorTest
 
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { null , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { {} , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 } , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 } , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 } , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 } , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 } , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 } , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 } , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 , 1 } , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 , 1 } , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 , 1 } , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 , 1 } , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 , 1 } , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 0 , 1 } , { 1 , 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 , 0 } , null } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 , 0 } , {} } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 , 0 } , { 0 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 , 0 } , { 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 , 0 } , { 0 , 1 } } );
 
         assertNext(
-                intArrDim2CoroIter ,
+                integerArrDim2CoroIter ,
                 new Integer[][] { { 1 , 0 } , { 1 , 0 } } );
 
         assertHasNextFalse(
-                intArrDim2CoroIter );
+                integerArrDim2CoroIter );
     }
 
     /**
