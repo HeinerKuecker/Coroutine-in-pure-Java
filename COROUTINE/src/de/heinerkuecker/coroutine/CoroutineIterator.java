@@ -18,6 +18,7 @@ import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
+import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
  * Class to generate a sequence of values
@@ -427,7 +428,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 this.getClass().getSimpleName() + "\n" +
                 "finallyReturnRaised=" + this.finallyReturnRaised + ", " +
                 "hasNext=" + this.hasNext + ", " +
-                "next=" + this.next + ", " +
+                "next=" + ArrayDeepToString.deepToString( this.next ) + ", " +
                 "variables=" + this.variables + "\n" +
                 this.complexStep.toString(
                         //parent

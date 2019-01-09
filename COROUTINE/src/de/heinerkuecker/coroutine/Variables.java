@@ -107,7 +107,25 @@ implements Iterable<Entry<String, Object>>
     public String toString()
     {
         //return "Variables [innerVars=" + this.innerVars + "]";
-        return String.valueOf( this.values );
+        //return String.valueOf( this.values );
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for ( final Entry<String, Object> valuesEntry : this.values.entrySet() )
+        {
+            String key = valuesEntry.getKey();
+            Object value = valuesEntry.getValue();
+
+            if ( sb.length() != 0 )
+            {
+                sb.append(',').append(' ');
+            }
+
+            sb.append( key );
+            sb.append('=');
+            sb.append(value == this.values ? "(this Map)" : value);
+        }
+        return sb.append('}').toString();
     }
 
     /**
