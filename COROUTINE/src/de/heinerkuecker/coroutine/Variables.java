@@ -46,7 +46,7 @@ implements Iterable<Entry<String, Object>>
     }
 
     /**
-     * Convinience method.
+     * Convenience method.
      *
      * @param variableName
      * @param type
