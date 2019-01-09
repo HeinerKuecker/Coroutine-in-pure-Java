@@ -131,8 +131,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         //label
                                         "label_already_in_use" ) ,
                                 // this yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ) ) );
+                                new YieldReturn<>( 1 ) ) ) );
     }
 
 }

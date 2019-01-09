@@ -44,15 +44,11 @@ public class CoroutineIteratorBreakTest
                                 // updateStep
                                 new NoOperation<>() ,
                                 // steps
-                                new YieldReturn<>(
-                                        new Value<>(
-                                                0 ) ) ,
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ,
+                                new YieldReturn<>( 0 ) ,
+                                new YieldReturn<>( 1 ) ,
                                 new Break<>() ,
                                 // the third yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 2 ) ) ) );
+                                new YieldReturn<>( 2 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -100,14 +96,10 @@ public class CoroutineIteratorBreakTest
                                         // steps
                                         new Break<>( "outer_for" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 0 ) ) ) ,
+                                        new YieldReturn<>( 0 ) ) ,
                                 // this yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ) ,
-                        new YieldReturn<>(
-                                new Value<>(
-                                        2 ) ) );
+                                new YieldReturn<>( 1 ) ) ,
+                        new YieldReturn<>( 2 ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -386,14 +378,11 @@ public class CoroutineIteratorBreakTest
                                 //condition
                                 new True() ,
                                 //steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ,
+                                new YieldReturn<>( 0 ) ,
+                                new YieldReturn<>( 1 ) ,
                                 new Break<>() ,
                                 // the third yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 2 ) ) ) );
+                                new YieldReturn<>( 2 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -446,13 +435,10 @@ public class CoroutineIteratorBreakTest
                                                 //label
                                                 "outer_while" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 0 ) ) ) ,
+                                        new YieldReturn<>( 0 ) ) ,
                                 // this yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ) ,
-                        new YieldReturn<>(
-                                new Value<>( 2 ) ) );
+                                new YieldReturn<>( 1 ) ) ,
+                        new YieldReturn<>( 2 ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -501,13 +487,10 @@ public class CoroutineIteratorBreakTest
                                                 //label
                                                 "wrong" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 0 ) ) ) ,
+                                        new YieldReturn<>( 0 ) ) ,
                                 // this yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ) ,
-                        new YieldReturn<>(
-                                new Value<>( 2 ) ) );
+                                new YieldReturn<>( 1 ) ) ,
+                        new YieldReturn<>( 2 ) );
 
         coroIter.hasNext();
     }
@@ -551,13 +534,10 @@ public class CoroutineIteratorBreakTest
                                                 //label
                                                 "wrong" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 0 ) ) ) ,
+                                        new YieldReturn<>( 0 ) ) ,
                                 // this yield return is never executed
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ) ,
-                        new YieldReturn<>(
-                                new Value<>( 2 ) ) );
+                                new YieldReturn<>( 1 ) ) ,
+                        new YieldReturn<>( 2 ) );
 
         coroIter.hasNext();
     }

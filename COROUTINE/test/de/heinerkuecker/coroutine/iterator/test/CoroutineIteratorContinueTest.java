@@ -45,10 +45,8 @@ public class CoroutineIteratorContinueTest
                                 // updateStep
                                 new NoOperation<>() ,
                                 // steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ,
+                                new YieldReturn<>( 0 ) ,
+                                new YieldReturn<>( 1 ) ,
                                 new Continue<>() ,
                                 // this step is never executed
                                 new NoOperation<>() ) );
@@ -108,8 +106,7 @@ public class CoroutineIteratorContinueTest
                                                 //label
                                                 "outer_for" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 1 ) ) ) ) );
+                                        new YieldReturn<>( 1 ) ) ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -275,8 +272,7 @@ public class CoroutineIteratorContinueTest
                                                 //label
                                                 "wrong" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 1 ) ) ) ) );
+                                        new YieldReturn<>( 1 ) ) ) );
 
         coroIter.hasNext();
     }
@@ -320,8 +316,7 @@ public class CoroutineIteratorContinueTest
                                                 //label
                                                 "wrong" ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 1 ) ) ) ) );
+                                        new YieldReturn<>( 1 ) ) ) );
 
         coroIter.hasNext();
     }
@@ -343,10 +338,8 @@ public class CoroutineIteratorContinueTest
                                 //condition
                                 new True() ,
                                 //steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ,
+                                new YieldReturn<>( 0 ) ,
+                                new YieldReturn<>( 1 ) ,
                                 new Continue<>() ,
                                 // this step is never executed
                                 new NoOperation<>() ) );

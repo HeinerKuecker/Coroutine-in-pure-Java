@@ -79,8 +79,7 @@ public class CoroutineIteratorTest
                         // type
                         String.class ,
                         // steps
-                        new YieldReturn<>(
-                                new Value<>( "a" ) ) );
+                        new YieldReturn<>( "a" ) );
 
         assertNext(
                 coroIter ,
@@ -100,8 +99,7 @@ public class CoroutineIteratorTest
                         // type
                         String.class ,
                         // steps
-                        new FinallyReturn<>(
-                                new Value<>( "a" ) ) );
+                        new FinallyReturn<>( "a" ) );
 
         assertNext(
                 coroIter ,
@@ -122,11 +120,9 @@ public class CoroutineIteratorTest
                         String.class ,
                         // steps
                         //parent -> new CoroIterStepResult.FinallyReturnWithResult<String>( "a" )
-                        new FinallyReturn<>(
-                                new Value<>( "a" ) ) ,
+                        new FinallyReturn<>( "a" ) ,
                         // the second step is never executed
-                        new YieldReturn<>(
-                                new Value<>( "b" ) ) );
+                        new YieldReturn<>( "b" ) );
 
         assertNext(
                 coroIter ,

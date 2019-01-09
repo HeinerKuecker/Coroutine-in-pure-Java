@@ -267,8 +267,7 @@ public class CoroutineIteratorWhileTest
                                 // steps
                                 new YieldReturn<>(
                                         new Value<>( 0 ) ) ,
-                                new FinallyReturn<>(
-                                        new Value<>( 1 ) ) ) );
+                                new FinallyReturn<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -472,15 +471,13 @@ public class CoroutineIteratorWhileTest
                                         "first" ,
                                         Boolean.class ) ,
                                 // thenSteps
-                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
-                                        {
-                                                new YieldReturn<>( 0 ) ,
-                                        } ,
-                                        // elseSteps
-                                        (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[]
-                                                {
-                                                        new FinallyReturn<>( 1 ) ,
-                                                } ) ,
+                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[] {
+                                        new YieldReturn<>( 0 ) ,
+                                } ,
+                                // elseSteps
+                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[] {
+                                        new FinallyReturn<>( 1 ) ,
+                                } ) ,
                         new NegateLocalVar<>( "first" ) ) );
 
         CoroutineIteratorTest.assertNext(

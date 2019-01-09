@@ -36,10 +36,8 @@ public class CoroutineIteratorIfTest
                                 //new True()
                                 true ,
                                 // steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
-                                new FinallyReturn<>(
-                                        new Value<>( 1 ) ) ) );
+                                new YieldReturn<>( 0 ) ,
+                                new FinallyReturn<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -77,10 +75,8 @@ public class CoroutineIteratorIfTest
                                         // type
                                         Boolean.class ) ,
                                 // steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
-                                new FinallyReturn<>(
-                                        new Value<>( 1 ) ) ) );
+                                new YieldReturn<>( 0 ) ,
+                                new FinallyReturn<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -139,8 +135,7 @@ public class CoroutineIteratorIfTest
                                                         Integer.class ) ,
                                                 0 ) ,
                                         // steps
-                                        new YieldReturn<>(
-                                                new Value<>( 0 ) ) ) ,
+                                        new YieldReturn<>( 0 ) ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Equals<>(
@@ -149,8 +144,7 @@ public class CoroutineIteratorIfTest
                                                         Integer.class ) ,
                                                 1 ) ,
                                         // steps
-                                        new FinallyReturn<>(
-                                                new Value<>( 1 ) ) ) ,
+                                        new FinallyReturn<>( 1 ) ) ,
                                 new IncrementLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(

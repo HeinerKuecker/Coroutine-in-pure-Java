@@ -29,11 +29,11 @@ public class CoroutineIteratorForArrayComparatorTest
                         // type
                         int[].class ,
                         new YieldReturn<>( new Value<>( null ) ) ,
-                        new YieldReturn<>( new Value<>( new int[ 0 ] ) ) ,
-                        new YieldReturn<>( new Value<>( new int[] { 0 } ) ) ,
-                        new YieldReturn<>( new Value<>( new int[] { 1 } ) ) ,
-                        new YieldReturn<>( new Value<>( new int[] { 0 , 1 } ) ) ,
-                        new YieldReturn<>( new Value<>( new int[] { 1 , 0 } ) ) );
+                        new YieldReturn<>( new int[ 0 ] ) ,
+                        new YieldReturn<>( new int[] { 0 } ) ,
+                        new YieldReturn<>( new int[] { 1 } ) ,
+                        new YieldReturn<>( new int[] { 0 , 1 } ) ,
+                        new YieldReturn<>( new int[] { 1 , 0 } ) );
 
         assertNext(
                 intArrDim1CoroIter ,
@@ -112,11 +112,11 @@ public class CoroutineIteratorForArrayComparatorTest
                         // type
                         Integer[].class ,
                         new YieldReturn<>( new Value<>( null ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[ 0 ] ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[] { 0 } ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[] { 1 } ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[] { 0 , 1 } ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[] { 1 , 0 } ) ) );
+                        new YieldReturn<>( new Integer[ 0 ] ) ,
+                        new YieldReturn<>( new Integer[] { 0 } ) ,
+                        new YieldReturn<>( new Integer[] { 1 } ) ,
+                        new YieldReturn<>( new Integer[] { 0 , 1 } ) ,
+                        new YieldReturn<>( new Integer[] { 1 , 0 } ) );
 
         assertNext(
                 intArrDim1CoroIter ,
@@ -167,7 +167,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         Integer[].class ,
                                         // steps
                                         new YieldReturn<>( new Value<>( null ) ) ,
-                                        new YieldReturn<>( new Value<>( new Integer[] {} ) ) ,
+                                        new YieldReturn<>( new Integer[] {} ) ,
                                         //new YieldReturn<>( new Value<>( new Integer[] { 0 } ) ) ,
                                         //new YieldReturn<>( new Value<>( new Integer[] { 1 } ) ) ,
                                         new ForEach<Integer[], Integer>(
@@ -235,7 +235,7 @@ public class CoroutineIteratorForArrayComparatorTest
                         Integer[][].class ,
                         // steps
                         new YieldReturn<>( new Value<>( null ) ) ,
-                        new YieldReturn<>( new Value<>( new Integer[][] {} ) ) ,
+                        new YieldReturn<>( new Integer[][] {} ) ,
                         new ForEach<Integer[][], Integer[]>(
                                 // variableName
                                 "subArr" ,

@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine.iterator.test;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
 import de.heinerkuecker.coroutine.step.complex.TryCatch;
 import de.heinerkuecker.coroutine.step.flow.Throw;
@@ -50,13 +49,11 @@ public class CroutineIteratorTryCatchTest
                                         0 ,
                                         new Throw<Integer>( new TestException( "test" ) ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>(
-                                                new Value<>( 0 ) ) ) ,
+                                        new YieldReturn<>( 0 ) ) ,
                                 // catchExceptionClass
                                 TestException.class ,
                                 // catchBodySteps
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ) );
+                                new YieldReturn<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,

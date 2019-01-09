@@ -87,8 +87,7 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new YieldReturn<>(
-                                new Value<>( 0 ) ) );
+                        new YieldReturn<>( 0 ) );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
