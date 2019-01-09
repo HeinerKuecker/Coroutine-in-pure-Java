@@ -163,7 +163,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
-            checkForGetProcedureArgumentNotInProcedure();
+            checkForUseGetProcedureArgumentOutsideOfProcedureException();
             this.complexStep.checkLabelAlreadyInUse(
                     new HashSet<>() ,
                     this ,
@@ -202,7 +202,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
-            checkForGetProcedureArgumentNotInProcedure();
+            checkForUseGetProcedureArgumentOutsideOfProcedureException();
             this.complexStep.checkLabelAlreadyInUse(
                     new HashSet<>() ,
                     this ,
@@ -253,7 +253,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Check for {@link GetProcedureArgument} outside of procedure.
      */
-    private void checkForGetProcedureArgumentNotInProcedure()
+    private void checkForUseGetProcedureArgumentOutsideOfProcedureException()
     {
         final List<GetProcedureArgument<?>> getProcedureArgumentsNotInProcedure =
                 complexStep.getProcedureArgumentGetsNotInProcedure();

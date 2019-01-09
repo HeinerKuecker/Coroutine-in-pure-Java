@@ -21,7 +21,7 @@ import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 public class CoroutineIteratorExpressionNegativeTest
 {
     @Test( expected = UseGetProcedureArgumentOutsideOfProcedureException.class )
-    public void testGetProcedureArgumentNotInProcedure()
+    public void testUseGetProcedureArgumentOutsideOfProcedureException()
     {
         CoroutineIterator.initializationChecks = true;
 
