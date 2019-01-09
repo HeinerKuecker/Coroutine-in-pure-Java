@@ -305,8 +305,6 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                 //type
                                                                 Integer[].class ) ) ) ) ) );
 
-        // TODO assert with nested for loops
-
         Integer[][] expected = null;
         //System.out.println( ArrayDeepToString.deepToString( expected ) );
         assertNext(
