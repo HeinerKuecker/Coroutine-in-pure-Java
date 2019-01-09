@@ -421,12 +421,6 @@ public class CoroutineIteratorForArrayComparatorTest
     @Test // TODO remove
     public void testCmplDim2Arr()
     {
-        final Iterable<Integer> integerIterable =
-                Arrays.asList(
-                        null ,
-                        0 ,
-                        1 );
-
         Integer[][] actual = null;
         System.out.println( ArrayDeepToString.deepToString( actual ) );
 
