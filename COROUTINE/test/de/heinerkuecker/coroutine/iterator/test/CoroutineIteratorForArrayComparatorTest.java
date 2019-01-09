@@ -168,8 +168,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // steps
                                         new YieldReturn<>( new Value<>( null ) ) ,
                                         new YieldReturn<>( new Integer[] {} ) ,
-                                        //new YieldReturn<>( new Value<>( new Integer[] { 0 } ) ) ,
-                                        //new YieldReturn<>( new Value<>( new Integer[] { 1 } ) ) ,
+                                        // generate arrays of size 1
                                         new ForEach<Integer[], Integer>(
                                                 // variableName
                                                 "intValue" ,
@@ -185,8 +184,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                         "intValue" ,
                                                                         //type
                                                                         Integer.class ) ) ) ) ,
-                                        //new YieldReturn<>( new Value<>( new Integer[] { 0 , 1 } ) ) ,
-                                        //new YieldReturn<>( new Value<>( new Integer[] { 1 , 0 } ) ) );
+                                        // generate arrays of size 2
                                         new ForEach<Integer[], Integer>(
                                                 // variableName
                                                 "intValue0" ,
