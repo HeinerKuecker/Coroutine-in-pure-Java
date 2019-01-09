@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
  *
  * @author Heiner K&uuml;cker
  */
-public class GetProcedureArgumentNotInProcedureException
+public class UseGetProcedureArgumentOutsideOfProcedureException
 extends IllegalArgumentException
 {
     /**
@@ -24,7 +24,7 @@ extends IllegalArgumentException
      *
      * @param s
      */
-    public GetProcedureArgumentNotInProcedureException(
+    public UseGetProcedureArgumentOutsideOfProcedureException(
             final String s )
     {
         super(s);

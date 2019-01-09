@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.condition.IsNull;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
-import de.heinerkuecker.coroutine.expression.exc.GetProcedureArgumentNotInProcedureException;
+import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
@@ -20,7 +20,7 @@ import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
  */
 public class CoroutineIteratorExpressionNegativeTest
 {
-    @Test( expected = GetProcedureArgumentNotInProcedureException.class )
+    @Test( expected = UseGetProcedureArgumentOutsideOfProcedureException.class )
     public void testGetProcedureArgumentNotInProcedure()
     {
         CoroutineIterator.initializationChecks = true;

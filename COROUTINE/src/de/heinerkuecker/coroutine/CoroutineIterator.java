@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine.expression.exc.GetProcedureArgumentNotInProcedureException;
+import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
@@ -260,7 +260,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         if ( ! getProcedureArgumentsNotInProcedure.isEmpty() )
         {
-            throw new GetProcedureArgumentNotInProcedureException(
+            throw new UseGetProcedureArgumentOutsideOfProcedureException(
                     "ProcedureArguments not in procedure: " +
                     getProcedureArgumentsNotInProcedure );
         }
