@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.util.ArrayTypeName;
 
 public class NewArray<ELEMENT>
 implements CoroExpression<ELEMENT[]>
@@ -82,7 +83,7 @@ implements CoroExpression<ELEMENT[]>
         return
                 this.getClass().getSimpleName() +
                 "<" +
-                this.elementClass.getName() +
+                ArrayTypeName.toStr( this.elementClass ) +
                 ">" +
                 Arrays.toString( this.arrayElementExpressions );
     }
