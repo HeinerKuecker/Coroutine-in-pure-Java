@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import de.heinerkuecker.util.ArrayDeepToString;
+
 /**
  * Variables {@link Map} with
  * type check at runtime.
@@ -110,7 +112,6 @@ implements Iterable<Entry<String, Object>>
         //return String.valueOf( this.values );
 
         StringBuilder sb = new StringBuilder();
-        sb.append('{');
         for ( final Entry<String, Object> valuesEntry : this.values.entrySet() )
         {
             String key = valuesEntry.getKey();
@@ -123,9 +124,12 @@ implements Iterable<Entry<String, Object>>
 
             sb.append( key );
             sb.append('=');
-            sb.append(value == this.values ? "(this Map)" : value);
+            sb.append(
+                    value == this.values
+                        ? "(this Map circular reference)"
+                        : ArrayDeepToString.deepToString( value ) );
         }
-        return sb.append('}').toString();
+        return "" + '{' + sb + '}';
     }
 
     /**

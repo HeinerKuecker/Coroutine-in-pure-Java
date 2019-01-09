@@ -240,15 +240,15 @@ public class CoroutineIteratorForArrayComparatorTest
                                 // iterableExpression
                                 new Value<>( integerArrDim1Iterable ) ,
                                 // steps
-                                new SystemOutPrintln<Integer[][]>(
-                                        new StrConcat(
-                                                new Value<>( "subArr: " ) ,
-                                                new ArrayDeepToStr(
-                                                        new GetLocalVar<Integer[]>(
-                                                                //localVarName
-                                                                "subArr" ,
-                                                                //type
-                                                                Integer[].class ) ) ) ) ,
+                                //new SystemOutPrintln<Integer[][]>(
+                                //        new StrConcat(
+                                //                new Value<>( "subArr: " ) ,
+                                //                new ArrayDeepToStr(
+                                //                        new GetLocalVar<Integer[]>(
+                                //                                //localVarName
+                                //                                "subArr" ,
+                                //                                //type
+                                //                                Integer[].class ) ) ) ) ,
                                 new YieldReturn<Integer[][]>(
                                         new NewArray<Integer[]>(
                                                 // componentClass
@@ -279,15 +279,15 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // iterableExpression
                                         new Value<>( integerArrDim1Iterable ) ,
                                         // steps
-                                        new SystemOutPrintln<Integer[][]>(
-                                                new StrConcat(
-                                                        new Value<>( "subArr1: " ) ,
-                                                        new ArrayDeepToStr(
-                                                                new GetLocalVar<Integer[]>(
-                                                                        //localVarName
-                                                                        "subArr1" ,
-                                                                        //type
-                                                                        Integer[].class ) ) ) ) ,
+                                        //new SystemOutPrintln<Integer[][]>(
+                                        //        new StrConcat(
+                                        //                new Value<>( "subArr1: " ) ,
+                                        //                new ArrayDeepToStr(
+                                        //                        new GetLocalVar<Integer[]>(
+                                        //                                //localVarName
+                                        //                                "subArr1" ,
+                                        //                                //type
+                                        //                                Integer[].class ) ) ) ) ,
                                         new YieldReturn<Integer[][]>(
                                                 new NewArray<Integer[]>(
                                                         // componentClass
