@@ -11,3 +11,11 @@ try {
 SAX parser
 
 Fibonacci generator
+
+Boolean paramater condition (@see If)
+
+remove: IsTrue, IsFalse
+
+new: NullValue ( new Value( null ) )
+
+varargs: Add, StrConcat
