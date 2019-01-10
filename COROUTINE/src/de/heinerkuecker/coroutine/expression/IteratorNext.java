@@ -12,7 +12,7 @@ implements CoroExpression<T>
     /**
      * Expression to get {@link Iterator}.
      */
-    public final CoroExpression<Iterator<T>> iteratorExpression;
+    public final CoroExpression<? extends Iterator<? extends T>> iteratorExpression;
 
     /**
      * Constructor.
@@ -20,7 +20,7 @@ implements CoroExpression<T>
      * @param value
      */
     public IteratorNext(
-            final CoroExpression<Iterator<T>> iteratorExpression )
+            final CoroExpression<? extends Iterator<? extends T>> iteratorExpression )
     {
         this.iteratorExpression = iteratorExpression;
     }
@@ -32,8 +32,8 @@ implements CoroExpression<T>
     public T evaluate(
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Iterator<T> iterator = iteratorExpression.evaluate( parent );
-
+        final Iterator<? extends T> iterator = iteratorExpression.evaluate( parent );
+        // TODO null handling
         return iterator.next();
     }
 

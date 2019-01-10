@@ -22,7 +22,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     public final Class<T> type;
 
-    public final CoroExpression<T> initialVarValueExpression;
+    public final CoroExpression<? extends T> initialVarValueExpression;
 
     /**
      * Constructor.
@@ -30,7 +30,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public DeclareLocalVar(
             final String varName ,
             final Class<T> type ,
-            final CoroExpression<T> initialVarValueExpression )
+            final CoroExpression<? extends T> initialVarValueExpression )
     {
         this.varName =
                 Objects.requireNonNull(
