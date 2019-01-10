@@ -43,7 +43,7 @@ implements CoroExpression<Integer>
 
         if ( numberExpressionResult == null )
         {
-            throw new NullPointerException( "numberExpression: " + numberExpression );
+            throw new NullPointerException( "result of numberExpression: " + numberExpression );
         }
 
         return numberExpressionResult.intValue();
