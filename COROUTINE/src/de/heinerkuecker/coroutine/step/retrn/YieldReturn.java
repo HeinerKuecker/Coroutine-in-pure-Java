@@ -23,13 +23,13 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 public class YieldReturn<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
-    public final CoroExpression<RESULT> expression;
+    public final CoroExpression<? extends RESULT> expression;
 
     /**
      * Constructor.
      */
     public YieldReturn(
-            final CoroExpression<RESULT> expression )
+            final CoroExpression<? extends RESULT> expression )
     {
         super(
                 //creationStackOffset
