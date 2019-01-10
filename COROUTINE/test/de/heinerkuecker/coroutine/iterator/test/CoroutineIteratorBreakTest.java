@@ -34,8 +34,7 @@ public class CoroutineIteratorBreakTest
                         Integer.class ,
                         // steps
                         new SetLocalVar<>( "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new For<>(
                                 // initialStep
                                 new NoOperation<>() ,
@@ -74,8 +73,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>(
-                                        0 ) ) ,
+                                new Value<>( 0 ) ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_for" ,

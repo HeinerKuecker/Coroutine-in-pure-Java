@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine.iterator.test;
 
+import static de.heinerkuecker.coroutine.expression.NullValue.nullValue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -28,7 +30,7 @@ public class CoroutineIteratorForArrayComparatorTest
                 new CoroutineIterator<>(
                         // type
                         int[].class ,
-                        new YieldReturn<>( new Value<>( null ) ) ,
+                        new YieldReturn<>( nullValue() ) ,
                         new YieldReturn<>( new int[ 0 ] ) ,
                         new YieldReturn<>( new int[] { 0 } ) ,
                         new YieldReturn<>( new int[] { 1 } ) ,
@@ -111,7 +113,7 @@ public class CoroutineIteratorForArrayComparatorTest
                 new CoroutineIterator<>(
                         // type
                         Integer[].class ,
-                        new YieldReturn<>( new Value<>( null ) ) ,
+                        new YieldReturn<>( nullValue() ) ,
                         new YieldReturn<>( new Integer[ 0 ] ) ,
                         new YieldReturn<>( new Integer[] { 0 } ) ,
                         new YieldReturn<>( new Integer[] { 1 } ) ,
@@ -166,7 +168,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // type
                                         Integer[].class ,
                                         // steps
-                                        new YieldReturn<>( new Value<>( null ) ) ,
+                                        new YieldReturn<>( nullValue() ) ,
                                         new YieldReturn<>( new Integer[] {} ) ,
                                         // generate arrays of size 1
                                         new ForEach<Integer[], Integer>(
@@ -232,7 +234,7 @@ public class CoroutineIteratorForArrayComparatorTest
                         // type
                         Integer[][].class ,
                         // steps
-                        new YieldReturn<>( new Value<>( null ) ) ,
+                        new YieldReturn<>( nullValue() ) ,
                         new YieldReturn<>( new Integer[][] {} ) ,
                         new ForEach<Integer[][], Integer[]>(
                                 // variableName
@@ -315,6 +317,7 @@ public class CoroutineIteratorForArrayComparatorTest
                 integerArrDim2CoroIter ,
                 expected );
 
+        // check array of length 1
         for ( final Integer[] integerDim1Arr : cmplDim1ArrIterable() )
         {
             expected = new Integer[][] { integerDim1Arr };
@@ -324,6 +327,7 @@ public class CoroutineIteratorForArrayComparatorTest
                     expected );
         }
 
+        // check array of length 2
         for ( final Integer[] integerDim1Arr0 : cmplDim1ArrIterable() )
         {
 
