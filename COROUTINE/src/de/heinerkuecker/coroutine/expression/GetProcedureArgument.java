@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
+import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class GetProcedureArgument<T>
@@ -60,12 +61,18 @@ implements CoroExpression<T>
         if ( procArgValue != null &&
                 ! type.isInstance( procArgValue ) )
         {
-            throw new ClassCastException(
-                    procArgValue.getClass().toString() +
-                    ( this.creationStackTraceElement != null
-                        ? " " + this.creationStackTraceElement
-                        : "" )
-                    );
+            //throw new ClassCastException(
+            //        procArgValue.getClass().toString() +
+            //        ( this.creationStackTraceElement != null
+            //            ? " " + this.creationStackTraceElement
+            //            : "" ) );
+            throw new WrongClassException(
+                    //valueExpression
+                    this ,
+                    //expectedClass
+                    type ,
+                    //wrongValue
+                    procArgValue );
         }
 
         return type.cast( procArgValue );

@@ -36,4 +36,10 @@ extends HasCreationStackTraceElement
     }
 
     abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
+
+    /**
+     * Set reifier for type param {@link #RESULT} to solve unchecked casts.
+     */
+    abstract public void setResultType(
+            final Class<? extends RESULT> resultType );
 }

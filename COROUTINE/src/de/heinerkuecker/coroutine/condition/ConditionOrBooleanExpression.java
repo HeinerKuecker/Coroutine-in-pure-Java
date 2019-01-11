@@ -25,6 +25,13 @@ extends CoroExpression<Boolean>
             final CoroIteratorOrProcedure<?> parent );
 
     /**
+     * Evaluates expression.
+     *
+     * Using of Java8 default method,
+     * for using older Java versions
+     * copy this method implementation
+     * in all sub classes.
+     *
      * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override

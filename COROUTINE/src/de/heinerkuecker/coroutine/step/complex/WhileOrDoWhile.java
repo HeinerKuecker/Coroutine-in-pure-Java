@@ -148,6 +148,16 @@ extends ComplexStep<
     }
 
     /**
+     * @see CoroIterStep#setResultType(Class)
+     */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        this.bodyComplexStep.setResultType( resultType );
+    }
+
+    /**
      * @see ComplexStep#checkLabelAlreadyInUse(Set)
      */
     @Override
@@ -171,16 +181,6 @@ extends ComplexStep<
                 parent ,
                 labels );
     }
-
-    ///**
-    // * @see ComplexStep#setRootParent
-    // */
-    //@Override
-    //public void setRootParent(
-    //        final CoroutineIterator<RESULT> rootParent )
-    //{
-    //    this.bodyComplexStep.setRootParent( rootParent );
-    //}
 
     /**
      * @see ComplexStep#toString

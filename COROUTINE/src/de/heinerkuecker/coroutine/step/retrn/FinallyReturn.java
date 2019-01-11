@@ -8,6 +8,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
@@ -24,6 +25,11 @@ public class FinallyReturn<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     public final CoroExpression<? extends RESULT> expression;
+
+    /**
+     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     */
+    private Class<? extends RESULT> resultType;
 
     /**
      * Constructor.
@@ -65,9 +71,44 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return new CoroIterStepResult.FinallyReturnWithResult<RESULT>(
+        final RESULT resultValue =
                 expression.evaluate(
-                        parent ) );
+                        parent );
+
+        if ( resultValue != null &&
+                ! resultType.isInstance( resultValue ) )
+        {
+            throw new WrongClassException(
+                    //valueExpression
+                    expression ,
+                    //expectedClass
+                    resultType ,
+                    //wrongValue
+                    resultValue );
+        }
+
+        return new CoroIterStepResult.FinallyReturnWithResult<RESULT>(
+                resultType.cast(
+                        resultValue ) );
+    }
+
+    /**
+     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     */
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        return expression.getProcedureArgumentGetsNotInProcedure();
+    }
+
+    /**
+     * @see CoroIterStep#setResultType(Class)
+     */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        this.resultType = resultType;
     }
 
     /**
@@ -84,15 +125,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
-    }
-
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
-    @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    {
-        return expression.getProcedureArgumentGetsNotInProcedure();
     }
 
 }

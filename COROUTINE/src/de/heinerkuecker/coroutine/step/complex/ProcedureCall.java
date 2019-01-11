@@ -40,6 +40,11 @@ extends ComplexStep<
     final Map<String, ProcedureArgument<?>> procedureArguments;
 
     /**
+     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     */
+    private Class<? extends RESULT> resultType;
+
+    /**
      * Constructor.
      *
      * @param creationStackOffset
@@ -126,8 +131,8 @@ extends ComplexStep<
         final ProcedureCallState<RESULT> procedureCallState =
                 new ProcedureCallState<>(
                         this ,
+                        resultType ,
                         procedureArgumentValues ,
-                        //parent.getRootParent() ,
                         parent );
 
         return procedureCallState;
@@ -282,7 +287,18 @@ extends ComplexStep<
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
+        // all subsequent GetProcedureArgument are in procedure
         return Collections.emptyList();
+    }
+
+    /**
+     * @see CoroIterStep#setResultType(Class)
+     */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        this.resultType = resultType;
     }
 
 }

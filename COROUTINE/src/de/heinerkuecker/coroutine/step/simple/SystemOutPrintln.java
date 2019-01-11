@@ -68,6 +68,16 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
+     * @see CoroIterStep#setResultType(Class)
+     */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        // do nothing
+    }
+
+    /**
      * @see Object#toString()
      */
     @Override

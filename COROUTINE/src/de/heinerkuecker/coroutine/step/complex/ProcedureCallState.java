@@ -47,8 +47,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     protected ProcedureCallState(
             final ProcedureCall<RESULT> procedureCall ,
+            final Class<? extends RESULT> resultType ,
             final Map<String, Object> procedureArgumentValues ,
-            //final CoroutineIterator<RESULT> rootParent
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.procedureCall =
@@ -65,10 +65,20 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
                 Objects.requireNonNull(
                         parent );
 
-        // for toString
+        final Procedure<RESULT> procedure =
+                this.parent.getRootParent().getProcedure(
+                        procedureCall.procedureName );
+
+        // for showing next step in toString
         this.bodyComplexState =
-                this.parent.getRootParent().getProcedure( procedureCall.procedureName ).bodyComplexStep.newState(
+                procedure.bodyComplexStep.newState(
                         this );
+
+        if ( resultType != null )
+        {
+            // TODO execute only once
+            procedure.bodyComplexStep.setResultType( resultType );
+        }
     }
 
     /**
@@ -151,6 +161,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         final ProcedureCallState<RESULT/*, PARENT*/> clone =
                 new ProcedureCallState<>(
                         this.procedureCall ,
+                        // resultType null, because only for first call necessary
+                        null ,
                         this.procedureArgumentValues ,
                         //this.rootParent ,
                         this.parent );

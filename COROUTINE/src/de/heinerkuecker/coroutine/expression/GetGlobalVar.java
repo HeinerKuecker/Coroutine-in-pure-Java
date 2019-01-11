@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
+import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class GetGlobalVar<T>
@@ -45,7 +46,7 @@ implements CoroExpression<T>
     /**
      * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     @Override
     public T evaluate(
             final CoroIteratorOrProcedure<?> parent )
@@ -55,12 +56,18 @@ implements CoroExpression<T>
         if ( globalVarValue != null &&
                 ! type.isInstance( globalVarValue ) )
         {
-            throw new ClassCastException(
-                    globalVarValue.getClass().toString() +
-                    ( this.creationStackTraceElement != null
-                        ? " " + this.creationStackTraceElement
-                        : "" )
-                    );
+            //throw new ClassCastException(
+            //        globalVarValue.getClass().toString() +
+            //        ( this.creationStackTraceElement != null
+            //            ? " " + this.creationStackTraceElement
+            //            : "" ) );
+            throw new WrongClassException(
+                    //valueExpression
+                    this ,
+                    //expectedClass
+                    type ,
+                    //wrongValue
+                    globalVarValue );
         }
 
         return type.cast( globalVarValue );

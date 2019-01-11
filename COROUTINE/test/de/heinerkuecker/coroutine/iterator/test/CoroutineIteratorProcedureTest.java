@@ -609,7 +609,7 @@ public class CoroutineIteratorProcedureTest
                                             // name
                                             "argument" ,
                                             // value
-                                            0L ) ) );
+                                            0 ) ) );
 
             CoroutineIteratorTest.assertNext(
                     coroIter ,

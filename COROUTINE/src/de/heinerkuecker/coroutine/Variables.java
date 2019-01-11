@@ -174,6 +174,8 @@ implements Iterable<Entry<String, Object>>
         private static final long serialVersionUID = -3843489649279228520L;
 
         /**
+         * Constructor.
+         *
          * @param message
          */
         public WrongVariableClassException(

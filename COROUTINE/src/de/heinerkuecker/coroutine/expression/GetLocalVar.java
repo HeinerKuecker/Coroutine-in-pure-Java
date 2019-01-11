@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
+import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.util.ArrayTypeName;
 
@@ -16,8 +17,9 @@ implements CoroExpression<T>
     public final String localVarName;
 
     /**
-     * For type check.
+     * Reifier for type param {@link #RESULT} to solve unchecked casts.
      *
+     * For type check.
      * Solve unchecked cast.
      */
     public final Class<? extends T> type;
@@ -56,12 +58,18 @@ implements CoroExpression<T>
         if ( localVarValue != null &&
                 ! type.isInstance( localVarValue ) )
         {
-            throw new ClassCastException(
-                    localVarValue.getClass().toString() +
-                    ( this.creationStackTraceElement != null
-                        ? " " + this.creationStackTraceElement
-                        : "" )
-                    );
+            //throw new ClassCastException(
+            //        localVarValue.getClass().toString() +
+            //        ( this.creationStackTraceElement != null
+            //            ? " " + this.creationStackTraceElement
+            //            : "" ) );
+            throw new WrongClassException(
+                    //valueExpression
+                    this ,
+                    //expectedClass
+                    type ,
+                    //wrongValue
+                    localVarValue );
         }
 
         return type.cast( localVarValue );

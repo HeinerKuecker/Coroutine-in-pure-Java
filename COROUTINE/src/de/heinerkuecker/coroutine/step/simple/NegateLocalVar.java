@@ -84,4 +84,14 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         return Collections.emptyList();
     }
 
+    /**
+     * @see CoroIterStep#setResultType(Class)
+     */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        // do nothing
+    }
+
 }

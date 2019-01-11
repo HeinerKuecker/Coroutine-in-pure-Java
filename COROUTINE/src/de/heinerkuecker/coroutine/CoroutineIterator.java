@@ -160,6 +160,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             }
         }
 
+        this.complexStep.setResultType( resultType );
+
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
@@ -198,6 +200,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                             4 ,
                             steps );
         }
+
+        this.complexStep.setResultType( resultType );
 
         if ( initializationChecks )
         {

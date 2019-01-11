@@ -143,6 +143,17 @@ extends ComplexStep<
     }
 
     /**
+     * @see CoroIterStep#setResultType(Class)
+     */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        this.tryBodyComplexStep.setResultType( resultType );
+        this.catchBodyComplexStep.setResultType( resultType );
+    }
+
+    /**
      * @see ComplexStep#checkLabelAlreadyInUse(Set)
      */
     @Override
