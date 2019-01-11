@@ -21,8 +21,19 @@ import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.SystemOutPrintln;
 import de.heinerkuecker.util.ArrayDeepToString;
 
+/**
+ * JUnit4 test case for {@link CoroutineIterator}.
+ *
+ * Special tests to generate test data for
+ * <a href="https://github.com/HeinerKuecker/Array-Comparator-Java">Array-Comparator-Java</a>.
+ *
+ * @author Heiner K&uuml;cker
+ */
 public class CoroutineIteratorForArrayComparatorTest
 {
+    // TODO more dims
+    // TODO tuple with expected compare result
+
     @Test
     public void testIntArrDim1()
     {
