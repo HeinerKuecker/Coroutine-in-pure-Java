@@ -14,7 +14,7 @@ import de.heinerkuecker.coroutine.step.ret.YieldReturn;
  *
  * @author Heiner K&uuml;cker
  */
-public class CroutineIteratorTryCatchTest
+public class CoroutineIteratorTryCatchTest
 {
     @Test
     public void test_TryCatch_0()
