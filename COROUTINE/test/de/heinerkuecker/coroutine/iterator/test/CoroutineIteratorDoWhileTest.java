@@ -5,7 +5,7 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.False;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
-import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.LesserOrEqual;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.step.complex.For;
-import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NegateLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;

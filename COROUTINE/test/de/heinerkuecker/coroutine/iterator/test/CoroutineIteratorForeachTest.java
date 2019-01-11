@@ -8,7 +8,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.ForEach;
-import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
 import de.heinerkuecker.coroutine.step.complex.TryCatch;
 import de.heinerkuecker.coroutine.step.flow.Throw;
-import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 
 
 /**

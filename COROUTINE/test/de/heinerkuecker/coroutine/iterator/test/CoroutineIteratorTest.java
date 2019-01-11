@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
-import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
+import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;

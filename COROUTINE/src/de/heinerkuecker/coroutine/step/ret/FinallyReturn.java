@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.step.retrn;
+package de.heinerkuecker.coroutine.step.ret;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,12 +16,12 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 /**
  * Step {@link CoroIterStep} to
  * return a specified value
- * and suspend stepping.
+ * and stop stepping.
  *
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class YieldReturn<RESULT>
+public class FinallyReturn<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     public final CoroExpression<? extends RESULT> expression;
@@ -34,7 +34,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Constructor.
      */
-    public YieldReturn(
+    public FinallyReturn(
             final CoroExpression<? extends RESULT> expression )
     {
         super(
@@ -50,7 +50,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Constructor.
      */
-    public YieldReturn(
+    public FinallyReturn(
             final RESULT value )
     {
         super(
@@ -63,7 +63,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * Compute result value and wrap it in yield return.
+     * Compute result value and wrap it in finally return.
      *
      * @see CoroIterStep#execute(Object)
      */
@@ -87,25 +87,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                     resultValue );
         }
 
-        return new CoroIterStepResult.YieldReturnWithResult<RESULT>(
+        return new CoroIterStepResult.FinallyReturnWithResult<RESULT>(
                 resultType.cast(
                         resultValue ) );
-    }
-
-    /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return
-                this.getClass().getSimpleName() +
-                "[" +
-                expression +
-                "]" +
-                ( this.creationStackTraceElement != null
-                ? " " + this.creationStackTraceElement
-                        : "" );
     }
 
     /**
@@ -125,6 +109,22 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         this.resultType = resultType;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return
+                this.getClass().getSimpleName() +
+                "[" +
+                expression +
+                "]" +
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

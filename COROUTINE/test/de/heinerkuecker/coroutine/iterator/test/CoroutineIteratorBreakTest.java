@@ -12,7 +12,7 @@ import de.heinerkuecker.coroutine.step.complex.StepSequence;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.flow.Break;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
-import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
+import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
