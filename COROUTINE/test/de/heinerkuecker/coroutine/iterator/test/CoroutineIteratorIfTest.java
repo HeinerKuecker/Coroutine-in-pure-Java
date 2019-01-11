@@ -6,7 +6,6 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Equals;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
@@ -64,8 +63,8 @@ public class CoroutineIteratorIfTest
                         new SetLocalVar<>(
                                 //varName
                                 "condition_var" ,
-                                //varValueExpression
-                                new True() ) ,
+                                //varValue
+                                true ) ,
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 //new True() ,
@@ -122,7 +121,7 @@ public class CoroutineIteratorIfTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,

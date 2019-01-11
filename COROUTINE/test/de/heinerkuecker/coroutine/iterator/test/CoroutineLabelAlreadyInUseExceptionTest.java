@@ -6,7 +6,6 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
 import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.complex.While;
@@ -30,7 +29,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 // steps
                 new SetLocalVar<>(
                         "number" ,
-                        new Value<>( 0 ) ) ,
+                        0 ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                         //label
                         "label_already_in_use" ,
@@ -66,7 +65,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 // steps
                 new SetLocalVar<>(
                         "number" ,
-                        new Value<>( 0 ) ) ,
+                        0 ) ,
                 new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
                         //label
                         "label_already_in_use" ,
@@ -102,7 +101,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 // steps
                 new SetLocalVar<>(
                         "number" ,
-                        new Value<>( 0 ) ) ,
+                        0 ) ,
                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                         //label
                         "label_already_in_use" ,

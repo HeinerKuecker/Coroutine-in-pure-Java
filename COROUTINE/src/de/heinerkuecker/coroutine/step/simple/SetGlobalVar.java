@@ -6,6 +6,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
@@ -34,6 +35,22 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         this.varValueExpression =
                 Objects.requireNonNull(
                         varValueExpression );
+    }
+
+    /**
+     * Convenience constructor.
+     */
+    public SetGlobalVar(
+            final String varName ,
+            final Object varValue )
+    {
+        this.varName =
+                Objects.requireNonNull(
+                        varName );
+
+        this.varValueExpression =
+                new Value<>(
+                        varValue );
     }
 
     /**

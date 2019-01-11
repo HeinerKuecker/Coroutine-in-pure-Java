@@ -119,7 +119,7 @@ public class CoroutineIteratorProcedureTest
                                 //varName
                                 "counter" ,
                                 //varValue
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new IncrementLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -166,10 +166,10 @@ public class CoroutineIteratorProcedureTest
                         //initialVariableValues
                         null ,
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "counter" ,
-                                //varValue
-                                new Value<>( 0 ) ) ,
+                                // varValue
+                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -193,7 +193,7 @@ public class CoroutineIteratorProcedureTest
                                 //varName
                                 "counter" ,
                                 //varValue
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new IncrementLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -244,7 +244,7 @@ public class CoroutineIteratorProcedureTest
                                 //varName
                                 "counter" ,
                                 //varValue
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) ,
                         new ProcedureCall<Integer>(
@@ -322,7 +322,7 @@ public class CoroutineIteratorProcedureTest
                                 //varName
                                 "number" ,
                                 //varValue
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -382,7 +382,7 @@ public class CoroutineIteratorProcedureTest
                                 //varName
                                 "number" ,
                                 //varValue
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure1" ) );
 
@@ -548,6 +548,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_ValueProcedureArgument_LocalVariable_Recursive_Int()
     {
+        // TODO this test failes intentionally, because is wip
         try
         {
             CoroutineIterator.initializationChecks = true;

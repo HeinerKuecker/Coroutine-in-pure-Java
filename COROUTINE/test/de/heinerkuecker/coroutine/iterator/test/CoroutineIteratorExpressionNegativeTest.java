@@ -6,7 +6,6 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.condition.IsNull;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
@@ -56,8 +55,8 @@ public class CoroutineIteratorExpressionNegativeTest
                         new SetLocalVar<>(
                                 // varName ,
                                 "int_number" ,
-                                // varValueExpression
-                                new Value<>( "a" ) ) );
+                                // varValue
+                                "a" ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );

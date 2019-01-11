@@ -47,7 +47,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new SetLocalVar<Integer>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer>(
                                 // condition
                                 new Equals<Integer>(
@@ -82,7 +82,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new SetLocalVar<Integer>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<>(
                                 // condition
                                 new Lesser<>(
@@ -125,7 +125,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<>(
                                 // condition
                                 new Equals<>(
@@ -161,7 +161,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 3 ) ) ,
+                                3 ) ,
                         new While<>(
                                 //condition
                                 new Not(
@@ -204,7 +204,7 @@ public class CoroutineIteratorWhileTest
                                 Integer.class ) ,
                         new SetLocalVar<>(
                                 "number0" ,
-                                new Value<>( 3 ) ) ,
+                                3 ) ,
                         new While<Integer>(
                                 //condition
                                 new GreaterOrEqual<>(
@@ -215,7 +215,7 @@ public class CoroutineIteratorWhileTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number1" ,
-                                        new Value<>( 3 ) ) ,
+                                        3 ) ,
                                 new While<Integer>(
                                         //condition
                                         new GreaterOrEqual<>(
@@ -365,7 +365,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Lesser<>(
@@ -408,7 +408,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 2 ) ) ,
+                                2 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new Or(
@@ -459,8 +459,7 @@ public class CoroutineIteratorWhileTest
                 // steps
                 new SetLocalVar<Integer>(
                         "first" ,
-                        //new Value<>( Boolean.TRUE )
-                        new True() ) ,
+                        true ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                         //condition
                         new True() ,

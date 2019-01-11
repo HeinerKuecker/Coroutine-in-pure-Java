@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.retrn.FinallyReturn;
 import de.heinerkuecker.coroutine.step.retrn.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
@@ -144,7 +143,7 @@ public class CoroutineIteratorTest
                         // steps
                         new SetLocalVar<>(
                                 "str" ,
-                                new Value<>( "a" ) ) ,
+                                "a" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "str" ,
@@ -170,7 +169,7 @@ public class CoroutineIteratorTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
                                         "number" ,
@@ -199,7 +198,7 @@ public class CoroutineIteratorTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new IncrementLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -226,7 +225,7 @@ public class CoroutineIteratorTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 1 ) ) ,
+                                1 ) ,
                         new DecrementLocalVar<>( "number" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(

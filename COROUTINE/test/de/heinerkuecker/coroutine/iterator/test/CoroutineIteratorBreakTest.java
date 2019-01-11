@@ -33,8 +33,9 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>( "number" ,
-                                new Value<>( 0 ) ) ,
+                        new SetLocalVar<>(
+                                "number" ,
+                                0 ) ,
                         new For<>(
                                 // initialStep
                                 new NoOperation<>() ,
@@ -73,7 +74,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_for" ,
@@ -123,7 +124,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<>(
                                         // initialStep
                                         new Break<>() ,
@@ -153,7 +154,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
                                         new StepSequence<>(
@@ -187,7 +188,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<>(
                                         // initialStep
                                         new Break<>( "wrong" ) ,
@@ -217,7 +218,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<>(
                                         // initialStep
                                         new NoOperation<>() ,
@@ -247,7 +248,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
                                         new NoOperation<>() ,
@@ -281,7 +282,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<>(
                                         // initialStep
                                         new NoOperation<>() ,
@@ -311,7 +312,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<Integer>(
                                         //label
                                         "for" ,
@@ -343,7 +344,7 @@ public class CoroutineIteratorBreakTest
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
-                                        new Value<>( 0 ) ) ,
+                                        0 ) ,
                                 new For<Integer>(
                                         //label
                                         "for" ,
@@ -371,7 +372,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
                                 new True() ,
@@ -406,7 +407,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
@@ -458,7 +459,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
@@ -505,7 +506,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new SetLocalVar<>(
                                 "number" ,
-                                new Value<>( 0 ) ) ,
+                                0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 //label
                                 "outer_while" ,
