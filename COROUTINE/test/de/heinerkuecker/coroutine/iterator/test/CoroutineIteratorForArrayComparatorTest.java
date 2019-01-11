@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.expression.ArrayDeepToStr;
+import de.heinerkuecker.coroutine.expression.ArrayDeepToStrCoroExpr;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.NewArray;
 import de.heinerkuecker.coroutine.expression.StrConcat;
@@ -378,7 +378,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                 new SystemOutPrintln<Integer[][]>(
                                         new StrConcat(
                                                 new Value<>( "subArr0: " ) ,
-                                                new ArrayDeepToStr(
+                                                new ArrayDeepToStrCoroExpr(
                                                         new GetLocalVar<Integer[]>(
                                                                 //localVarName
                                                                 "subArr0" ,

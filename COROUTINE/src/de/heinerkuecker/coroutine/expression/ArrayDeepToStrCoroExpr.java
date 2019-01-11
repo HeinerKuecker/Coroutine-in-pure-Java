@@ -5,7 +5,7 @@ import java.util.List;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.util.ArrayDeepToString;
 
-public class ArrayDeepToStr
+public class ArrayDeepToStrCoroExpr
 implements CoroExpression<String>
 {
     public final CoroExpression<? extends Object[]> arrayExpression;
@@ -13,7 +13,7 @@ implements CoroExpression<String>
     /**
      * Constructor.
      */
-    public ArrayDeepToStr(
+    public ArrayDeepToStrCoroExpr(
             final CoroExpression<? extends Object[]> arrayExpression )
     {
         this.arrayExpression = arrayExpression;
