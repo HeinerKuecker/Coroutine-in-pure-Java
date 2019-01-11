@@ -61,7 +61,7 @@ public class CoroutineIteratorForArrayComparatorTest
                 intArrDim1CoroIter ,
                 new int[] { 1 , 0 } );
 
-        assertHasNextFalse(
+        CoroutineIteratorTest.assertHasNextFalse(
                 intArrDim1CoroIter );
     }
 
@@ -89,22 +89,120 @@ public class CoroutineIteratorForArrayComparatorTest
                 actual );
     }
 
-    /**
-     * @param coroIter
-     */
-    public static void assertHasNextFalse(
-            final CoroutineIterator<?> coroIter )
+    @Test
+    public void testIntArrDim2()
     {
-        //System.out.println( coroIter );
+        final Iterable<int[]> intArrDim1CoroIterable =
+                new Iterable<int[]>() {
 
-        Assert.assertFalse(
-                coroIter.hasNext() );
+                    @Override
+                    public Iterator<int[]> iterator()
+                    {
+                        return
+                                new CoroutineIterator<>(
+                                        // type
+                                        int[].class ,
+                                        new YieldReturn<>( nullValue() ) ,
+                                        new YieldReturn<>( new int[ 0 ] ) ,
+                                        new YieldReturn<>( new int[] { 0 } ) ,
+                                        new YieldReturn<>( new int[] { 1 } ) ,
+                                        new YieldReturn<>( new int[] { 0 , 1 } ) ,
+                                        new YieldReturn<>( new int[] { 1 , 0 } ) );
+                    }
 
-        System.out.println( "hasNext: false" );
-        System.out.println();
+                };
 
-        System.out.println( coroIter );
+                final CoroutineIterator<int[][]> intArrDim2CoroIter =
+                        new CoroutineIterator<int[][]>(
+                                //type
+                                int[][].class ,
+                                //steps
+                                new YieldReturn<int[][]>( nullValue() ) ,
+                                new YieldReturn<int[][]>( new int[][] {} ) ,
+                                // generate arrays of size 1
+                                new ForEach<int[][], int[]>(
+                                        // variableName
+                                        "intValue" ,
+                                        // iterableExpression
+                                        new Value<>( intArrDim1CoroIterable ) ,
+                                        // steps
+                                        new YieldReturn<int[][]>(
+                                                new NewArray<int[]>(
+                                                        // elementClass
+                                                        int[].class ,
+                                                        new GetLocalVar<>(
+                                                                //localVarName
+                                                                "intValue" ,
+                                                                //type
+                                                                int[].class ) ) ) ) ,
+                                // generate arrays of size 2
+                                new ForEach<int[][], int[]>(
+                                        // variableName
+                                        "intValue0" ,
+                                        // iterableExpression
+                                        new Value<>( intArrDim1CoroIterable ) ,
+                                        // steps
+                                        new ForEach<>(
+                                                // variableName
+                                                "intValue1" ,
+                                                // iterableExpression
+                                                new Value<>( intArrDim1CoroIterable ) ,
+                                                new YieldReturn<>(
+                                                        new NewArray<int[]>(
+                                                                // elementClass
+                                                                int[].class ,
+                                                                new GetLocalVar<>(
+                                                                        //localVarName
+                                                                        "intValue0" ,
+                                                                        //type
+                                                                        int[].class ) ,
+                                                                new GetLocalVar<>(
+                                                                        //localVarName
+                                                                        "intValue1" ,
+                                                                        //type
+                                                                        int[].class ) ) ) ) ) );
+
+
+                int[][] expected = null;
+                //System.out.println( ArrayDeepToString.deepToString( expected ) );
+                assertNext(
+                        intArrDim2CoroIter ,
+                        expected );
+
+                expected = new int[][] {};
+                //System.out.println( ArrayDeepToString.deepToString( expected ) );
+                assertNext(
+                        intArrDim2CoroIter ,
+                        expected );
+
+                // check array of length 1
+                for ( final int[] integerDim1Arr : intArrDim1CoroIterable )
+                {
+                    expected = new int[][] { integerDim1Arr };
+                    //System.out.println( ArrayDeepToString.deepToString( expected ) );
+                    assertNext(
+                            intArrDim2CoroIter ,
+                            expected );
+                }
+
+                // check array of length 2
+                for ( final int[] integerDim1Arr0 : intArrDim1CoroIterable )
+                {
+
+                    for ( final int[] integerDim1Arr1 : intArrDim1CoroIterable )
+                    {
+                        expected = new int[][] { integerDim1Arr0 , integerDim1Arr1 };
+                        //System.out.println( ArrayDeepToString.deepToString( expected ) );
+                        assertNext(
+                                intArrDim2CoroIter ,
+                                expected );
+                    }
+                }
+
+                CoroutineIteratorTest.assertHasNextFalse(
+                        intArrDim2CoroIter );
     }
+
 
     @Test
     public void testCmpblArrDim1()
@@ -144,7 +242,7 @@ public class CoroutineIteratorForArrayComparatorTest
                 intArrDim1CoroIter ,
                 new Integer[] { 1 , 0 } );
 
-        assertHasNextFalse(
+        CoroutineIteratorTest.assertHasNextFalse(
                 intArrDim1CoroIter );
     }
 
@@ -341,7 +439,7 @@ public class CoroutineIteratorForArrayComparatorTest
             }
         }
 
-        assertHasNextFalse(
+        CoroutineIteratorTest.assertHasNextFalse(
                 integerArrDim2CoroIter );
     }
 
@@ -452,9 +550,9 @@ public class CoroutineIteratorForArrayComparatorTest
     /**
      * @param coroIter
      */
-    public static <T extends Comparable<T>> void assertNext(
-            final CoroutineIterator<T[]> coroIter ,
-            final T[] expected )
+    public static <T /*extends Comparable<T>*/> void assertNext(
+            final CoroutineIterator<? extends T[]> coroIter ,
+                    final T[] expected )
     {
         //System.out.println( coroIter );
 
@@ -476,25 +574,25 @@ public class CoroutineIteratorForArrayComparatorTest
     /**
      * @param coroIter
      */
-    public static <T extends Comparable<T>> void assertNext(
-            final CoroutineIterator<T[][]> coroIter ,
-            final T[][] expected )
-    {
-        //System.out.println( coroIter );
-
-        Assert.assertTrue(
-                coroIter.hasNext() );
-
-        System.out.println( coroIter );
-
-        final T[][] actual = coroIter.next();
-
-        System.out.println( ArrayDeepToString.deepToString( actual ) );
-        System.out.println();
-
-        Assert.assertArrayEquals(
-                expected ,
-                actual );
-    }
+    //public static <T extends Comparable<T>> void assertNext(
+    //        final CoroutineIterator<T[][]> coroIter ,
+    //        final T[][] expected )
+    //{
+    //    //System.out.println( coroIter );
+    //
+    //    Assert.assertTrue(
+    //            coroIter.hasNext() );
+    //
+    //    System.out.println( coroIter );
+    //
+    //    final T[][] actual = coroIter.next();
+    //
+    //    System.out.println( ArrayDeepToString.deepToString( actual ) );
+    //    System.out.println();
+    //
+    //    Assert.assertArrayEquals(
+    //            expected ,
+    //            actual );
+    //}
 
 }
