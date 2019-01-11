@@ -51,7 +51,7 @@ implements CoroExpression<T>
     /**
      * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     @Override
     public T evaluate(
             final CoroIteratorOrProcedure<?> parent )

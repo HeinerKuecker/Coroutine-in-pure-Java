@@ -52,7 +52,7 @@ extends HasCreationStackTraceElement
         else
         {
             this.bodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             bodySteps );

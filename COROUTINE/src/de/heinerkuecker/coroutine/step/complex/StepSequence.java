@@ -29,7 +29,7 @@ extends ComplexStep<
     PARENT*/
     >
 {
-    private final CoroIterStep<RESULT/*, PARENT*/>[] steps;
+    private final CoroIterStep<? extends RESULT/*, PARENT*/>[] steps;
 
     /**
      * Constructor.
@@ -37,12 +37,12 @@ extends ComplexStep<
     @SafeVarargs
     public StepSequence(
             final int creationStackOffset ,
-            final CoroIterStep<RESULT /*, PARENT*/>... steps )
+            final CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
         // TODO HasCreationStackTraceElement.creationStackTraceElement never used
         super( creationStackOffset );
 
-        for ( final CoroIterStep<RESULT /*, PARENT*/> step : steps )
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : steps )
         {
             Objects.requireNonNull( step );
         }
@@ -57,7 +57,7 @@ extends ComplexStep<
         return steps.length;
     }
 
-    CoroIterStep<RESULT /*, ? super PARENT*/> getStep(
+    CoroIterStep<? extends RESULT /*, ? super PARENT*/> getStep(
             final int index )
     {
         return steps[ index ];
@@ -85,7 +85,7 @@ extends ComplexStep<
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
-        for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
             if ( step instanceof BreakOrContinue )
             {
@@ -112,7 +112,7 @@ extends ComplexStep<
     {
         final List<GetProcedureArgument<?>> result = new ArrayList<>();
 
-        for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
             result.addAll(
                     step.getProcedureArgumentGetsNotInProcedure() );
@@ -128,9 +128,9 @@ extends ComplexStep<
     public void setResultType(
             final Class<? extends RESULT> resultType )
     {
-        for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
-            step.setResultType( resultType );
+            ( (CoroIterStep<RESULT>) step ).setResultType( resultType );
         }
     }
 
@@ -143,11 +143,11 @@ extends ComplexStep<
             final CoroIteratorOrProcedure<RESULT> parent ,
             final Set<String> labels )
     {
-        for ( final CoroIterStep<RESULT /*, PARENT*/> step : this.steps )
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
             if ( step instanceof ComplexStep )
             {
-                ((ComplexStep) step).checkLabelAlreadyInUse(
+                ((ComplexStep<?, ?, RESULT>) step).checkLabelAlreadyInUse(
                         alreadyCheckedProcedureNames ,
                         parent ,
                         labels );
@@ -181,9 +181,11 @@ extends ComplexStep<
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
+        @SuppressWarnings("unchecked")
         final StepSequenceState<RESULT /*, PARENT*/> lastSequenceExecuteState =
                 (StepSequenceState<RESULT /*, PARENT*/>) lastStepExecuteState;
 
+        @SuppressWarnings("unchecked")
         final StepSequenceState<RESULT /*, PARENT*/> nextSequenceExecuteState =
                 (StepSequenceState<RESULT /*, PARENT*/>) nextStepExecuteState;
 
@@ -191,11 +193,11 @@ extends ComplexStep<
 
         for ( int i = 0 ; i < steps.length ; i++ )
         {
-            final CoroIterStep<RESULT /*, PARENT*/> step = this.steps[ i ];
+            final CoroIterStep<? extends RESULT /*, PARENT*/> step = this.steps[ i ];
 
             if ( step instanceof ComplexStep )
             {
-                final ComplexStepState lastSubStepExecuteState;
+                final ComplexStepState<?, ?, RESULT> lastSubStepExecuteState;
                 if ( lastSequenceExecuteState != null &&
                         lastSequenceExecuteState.currentStepIndex == i )
                 {
@@ -206,7 +208,7 @@ extends ComplexStep<
                     lastSubStepExecuteState = null;
                 }
 
-                final ComplexStepState nextSubStepExecuteState;
+                final ComplexStepState<?, ?, RESULT> nextSubStepExecuteState;
                 if ( nextSequenceExecuteState != null &&
                         nextSequenceExecuteState.currentStepIndex == i )
                 {
@@ -218,7 +220,7 @@ extends ComplexStep<
                 }
 
                 buff.append(
-                        ( (ComplexStep<?, ?, RESULT /*, ?*/>) step ).toString(
+                        ( (ComplexStep<?, ?, RESULT>) step ).toString(
                                 parent ,
                                 //indent
                                 indent /*+ " "*/ ,

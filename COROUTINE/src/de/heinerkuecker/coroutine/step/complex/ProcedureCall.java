@@ -191,9 +191,11 @@ extends ComplexStep<
             final ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT> nextStepExecuteState )
     {
+        @SuppressWarnings("unchecked")
         final ProcedureCallState<RESULT /*, PARENT*/> lastProcExecuteState =
                 (ProcedureCallState<RESULT /*, PARENT*/>) lastStepExecuteState;
 
+        @SuppressWarnings("unchecked")
         final ProcedureCallState<RESULT /*, PARENT*/> nextProcExecuteState =
                 (ProcedureCallState<RESULT /*, PARENT*/>) nextStepExecuteState;
 

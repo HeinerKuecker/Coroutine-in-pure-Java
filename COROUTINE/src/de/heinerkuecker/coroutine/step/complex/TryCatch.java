@@ -45,7 +45,7 @@ extends ComplexStep<
         {
             // TODO support simple step
             this.tryBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             tryStep );
@@ -64,7 +64,7 @@ extends ComplexStep<
         else
         {
             this.catchBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             catchBodySteps );
@@ -110,14 +110,14 @@ extends ComplexStep<
 
         if ( tryBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
+            result.addAll( ((ComplexStep<?, ?, RESULT>) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
                     alreadyCheckedProcedureNames ,
                     parent ) );
         }
 
         if ( catchBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
+            result.addAll( ((ComplexStep<?, ?, RESULT>) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
                     alreadyCheckedProcedureNames ,
                     parent ) );
         }
@@ -194,9 +194,11 @@ extends ComplexStep<
             ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
+        @SuppressWarnings("unchecked")
         final TryCatchState<RESULT/*, PARENT*/> lastTryCatchExecuteState =
                 (TryCatchState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
+        @SuppressWarnings("unchecked")
         final TryCatchState<RESULT/*, PARENT*/> nextTryCatchExecuteState =
                 (TryCatchState<RESULT/*, PARENT*/>) nextStepExecuteState;
 

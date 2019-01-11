@@ -82,12 +82,13 @@ extends ComplexStep<
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
-            this.bodyComplexStep = (ComplexStep<?, ?, RESULT /*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
+            this.bodyComplexStep =
+                    (ComplexStep<?, ?, RESULT /*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
         }
         else
         {
             this.bodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<RESULT>(
                             // creationStackOffset
                             4 ,
                             steps );

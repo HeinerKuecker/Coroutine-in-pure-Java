@@ -47,12 +47,13 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
     {
         while ( currentStepIndex < sequence.length() )
         {
-            final CoroIterStep<RESULT /*, ? super PARENT*/> currentStep =
+            final CoroIterStep<? extends RESULT /*, ? super PARENT*/> currentStep =
                     sequence.getStep( this.currentStepIndex );
 
             final CoroIterStepResult<RESULT> executeResult;
             if ( currentStep instanceof SimpleStep )
             {
+                @SuppressWarnings("unchecked")
                 final SimpleStep<RESULT /*, ? super PARENT*/> currentSimpleStep =
                         (SimpleStep<RESULT /*, ? super PARENT*/>) currentStep;
 
@@ -66,6 +67,7 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
             }
             else
             {
+                @SuppressWarnings("unchecked")
                 final ComplexStep<?, ?, RESULT /*, ? super PARENT*/> currentComplexStep =
                         (ComplexStep<?, ?, RESULT /*, ? super PARENT*/>) currentStep;
 
@@ -97,7 +99,7 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
                      sequence.getStep( this.currentStepIndex ) instanceof ComplexStep )
             {
                 this.currentComplexState =
-                        ( (ComplexStep) sequence.getStep(
+                        ( (ComplexStep<?, ?, RESULT>) sequence.getStep(
                                 this.currentStepIndex ) ).newState(
                                         //this.rootParent
                                         this.parent );

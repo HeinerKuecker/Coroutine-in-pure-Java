@@ -47,7 +47,7 @@ extends ComplexStep<
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             steps );
@@ -78,7 +78,7 @@ extends ComplexStep<
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             steps );
@@ -110,7 +110,7 @@ extends ComplexStep<
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             steps );
@@ -204,9 +204,11 @@ extends ComplexStep<
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
+        @SuppressWarnings("unchecked")
         final IfState<RESULT/*, PARENT*/> lastIfExecuteState =
                 (IfState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
+        @SuppressWarnings("unchecked")
         final IfState<RESULT/*, PARENT*/> nextIfExecuteState =
                 (IfState<RESULT/*, PARENT*/>) nextStepExecuteState;
 

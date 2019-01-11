@@ -488,9 +488,11 @@ extends ComplexStep<
             ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             ComplexStepState<?, ?, RESULT> nextStepExecuteState )
     {
+        @SuppressWarnings("unchecked")
         final ForState<RESULT/*, PARENT*/> lastForExecuteState =
                 (ForState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
+        @SuppressWarnings("unchecked")
         final ForState<RESULT/*, PARENT*/> nextForExecuteState =
                 (ForState<RESULT/*, PARENT*/>) nextStepExecuteState;
 

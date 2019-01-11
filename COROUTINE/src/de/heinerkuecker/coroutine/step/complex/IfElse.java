@@ -43,12 +43,13 @@ extends ComplexStep<
         if ( thenSteps.length == 1 &&
                 thenSteps[ 0 ] instanceof ComplexStep )
         {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
+            this.thenBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
         }
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             thenSteps );
@@ -57,12 +58,13 @@ extends ComplexStep<
         if ( elseSteps.length == 1 &&
                 elseSteps[ 0 ] instanceof ComplexStep )
         {
-            this.elseBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
+            this.elseBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
         }
         else
         {
             this.elseBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             elseSteps );
@@ -89,12 +91,13 @@ extends ComplexStep<
         if ( thenSteps.length == 1 &&
                 thenSteps[ 0 ] instanceof ComplexStep )
         {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
+            this.thenBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
         }
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             thenSteps );
@@ -103,12 +106,13 @@ extends ComplexStep<
         if ( elseSteps.length == 1 &&
                 elseSteps[ 0 ] instanceof ComplexStep )
         {
-            this.elseBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
+            this.elseBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
         }
         else
         {
             this.elseBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             elseSteps );
@@ -136,12 +140,13 @@ extends ComplexStep<
         if ( thenSteps.length == 1 &&
                 thenSteps[ 0 ] instanceof ComplexStep )
         {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
+            this.thenBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
         }
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             thenSteps );
@@ -150,12 +155,13 @@ extends ComplexStep<
         if ( elseSteps.length == 1 &&
                 elseSteps[ 0 ] instanceof ComplexStep )
         {
-            this.elseBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
+            this.elseBodyComplexStep =
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
         }
         else
         {
             this.elseBodyComplexStep =
-                    new StepSequence(
+                    new StepSequence<>(
                             // creationStackOffset
                             3 ,
                             elseSteps );
@@ -270,9 +276,11 @@ extends ComplexStep<
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
+        @SuppressWarnings("unchecked")
         final IfElseState<RESULT/*, PARENT*/> lastIfElseExecuteState =
                 (IfElseState<RESULT/*, PARENT*/>) lastStepExecuteState;
 
+        @SuppressWarnings("unchecked")
         final IfElseState<RESULT/*, PARENT*/> nextIfElseExecuteState =
                 (IfElseState<RESULT/*, PARENT*/>) nextStepExecuteState;
 
