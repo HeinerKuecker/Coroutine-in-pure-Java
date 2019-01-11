@@ -98,8 +98,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         return varName + " = " + varValueExpression +
                 ( this.creationStackTraceElement != null
-                ? " " + this.creationStackTraceElement
-                        : "" );
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }
