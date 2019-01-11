@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.step;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
 import de.heinerkuecker.coroutine.step.complex.For;
+import de.heinerkuecker.coroutine.step.complex.ForEach;
 import de.heinerkuecker.coroutine.step.complex.While;
 
 /**
@@ -125,6 +126,7 @@ public interface CoroIterStepResult<RESULT>
     /**
      * Class to enforce break current loop like
      * {@link For},
+     * {@link ForEach},
      * {@link While} or
      * {@link DoWhile}.
      *
@@ -162,6 +164,7 @@ public interface CoroIterStepResult<RESULT>
     /**
      * Class to enforce continue current loop like
      * {@link For},
+     * {@link ForEach},
      * {@link While} or
      * {@link DoWhile}.
      *
