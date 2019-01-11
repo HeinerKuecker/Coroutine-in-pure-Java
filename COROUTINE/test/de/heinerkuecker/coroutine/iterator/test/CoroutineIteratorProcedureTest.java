@@ -287,8 +287,8 @@ public class CoroutineIteratorProcedureTest
                                 new ProcedureArgument<>(
                                         // name
                                         "argument" ,
-                                        // expression
-                                        new Value<>( 0 ) ) ) );
+                                        // value
+                                        0 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -441,8 +441,8 @@ public class CoroutineIteratorProcedureTest
                                 new ProcedureArgument<>(
                                         // name
                                         "argument" ,
-                                        // expression
-                                        new Value<>( 0L ) ) ) );
+                                        // value
+                                        0L ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -522,8 +522,8 @@ public class CoroutineIteratorProcedureTest
                                 new ProcedureArgument<>(
                                         // name
                                         "argument" ,
-                                        // expression
-                                        new Value<>( 0L ) ) ) );
+                                        // value
+                                        0L ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -608,8 +608,8 @@ public class CoroutineIteratorProcedureTest
                                     new ProcedureArgument<>(
                                             // name
                                             "argument" ,
-                                            // expression
-                                            new Value<>( 0L ) ) ) );
+                                            // value
+                                            0L ) ) );
 
             CoroutineIteratorTest.assertNext(
                     coroIter ,

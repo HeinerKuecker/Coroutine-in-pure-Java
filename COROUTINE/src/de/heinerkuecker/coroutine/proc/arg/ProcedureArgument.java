@@ -4,12 +4,10 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
+import de.heinerkuecker.coroutine.expression.Value;
 
-public /*interface*/class ProcedureArgument<T>
+public class ProcedureArgument<T>
 {
-    //String getName();
-    //Object getValue( final CoroIteratorOrProcedure<?> parent );
-
     public final String name;
 
     public final CoroExpression<T> expression;
@@ -26,6 +24,20 @@ public /*interface*/class ProcedureArgument<T>
     {
         this.name = Objects.requireNonNull( name );
         this.expression = Objects.requireNonNull( expression );
+    }
+
+    /**
+     * Convenience Constructor.
+     *
+     * @param name
+     * @param expression
+     */
+    public ProcedureArgument(
+            final String name ,
+            final T value )
+    {
+        this.name = Objects.requireNonNull( name );
+        this.expression = new Value<T>( value );
     }
 
     public T getValue(
