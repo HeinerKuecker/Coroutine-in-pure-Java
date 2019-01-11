@@ -400,6 +400,13 @@ public class CoroutineIteratorBreakTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         // type
@@ -413,20 +420,14 @@ public class CoroutineIteratorBreakTest
                                 "outer_while" ,
                                 //condition
                                 new Lesser<>(
-                                        new GetLocalVar<>(
-                                                //varName
-                                                "number" ,
-                                                Integer.class ) ,
+                                        number ,
                                         //compareValue
                                         2 ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser<>(
-                                                new GetLocalVar<>(
-                                                        //varName
-                                                        "number" ,
-                                                        Integer.class ) ,
+                                                number ,
                                                 //compareValue
                                                 1 ) ,
                                         //steps
@@ -452,6 +453,13 @@ public class CoroutineIteratorBreakTest
     {
         CoroutineIterator.initializationChecks = false;
 
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         // type
@@ -465,20 +473,14 @@ public class CoroutineIteratorBreakTest
                                 "outer_while" ,
                                 //condition
                                 new Lesser<>(
-                                        new GetLocalVar<>(
-                                                //varName
-                                                "number" ,
-                                                Integer.class ) ,
+                                        number ,
                                         //compareValue
                                         2 ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser<>(
-                                                new GetLocalVar<>(
-                                                        //varName
-                                                        "number" ,
-                                                        Integer.class ) ,
+                                                number ,
                                                 //compareValue
                                                 1 ) ,
                                         //steps
@@ -499,6 +501,13 @@ public class CoroutineIteratorBreakTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         // type
@@ -512,20 +521,14 @@ public class CoroutineIteratorBreakTest
                                 "outer_while" ,
                                 //condition
                                 new Lesser<>(
-                                        new GetLocalVar<>(
-                                                //varName
-                                                "number" ,
-                                                Integer.class ) ,
+                                        number ,
                                         //compareValue
                                         2 ) ,
                                 //steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Lesser<>(
-                                                new GetLocalVar<>(
-                                                        //varName
-                                                        "number" ,
-                                                        Integer.class ) ,
+                                                number ,
                                                 //compareValue
                                                 new Value<>( 1 ) ) ,
                                         //steps

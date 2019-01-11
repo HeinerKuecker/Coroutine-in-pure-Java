@@ -40,27 +40,30 @@ public class CoroutineIteratorWhileTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
         final CoroutineIterator<Integer> coroIter =
-                new CoroutineIterator<Integer>(
+                new CoroutineIterator<>(
                         // type
                         Integer.class ,
                         // steps
                         new SetLocalVar<Integer>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer>(
+                        new While<>(
                                 // condition
                                 new Equals<Integer>(
-                                        new GetLocalVar<>(
-                                                "number" ,
-                                                Integer.class ) ,
+                                        number ,
                                         0 ) ,
                                 // steps
-                                new IncrementLocalVar<Integer>( "number" ) ) ,
+                                new IncrementLocalVar<>( "number" ) ) ,
                         new YieldReturn<>(
-                                new GetLocalVar<>(
-                                        "number" ,
-                                        Integer.class ) ) );
+                                        number ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
