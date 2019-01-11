@@ -37,7 +37,7 @@ In the toString() method, the steps of currently running procedures are output, 
 
 The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code (steps).
 
-This repository contains an eclipse project to import in your IDE.
+This repository contains an eclipse project COROUTINE to import in your IDE.
 
 To extend this library for your own tasks, you can extend the Java classes SimpleStep and CoroExpression using the existing code.
 
