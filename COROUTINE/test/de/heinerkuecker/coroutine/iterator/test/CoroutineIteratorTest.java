@@ -118,7 +118,6 @@ public class CoroutineIteratorTest
                         // type
                         String.class ,
                         // steps
-                        //parent -> new CoroIterStepResult.FinallyReturnWithResult<String>( "a" )
                         new FinallyReturn<>( "a" ) ,
                         // the second step is never executed
                         new YieldReturn<>( "b" ) );
@@ -165,7 +164,7 @@ public class CoroutineIteratorTest
         // extract get local variable expression
         final GetLocalVar<Integer> number =
                 new GetLocalVar<>(
-                		// varName
+                        // varName
                         "number" ,
                         Integer.class );
 
