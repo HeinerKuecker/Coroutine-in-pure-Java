@@ -87,7 +87,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Reifier for type param {@link #RESULT} to solve unchecked casts.
      */
-    private final Class<? extends RESULT> type;
+    private final Class<? extends RESULT> resultType;
 
     /**
      * Variables.
@@ -106,16 +106,16 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Class<? extends RESULT> type ,
+            final Class<? extends RESULT> resultType ,
             final Iterable<Procedure<RESULT>> procedures ,
             final Map<String, ? extends Object> initialVariableValues ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
 
-        this.type =
+        this.resultType =
                 Objects.requireNonNull(
-                        type );
+                        resultType );
 
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
@@ -178,12 +178,12 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Class<? extends RESULT> type ,
+            final Class<? extends RESULT> resultType ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
-        this.type =
+        this.resultType =
                 Objects.requireNonNull(
-                        type );
+                        resultType );
 
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
@@ -209,21 +209,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                     new HashSet<>() );
         }
     }
-
-    // TODO remove
-    //public void add(
-    //        final Procedure<RESULT> procedureToAdd )
-    //{
-    //    if ( this.procedures.containsKey( procedureToAdd.name ) )
-    //    {
-    //        throw new IllegalArgumentException(
-    //                "procedure already added: " +
-    //                procedureToAdd.name );
-    //    }
-    //    this.procedures.put(
-    //            procedureToAdd.name ,
-    //            procedureToAdd );
-    //}
 
     @Override
     public Procedure<RESULT> getProcedure(
@@ -314,7 +299,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                     (CoroIterStepResult.YieldReturnWithResult<RESULT>) executeResult;
 
             this.next =
-                    type.cast(
+                    resultType.cast(
                             yieldReturnWithResult.result );
 
             this.hasNext = true;
@@ -326,7 +311,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
 
             this.next =
-                    type.cast(
+                    resultType.cast(
                             yieldReturnWithResult.result );
 
             this.hasNext = true;
