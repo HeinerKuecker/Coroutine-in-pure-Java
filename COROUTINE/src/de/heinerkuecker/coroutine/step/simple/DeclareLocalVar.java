@@ -7,6 +7,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.ArrayTypeName;
@@ -43,6 +44,27 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         this.initialVarValueExpression =
                 Objects.requireNonNull(
                         initialVarValueExpression );
+    }
+
+    /**
+     * Convenience constructor.
+     */
+    public DeclareLocalVar(
+            final String varName ,
+            final Class<T> type ,
+            final T initialVarValue )
+    {
+        this.varName =
+                Objects.requireNonNull(
+                        varName );
+
+        this.type =
+                Objects.requireNonNull(
+                        type );
+
+        this.initialVarValueExpression =
+                new Value<>(
+                        initialVarValue );
     }
 
     /**
@@ -138,8 +160,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 varName +
                 initializationStr +
                 ( this.creationStackTraceElement != null
-                    ? " " + this.creationStackTraceElement
-                    : "" );
+                ? " " + this.creationStackTraceElement
+                        : "" );
     }
 
 }
