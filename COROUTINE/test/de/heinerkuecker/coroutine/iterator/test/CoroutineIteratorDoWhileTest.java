@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine.iterator.test;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.False;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 
@@ -26,7 +25,7 @@ public class CoroutineIteratorDoWhileTest
                         // steps
                         new DoWhile<>(
                                 // condition
-                                new False() ,
+                                false ,
                                 // steps
                                 new YieldReturn<>( 0 ) ) ,
                         new YieldReturn<>( 1 ) );
@@ -55,7 +54,7 @@ public class CoroutineIteratorDoWhileTest
                         // steps
                         new DoWhile<>(
                                 // condition
-                                new False()
+                                false
                                 // no steps
                                 ) ,
                         new YieldReturn<>( 1 ) );

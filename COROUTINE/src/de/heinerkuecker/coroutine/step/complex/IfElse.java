@@ -10,6 +10,7 @@ import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 
@@ -84,6 +85,53 @@ extends ComplexStep<
         this.condition =
                 new IsTrue(
                         condition );
+
+        if ( thenSteps.length == 1 &&
+                thenSteps[ 0 ] instanceof ComplexStep )
+        {
+            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) thenSteps[ 0 ];
+        }
+        else
+        {
+            this.thenBodyComplexStep =
+                    new StepSequence(
+                            // creationStackOffset
+                            3 ,
+                            thenSteps );
+        }
+
+        if ( elseSteps.length == 1 &&
+                elseSteps[ 0 ] instanceof ComplexStep )
+        {
+            this.elseBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) elseSteps[ 0 ];
+        }
+        else
+        {
+            this.elseBodyComplexStep =
+                    new StepSequence(
+                            // creationStackOffset
+                            3 ,
+                            elseSteps );
+        }
+
+    }
+
+    /**
+     * Constructor.
+     */
+    public IfElse(
+            final Boolean condition ,
+            final CoroIterStep<RESULT/*, CoroutineIterator<RESULT>*/>[] thenSteps ,
+            final CoroIterStep<RESULT/*, CoroutineIterator<RESULT>*/>[] elseSteps )
+    {
+        super(
+                //creationStackOffset
+                3 );
+
+        this.condition =
+                new IsTrue(
+                        new Value<>(
+                                condition ) );
 
         if ( thenSteps.length == 1 &&
                 thenSteps[ 0 ] instanceof ComplexStep )

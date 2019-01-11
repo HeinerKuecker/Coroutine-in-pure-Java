@@ -32,7 +32,6 @@ public class CoroutineIteratorIfTest
                         // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
-                                //new True()
                                 true ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
@@ -67,7 +66,6 @@ public class CoroutineIteratorIfTest
                                 true ) ,
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
-                                //new True() ,
                                 new GetLocalVar<>(
                                         // localVarName
                                         "condition_var" ,
@@ -101,7 +99,7 @@ public class CoroutineIteratorIfTest
                         // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
-                                new True()
+                                true
                                 // steps
                                 ) );
 
