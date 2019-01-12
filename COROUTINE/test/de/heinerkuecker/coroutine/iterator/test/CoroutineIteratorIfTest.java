@@ -54,6 +54,14 @@ public class CoroutineIteratorIfTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // extract get local variable expression
+        final GetLocalVar<Boolean> condition_var =
+                new GetLocalVar<>(
+                        // localVarName
+                        "condition_var" ,
+                        // type
+                        Boolean.class );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         // type
@@ -66,11 +74,7 @@ public class CoroutineIteratorIfTest
                                 true ) ,
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
                                 //condition
-                                new GetLocalVar<>(
-                                        // localVarName
-                                        "condition_var" ,
-                                        // type
-                                        Boolean.class ) ,
+                                condition_var ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
                                 new FinallyReturn<>( 1 ) ) );

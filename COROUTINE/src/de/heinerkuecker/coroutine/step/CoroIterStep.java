@@ -1,10 +1,8 @@
 package de.heinerkuecker.coroutine.step;
 
-import java.util.List;
-
+import de.heinerkuecker.coroutine.CoroCheckable;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
-import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 
 /**
  * Abstract super class for one step
@@ -16,6 +14,7 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
  */
 abstract public class CoroIterStep<RESULT/*, PARENT*/>
 extends HasCreationStackTraceElement
+implements CoroCheckable
 {
     ///**
     // * Execute one step.
@@ -35,7 +34,7 @@ extends HasCreationStackTraceElement
         super( creationStackOffset + 1 );
     }
 
-    abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
+    //abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 
     /**
      * Set reifier for type param {@link #RESULT} to solve unchecked casts.
