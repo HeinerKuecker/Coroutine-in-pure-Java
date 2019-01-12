@@ -47,7 +47,10 @@ public class CoroutineIteratorTryCatchTest
                                 new StepSequence<Integer/*, CoroutineIterator<Integer>*/>(
                                         // creationStackOffset
                                         0 ,
-                                        new Throw<Integer>( new TestException( "test" ) ) ,
+                                        new Throw<>(
+                                                new TestException(
+                                                        // message
+                                                        "test" ) ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>( 0 ) ) ,
                                 // catchExceptionClass
