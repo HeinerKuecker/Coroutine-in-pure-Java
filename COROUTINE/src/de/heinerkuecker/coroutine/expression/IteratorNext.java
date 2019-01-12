@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 public class IteratorNext<T>
 implements CoroExpression<T>
@@ -30,7 +31,7 @@ implements CoroExpression<T>
      */
     @Override
     public T evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Iterator<? extends T> iterator = iteratorExpression.evaluate( parent );
         // TODO null handling

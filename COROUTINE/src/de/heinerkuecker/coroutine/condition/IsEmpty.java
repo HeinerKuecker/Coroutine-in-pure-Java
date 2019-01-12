@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -49,11 +49,11 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
      * empty {@link Map} or
      * empty {@link Collection}.
      *
-     * @see Condition#execute(Object)
+     * @see Condition#execute
      */
     @Override
     public boolean execute(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         //final Object varValue = parent.localVars().get( varName );
         final Object varValue = expression.evaluate( parent );

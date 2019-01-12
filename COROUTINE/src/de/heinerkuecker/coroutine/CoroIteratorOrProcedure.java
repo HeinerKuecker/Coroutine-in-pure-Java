@@ -16,29 +16,12 @@ import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
  */
 //public interface CoroIteratorOrProcedure<RESULT, /*PARENT*/ THIS extends CoroIteratorOrProcedure<RESULT, /*PARENT*/ THIS>>
 public interface CoroIteratorOrProcedure<RESULT>
+extends HasArgumentsAndVariables
 {
     /**
      * Save last step state for {@link ComplexStep#toString(String, ComplexStepState, ComplexStepState)}
      */
     abstract public void saveLastStepState();
-
-    /**
-     * @return Map with local variables
-     */
-    //abstract public Map<String, Object> localVars();
-    abstract public Variables localVars();
-
-    /**
-     * @return Map with global variables
-     */
-    //abstract public Map<String, Object> globalVars();
-    abstract public Variables globalVars();
-
-    /**
-     * @return Map with procedure arguments
-     */
-    //abstract public Map<String, Object> procedureArgumentValues();
-    abstract public Arguments procedureArgumentValues();
 
     abstract CoroutineIterator<RESULT> getRootParent();
 

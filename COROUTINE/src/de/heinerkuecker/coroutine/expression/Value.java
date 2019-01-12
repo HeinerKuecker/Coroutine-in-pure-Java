@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 public class Value<T>
@@ -27,7 +28,7 @@ implements CoroExpression<T>
      */
     @Override
     public T evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         return this.value;
     }

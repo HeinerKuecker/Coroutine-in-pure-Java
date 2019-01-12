@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.util.ArrayTypeName;
 
@@ -42,7 +43,7 @@ implements CoroExpression<ELEMENT[]>
      */
     @Override
     public ELEMENT[] evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Class<? extends ELEMENT> componentClass = elementClass;
 

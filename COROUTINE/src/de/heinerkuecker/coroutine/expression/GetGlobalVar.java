@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -49,7 +50,7 @@ implements CoroExpression<T>
     //@SuppressWarnings("unchecked")
     @Override
     public T evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Object globalVarValue = parent.globalVars().get( globalVarName );
 

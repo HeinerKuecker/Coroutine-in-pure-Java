@@ -66,7 +66,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
                         parent );
 
         final Procedure<RESULT> procedure =
-                this.parent.getRootParent().getProcedure(
+                this.parent/*.getRootParent()*/.getProcedure(
                         procedureCall.procedureName );
 
         // for showing next step in toString
@@ -92,7 +92,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             final ComplexStep<?, ?, RESULT/*, PARENT*/> bodyComplexStep =
                     //procedureCall.procedure.bodyComplexStep;
-                    this.parent.getRootParent().getProcedure( procedureCall.procedureName ).bodyComplexStep;
+                    this.parent/*.getRootParent()*/.getProcedure( procedureCall.procedureName ).bodyComplexStep;
 
             if ( this.bodyComplexState == null )
                 // no existing state from previous execute call
@@ -207,7 +207,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     //public Map<String, Object> globalVars()
     public Variables globalVars()
     {
-        return this.parent.getRootParent().globalVars();
+        return this.parent/*.getRootParent()*/.globalVars();
     }
 
     /**

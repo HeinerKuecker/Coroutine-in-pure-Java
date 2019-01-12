@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
@@ -54,7 +55,7 @@ implements CoroExpression<T>
      */
     @Override
     public T evaluate(
-            final CoroIteratorOrProcedure<?> parent)
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final T lhsResult = lhs.evaluate( parent );
         final T rhsResult = rhs.evaluate( parent );

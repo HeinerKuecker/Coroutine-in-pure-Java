@@ -99,7 +99,8 @@ extends ComplexStep<
     {
         return new ForEachState<>(
                 this ,
-                parent.getRootParent() );
+                //parent.getRootParent()
+                parent );
     }
 
     /**

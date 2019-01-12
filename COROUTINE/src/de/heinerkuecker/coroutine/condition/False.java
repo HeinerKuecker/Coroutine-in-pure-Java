@@ -3,8 +3,8 @@ package de.heinerkuecker.coroutine.condition;
 import java.util.Collections;
 import java.util.List;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
@@ -21,11 +21,11 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
     /**
      * Returns always false.
      *
-     * @see Condition#execute(Object)
+     * @see Condition#execute
      */
     @Override
     public boolean execute(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         return false;
     }

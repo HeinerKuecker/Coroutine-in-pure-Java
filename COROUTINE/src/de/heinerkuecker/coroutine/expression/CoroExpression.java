@@ -2,12 +2,12 @@ package de.heinerkuecker.coroutine.expression;
 
 import java.util.List;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 public interface CoroExpression<T>
 {
     T evaluate(
-            final CoroIteratorOrProcedure<?> parent );
+            final HasArgumentsAndVariables parent );
 
     abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 }

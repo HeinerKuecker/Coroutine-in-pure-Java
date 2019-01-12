@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class StrConcat
@@ -42,7 +43,7 @@ implements CoroExpression<String>
      */
     @Override
     public String evaluate(
-            final CoroIteratorOrProcedure<?> parent)
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Object lhsResult = lhs.evaluate( parent );
         final Object rhsResult = rhs.evaluate( parent );

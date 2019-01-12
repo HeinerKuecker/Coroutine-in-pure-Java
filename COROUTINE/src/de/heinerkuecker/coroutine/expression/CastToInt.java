@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
@@ -37,7 +38,7 @@ implements CoroExpression<Integer>
      */
     @Override
     public Integer evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Number numberExpressionResult = numberExpression.evaluate( parent );
 

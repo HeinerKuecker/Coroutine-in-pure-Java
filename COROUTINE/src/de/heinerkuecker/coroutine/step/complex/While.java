@@ -141,7 +141,8 @@ extends WhileOrDoWhile<
     {
         return new WhileState<>(
                 this ,
-                parent.getRootParent() );
+                //parent.getRootParent()
+                parent );
     }
 
 }

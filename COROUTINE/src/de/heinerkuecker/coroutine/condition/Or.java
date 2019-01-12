@@ -3,7 +3,7 @@ package de.heinerkuecker.coroutine.condition;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
@@ -30,11 +30,11 @@ implements Condition/*<CoroutineIterator<?>>*/
     /**
      * Negates the specified {@link Condition}.
      *
-     * @see Condition#execute(java.lang.Object)
+     * @see Condition#execute
      */
     @Override
     public boolean execute(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
         {

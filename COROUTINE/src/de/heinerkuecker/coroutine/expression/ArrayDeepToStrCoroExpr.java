@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.expression;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 public class ArrayDeepToStrCoroExpr
@@ -24,7 +25,7 @@ implements CoroExpression<String>
      */
     @Override
     public String evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Object[] array = arrayExpression.evaluate( parent );
 

@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.condition;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 /**
  * Interface for condition
@@ -22,6 +23,5 @@ extends ConditionOrBooleanExpression
      */
     @Override
     boolean execute(
-            //final PARENT parent
-            final CoroIteratorOrProcedure<?> parent );
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent );
 }

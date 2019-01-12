@@ -2,7 +2,7 @@ package de.heinerkuecker.coroutine.condition;
 
 import java.util.List;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -37,11 +37,11 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
     /**
      * Equals variable to <code>true</code>.
      *
-     * @see Condition#execute(java.lang.Object)
+     * @see Condition#execute
      */
     @Override
     public boolean execute(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         //final Object varValue = parent.localVars().get( varName );
         final Object varValue = expression.evaluate( parent );

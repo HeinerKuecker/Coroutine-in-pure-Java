@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 /**
  * Short cut for
@@ -50,7 +51,7 @@ implements CoroExpression<T>
      */
     @Override
     public T evaluate(
-            final CoroIteratorOrProcedure<?> parent )
+            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         return null;
     }
