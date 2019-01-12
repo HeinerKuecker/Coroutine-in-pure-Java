@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.condition.Lesser;
@@ -328,6 +329,107 @@ public class CoroutineIteratorProcedureTest
                 coroIter );
     }
 
+    @Test( expected = IllegalArgumentException.class )
+    public void test_ValueProcedureArgument_negative_wrong()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class )
+                        } ,
+                        // steps
+                        new YieldReturn<>(
+                                new GetProcedureArgument<>(
+                                        "argument" ,
+                                        Integer.class ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new ProcedureArgument<>(
+                                        // name
+                                        "wrong_argument" ,
+                                        // value
+                                        0 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test( expected = Arguments.MissedArgumentException.class )
+    public void test_ValueProcedureArgument_negative_missed()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument0" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class ) ,
+                                new ProcedureParameter(
+                                        //name
+                                        "argument1" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class )
+                        } ,
+                        // steps
+                        new YieldReturn<>(
+                                new GetProcedureArgument<>(
+                                        "argument" ,
+                                        Integer.class ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        Arrays.asList( procedure ) ,
+                        //initialVariableValues
+                        null ,
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new ProcedureArgument<>(
+                                        // name
+                                        "argument0" ,
+                                        // value
+                                        0 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
     @Test
     public void test_LocalVarProcedureArgument_0_0()
     {
@@ -446,7 +548,14 @@ public class CoroutineIteratorProcedureTest
                                 //varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
-                                "procedure1" ) );
+                                "procedure1" ,
+                                new ProcedureArgument<>(
+                                        // procedureArgumentName
+                                        "argument" ,
+                                        // expression
+                                        new Value<>( 0L ) ) ) );
+
+        System.out.println( coroIter );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
