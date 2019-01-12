@@ -20,7 +20,12 @@ implements Iterable<Entry<String, Object>>
 
     private final HashMap<String, Class<?>> types = new HashMap<>();
 
-
+    /**
+     * Get variable value.
+     *
+     * @param variableName
+     * @return variable value
+     */
     public Object get(
             final String variableName )
     {
@@ -133,7 +138,7 @@ implements Iterable<Entry<String, Object>>
     }
 
     /**
-     * @see java.lang.Iterable#iterator()
+     * @see Iterable#iterator()
      */
     @Override
     public Iterator<Entry<String, Object>> iterator()
@@ -184,7 +189,7 @@ implements Iterable<Entry<String, Object>>
                 final Object wrongValue )
         {
             super(
-                    "wrong variable class for variable: " +
+                    "wrong class for variable: " +
                     variableName + ", " +
                     "expected class: " +
                     expectedClass + ", " +

@@ -391,7 +391,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      * @see CoroIteratorOrProcedure#procedureArgumentValues()
      */
     @Override
-    public Map<String, Object> procedureArgumentValues()
+    public Arguments procedureArgumentValues()
     {
         // TODO code smell ausgeschlagenes Erbe Refused bequest
         //return null;

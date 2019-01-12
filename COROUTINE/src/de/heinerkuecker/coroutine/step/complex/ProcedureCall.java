@@ -2,12 +2,11 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
@@ -37,7 +36,8 @@ extends ComplexStep<
     final String procedureName;
 
     // TODO getter
-    final Map<String, ProcedureArgument<?>> procedureArguments;
+    //final Map<String, ProcedureArgument<?>> procedureArguments;
+    final ProcedureArgument<?>[] procedureArguments;
 
     /**
      * Reifier for type param {@link #RESULT} to solve unchecked casts.
@@ -83,24 +83,25 @@ extends ComplexStep<
         //this.procedure = Objects.requireNonNull( procedure );
         this.procedureName = Objects.requireNonNull( procedureName );
 
-        final LinkedHashMap<String, ProcedureArgument<?>> argMap = new LinkedHashMap<>();
-
-        if ( args != null )
-        {
-            for ( ProcedureArgument<?> arg : args )
-            {
-                if ( argMap.containsKey( Objects.requireNonNull( arg.name ) ) )
-                {
-                    throw new IllegalArgumentException( "argument name " + arg.name + " already in use" );
-                }
-
-                argMap.put(
-                        Objects.requireNonNull( arg.name ) ,
-                        Objects.requireNonNull( arg ) );
-            }
-        }
-
-        this.procedureArguments = Collections.unmodifiableMap( argMap );
+        //final LinkedHashMap<String, ProcedureArgument<?>> argMap = new LinkedHashMap<>();
+        //
+        //if ( args != null )
+        //{
+        //    for ( ProcedureArgument<?> arg : args )
+        //    {
+        //        if ( argMap.containsKey( Objects.requireNonNull( arg.name ) ) )
+        //        {
+        //            throw new IllegalArgumentException( "argument name " + arg.name + " already in use" );
+        //        }
+        //
+        //        argMap.put(
+        //                Objects.requireNonNull( arg.name ) ,
+        //                Objects.requireNonNull( arg ) );
+        //    }
+        //}
+        //
+        //this.procedureArguments = Collections.unmodifiableMap( argMap );
+        this.procedureArguments = args;
     }
 
     ///**
@@ -118,21 +119,29 @@ extends ComplexStep<
     public ProcedureCallState<RESULT> newState(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        final Map<String, Object> procedureArgumentValues = new LinkedHashMap<>();
+        //final Map<String, Object> procedureArgumentValues = new LinkedHashMap<>();
+        //for ( ProcedureArgument<?> arg : procedureArguments.values() )
+        //{
+        //    procedureArgumentValues.put(
+        //            arg.name ,
+        //            arg.getValue(
+        //                    parent ) );
+        //}
 
-        for ( ProcedureArgument<?> arg : procedureArguments.values() )
-        {
-            procedureArgumentValues.put(
-                    arg.name ,
-                    arg.getValue(
-                            parent ) );
-        }
+        final Arguments arguments =
+                new Arguments(
+                        //params
+                        parent.getProcedure( this.procedureName ).params ,
+                        //args
+                        procedureArguments ,
+                        parent );
 
         final ProcedureCallState<RESULT> procedureCallState =
                 new ProcedureCallState<>(
                         this ,
                         resultType ,
-                        procedureArgumentValues ,
+                        //procedureArgumentValues
+                        arguments ,
                         parent );
 
         return procedureCallState;

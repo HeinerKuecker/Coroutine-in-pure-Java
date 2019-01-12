@@ -13,6 +13,7 @@ import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
@@ -38,7 +39,9 @@ public class CoroutineIteratorProcedureTest
 
         final Procedure<Integer> empty_procedure =
                 new Procedure<>(
-                        "empty_procedure" );
+                        "empty_procedure" ,
+                        // params
+                        null );
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -63,6 +66,8 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        null ,
                         new FinallyReturnWithoutResult<>() );
 
         final CoroutineIterator<Integer> coroIter =
@@ -87,6 +92,8 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        null ,
                         new YieldReturn<>( 0 ) );
 
         final CoroutineIterator<Integer> coroIter =
@@ -115,6 +122,9 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        null ,
+                        // steps
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
@@ -152,6 +162,9 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        null ,
+                        // steps
                         new IncrementGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
@@ -189,6 +202,9 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        null ,
+                        // steps
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
@@ -227,6 +243,9 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        null ,
+                        // steps
                         new IncrementGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
@@ -270,6 +289,17 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class )
+                        } ,
+                        // steps
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -306,6 +336,16 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class )
+                        } ,
+                        // steps
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -350,6 +390,17 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure0 =
                 new Procedure<>(
                         "procedure0" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class )
+                        } ,
+                        // steps
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -358,6 +409,17 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure1 =
                 new Procedure<>(
                         "procedure1" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Long.class )
+                        } ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure0" ,
                                 new ProcedureArgument<>(
@@ -402,6 +464,17 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Long> procedure =
                 new Procedure<Long>(
                         "procedure" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Long.class )
+                        } ,
+                        // steps
                         new If<Long>(
                                 new Lesser<>(
                                         new GetProcedureArgument<>(
@@ -472,6 +545,17 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Long> procedure =
                 new Procedure<Long>(
                         "procedure" ,
+                        // params
+                        new ProcedureParameter[] {
+                                new ProcedureParameter(
+                                        //name
+                                        "argument" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Long.class )
+                        } ,
+                        // steps
                         new SetLocalVar<>(
                                 //varName
                                 "variable" ,
@@ -570,6 +654,17 @@ public class CoroutineIteratorProcedureTest
             final Procedure<Integer> procedure =
                     new Procedure<Integer>(
                             "procedure" ,
+                            // params
+                            new ProcedureParameter[] {
+                                    new ProcedureParameter(
+                                            //name
+                                            "procedureArgument" ,
+                                            //isMandantory
+                                            true ,
+                                            //type
+                                            Integer.class )
+                            } ,
+                            // steps
                             new DeclareLocalVar<>(
                                     //varName
                                     "variable" ,

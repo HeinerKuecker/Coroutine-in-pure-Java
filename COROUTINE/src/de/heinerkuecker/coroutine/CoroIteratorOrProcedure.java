@@ -1,7 +1,5 @@
 package de.heinerkuecker.coroutine;
 
-import java.util.Map;
-
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
 import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
@@ -39,7 +37,8 @@ public interface CoroIteratorOrProcedure<RESULT>
     /**
      * @return Map with procedure arguments
      */
-    abstract public Map<String, Object> procedureArgumentValues();
+    //abstract public Map<String, Object> procedureArgumentValues();
+    abstract public Arguments procedureArgumentValues();
 
     abstract CoroutineIterator<RESULT> getRootParent();
 

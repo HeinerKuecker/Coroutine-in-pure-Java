@@ -1,10 +1,9 @@
 package de.heinerkuecker.coroutine.step.complex;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Procedure;
@@ -32,7 +31,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     private final CoroIteratorOrProcedure<RESULT> parent;
 
     // TODO immutable map
-    final Map<String, Object> procedureArgumentValues;
+    //final Map<String, Object> procedureArgumentValues;
+    final Arguments arguments;
 
     /**
      * Variables.
@@ -48,16 +48,16 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     protected ProcedureCallState(
             final ProcedureCall<RESULT> procedureCall ,
             final Class<? extends RESULT> resultType ,
-            final Map<String, Object> procedureArgumentValues ,
+            //final Map<String, Object> procedureArgumentValues
+            final Arguments arguments ,
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         this.procedureCall =
                 Objects.requireNonNull(
                         procedureCall );
 
-        this.procedureArgumentValues =
-                Collections.unmodifiableMap(
-                        procedureArgumentValues );
+        //this.procedureArgumentValues = Collections.unmodifiableMap( procedureArgumentValues );
+        this.arguments = arguments;
 
         //this.rootParent = Objects.requireNonNull( rootParent );
 
@@ -163,7 +163,8 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
                         this.procedureCall ,
                         // resultType null, because only for first call necessary
                         null ,
-                        this.procedureArgumentValues ,
+                        //this.procedureArgumentValues
+                        this.arguments ,
                         //this.rootParent ,
                         this.parent );
 
@@ -213,9 +214,12 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
      * @see CoroIteratorOrProcedure#procedureArgumentValues()
      */
     @Override
-    public Map<String, Object> procedureArgumentValues()
+    //public Map<String, Object> procedureArgumentValues()
+    public Arguments procedureArgumentValues()
     {
-        return this.procedureArgumentValues;
+        return
+                //this.procedureArgumentValues;
+                this.arguments;
     }
 
     /**
