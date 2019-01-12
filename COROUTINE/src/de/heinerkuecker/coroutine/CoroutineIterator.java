@@ -9,10 +9,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.arg.Argument;
+import de.heinerkuecker.coroutine.arg.Arguments;
+import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
-import de.heinerkuecker.coroutine.proc.arg.Argument;
-import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;

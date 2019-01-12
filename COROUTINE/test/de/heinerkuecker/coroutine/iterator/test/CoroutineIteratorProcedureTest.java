@@ -4,17 +4,17 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.arg.Argument;
+import de.heinerkuecker.coroutine.arg.Arguments;
+import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.expression.Add;
 import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
-import de.heinerkuecker.coroutine.proc.arg.Argument;
-import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;

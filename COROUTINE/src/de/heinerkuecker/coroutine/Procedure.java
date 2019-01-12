@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.proc.arg.Parameter;
+import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;

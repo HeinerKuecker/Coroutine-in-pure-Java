@@ -3,12 +3,12 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.Variables;
+import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 

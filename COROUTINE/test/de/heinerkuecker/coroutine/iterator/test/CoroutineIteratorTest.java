@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.arg.Argument;
+import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.expression.GetGlobalArgument;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.proc.arg.Argument;
-import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;

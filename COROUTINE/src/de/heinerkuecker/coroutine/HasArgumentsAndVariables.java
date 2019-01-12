@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine;
 
+import de.heinerkuecker.coroutine.arg.Arguments;
+
 public interface HasArgumentsAndVariables
 {
 

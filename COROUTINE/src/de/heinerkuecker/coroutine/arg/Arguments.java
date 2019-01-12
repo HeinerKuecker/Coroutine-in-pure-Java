@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine;
+package de.heinerkuecker.coroutine.arg;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,8 +8,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.proc.arg.Argument;
-import de.heinerkuecker.coroutine.proc.arg.Parameter;
+import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**

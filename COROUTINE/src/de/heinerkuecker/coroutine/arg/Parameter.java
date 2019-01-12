@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.proc.arg;
+package de.heinerkuecker.coroutine.arg;
 
 import java.util.Objects;
 
