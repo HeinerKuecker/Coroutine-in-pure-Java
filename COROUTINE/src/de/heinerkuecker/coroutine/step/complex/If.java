@@ -39,19 +39,11 @@ extends ComplexStep<
 
         this.condition = condition;
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.thenBodyComplexStep =
-                    new StepSequence<>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.thenBodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**
@@ -70,19 +62,11 @@ extends ComplexStep<
                 new IsTrue(
                         condition );
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.thenBodyComplexStep =
-                    new StepSequence<>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.thenBodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**
@@ -102,19 +86,11 @@ extends ComplexStep<
                         new Value<Boolean>(
                                 condition ) );
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.thenBodyComplexStep = (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.thenBodyComplexStep =
-                    new StepSequence<>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.thenBodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**

@@ -117,20 +117,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 Objects.requireNonNull(
                         resultType );
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.complexStep =
-                    (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.complexStep =
-                    new StepSequence<>(
-                            // creationStackOffset
-                            4 ,
-                            steps );
-        }
+        this.complexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        5 ,
+                        steps );
 
         if ( procedures != null )
         {
@@ -140,7 +131,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 {
                     throw new IllegalArgumentException(
                             "procedure name already in use: " +
-                            procedure.name );
+                                    procedure.name );
                 }
 
                 this.procedures.put(
@@ -179,19 +170,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 Objects.requireNonNull(
                         resultType );
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.complexStep = (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.complexStep =
-                    new StepSequence<>(
-                            // creationStackOffset
-                            4 ,
-                            steps );
-        }
+        this.complexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        5 ,
+                        steps );
 
         this.complexStep.setResultType( resultType );
 
@@ -232,7 +215,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             throw new UnresolvedBreakOrContinueException(
                     "unresolved breaks or continues: " +
-                    unresolvedBreaksOrContinues );
+                            unresolvedBreaksOrContinues );
         }
     }
 
@@ -248,7 +231,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         {
             throw new UseGetProcedureArgumentOutsideOfProcedureException(
                     "ProcedureArguments not in procedure: " +
-                    getProcedureArgumentsNotInProcedure );
+                            getProcedureArgumentsNotInProcedure );
         }
     }
 

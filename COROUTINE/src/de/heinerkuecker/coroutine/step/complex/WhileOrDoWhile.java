@@ -30,38 +30,6 @@ extends ComplexStep<
     final ConditionOrBooleanExpression condition;
     final ComplexStep<?, ?, RESULT /*, PARENT*/> bodyComplexStep;
 
-    ///**
-    // * Constructor.
-    // */
-    //@SafeVarargs
-    //public WhileOrDoWhile(
-    //        final Condition<? super PARENT> condition ,
-    //        final CoroIterStep<? super RESULT, PARENT> ... steps )
-    //{
-    //    super(
-    //            //creationStackOffset
-    //            3 );
-    //
-    //    this.label = null;
-    //
-    //    this.condition = Objects.requireNonNull( condition );
-    //
-    //    if ( steps.length == 1 &&
-    //            steps[ 0 ] instanceof ComplexStep )
-    //    {
-    //        this.bodyComplexStep =
-    //                (ComplexStep<?, ?, RESULT, PARENT>) steps[ 0 ];
-    //    }
-    //    else
-    //    {
-    //        this.bodyComplexStep =
-    //                new StepSequence(
-    //                        // creationStackOffset
-    //                        3 ,
-    //                        steps );
-    //    }
-    //}
-
     /**
      * Constructor.
      */
@@ -79,30 +47,12 @@ extends ComplexStep<
 
         this.condition = Objects.requireNonNull( condition );
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT /*, PARENT/*? super CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.bodyComplexStep =
-                    new StepSequence<RESULT>(
-                            // creationStackOffset
-                            4 ,
-                            steps );
-        }
+        this.bodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        5 ,
+                        steps );
     }
-
-    ///**
-    // * @see ComplexStep#newState()
-    // */
-    //@Override
-    //public WhileState<RESULT, PARENT> newState()
-    //{
-    //    return new WhileState<>( this );
-    //}
 
     /**
      * @see ComplexStep#getUnresolvedBreaksOrContinues()

@@ -100,21 +100,11 @@ extends ComplexStep<
                             updateStep );
         }
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.bodyComplexStep =
-                    //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
-                    new StepSequence<RESULT>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.bodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**
@@ -181,21 +171,11 @@ extends ComplexStep<
                             updateStep );
         }
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.bodyComplexStep =
-                    //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
-                    new StepSequence<RESULT>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.bodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**
@@ -249,21 +229,11 @@ extends ComplexStep<
                             updateStep );
         }
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.bodyComplexStep =
-                    //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
-                    new StepSequence<RESULT>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.bodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**
@@ -319,21 +289,11 @@ extends ComplexStep<
                             updateStep );
         }
 
-        if ( steps.length == 1 &&
-                steps[ 0 ] instanceof ComplexStep )
-        {
-            this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>) steps[ 0 ];
-        }
-        else
-        {
-            this.bodyComplexStep =
-                    //new StepSequence<RESULT, PARENT /*CoroutineIterator<RESULT>*/>(
-                    new StepSequence<RESULT>(
-                            // creationStackOffset
-                            3 ,
-                            steps );
-        }
+        this.bodyComplexStep =
+                StepSequence.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        steps );
     }
 
     /**

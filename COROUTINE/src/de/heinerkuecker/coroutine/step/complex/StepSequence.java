@@ -260,4 +260,28 @@ extends ComplexStep<
         return buff.toString();
     }
 
+    @SuppressWarnings("unchecked")
+    @SafeVarargs
+    public static <RESULT> ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> convertStepsToComplexStep(
+            final int creationStackOffset ,
+            final CoroIterStep<? extends RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+    {
+        final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> complexStep;
+        if ( steps.length == 1 &&
+                steps[ 0 ] instanceof ComplexStep )
+        {
+            complexStep =
+                    (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) steps[ 0 ];
+        }
+        else
+        {
+            complexStep =
+                    new StepSequence<>(
+                            creationStackOffset ,
+                            steps );
+        }
+
+        return complexStep;
+    }
+
 }
