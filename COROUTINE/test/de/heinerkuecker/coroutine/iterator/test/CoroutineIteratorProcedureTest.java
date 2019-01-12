@@ -742,6 +742,7 @@ public class CoroutineIteratorProcedureTest
     public void test_ValueProcedureArgument_LocalVariable_Recursive_Int()
     {
         // TODO this test failes intentionally, because is wip
+        CoroutineIterator<Integer> coroIter = null;
         try
         {
             CoroutineIterator.initializationChecks = true;
@@ -797,7 +798,7 @@ public class CoroutineIteratorProcedureTest
                                                             new Value<>( 1 ) ) ) ) ) ,
                             new FinallyReturn<>( variable ) );
 
-            final CoroutineIterator<Integer> coroIter =
+            coroIter =
                     new CoroutineIterator<Integer>(
                             // type
                             Integer.class ,
@@ -812,6 +813,8 @@ public class CoroutineIteratorProcedureTest
                                             "procedureArgument" ,
                                             // value
                                             0 ) ) );
+
+            System.out.println( coroIter );
 
             CoroutineIteratorTest.assertNext(
                     coroIter ,
@@ -834,6 +837,8 @@ public class CoroutineIteratorProcedureTest
         }
         catch ( Throwable t )
         {
+            System.out.println( coroIter );
+
             System.err.println( t.getMessage() );
             t.printStackTrace();
             throw t;

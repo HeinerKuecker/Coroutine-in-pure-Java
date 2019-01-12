@@ -12,14 +12,15 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
+import de.heinerkuecker.util.ArrayDeepToString;
 
 public class ProcedureCall<RESULT/*, PARENT extends CoroIteratorOrProcedure<RESULT, PARENT>*/>
 extends ComplexStep<
-    ProcedureCall<RESULT/*, PARENT*/> ,
-    ProcedureCallState<RESULT> ,
-    RESULT
-    //PARENT
-    >
+ProcedureCall<RESULT/*, PARENT*/> ,
+ProcedureCallState<RESULT> ,
+RESULT
+//PARENT
+>
 //implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     ///**
@@ -202,11 +203,11 @@ extends ComplexStep<
     {
         @SuppressWarnings("unchecked")
         final ProcedureCallState<RESULT /*, PARENT*/> lastProcExecuteState =
-                (ProcedureCallState<RESULT /*, PARENT*/>) lastStepExecuteState;
+        (ProcedureCallState<RESULT /*, PARENT*/>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
         final ProcedureCallState<RESULT /*, PARENT*/> nextProcExecuteState =
-                (ProcedureCallState<RESULT /*, PARENT*/>) nextStepExecuteState;
+        (ProcedureCallState<RESULT /*, PARENT*/>) nextStepExecuteState;
 
         final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastBodyState;
         if ( lastProcExecuteState != null )
@@ -229,9 +230,9 @@ extends ComplexStep<
         }
 
         final String procedureArgumentsStr;
-        //if ( nextProcExecuteState == null )
-        if ( lastBodyState == null &&
-                nextBodyState == null )
+        if ( nextProcExecuteState == null )
+        //if ( lastBodyState == null &&
+        //        nextBodyState == null )
         {
             procedureArgumentsStr = "";
         }
@@ -239,9 +240,10 @@ extends ComplexStep<
         {
             procedureArgumentsStr =
                     indent + " " +
-                    "procedure arguments: " +
-                    this.procedureArguments +
-                    "\n";
+                            //"procedure arguments: " +
+                            "procedure argument values: " +
+                            nextProcExecuteState.arguments +
+                            "\n";
         }
 
         final String procedureVariablesStr;
@@ -255,9 +257,9 @@ extends ComplexStep<
         {
             procedureVariablesStr =
                     indent + " " +
-                    "procedure variables: " +
-                    nextProcExecuteState.variables +
-                    "\n";
+                            "procedure variables: " +
+                            nextProcExecuteState.variables +
+                            "\n";
         }
 
         final String procedureBodyComplexStepStr;
@@ -278,6 +280,13 @@ extends ComplexStep<
                             nextBodyState );
         }
 
+        final String procedureArgumentExpressionsStr =
+                indent + " " +
+                "procedure argument expressions: " +
+                ArrayDeepToString.deepToString( this.procedureArguments ) +
+                "\n";
+
+
         return
                 indent +
                 //( this.label != null ? this.label + " : " : "" ) +
@@ -287,6 +296,7 @@ extends ComplexStep<
                 //" (" +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +
+                procedureArgumentExpressionsStr +
                 procedureArgumentsStr +
                 procedureVariablesStr +
                 procedureBodyComplexStepStr;
