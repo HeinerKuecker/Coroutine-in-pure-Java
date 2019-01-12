@@ -162,15 +162,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         this.complexStep.setResultType( resultType );
 
-        if ( initializationChecks )
-        {
-            checkForUnresolvedBreaksAndContinues();
-            checkForUseGetProcedureArgumentOutsideOfProcedureException();
-            this.complexStep.checkLabelAlreadyInUse(
-                    new HashSet<>() ,
-                    this ,
-                    new HashSet<>() );
-        }
+        doMoreInitializations();
     }
 
     /**
@@ -203,6 +195,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         this.complexStep.setResultType( resultType );
 
+        doMoreInitializations();
+    }
+
+    private void doMoreInitializations()
+    {
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
