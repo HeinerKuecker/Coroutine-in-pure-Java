@@ -11,8 +11,10 @@ public class ArrayTypeName
 {
 
     /**
-     * @param type
-     * @return
+     * Get type name of array as readable {@link String}.
+     *
+     * @param type array type
+     * @return type name of array as readable {@link String}
      */
     public static String toStr(
             final Class<?> type )
