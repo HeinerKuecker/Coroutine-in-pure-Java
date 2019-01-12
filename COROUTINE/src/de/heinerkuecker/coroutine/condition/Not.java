@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.condition;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
@@ -21,6 +22,17 @@ implements Condition/*<CoroutineIterator<?>>*/
             final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate )
     {
         this.conditionToNegate = conditionToNegate;
+    }
+
+    /**
+     * Constructor.
+     */
+    public Not(
+            final CoroExpression<Boolean> conditionToNegate )
+    {
+        this.conditionToNegate =
+                new IsTrue(
+                        conditionToNegate );
     }
 
     /**
