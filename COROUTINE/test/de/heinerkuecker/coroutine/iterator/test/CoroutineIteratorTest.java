@@ -1,13 +1,13 @@
 package de.heinerkuecker.coroutine.iterator.test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.expression.GetGlobalArgument;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
+import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
@@ -38,14 +38,28 @@ public class CoroutineIteratorTest
     }
 
     @Test
-    public void testConstructor_Params()
+    public void testConstructor_Params_Args()
     {
         CoroutineIterator.initializationChecks = true;
 
-        final Map<String, Object> params = new HashMap<>();
-        params.put(
-                "param" ,
-                "x" );
+
+        final ProcedureParameter[] params = {
+                new ProcedureParameter(
+                        //name
+                        "param" ,
+                        //isMandantory
+                        true ,
+                        //type
+                        String.class )
+        };
+
+        final ProcedureArgument<?>[] args = {
+                new ProcedureArgument<String>(
+                        //name
+                        "param" ,
+                        //value
+                        "x" )
+        };
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
@@ -54,9 +68,10 @@ public class CoroutineIteratorTest
                         //procedures
                         null ,
                         params ,
+                        args ,
                         // steps
                         new YieldReturn<>(
-                                new GetLocalVar<>(
+                                new GetGlobalArgument<>(
                                         "param" ,
                                         String.class ) ) );
 

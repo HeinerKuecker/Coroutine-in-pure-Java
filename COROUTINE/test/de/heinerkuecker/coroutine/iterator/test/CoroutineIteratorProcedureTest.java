@@ -49,7 +49,9 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( empty_procedure ) ,
-                        //initialVariableValues
+                        // params
+                        null ,
+                        // args
                         null ,
                         // steps
                         new ProcedureCall<Integer>(
@@ -76,8 +78,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -102,8 +107,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -142,8 +150,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -176,9 +187,13 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // procedures
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new SetLocalVar<>(
                                 // varName
                                 "counter" ,
@@ -223,8 +238,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -258,8 +276,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new SetLocalVar<>(
                                 //varName
                                 "counter" ,
@@ -311,8 +332,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -358,8 +382,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -412,8 +439,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -458,8 +488,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new SetLocalVar<>(
                                 //varName
                                 "number" ,
@@ -540,8 +573,11 @@ public class CoroutineIteratorProcedureTest
                         Arrays.asList(
                                 procedure0 ,
                                 procedure1 ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new SetLocalVar<>(
                                 //varName
                                 "number" ,
@@ -616,8 +652,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Long.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Long>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -708,8 +747,11 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Long.class ,
                         Arrays.asList( procedure ) ,
-                        //initialVariableValues
+                        // params
                         null ,
+                        // args
+                        null ,
+                        // steps
                         new ProcedureCall<Long>(
                                 "procedure" ,
                                 new ProcedureArgument<>(
@@ -804,8 +846,11 @@ public class CoroutineIteratorProcedureTest
                             Integer.class ,
                             // procedures
                             Arrays.asList( procedure ) ,
-                            // initialVariableValues
+                            // params
                             null ,
+                            // args
+                            null ,
+                            // steps
                             new ProcedureCall<Integer>(
                                     "procedure" ,
                                     new ProcedureArgument<>(

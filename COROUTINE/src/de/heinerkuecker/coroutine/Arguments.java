@@ -14,8 +14,8 @@ import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
  * Argument values {@link Map}
- * for Parameters with
- * type check at runtime.
+ * for {@link ProcedureParameter}
+ * with type check at runtime.
  *
  * Parameters are unmodifiable.
  *
@@ -26,6 +26,13 @@ implements Iterable<Entry<String, Object>>
 {
     private final HashMap<String, Object> values = new HashMap<>();
 
+    /**
+     * Constructor.
+     *
+     * @param params
+     * @param args
+     * @param parent
+     */
     public Arguments(
             final Map<String, ProcedureParameter> params ,
             final ProcedureArgument<?>[] args ,
@@ -33,15 +40,17 @@ implements Iterable<Entry<String, Object>>
     {
         final Set<String> missedMandantoryParamNames = new HashSet<>();
 
-        for ( ProcedureParameter param : params.values() )
+        if ( params != null )
         {
-            if ( param.isMandantory )
+            for ( ProcedureParameter param : params.values() )
             {
-                missedMandantoryParamNames.add(
-                        param.name );
+                if ( param.isMandantory )
+                {
+                    missedMandantoryParamNames.add(
+                            param.name );
+                }
             }
         }
-
 
         if ( args != null )
         {
@@ -90,11 +99,20 @@ implements Iterable<Entry<String, Object>>
         }
     }
 
+    public static Arguments EMPTY =
+            new Arguments(
+                    //params
+                    null ,
+                    //args
+                    null ,
+                    //parent
+                    null );
+
     /**
      * Get argument value.
      *
      * @param argumentName
-     * @return
+     * @return argument value
      */
     public Object get(
             final String argumentName )

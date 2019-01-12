@@ -21,4 +21,9 @@ public interface HasArgumentsAndVariables
     //abstract public Map<String, Object> procedureArgumentValues();
     abstract public Arguments procedureArgumentValues();
 
+    /**
+     * @return Map with global arguments (arguments of coroutine)
+     */
+    abstract public Arguments globalArgumentValues();
+
 }

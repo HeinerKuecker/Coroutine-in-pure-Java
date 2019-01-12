@@ -77,7 +77,7 @@ extends HasCreationStackTraceElement
      * @param params procedure parameter, can be <code>null</code>
      * @return unmodifiable parameter map
      */
-    private Map<String, ProcedureParameter> initParams(
+    public static Map<String, ProcedureParameter> initParams(
             final ProcedureParameter[] params )
     {
         final Map<String, ProcedureParameter> paramsMap = new HashMap<>();

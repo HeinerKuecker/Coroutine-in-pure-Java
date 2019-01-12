@@ -1,16 +1,18 @@
 package de.heinerkuecker.coroutine;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
+import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
@@ -28,6 +30,7 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * memory consuming buffer or
  * bytecode manipulation.
  *
+ * @param <RESULT> result type of this method {@link Iterator#next()}
  * @author Heiner K&uuml;cker
  */
 public class CoroutineIterator<RESULT>
@@ -97,6 +100,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
     private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
 
+    public final Map<String, ProcedureParameter> params;
+
+    final Arguments arguments;
+
     /**
      * Constructor.
      *
@@ -108,7 +115,9 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroutineIterator(
             final Class<? extends RESULT> resultType ,
             final Iterable<Procedure<RESULT>> procedures ,
-            final Map<String, ? extends Object> initialVariableValues ,
+            //final Map<String, ? extends Object> initialVariableValues ,
+            final ProcedureParameter[] params ,
+            final ProcedureArgument<?>[] args ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
@@ -140,16 +149,27 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             }
         }
 
-        if ( initialVariableValues != null )
-        {
-            //this.vars.putAll( initialVariableValues );
-            for ( Entry<String, ? extends Object> initialVariableEntry : initialVariableValues.entrySet() )
-            {
-                this.variables.set(
-                        initialVariableEntry.getKey() ,
-                        initialVariableEntry.getValue() );
-            }
-        }
+        //if ( initialVariableValues != null )
+        //{
+        //    //this.vars.putAll( initialVariableValues );
+        //    for ( Entry<String, ? extends Object> initialVariableEntry : initialVariableValues.entrySet() )
+        //    {
+        //        this.variables.set(
+        //                initialVariableEntry.getKey() ,
+        //                initialVariableEntry.getValue() );
+        //    }
+        //}
+
+        this.params =
+                Procedure.initParams(
+                        params );
+
+        this.arguments =
+                new Arguments(
+                        this.params ,
+                        args ,
+                        //parent
+                        this );
 
         this.complexStep.setResultType( resultType );
 
@@ -177,6 +197,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                         steps );
 
         this.complexStep.setResultType( resultType );
+
+        this.params = Collections.emptyMap();
+
+        this.arguments = Arguments.EMPTY;
 
         doMoreInitializations();
     }
@@ -376,6 +400,15 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         // TODO code smell ausgeschlagenes Erbe Refused bequest
         //return null;
         throw new IllegalStateException( this.getClass().getSimpleName() + " has no procedure arguments" );
+    }
+
+    /**
+     * @see HasArgumentsAndVariables#globalArgumentValues()
+     */
+    @Override
+    public Arguments globalArgumentValues()
+    {
+        return this.arguments;
     }
 
     /**

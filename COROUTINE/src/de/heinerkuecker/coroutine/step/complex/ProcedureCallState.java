@@ -6,6 +6,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
@@ -30,7 +31,6 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     //private final CoroutineIterator<RESULT> rootParent;
     private final CoroIteratorOrProcedure<RESULT> parent;
 
-    // TODO immutable map
     //final Map<String, Object> procedureArgumentValues;
     final Arguments arguments;
 
@@ -220,6 +220,15 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         return
                 //this.procedureArgumentValues;
                 this.arguments;
+    }
+
+    /**
+     * @see HasArgumentsAndVariables#globalArgumentValues()
+     */
+    @Override
+    public Arguments globalArgumentValues()
+    {
+        return this.parent.globalArgumentValues();
     }
 
     /**
