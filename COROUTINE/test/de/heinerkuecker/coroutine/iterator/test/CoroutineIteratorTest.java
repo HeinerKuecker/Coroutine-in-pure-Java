@@ -6,8 +6,8 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.GetGlobalArgument;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
+import de.heinerkuecker.coroutine.proc.arg.Argument;
+import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
@@ -43,8 +43,8 @@ public class CoroutineIteratorTest
         CoroutineIterator.initializationChecks = true;
 
 
-        final ProcedureParameter[] params = {
-                new ProcedureParameter(
+        final Parameter[] params = {
+                new Parameter(
                         //name
                         "param" ,
                         //isMandantory
@@ -53,8 +53,8 @@ public class CoroutineIteratorTest
                         String.class )
         };
 
-        final ProcedureArgument<?>[] args = {
-                new ProcedureArgument<String>(
+        final Argument<?>[] args = {
+                new Argument<String>(
                         //name
                         "param" ,
                         //value

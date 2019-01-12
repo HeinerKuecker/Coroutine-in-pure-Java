@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.Value;
 
-public class ProcedureArgument<T>
+public class Argument<T>
 {
     public final String name;
 
@@ -18,7 +18,7 @@ public class ProcedureArgument<T>
      * @param name
      * @param expression
      */
-    public ProcedureArgument(
+    public Argument(
             final String name ,
             final CoroExpression<T> expression )
     {
@@ -32,7 +32,7 @@ public class ProcedureArgument<T>
      * @param name
      * @param expression
      */
-    public ProcedureArgument(
+    public Argument(
             final String name ,
             final T value )
     {

@@ -8,13 +8,13 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
+import de.heinerkuecker.coroutine.proc.arg.Argument;
+import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
  * Argument values {@link Map}
- * for {@link ProcedureParameter}
+ * for {@link Parameter}
  * with type check at runtime.
  *
  * Parameters are unmodifiable.
@@ -34,15 +34,15 @@ implements Iterable<Entry<String, Object>>
      * @param parent
      */
     public Arguments(
-            final Map<String, ProcedureParameter> params ,
-            final ProcedureArgument<?>[] args ,
+            final Map<String, Parameter> params ,
+            final Argument<?>[] args ,
             final CoroIteratorOrProcedure<?> parent )
     {
         final Set<String> missedMandantoryParamNames = new HashSet<>();
 
         if ( params != null )
         {
-            for ( ProcedureParameter param : params.values() )
+            for ( Parameter param : params.values() )
             {
                 if ( param.isMandantory )
                 {
@@ -54,7 +54,7 @@ implements Iterable<Entry<String, Object>>
 
         if ( args != null )
         {
-            for ( final ProcedureArgument<?> argument : args )
+            for ( final Argument<?> argument : args )
             {
                 if ( ! params.containsKey( argument.name ) )
                 {
@@ -71,7 +71,7 @@ implements Iterable<Entry<String, Object>>
 
                 if ( argumentValue != null )
                 {
-                    final ProcedureParameter param =
+                    final Parameter param =
                             params.get(
                                     argument.name );
 

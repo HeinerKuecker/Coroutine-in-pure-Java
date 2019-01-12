@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
+import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.StepSequence;
@@ -26,7 +26,7 @@ extends HasCreationStackTraceElement
      */
     public final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
 
-    public final Map<String, ProcedureParameter> params;
+    public final Map<String, Parameter> params;
 
     /**
      * Constructor.
@@ -37,7 +37,7 @@ extends HasCreationStackTraceElement
     @SafeVarargs
     public Procedure(
             final String name ,
-            final ProcedureParameter[] params ,
+            final Parameter[] params ,
             final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps )
     {
         super(
@@ -77,14 +77,14 @@ extends HasCreationStackTraceElement
      * @param params procedure parameter, can be <code>null</code>
      * @return unmodifiable parameter map
      */
-    public static Map<String, ProcedureParameter> initParams(
-            final ProcedureParameter[] params )
+    public static Map<String, Parameter> initParams(
+            final Parameter[] params )
     {
-        final Map<String, ProcedureParameter> paramsMap = new HashMap<>();
+        final Map<String, Parameter> paramsMap = new HashMap<>();
 
         if ( params != null )
         {
-            for ( final ProcedureParameter param : params )
+            for ( final Parameter param : params )
             {
                 if ( paramsMap.containsKey( param.name ) )
                 {

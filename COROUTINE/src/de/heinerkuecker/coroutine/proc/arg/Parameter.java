@@ -2,7 +2,7 @@ package de.heinerkuecker.coroutine.proc.arg;
 
 import java.util.Objects;
 
-public class ProcedureParameter
+public class Parameter
 {
     public final String name;
 
@@ -17,7 +17,7 @@ public class ProcedureParameter
      * @param isMandantory
      * @param type
      */
-    public ProcedureParameter(
+    public Parameter(
             final String name ,
             final boolean isMandantory ,
             final Class<?> type )

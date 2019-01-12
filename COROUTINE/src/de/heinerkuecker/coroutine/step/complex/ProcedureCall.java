@@ -9,7 +9,7 @@ import java.util.Set;
 import de.heinerkuecker.coroutine.Arguments;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
+import de.heinerkuecker.coroutine.proc.arg.Argument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.util.ArrayDeepToString;
@@ -38,7 +38,7 @@ RESULT
 
     // TODO getter
     //final Map<String, ProcedureArgument<?>> procedureArguments;
-    final ProcedureArgument<?>[] procedureArguments;
+    final Argument<?>[] procedureArguments;
 
     /**
      * Reifier for type param {@link #RESULT} to solve unchecked casts.
@@ -55,7 +55,7 @@ RESULT
             //final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps
             //final Procedure<RESULT> procedure
             final String procedureName ,
-            final ProcedureArgument<?>... args )
+            final Argument<?>... args )
     {
         super(
                 //creationStackOffset

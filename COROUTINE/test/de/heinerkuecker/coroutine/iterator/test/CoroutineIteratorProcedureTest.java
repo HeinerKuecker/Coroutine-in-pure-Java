@@ -13,8 +13,8 @@ import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
+import de.heinerkuecker.coroutine.proc.arg.Argument;
+import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
@@ -312,8 +312,8 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<>(
                         "procedure" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -339,7 +339,7 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // name
                                         "argument" ,
                                         // value
@@ -362,8 +362,8 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<>(
                         "procedure" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -389,7 +389,7 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // name
                                         "wrong_argument" ,
                                         // value
@@ -412,15 +412,15 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<>(
                         "procedure" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument0" ,
                                         //isMandantory
                                         true ,
                                         //type
                                         Integer.class ) ,
-                                new ProcedureParameter(
+                                new Parameter(
                                         //name
                                         "argument1" ,
                                         //isMandantory
@@ -446,7 +446,7 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // name
                                         "argument0" ,
                                         // value
@@ -468,8 +468,8 @@ public class CoroutineIteratorProcedureTest
         final Procedure<Integer> procedure =
                 new Procedure<>(
                         "procedure" ,
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -500,7 +500,7 @@ public class CoroutineIteratorProcedureTest
                                 0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // procedureArgumentName
                                         "argument" ,
                                         // expression
@@ -526,8 +526,8 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<>(
                         "procedure0" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -545,8 +545,8 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<>(
                         "procedure1" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -557,7 +557,7 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure0" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // procedureArgumentName
                                         "argument" ,
                                         // expression
@@ -585,7 +585,7 @@ public class CoroutineIteratorProcedureTest
                                 0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure1" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // procedureArgumentName
                                         "argument" ,
                                         // expression
@@ -610,8 +610,8 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<Long>(
                         "procedure" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -633,7 +633,7 @@ public class CoroutineIteratorProcedureTest
                                                 Long.class ) ) ,
                                 new ProcedureCall<Long>(
                                         "procedure" ,
-                                        new ProcedureArgument<>(
+                                        new Argument<>(
                                                 // name
                                                 "argument" ,
                                                 // expression
@@ -659,7 +659,7 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new ProcedureCall<Long>(
                                 "procedure" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // name
                                         "argument" ,
                                         // value
@@ -694,8 +694,8 @@ public class CoroutineIteratorProcedureTest
                 new Procedure<Long>(
                         "procedure" ,
                         // params
-                        new ProcedureParameter[] {
-                                new ProcedureParameter(
+                        new Parameter[] {
+                                new Parameter(
                                         //name
                                         "argument" ,
                                         //isMandantory
@@ -726,7 +726,7 @@ public class CoroutineIteratorProcedureTest
                                                 Long.class ) ) ,
                                 new ProcedureCall<Long>(
                                         "procedure" ,
-                                        new ProcedureArgument<>(
+                                        new Argument<>(
                                                 // name
                                                 "argument" ,
                                                 // expression
@@ -754,7 +754,7 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new ProcedureCall<Long>(
                                 "procedure" ,
-                                new ProcedureArgument<>(
+                                new Argument<>(
                                         // name
                                         "argument" ,
                                         // value
@@ -807,8 +807,8 @@ public class CoroutineIteratorProcedureTest
                     new Procedure<Integer>(
                             "procedure" ,
                             // params
-                            new ProcedureParameter[] {
-                                    new ProcedureParameter(
+                            new Parameter[] {
+                                    new Parameter(
                                             //name
                                             "procedureArgument" ,
                                             //isMandantory
@@ -831,7 +831,7 @@ public class CoroutineIteratorProcedureTest
                                     new YieldReturn<>( variable ) ,
                                     new ProcedureCall<Integer>(
                                             "procedure" ,
-                                            new ProcedureArgument<>(
+                                            new Argument<>(
                                                     // name
                                                     "procedureArgument" ,
                                                     // expression
@@ -853,7 +853,7 @@ public class CoroutineIteratorProcedureTest
                             // steps
                             new ProcedureCall<Integer>(
                                     "procedure" ,
-                                    new ProcedureArgument<>(
+                                    new Argument<>(
                                             // name
                                             "procedureArgument" ,
                                             // value

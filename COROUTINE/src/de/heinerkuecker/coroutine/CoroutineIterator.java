@@ -11,8 +11,8 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureArgument;
-import de.heinerkuecker.coroutine.proc.arg.ProcedureParameter;
+import de.heinerkuecker.coroutine.proc.arg.Argument;
+import de.heinerkuecker.coroutine.proc.arg.Parameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
@@ -100,7 +100,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
     private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
 
-    public final Map<String, ProcedureParameter> params;
+    public final Map<String, Parameter> params;
 
     final Arguments arguments;
 
@@ -116,8 +116,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType ,
             final Iterable<Procedure<RESULT>> procedures ,
             //final Map<String, ? extends Object> initialVariableValues ,
-            final ProcedureParameter[] params ,
-            final ProcedureArgument<?>[] args ,
+            final Parameter[] params ,
+            final Argument<?>[] args ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
