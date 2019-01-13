@@ -12,6 +12,26 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.ArrayTypeName;
 
+/**
+ * {@link SimpleStep} to declare
+ * local variable with specified
+ * type (class).
+ *
+ * The value of the variable can
+ * optional initialized with
+ * specified value or result of
+ * specified expression.
+ *
+ * There is no DeclareGlobalVar step,
+ * because global variables are
+ * local for the root of coroutine.
+ * Declare global variables as local
+ * variables in the root of the
+ * coroutine.
+ *
+ * @author Heiner K&uuml;cker
+ * @param <RESULT> result type of coroutine, here unused
+ */
 public final class DeclareLocalVar<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
@@ -21,8 +41,16 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     public final String varName;
 
+    /**
+     * Type (class) of the variable.
+     */
     public final Class<T> type;
 
+    /**
+     * This is the expression whose result
+     * should be set as the initial value of
+     * the variable.
+     */
     public final CoroExpression<? extends T> initialVarValueExpression;
 
     /**

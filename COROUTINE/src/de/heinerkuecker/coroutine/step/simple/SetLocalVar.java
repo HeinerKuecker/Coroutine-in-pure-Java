@@ -10,6 +10,15 @@ import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
+/**
+ * {@link SimpleStep} to set
+ * local variable with specified
+ * value or result of specified
+ * expression.
+ *
+ * @author Heiner K&uuml;cker
+ * @param <RESULT> result type of coroutine, here unused
+ */
 public final class SetLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
@@ -19,6 +28,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     public final String varName;
 
+    /**
+     * This is the expression whose result
+     * should be set as the value of the variable.
+     */
     public final CoroExpression<?> varValueExpression;
 
     /**
