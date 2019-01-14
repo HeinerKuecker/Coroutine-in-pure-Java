@@ -101,6 +101,13 @@ implements CoroExpression<T> , HasVariableName
         return this.localVarName;
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        // nothing to do
+    }
+
     /**
      * @see Object#toString()
      */
@@ -131,6 +138,8 @@ implements CoroExpression<T> , HasVariableName
 
         /**
          * Constructor.
+         *
+         * @param stepOrExpression step or expression with access to not declared local variable
          */
         public <T extends HasCreationStackTraceElement & HasVariableName> LocalVariableNotDeclaredException(
                 final T stepOrExpression )

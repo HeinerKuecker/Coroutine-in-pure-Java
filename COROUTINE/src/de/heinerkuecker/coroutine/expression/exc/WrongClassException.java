@@ -16,8 +16,6 @@ extends RuntimeException
 
     /**
      * Constructor.
-     *
-     * @param message
      */
     public WrongClassException(
             final CoroExpression<?> valueExpression ,

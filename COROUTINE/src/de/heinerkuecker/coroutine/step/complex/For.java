@@ -443,6 +443,16 @@ extends ComplexStep<
         throw new RuntimeException( "not implemented" );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.initialStep.checkUseUndeclaredParameters( parent );
+        this.condition.checkUseUndeclaredParameters( parent );
+        this.updateStep.checkUseUndeclaredParameters( parent );
+        this.bodyComplexStep.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see ComplexStep#toString
      */

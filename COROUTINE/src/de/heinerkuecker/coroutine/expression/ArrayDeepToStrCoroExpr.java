@@ -56,6 +56,13 @@ implements CoroExpression<String>
                 localVariableTypes );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.arrayExpression.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see Object#toString()
      */

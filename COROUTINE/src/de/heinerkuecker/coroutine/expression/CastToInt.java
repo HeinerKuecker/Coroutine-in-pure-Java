@@ -72,6 +72,13 @@ implements CoroExpression<Integer>
                 localVariableTypes );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.numberExpression.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see Object#toString()
      */

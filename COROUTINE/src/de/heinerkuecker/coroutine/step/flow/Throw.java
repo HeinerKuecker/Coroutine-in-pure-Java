@@ -80,4 +80,13 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         // nothing to do
         // TODO change it, when expression for exception is used
     }
+
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        // nothing to do
+        // TODO change it, when expression for exception is used
+        //this.expression.checkUseUndeclaredParameters( parent );
+    }
 }

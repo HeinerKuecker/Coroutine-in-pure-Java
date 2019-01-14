@@ -58,6 +58,13 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         // nothing to do
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        // nothing to do
+    }
+
     /**
      * @see Object#toString()
      */

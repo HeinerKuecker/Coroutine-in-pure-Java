@@ -193,6 +193,13 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 localVariableTypes );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.initialVarValueExpression.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see Object#toString()
      */

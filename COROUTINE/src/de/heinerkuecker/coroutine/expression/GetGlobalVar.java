@@ -9,9 +9,7 @@ import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.expression.GetLocalVar.LocalVariableNotDeclaredException;
 import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class GetGlobalVar<T>
 extends HasCreationStackTraceElement
@@ -101,6 +99,13 @@ implements CoroExpression<T> , HasVariableName
         return this.globalVarName;
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        // nothing to do
+    }
+
     /**
      * @see Object#toString()
      */
@@ -128,6 +133,8 @@ implements CoroExpression<T> , HasVariableName
 
         /**
          * Constructor.
+         *
+         * @param stepOrExpression step or expression with access to not declared global variable
          */
         public <T extends HasCreationStackTraceElement & HasVariableName> GlobalVariableNotDeclaredException(
                 final T stepOrExpression )

@@ -20,6 +20,8 @@ extends ComplexStep<
     //PARENT
     >
 {
+    // TODO variable to enable access to exception
+
     final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> tryBodyComplexStep;
     final Class<? extends Throwable> catchExceptionClass;
     final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> catchBodyComplexStep;
@@ -191,9 +193,14 @@ extends ComplexStep<
                 localVariableTypes );
     }
 
-    /**
-     * @see ComplexStep#toString(String, ComplexStepState, ComplexStepState)
-     */
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.tryBodyComplexStep.checkUseUndeclaredParameters( parent );
+        this.catchBodyComplexStep.checkUseUndeclaredParameters( parent );
+    }
+
     @Override
     public String toString(
             final CoroIteratorOrProcedure<RESULT> parent ,

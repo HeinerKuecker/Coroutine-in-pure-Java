@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.step.complex;
 
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -254,6 +255,18 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     public boolean isCoroutineRoot()
     {
         return false;
+    }
+
+    @Override
+    public Map<String, Class<?>> procedureParameterTypes()
+    {
+        throw new RuntimeException( "not implemented" );
+    }
+
+    @Override
+    public Map<String, Class<?>> globalParameterTypes()
+    {
+        throw new RuntimeException( "not implemented" );
     }
 
 }

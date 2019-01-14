@@ -15,4 +15,7 @@ public interface CoroCheckable
             final CoroIteratorOrProcedure<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes );
+
+    abstract public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent );
 }

@@ -70,6 +70,13 @@ implements Condition/*<CoroutineIterator<?>>*/
                 localVariableTypes );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.conditionToNegate.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see Object#toString()
      */

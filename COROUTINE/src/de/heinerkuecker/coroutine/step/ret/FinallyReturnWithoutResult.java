@@ -35,8 +35,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     /**
      * Decrement variable.
-     *
-     * @see CoroIterStep#execute(Object)
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
@@ -45,22 +43,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         return new CoroIterStepResult.FinallyReturnWithoutResult<>();
     }
 
-    /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return
-                this.getClass().getSimpleName() +
-                 ( this.creationStackTraceElement != null
-                     ? " " + this.creationStackTraceElement
-                     : "" );
-    }
-
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -84,6 +66,26 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Map<String, Class<?>> localVariableTypes )
     {
         // nothing to do
+    }
+
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        // nothing to do
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return
+                this.getClass().getSimpleName() +
+                 ( this.creationStackTraceElement != null
+                     ? " " + this.creationStackTraceElement
+                     : "" );
     }
 
 }

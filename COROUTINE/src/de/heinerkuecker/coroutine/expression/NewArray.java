@@ -9,7 +9,6 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.util.ArrayTypeName;
 
@@ -89,6 +88,16 @@ implements CoroExpression<ELEMENT[]>
                     parent ,
                     globalVariableTypes ,
                     localVariableTypes );
+        }
+    }
+
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
+        {
+            arrayElementExpression.checkUseUndeclaredParameters( parent );
         }
     }
 

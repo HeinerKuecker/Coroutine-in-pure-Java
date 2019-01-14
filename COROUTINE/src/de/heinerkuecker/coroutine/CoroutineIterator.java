@@ -219,6 +219,9 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                     this ,
                     new HashSet<>() );
 
+            this.complexStep.checkUseUndeclaredParameters(
+                    this );
+
             // TODO
             //this.complexStep.checkUseUndeclaredVariables(
             //        // parent
@@ -434,6 +437,18 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     public boolean isCoroutineRoot()
     {
         return true;
+    }
+
+    @Override
+    public Map<String, Class<?>> procedureParameterTypes()
+    {
+        throw new RuntimeException( "not implemented" );
+    }
+
+    @Override
+    public Map<String, Class<?>> globalParameterTypes()
+    {
+        throw new RuntimeException( "not implemented" );
     }
 
     /**

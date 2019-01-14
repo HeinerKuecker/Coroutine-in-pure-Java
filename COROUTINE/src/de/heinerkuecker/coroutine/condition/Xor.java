@@ -77,6 +77,14 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
                 localVariableTypes );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.lhs.checkUseUndeclaredParameters( parent );
+        this.rhs.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see Object#toString()
      */

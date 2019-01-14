@@ -80,6 +80,16 @@ implements Condition/*<CoroutineIterator<?>>*/
         }
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        {
+            condition.checkUseUndeclaredParameters( parent );
+        }
+    }
+
     /**
      * @see Object#toString()
      */

@@ -178,6 +178,14 @@ extends ComplexStep<
                 localVariableTypes );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.condition.checkUseUndeclaredParameters( parent );
+        this.thenBodyComplexStep.checkUseUndeclaredParameters( parent );
+    }
+
     /**
      * @see ComplexStep#toString
      */

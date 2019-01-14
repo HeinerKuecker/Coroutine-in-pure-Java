@@ -125,6 +125,13 @@ implements HasVariableName
     }
 
     @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.varValueExpression.checkUseUndeclaredParameters( parent );
+    }
+
+    @Override
     public String getVariableName()
     {
         return this.localVarName;

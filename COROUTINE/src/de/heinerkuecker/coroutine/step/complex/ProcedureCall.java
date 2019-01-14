@@ -150,9 +150,6 @@ RESULT
         return procedureCallState;
     }
 
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
@@ -218,6 +215,15 @@ RESULT
                 globalVariableTypes ,
                 //localVariableTypes
                 new HashMap<>() );
+    }
+
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseUndeclaredParameters(
+                this.newState(
+                        (CoroIteratorOrProcedure<RESULT>) parent ) );
     }
 
     @Override

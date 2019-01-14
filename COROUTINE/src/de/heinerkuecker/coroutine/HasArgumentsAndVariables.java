@@ -1,5 +1,7 @@
 package de.heinerkuecker.coroutine;
 
+import java.util.Map;
+
 import de.heinerkuecker.coroutine.arg.Arguments;
 
 public interface HasArgumentsAndVariables
@@ -23,9 +25,12 @@ public interface HasArgumentsAndVariables
     //abstract public Map<String, Object> procedureArgumentValues();
     abstract public Arguments procedureArgumentValues();
 
+    abstract public Map<String, Class<?>> procedureParameterTypes();
+
     /**
      * @return Map with global arguments (arguments of coroutine)
      */
     abstract public Arguments globalArgumentValues();
 
+    abstract public Map<String, Class<?>> globalParameterTypes();
 }

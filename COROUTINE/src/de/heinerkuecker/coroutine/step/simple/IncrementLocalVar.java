@@ -97,6 +97,13 @@ implements HasVariableName
         return this.localVarName;
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        // nothing to do
+    }
+
     /**
      * @see Object#toString()
      */

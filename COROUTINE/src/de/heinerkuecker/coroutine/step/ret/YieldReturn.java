@@ -94,22 +94,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return
-                this.getClass().getSimpleName() +
-                "[" +
-                expression +
-                "]" +
-                ( this.creationStackTraceElement != null
-                ? " " + this.creationStackTraceElement
-                        : "" );
-    }
-
-    /**
      * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
      */
     @Override
@@ -138,6 +122,29 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 parent ,
                 globalVariableTypes ,
                 localVariableTypes );
+    }
+
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        this.expression.checkUseUndeclaredParameters( parent );
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return
+                this.getClass().getSimpleName() +
+                "[" +
+                expression +
+                "]" +
+                ( this.creationStackTraceElement != null
+                ? " " + this.creationStackTraceElement
+                        : "" );
     }
 
 }

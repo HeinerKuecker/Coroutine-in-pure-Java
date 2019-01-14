@@ -165,6 +165,16 @@ extends ComplexStep<
         throw new RuntimeException( "not implemented" );
     }
 
+    @Override
+    public void checkUseUndeclaredParameters(
+            final CoroIteratorOrProcedure<?> parent )
+    {
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
+        {
+            step.checkUseUndeclaredParameters( parent );
+        }
+    }
+
     /**
      * @see ComplexStep#toString
      */
