@@ -250,4 +250,10 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
         return this.getRootParent().getProcedure( procedureName );
     }
 
+    @Override
+    public boolean isCoroutineRoot()
+    {
+        return false;
+    }
+
 }

@@ -2,38 +2,42 @@ package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasVariableName;
+import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 public final class NegateGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+implements HasVariableName
 {
     /**
      * Name of variable to negate in
      * {@link CoroIteratorOrProcedure#globalVars()}
      */
-    public final String varName;
+    public final String globalVarName;
 
     /**
      * Constructor.
      */
     public NegateGlobalVar(
-            final String varName )
+            final String globalVarName )
     {
-        this.varName =
+        this.globalVarName =
                 Objects.requireNonNull(
-                        varName );
+                        globalVarName );
     }
 
     public static <RESULT> NegateGlobalVar<RESULT> negate(
-            final String varName )
+            final String globalVarName )
     {
         return new NegateGlobalVar<>(
-                varName );
+                globalVarName );
     }
 
     /**
@@ -45,34 +49,28 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        final Object varValue = parent.globalVars().get( varName );
+        final Object varValue = parent.globalVars().get( globalVarName );
 
         if ( varValue instanceof Boolean )
         {
             parent.globalVars().set(
-                    varName ,
+                    globalVarName ,
                     ! (boolean) varValue );
         }
         else
             // null or not boolean is handled as false
         {
             parent.globalVars().set(
-                    varName ,
+                    globalVarName ,
                     true );
         }
         return CoroIterStepResult.continueCoroutine();
     }
 
-    /**
-     * @see Object#toString()
-     */
     @Override
-    public String toString()
+    public String getVariableName()
     {
-        return varName + " = ! " + varName +
-                ( this.creationStackTraceElement != null
-                    ? " " + this.creationStackTraceElement
-                    : "" );
+        return this.globalVarName;
     }
 
     /**
@@ -92,6 +90,30 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         // do nothing
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
+        {
+            throw new GetGlobalVar.GlobalVariableNotDeclaredException( this );
+        }
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return globalVarName + " = ! " + globalVarName +
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

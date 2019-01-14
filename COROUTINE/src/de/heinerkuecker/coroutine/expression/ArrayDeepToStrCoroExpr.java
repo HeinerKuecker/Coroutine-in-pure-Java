@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.expression;
 
 import java.util.List;
+import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
@@ -41,6 +42,18 @@ implements CoroExpression<String>
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
         return this.arrayExpression.getProcedureArgumentGetsNotInProcedure();
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        this.arrayExpression.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
     }
 
     /**

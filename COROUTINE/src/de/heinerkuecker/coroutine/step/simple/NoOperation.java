@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
@@ -23,7 +24,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * Do nothing.
      *
-     * @see SimpleStep#execute(Object)
+     * @see SimpleStep#execute
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
@@ -32,9 +33,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         return CoroIterStepResult.continueCoroutine();
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -49,6 +47,15 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         // do nothing
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        // nothing to do
     }
 
     /**

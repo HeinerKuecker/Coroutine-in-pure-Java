@@ -2,10 +2,13 @@ package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.HasVariableName;
+import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
@@ -21,12 +24,13 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  */
 public final class DecrementLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+implements HasVariableName
 {
     /**
      * Name of variable to decrement in
- * {@link CoroIteratorOrProcedure#localVars()}
+     * {@link CoroIteratorOrProcedure#localVars()}
      */
-    public final String varName;
+    public final String localVarName;
 
     /**
      * Constructor.
@@ -34,11 +38,11 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      * @param variable name
      */
     public DecrementLocalVar(
-            final String varName )
+            final String localVarName )
     {
-        this.varName =
+        this.localVarName =
                 Objects.requireNonNull(
-                        varName );
+                        localVarName );
     }
 
     /**
@@ -51,28 +55,13 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.localVars().get( varName );
+        final int var = (int) parent.localVars().get( localVarName );
         parent.localVars().set(
-                varName ,
+                localVarName ,
                 var - 1 );
         return CoroIterStepResult.continueCoroutine();
     }
 
-    /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return varName + "--" +
-                ( this.creationStackTraceElement != null
-                    ? " " + this.creationStackTraceElement
-                    : "" );
-    }
-
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -87,6 +76,36 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         // do nothing
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        if ( ! localVariableTypes.containsKey( this.localVarName ) )
+        {
+            throw new GetLocalVar.LocalVariableNotDeclaredException( this );
+        }
+    }
+
+    @Override
+    public String getVariableName()
+    {
+        return this.localVarName;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return localVarName + "--" +
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

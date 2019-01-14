@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.ret;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
@@ -125,6 +126,18 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         this.resultType = resultType;
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        this.expression.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
     }
 
 }

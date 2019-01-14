@@ -4,10 +4,12 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.util.ArrayTypeName;
 
@@ -73,6 +75,21 @@ implements CoroExpression<ELEMENT[]>
         }
 
         return result;
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
+        {
+            arrayElementExpression.checkUseUndeclaredVariables(
+                    parent ,
+                    globalVariableTypes ,
+                    localVariableTypes );
+        }
     }
 
     /**

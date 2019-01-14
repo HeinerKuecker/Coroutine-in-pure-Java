@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -309,9 +310,6 @@ extends ComplexStep<
                 parent );
     }
 
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
@@ -415,9 +413,6 @@ extends ComplexStep<
         this.bodyComplexStep.setResultType( resultType );
     }
 
-    /**
-     * @see ComplexStep#checkLabelAlreadyInUse(Set)
-     */
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
@@ -437,6 +432,15 @@ extends ComplexStep<
                 alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        throw new RuntimeException( "not implemented" );
     }
 
     /**

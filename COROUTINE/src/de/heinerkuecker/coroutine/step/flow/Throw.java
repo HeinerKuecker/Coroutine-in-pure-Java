@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.step.flow;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
@@ -14,6 +15,7 @@ import de.heinerkuecker.util.ExceptionUnchecker;
 public class Throw<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
+    // TODO use expression
     private final Exception exception;
 
     /**
@@ -53,9 +55,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                     : "" );
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -70,5 +69,15 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         // do nothing
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        // nothing to do
+        // TODO change it, when expression for exception is used
     }
 }

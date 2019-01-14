@@ -211,11 +211,20 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
+
             checkForUseGetProcedureArgumentOutsideOfProcedureException();
+
             this.complexStep.checkLabelAlreadyInUse(
                     new HashSet<>() ,
                     this ,
                     new HashSet<>() );
+
+            // TODO
+            //this.complexStep.checkUseUndeclaredVariables(
+            //        // parent
+            //        this ,
+            //        new HashMap<>() ,
+            //        new HashMap<>() );
         }
     }
 
@@ -419,6 +428,12 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroutineIterator<RESULT> getRootParent()
     {
         return this;
+    }
+
+    @Override
+    public boolean isCoroutineRoot()
+    {
+        return true;
     }
 
     /**

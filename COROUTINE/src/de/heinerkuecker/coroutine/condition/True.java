@@ -2,7 +2,10 @@ package de.heinerkuecker.coroutine.condition;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import de.heinerkuecker.coroutine.CoroCheckable;
+import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
@@ -30,13 +33,19 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
         return true;
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
         return Collections.emptyList();
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        // nothing to do
     }
 
     /**

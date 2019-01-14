@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -179,6 +180,15 @@ extends ComplexStep<
                 alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        throw new RuntimeException( "not implemented" );
     }
 
     /**

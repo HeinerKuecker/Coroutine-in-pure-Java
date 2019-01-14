@@ -2,7 +2,9 @@ package de.heinerkuecker.coroutine.condition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -61,6 +63,21 @@ implements Condition/*<CoroutineIterator<?>>*/
         }
 
         return result;
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        {
+            condition.checkUseUndeclaredVariables(
+                    parent ,
+                    globalVariableTypes ,
+                    localVariableTypes );
+        }
     }
 
     /**

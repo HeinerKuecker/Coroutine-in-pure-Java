@@ -1,8 +1,10 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -169,9 +171,6 @@ RESULT
                 parent );
     }
 
-    /**
-     * @see ComplexStep#checkLabelAlreadyInUse(Set)
-     */
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
@@ -191,9 +190,36 @@ RESULT
                 parent );
     }
 
+    @Override
+    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    {
+        // all subsequent GetProcedureArgument are in procedure
+        return Collections.emptyList();
+    }
+
     /**
-     * @see ComplexStep#toString(String, ComplexStepState, ComplexStepState)
+     * @see CoroIterStep#setResultType(Class)
      */
+    @Override
+    public void setResultType(
+            final Class<? extends RESULT> resultType )
+    {
+        this.resultType = resultType;
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                //localVariableTypes
+                new HashMap<>() );
+    }
+
     @Override
     public String toString(
             final CoroIteratorOrProcedure<RESULT> parent ,
@@ -300,26 +326,6 @@ RESULT
                 procedureArgumentsStr +
                 procedureVariablesStr +
                 procedureBodyComplexStepStr;
-    }
-
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
-    @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    {
-        // all subsequent GetProcedureArgument are in procedure
-        return Collections.emptyList();
-    }
-
-    /**
-     * @see CoroIterStep#setResultType(Class)
-     */
-    @Override
-    public void setResultType(
-            final Class<? extends RESULT> resultType )
-    {
-        this.resultType = resultType;
     }
 
 }

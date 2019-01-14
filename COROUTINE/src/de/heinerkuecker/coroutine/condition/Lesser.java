@@ -2,8 +2,10 @@ package de.heinerkuecker.coroutine.condition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
@@ -133,6 +135,23 @@ implements ConditionOrBooleanExpression
                 rhs.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        this.lhs.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
+
+        this.rhs.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
     }
 
     /**

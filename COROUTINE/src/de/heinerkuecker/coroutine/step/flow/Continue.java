@@ -28,6 +28,8 @@ extends BreakOrContinue<RESULT>
     /**
      * Label of the loop
      * to continue.
+     *
+     * TODO move member to super class
      */
     public final String label;
 

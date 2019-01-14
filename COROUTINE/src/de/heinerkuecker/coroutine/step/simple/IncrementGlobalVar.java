@@ -2,9 +2,12 @@ package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasVariableName;
+import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
@@ -20,12 +23,13 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  */
 public final class IncrementGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+implements HasVariableName
 {
     /**
      * Name of variable to increment in
      * {@link CoroIteratorOrProcedure#globalVars()}
      */
-    public final String varName;
+    public final String globalVarName;
 
     /**
      * Constructor.
@@ -33,11 +37,11 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      * @param variable name
      */
     public IncrementGlobalVar(
-            final String varName )
+            final String globalVarName )
     {
-        this.varName =
+        this.globalVarName =
                 Objects.requireNonNull(
-                        varName );
+                        globalVarName );
     }
 
     /**
@@ -50,28 +54,15 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIteratorOrProcedure<RESULT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.globalVars().get( varName );
+        final int var = (int) parent.globalVars().get( globalVarName );
+
         parent.globalVars().set(
-                varName ,
+                globalVarName ,
                 var + 1 );
+
         return CoroIterStepResult.continueCoroutine();
     }
 
-    /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return varName + "++" +
-                ( this.creationStackTraceElement != null
-                    ? " " + this.creationStackTraceElement
-                    : "" );
-    }
-
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -86,6 +77,36 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         // do nothing
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
+        {
+            throw new GetGlobalVar.GlobalVariableNotDeclaredException( this );
+        }
+    }
+
+    @Override
+    public String getVariableName()
+    {
+        return this.globalVarName;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return globalVarName + "++" +
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

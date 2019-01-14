@@ -2,31 +2,35 @@ package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasVariableName;
+import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 public final class NegateLocalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+implements HasVariableName
 {
     /**
      * Name of variable to negate in
      * {@link CoroIteratorOrProcedure#localVars()}
      */
-    public final String varName;
+    public final String localVarName;
 
     /**
      * Constructor.
      */
     public NegateLocalVar(
-            final String varName )
+            final String localVarName )
     {
-        this.varName =
+        this.localVarName =
                 Objects.requireNonNull(
-                        varName );
+                        localVarName );
     }
 
     public static <RESULT> NegateLocalVar<RESULT> negate(
@@ -45,39 +49,24 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        final Object varValue = parent.localVars().get( varName );
+        final Object varValue = parent.localVars().get( localVarName );
 
         if ( varValue instanceof Boolean )
         {
             parent.localVars().set(
-                    varName ,
+                    localVarName ,
                     ! (boolean) varValue );
         }
         else
             // null or not boolean is handled as false
         {
             parent.localVars().set(
-                    varName ,
+                    localVarName ,
                     true );
         }
         return CoroIterStepResult.continueCoroutine();
     }
 
-    /**
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return varName + " = ! " + varName +
-                ( this.creationStackTraceElement != null
-                    ? " " + this.creationStackTraceElement
-                    : "" );
-    }
-
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -92,6 +81,36 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType )
     {
         // do nothing
+    }
+
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        if ( ! localVariableTypes.containsKey( this.localVarName ) )
+        {
+            throw new GetLocalVar.LocalVariableNotDeclaredException( this );
+        }
+    }
+
+    @Override
+    public String getVariableName()
+    {
+        return this.localVarName;
+    }
+
+    /**
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return localVarName + " = ! " + localVarName +
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

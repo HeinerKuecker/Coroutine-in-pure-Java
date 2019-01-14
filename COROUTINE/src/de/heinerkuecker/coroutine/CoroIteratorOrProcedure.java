@@ -25,6 +25,8 @@ extends HasArgumentsAndVariables
 
     abstract CoroutineIterator<RESULT> getRootParent();
 
+    abstract boolean isCoroutineRoot();
+
     abstract public Procedure<RESULT> getProcedure(
             final String procedureName );
 }

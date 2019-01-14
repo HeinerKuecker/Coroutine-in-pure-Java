@@ -1,10 +1,13 @@
 package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
+import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -22,12 +25,13 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  */
 public final class SetGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+implements HasVariableName
 {
     /**
      * Name of variable to set in
      * {@link CoroIteratorOrProcedure#globalVars()}
      */
-    public final String varName;
+    public final String globalVarName;
 
     /**
      * This is the expression whose result
@@ -39,12 +43,12 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      * Constructor.
      */
     public SetGlobalVar(
-            final String varName ,
+            final String globalVarName ,
             final CoroExpression<?> varValueExpression )
     {
-        this.varName =
+        this.globalVarName =
                 Objects.requireNonNull(
-                        varName );
+                        globalVarName );
 
         this.varValueExpression =
                 Objects.requireNonNull(
@@ -55,12 +59,12 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      * Convenience constructor.
      */
     public SetGlobalVar(
-            final String varName ,
+            final String globalVarName ,
             final Object varValue )
     {
-        this.varName =
+        this.globalVarName =
                 Objects.requireNonNull(
-                        varName );
+                        globalVarName );
 
         this.varValueExpression =
                 new Value<>(
@@ -79,7 +83,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         final Object varValue = varValueExpression.evaluate( parent );
 
         parent.globalVars().set(
-                varName ,
+                globalVarName ,
                 varValue );
 
         return CoroIterStepResult.continueCoroutine();
@@ -104,13 +108,36 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         // do nothing
     }
 
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
+        {
+            throw new GetGlobalVar.GlobalVariableNotDeclaredException( this );
+        }
+
+        this.varValueExpression.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
+    }
+
+    @Override
+    public String getVariableName()
+    {
+        return this.globalVarName;
+    }
+
     /**
      * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        return varName + " = " + varValueExpression +
+        return globalVarName + " = " + varValueExpression +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

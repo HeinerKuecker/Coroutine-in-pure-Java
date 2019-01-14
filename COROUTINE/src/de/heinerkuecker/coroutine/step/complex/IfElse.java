@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
@@ -255,16 +256,27 @@ extends ComplexStep<
                 labels );
     }
 
-    ///**
-    // * @see ComplexStep#setRootParent
-    // */
-    //@Override
-    //public void setRootParent(
-    //        final CoroutineIterator<RESULT> rootParent )
-    //{
-    //    this.thenBodyComplexStep.setRootParent( rootParent );
-    //    this.elseBodyComplexStep.setRootParent( rootParent );
-    //}
+    @Override
+    public void checkUseUndeclaredVariables(
+            final CoroIteratorOrProcedure<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
+    {
+        this.condition.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
+
+        this.thenBodyComplexStep.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
+
+        this.elseBodyComplexStep.checkUseUndeclaredVariables(
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
+    }
 
     /**
      * @see ComplexStep#toString
