@@ -31,9 +31,11 @@ In the coroutine procedures can be used, which can call themselves or each other
 
 The programming of functions is not possible and not planned.
 
-The toString() method returns debug information such as the last step, next step, global variables, local variables and procedure parameters.
+Instead of formulating functions in the steps of the coroutine, custom functions should be implemented as derivatives of CoroExpression.
 
-In the toString() method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
+The toString method returns debug information such as the last step, next step, global variables, local variables and procedure parameters.
+
+In the toString method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
 
 The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code (steps).
 
