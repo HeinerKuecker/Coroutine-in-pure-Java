@@ -45,19 +45,19 @@ public class CoroutineIteratorTest
 
         final Parameter[] params = {
                 new Parameter(
-                        //name
+                        // name
                         "param" ,
-                        //isMandantory
+                        // isMandantory
                         true ,
-                        //type
+                        // type
                         String.class )
         };
 
         final Argument<?>[] args = {
                 new Argument<String>(
-                        //name
+                        // name
                         "param" ,
-                        //value
+                        // value
                         "x" )
         };
 
@@ -65,7 +65,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         String.class ,
-                        //procedures
+                        // procedures
                         null ,
                         params ,
                         args ,
@@ -191,8 +191,7 @@ public class CoroutineIteratorTest
                         new SetLocalVar<>(
                                 "number" ,
                                 0 ) ,
-                        new YieldReturn<>(
-                                number ) );
+                        new YieldReturn<>( number ) );
 
         Assert.assertTrue(
                 coroIter.hasNext() );
@@ -225,8 +224,7 @@ public class CoroutineIteratorTest
                                 "number" ,
                                 0 ) ,
                         new IncrementLocalVar<>( "number" ) ,
-                        new YieldReturn<>(
-                                number ) );
+                        new YieldReturn<>( number ) );
 
         assertNext(
                 coroIter ,
@@ -257,8 +255,7 @@ public class CoroutineIteratorTest
                                 "number" ,
                                 1 ) ,
                         new DecrementLocalVar<>( "number" ) ,
-                        new YieldReturn<>(
-                                number ) );
+                        new YieldReturn<>( number ) );
 
         assertNext(
                 coroIter ,

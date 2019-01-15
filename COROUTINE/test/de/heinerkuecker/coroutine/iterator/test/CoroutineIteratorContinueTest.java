@@ -87,7 +87,7 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "outer_for" ,
                                 // initialStep
                                 new NoOperation<>() ,
@@ -107,7 +107,7 @@ public class CoroutineIteratorContinueTest
                                         new NoOperation<>() ,
                                         // steps
                                         new Continue<>(
-                                                //label
+                                                // label
                                                 "outer_for" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>( 1 ) ) ) );
@@ -127,7 +127,7 @@ public class CoroutineIteratorContinueTest
                         Integer.class ,
                         // steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 new True() ,
                                 // steps
                                 new SetLocalVar<>(
@@ -157,7 +157,7 @@ public class CoroutineIteratorContinueTest
                         Integer.class ,
                         // steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 new True() ,
                                 // steps
                                 new SetLocalVar<>(
@@ -187,7 +187,7 @@ public class CoroutineIteratorContinueTest
                         Integer.class ,
                         // steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 new True() ,
                                 // steps
                                 new SetLocalVar<>(
@@ -217,7 +217,7 @@ public class CoroutineIteratorContinueTest
                         Integer.class ,
                         // steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 new True() ,
                                 // steps
                                 new SetLocalVar<>(
@@ -258,7 +258,7 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "outer_for" ,
                                 // initialStep
                                 new NoOperation<>() ,
@@ -278,7 +278,7 @@ public class CoroutineIteratorContinueTest
                                         new NoOperation<>() ,
                                         // steps
                                         new Continue<>(
-                                                //label
+                                                // label
                                                 "wrong" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>( 1 ) ) ) );
@@ -307,7 +307,7 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "outer_for" ,
                                 // initialStep
                                 new NoOperation<>() ,
@@ -327,7 +327,7 @@ public class CoroutineIteratorContinueTest
                                         new NoOperation<>() ,
                                         // steps
                                         new Continue<>(
-                                                //label
+                                                // label
                                                 "wrong" ) ,
                                         // this yield return is never executed
                                         new YieldReturn<>( 1 ) ) ) );
@@ -349,9 +349,9 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 new True() ,
-                                //steps
+                                // steps
                                 new YieldReturn<>( 0 ) ,
                                 new YieldReturn<>( 1 ) ,
                                 new Continue<>() ,
@@ -395,20 +395,20 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "outer_while" ,
-                                //condition
+                                // condition
                                 new Lesser<>(
                                         number ,
                                         1 ) ,
-                                //steps
+                                // steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         new True() ,
-                                        //steps
+                                        // steps
                                         new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
-                                                //label
+                                                // label
                                                 "outer_while" ) ,
                                         // this step is never executed
                                         new NoOperation<>() ) ) );
@@ -438,20 +438,20 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "outer_while" ,
-                                //condition
+                                // condition
                                 new Lesser<>(
                                         number ,
                                         1 ) ,
-                                //steps
+                                // steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         new True() ,
-                                        //steps
+                                        // steps
                                         new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
-                                                //label
+                                                // label
                                                 "wrong" ) ,
                                         // this step is never executed
                                         new NoOperation<>() ) ) );
@@ -480,20 +480,20 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "outer_while" ,
-                                //condition
+                                // condition
                                 new Lesser<>(
                                         number ,
                                         1 ) ,
-                                //steps
+                                // steps
                                 new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         new True() ,
-                                        //steps
+                                        // steps
                                         new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
-                                                //label
+                                                // label
                                                 "wrong" ) ,
                                         // this step is never executed
                                         new NoOperation<>() ) ) );

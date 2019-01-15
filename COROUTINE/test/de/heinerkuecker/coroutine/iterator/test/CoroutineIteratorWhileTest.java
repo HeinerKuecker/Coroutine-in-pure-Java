@@ -62,8 +62,7 @@ public class CoroutineIteratorWhileTest
                                         0 ) ,
                                 // steps
                                 new IncrementLocalVar<>( "number" ) ) ,
-                        new YieldReturn<>(
-                                        number ) );
+                        new YieldReturn<>( number ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -183,8 +182,7 @@ public class CoroutineIteratorWhileTest
                                                 number ,
                                                 0 ) ) ,
                                 // steps
-                                new DecrementLocalVar<>(
-                                        "number" ) ) ,
+                                new DecrementLocalVar<>( "number" ) ) ,
                         new YieldReturn<>( number ) );
 
         CoroutineIteratorTest.assertNext(
@@ -244,10 +242,8 @@ public class CoroutineIteratorWhileTest
                                                                 new GetLocalVar<>(
                                                                         "number1" ,
                                                                         Integer.class ) ) ) ) ,
-                                        new DecrementLocalVar<>(
-                                                "number1" ) ) ,
-                                new DecrementLocalVar<>(
-                                        "number0" ) ) );
+                                        new DecrementLocalVar<>( "number1" ) ) ,
+                                new DecrementLocalVar<>( "number0" ) ) );
 
         for ( int i = 15 ; i >= 0 ; i-- )
         {
@@ -274,8 +270,7 @@ public class CoroutineIteratorWhileTest
                                 //condition
                                 new True() ,
                                 // steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
+                                new YieldReturn<>( 0 ) ,
                                 new FinallyReturn<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -302,7 +297,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new While<>(
                                 //condition
-                                new True()
+                                true
                                 // steps
                                 ) );
 
@@ -344,10 +339,8 @@ public class CoroutineIteratorWhileTest
                                 //condition
                                 new True() ,
                                 // steps
-                                new YieldReturn<>(
-                                        new Value<>( 0 ) ) ,
-                                new YieldReturn<>(
-                                        new Value<>( 1 ) ) ,
+                                new YieldReturn<>( 0 ) ,
+                                new YieldReturn<>( 1 ) ,
                                 new FinallyReturnWithoutResult<>() ) );
 
         CoroutineIteratorTest.assertNext(
@@ -438,8 +431,7 @@ public class CoroutineIteratorWhileTest
                                                 0 ) ) ,
                                 // steps
                                 new YieldReturn<>( number ) ,
-                                new DecrementLocalVar<>(
-                                        "number" ) ) );
+                                new DecrementLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -472,7 +464,7 @@ public class CoroutineIteratorWhileTest
                         "first" ,
                         true ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(
-                        //condition
+                        // condition
                         new True() ,
                         // steps
                         new IfElse<>(

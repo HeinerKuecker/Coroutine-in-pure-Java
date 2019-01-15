@@ -31,21 +31,21 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                         "number" ,
                         0 ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(
-                        //label
+                        // label
                         "label_already_in_use" ,
-                        //condition
+                        // condition
                         new Lesser<>(
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
                                 1 ) ,
-                        //steps
+                        // steps
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "label_already_in_use" ,
-                                //condition
+                                // condition
                                 new True() ,
-                                //steps
+                                // steps
                                 new IncrementLocalVar<>( "number" ) ,
                                 new Continue<>(
                                         //label
@@ -67,21 +67,21 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                         "number" ,
                         0 ) ,
                 new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
-                        //label
+                        // label
                         "label_already_in_use" ,
-                        //condition
+                        // condition
                         new Lesser<>(
                                 new GetLocalVar<>(
                                         "number" ,
                                         Integer.class ) ,
                                 1 ) ,
-                        //steps
+                        // steps
                         new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
-                                //label
+                                // label
                                 "label_already_in_use" ,
-                                //condition
+                                // condition
                                 new True() ,
-                                //steps
+                                // steps
                                 new IncrementLocalVar<>( "number" ) ,
                                 new Continue<>(
                                         //label

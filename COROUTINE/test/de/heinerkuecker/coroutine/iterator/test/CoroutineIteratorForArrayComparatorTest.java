@@ -76,9 +76,6 @@ public class CoroutineIteratorForArrayComparatorTest
                 intArrDim1CoroIter );
     }
 
-    /**
-     * @param coroIter
-     */
     public static void assertNext(
             final CoroutineIterator<int[]> coroIter ,
             final int[] expected )
@@ -125,9 +122,9 @@ public class CoroutineIteratorForArrayComparatorTest
 
                 final CoroutineIterator<int[][]> intArrDim2CoroIter =
                         new CoroutineIterator<int[][]>(
-                                //type
+                                // type
                                 int[][].class ,
-                                //steps
+                                // steps
                                 new YieldReturn<int[][]>( nullValue() ) ,
                                 new YieldReturn<int[][]>( new int[][] {} ) ,
                                 // generate arrays of size 1
@@ -142,9 +139,9 @@ public class CoroutineIteratorForArrayComparatorTest
                                                         // elementClass
                                                         int[].class ,
                                                         new GetLocalVar<>(
-                                                                //localVarName
+                                                                // localVarName
                                                                 "intValue" ,
-                                                                //type
+                                                                // type
                                                                 int[].class ) ) ) ) ,
                                 // generate arrays of size 2
                                 new ForEach<int[][], int[]>(
@@ -163,14 +160,14 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                 // elementClass
                                                                 int[].class ,
                                                                 new GetLocalVar<>(
-                                                                        //localVarName
+                                                                        // localVarName
                                                                         "intValue0" ,
-                                                                        //type
+                                                                        // type
                                                                         int[].class ) ,
                                                                 new GetLocalVar<>(
-                                                                        //localVarName
+                                                                        // localVarName
                                                                         "intValue1" ,
-                                                                        //type
+                                                                        // type
                                                                         int[].class ) ) ) ) ) );
 
 
@@ -291,9 +288,9 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                 // elementClass
                                                                 Integer.class ,
                                                                 new GetLocalVar<Integer>(
-                                                                        //localVarName
+                                                                        // localVarName
                                                                         "intValue" ,
-                                                                        //type
+                                                                        // type
                                                                         Integer.class ) ) ) ) ,
                                         // generate arrays of size 2
                                         new ForEach<Integer[], Integer>(
@@ -312,14 +309,14 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                         // elementClass
                                                                         Integer.class ,
                                                                         new GetLocalVar<Integer>(
-                                                                                //localVarName
+                                                                                // localVarName
                                                                                 "intValue0" ,
-                                                                                //type
+                                                                                // type
                                                                                 Integer.class ) ,
                                                                         new GetLocalVar<Integer>(
-                                                                                //localVarName
+                                                                                // localVarName
                                                                                 "intValue1" ,
-                                                                                //type
+                                                                                // type
                                                                                 Integer.class ) ) ) ) ) );
                     }
 
@@ -356,18 +353,18 @@ public class CoroutineIteratorForArrayComparatorTest
                                 //                new Value<>( "subArr: " ) ,
                                 //                new ArrayDeepToStr(
                                 //                        new GetLocalVar<Integer[]>(
-                                //                                //localVarName
+                                //                                // localVarName
                                 //                                "subArr" ,
-                                //                                //type
+                                //                                // type
                                 //                                Integer[].class ) ) ) ) ,
                                 new YieldReturn<Integer[][]>(
                                         new NewArray<Integer[]>(
                                                 // componentClass
                                                 Integer[].class ,
                                                 new GetLocalVar<Integer[]>(
-                                                        //localVarName
+                                                        // localVarName
                                                         "subArr" ,
-                                                        //type
+                                                        // type
                                                         Integer[].class ) ) ) ) ,
                         new ForEach<Integer[][], Integer[]>(
                                 // variableName
@@ -375,15 +372,15 @@ public class CoroutineIteratorForArrayComparatorTest
                                 // iterableExpression
                                 new Value<>( integerArrDim1Iterable ) ,
                                 // steps
-                                new SystemOutPrintln<Integer[][]>(
-                                        new StrConcat(
-                                                new Value<>( "subArr0: " ) ,
-                                                new ArrayDeepToStrCoroExpr(
-                                                        new GetLocalVar<Integer[]>(
-                                                                //localVarName
-                                                                "subArr0" ,
-                                                                //type
-                                                                Integer[].class ) ) ) ) ,
+                                //new SystemOutPrintln<Integer[][]>(
+                                //        new StrConcat(
+                                //                new Value<>( "subArr0: " ) ,
+                                //                new ArrayDeepToStrCoroExpr(
+                                //                        new GetLocalVar<Integer[]>(
+                                //                                // localVarName
+                                //                                "subArr0" ,
+                                //                                // type
+                                //                                Integer[].class ) ) ) ) ,
                                 new ForEach<Integer[][], Integer[]>(
                                         // variableName
                                         "subArr1" ,
@@ -395,23 +392,23 @@ public class CoroutineIteratorForArrayComparatorTest
                                         //                new Value<>( "subArr1: " ) ,
                                         //                new ArrayDeepToStr(
                                         //                        new GetLocalVar<Integer[]>(
-                                        //                                //localVarName
+                                        //                                // localVarName
                                         //                                "subArr1" ,
-                                        //                                //type
+                                        //                                // type
                                         //                                Integer[].class ) ) ) ) ,
                                         new YieldReturn<Integer[][]>(
                                                 new NewArray<Integer[]>(
                                                         // componentClass
                                                         Integer[].class ,
                                                         new GetLocalVar<Integer[]>(
-                                                                //localVarName
+                                                                // localVarName
                                                                 "subArr0" ,
-                                                                //type
+                                                                // type
                                                                 Integer[].class ) ,
                                                         new GetLocalVar<Integer[]>(
-                                                                //localVarName
+                                                                // localVarName
                                                                 "subArr1" ,
-                                                                //type
+                                                                // type
                                                                 Integer[].class ) ) ) ) ) );
 
         Integer[][] expected = null;

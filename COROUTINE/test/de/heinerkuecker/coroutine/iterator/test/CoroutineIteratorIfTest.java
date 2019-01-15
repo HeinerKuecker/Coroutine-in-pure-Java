@@ -32,7 +32,7 @@ public class CoroutineIteratorIfTest
                         Integer.class ,
                         // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 true ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
@@ -69,17 +69,17 @@ public class CoroutineIteratorIfTest
                         Integer.class ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "condition_var" ,
-                                //varValue
+                                // varValue
                                 true ) ,
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 condition_var ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         new Not( condition_var ) ,
                                         // steps
                                         new FinallyReturn<>( 1 ) ) ) );
@@ -111,17 +111,17 @@ public class CoroutineIteratorIfTest
                         Integer.class ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "condition_var" ,
-                                //varValue
+                                // varValue
                                 true ) ,
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 condition_var ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         condition_var ,
                                         // steps
                                         new FinallyReturn<>( 1 ) ) ) );
@@ -149,7 +149,7 @@ public class CoroutineIteratorIfTest
                         Integer.class ,
                         // steps
                         new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 true
                                 // steps
                                 ) );
@@ -179,18 +179,18 @@ public class CoroutineIteratorIfTest
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
-                                //condition
+                                // condition
                                 new True() ,
                                 // steps
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         new Equals<>(
                                                 number ,
                                                 0 ) ,
                                         // steps
                                         new YieldReturn<>( 0 ) ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
-                                        //condition
+                                        // condition
                                         new Equals<>(
                                                 number ,
                                                 1 ) ,
