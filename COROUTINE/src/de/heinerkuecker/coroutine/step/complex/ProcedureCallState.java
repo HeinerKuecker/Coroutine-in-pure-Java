@@ -260,13 +260,14 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Class<?>> procedureParameterTypes()
     {
-        throw new RuntimeException( "not implemented" );
+        return this.arguments.procedureParameterTypes();
     }
 
     @Override
     public Map<String, Class<?>> globalParameterTypes()
     {
-        throw new RuntimeException( "not implemented" );
+        //throw new RuntimeException( "not implemented" );
+        return this.getRootParent().arguments.procedureParameterTypes();
     }
 
 }

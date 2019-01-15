@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.expression;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,10 +46,6 @@ implements CoroExpression<T> , HasVariableName
                         type );
     }
 
-    /**
-     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
-     */
-    //@SuppressWarnings("unchecked")
     @Override
     public T evaluate(
             final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
@@ -82,14 +79,27 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
         {
             throw new GlobalVariableNotDeclaredException( this );
+        }
+
+        final Class<?> variableType = globalVariableTypes.get( this.globalVarName );
+
+        if ( ! variableType.isAssignableFrom( this.type ) )
+        {
+            throw new GetLocalVar.WrongVariableClassException(
+                    //wrongNamedExpression
+                    this ,
+                    //wrongClass
+                    this.type ,
+                    //expectedClass
+                    variableType );
         }
     }
 
@@ -100,8 +110,8 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
         // nothing to do
     }

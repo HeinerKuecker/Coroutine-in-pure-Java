@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.expression;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -45,22 +46,22 @@ implements CoroExpression<String>
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        this.arrayExpression.checkUseUndeclaredVariables(
+        this.arrayExpression.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
-        this.arrayExpression.checkUseUndeclaredParameters( parent );
+        this.arrayExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     /**

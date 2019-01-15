@@ -157,21 +157,21 @@ extends ComplexStep<
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         throw new RuntimeException( "not implemented" );
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
-            step.checkUseUndeclaredParameters( parent );
+            step.checkUseArguments( alreadyCheckedProcedureNames, parent );
         }
     }
 

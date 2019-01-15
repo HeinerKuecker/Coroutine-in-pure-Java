@@ -177,28 +177,28 @@ extends ComplexStep<
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        this.tryBodyComplexStep.checkUseUndeclaredVariables(
+        this.tryBodyComplexStep.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
 
-        this.catchBodyComplexStep.checkUseUndeclaredVariables(
+        this.catchBodyComplexStep.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
-        this.tryBodyComplexStep.checkUseUndeclaredParameters( parent );
-        this.catchBodyComplexStep.checkUseUndeclaredParameters( parent );
+        this.tryBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.catchBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     @Override

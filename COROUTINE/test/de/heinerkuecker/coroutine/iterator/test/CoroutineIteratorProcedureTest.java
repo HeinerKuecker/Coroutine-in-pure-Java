@@ -403,10 +403,67 @@ public class CoroutineIteratorProcedureTest
                 coroIter );
     }
 
+    @Test( expected = GetProcedureArgument.ProcedureArgumentNotDeclaredException.class )
+    public void test_ValueProcedureArgument_negative_not_declared()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        // params
+                        new Parameter[] {
+                                new Parameter(
+                                        //name
+                                        "argument0" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class ) ,
+                                new Parameter(
+                                        //name
+                                        "argument1" ,
+                                        //isMandantory
+                                        true ,
+                                        //type
+                                        Integer.class )
+                        } ,
+                        // steps
+                        new YieldReturn<>(
+                                new GetProcedureArgument<>(
+                                        "argument" ,
+                                        Integer.class ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        Arrays.asList( procedure ) ,
+                        // params
+                        null ,
+                        // args
+                        null ,
+                        // steps
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new Argument<>(
+                                        // name
+                                        "argument0" ,
+                                        // value
+                                        0 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
     @Test( expected = Arguments.MissedArgumentException.class )
     public void test_ValueProcedureArgument_negative_missed()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineIterator.initializationChecks = false;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(

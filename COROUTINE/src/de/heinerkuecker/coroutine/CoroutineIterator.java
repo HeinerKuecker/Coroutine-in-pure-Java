@@ -103,7 +103,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
     public final Map<String, Parameter> params;
 
-    final Arguments arguments;
+    public final Arguments arguments;
 
     /**
      * Constructor.
@@ -167,6 +167,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         this.arguments =
                 new Arguments(
+                        // checkMandantoryValues
+                        true ,
                         this.params ,
                         args ,
                         //parent
@@ -215,15 +217,21 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             checkForUseGetProcedureArgumentOutsideOfProcedureException();
 
             this.complexStep.checkLabelAlreadyInUse(
+                    // alreadyCheckedProcedureNames
                     new HashSet<>() ,
                     this ,
+                    // labels
                     new HashSet<>() );
 
-            this.complexStep.checkUseUndeclaredParameters(
+            this.complexStep.checkUseArguments(
+                    // alreadyCheckedProcedureNames
+                    new HashSet<>() ,
                     this );
 
             // TODO
             //this.complexStep.checkUseUndeclaredVariables(
+            //        // alreadyCheckedProcedureNames
+            //        new HashSet<>() ,
             //        // parent
             //        this ,
             //        new HashMap<>() ,
@@ -442,13 +450,15 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public Map<String, Class<?>> procedureParameterTypes()
     {
-        throw new RuntimeException( "not implemented" );
+        //throw new RuntimeException( "not implemented" );
+        return this.arguments.procedureParameterTypes();
     }
 
     @Override
     public Map<String, Class<?>> globalParameterTypes()
     {
-        throw new RuntimeException( "not implemented" );
+        //throw new RuntimeException( "not implemented" );
+        return procedureParameterTypes();
     }
 
     /**

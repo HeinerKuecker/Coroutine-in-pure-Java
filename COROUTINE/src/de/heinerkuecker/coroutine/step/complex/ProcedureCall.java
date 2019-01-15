@@ -133,10 +133,35 @@ RESULT
 
         final Arguments arguments =
                 new Arguments(
+                        // checkMandantoryValues
+                        true ,
                         //params
                         parent.getProcedure( this.procedureName ).params ,
                         //args
                         procedureArguments ,
+                        parent );
+
+        final ProcedureCallState<RESULT> procedureCallState =
+                new ProcedureCallState<>(
+                        this ,
+                        resultType ,
+                        //procedureArgumentValues
+                        arguments ,
+                        parent );
+
+        return procedureCallState;
+    }
+    public ProcedureCallState<RESULT> newStateForCheck(
+            final CoroIteratorOrProcedure<RESULT> parent )
+    {
+        final Arguments arguments =
+                new Arguments(
+                        // checkMandantoryValues
+                        false ,
+                        //params
+                        parent.getProcedure( this.procedureName ).params ,
+                        //args
+                        null ,
                         parent );
 
         final ProcedureCallState<RESULT> procedureCallState =
@@ -205,12 +230,21 @@ RESULT
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseUndeclaredVariables(
+        if ( alreadyCheckedProcedureNames.contains( procedureName ) )
+        {
+            return;
+        }
+
+        alreadyCheckedProcedureNames.add( procedureName );
+
+        parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 //localVariableTypes
@@ -218,11 +252,30 @@ RESULT
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
+    public void checkUseArguments(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent )
     {
-        parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseUndeclaredParameters(
-                this.newState(
+        for ( final Argument<?> procArg : this.procedureArguments )
+        {
+            procArg.checkUseArguments(
+                    alreadyCheckedProcedureNames,
+                    //parent
+                    this.newStateForCheck(
+                            (CoroIteratorOrProcedure<RESULT>) parent ) );
+        }
+
+        if ( alreadyCheckedProcedureNames.contains( procedureName ) )
+        {
+            return;
+        }
+
+        alreadyCheckedProcedureNames.add( procedureName );
+
+        parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseArguments(
+                alreadyCheckedProcedureNames ,
+                //parent
+                this.newStateForCheck(
                         (CoroIteratorOrProcedure<RESULT>) parent ) );
     }
 

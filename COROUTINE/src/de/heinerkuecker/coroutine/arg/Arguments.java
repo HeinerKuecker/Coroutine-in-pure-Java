@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.arg;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,6 +26,8 @@ implements Iterable<Entry<String, Object>>
 {
     private final HashMap<String, Object> values = new HashMap<>();
 
+    private final Map<String, Parameter> params;
+
     /**
      * Constructor.
      *
@@ -33,36 +36,55 @@ implements Iterable<Entry<String, Object>>
      * @param parent
      */
     public Arguments(
+            final boolean checkMandantoryValues ,
             final Map<String, Parameter> params ,
             final Argument<?>[] args ,
             final CoroIteratorOrProcedure<?> parent )
     {
-        final Set<String> missedMandantoryParamNames = new HashSet<>();
+        Set<String> missedMandantoryParamNames = null;
+
+        if ( checkMandantoryValues )
+        {
+            missedMandantoryParamNames = new HashSet<>();
+        }
 
         if ( params != null )
         {
-            for ( Parameter param : params.values() )
+            if ( checkMandantoryValues )
             {
-                if ( param.isMandantory )
+                for ( Parameter param : params.values() )
                 {
-                    missedMandantoryParamNames.add(
-                            param.name );
+                    if ( param.isMandantory )
+                    {
+                        missedMandantoryParamNames.add(
+                                param.name );
+                    }
                 }
             }
+
+            this.params = params;
+        }
+        else
+        {
+            this.params = Collections.emptyMap();
         }
 
         if ( args != null )
         {
             for ( final Argument<?> argument : args )
             {
-                if ( ! params.containsKey( argument.name ) )
+                if ( params == null ||
+                        ! params.containsKey( argument.name ) )
                 {
                     throw new IllegalArgumentException(
                             "undefined argument name: " +
                             argument.name );
                 }
 
-                missedMandantoryParamNames.remove( argument.name );
+                if ( checkMandantoryValues )
+                {
+                    missedMandantoryParamNames.remove( argument.name );
+                }
 
                 final Object argumentValue =
                         argument.expression.evaluate(
@@ -76,7 +98,7 @@ implements Iterable<Entry<String, Object>>
 
                     if ( ! param.type.isInstance( argumentValue ) )
                     {
-                        throw new WrongArgumentClassException(
+                        throw new WrongArgumentValueClassException(
                                 argument.name ,
                                 //expectedClass
                                 param.type ,
@@ -91,15 +113,21 @@ implements Iterable<Entry<String, Object>>
             }
         }
 
-        if ( ! missedMandantoryParamNames.isEmpty() )
+        if ( checkMandantoryValues &&
+                ! missedMandantoryParamNames.isEmpty() )
         {
             throw new MissedArgumentException(
                     missedMandantoryParamNames.toString() );
         }
     }
 
+    /**
+     * Empty instance.
+     */
     public static Arguments EMPTY =
             new Arguments(
+                    // checkMandantoryValues
+                    false ,
                     //params
                     null ,
                     //args
@@ -120,6 +148,30 @@ implements Iterable<Entry<String, Object>>
         return this.values.get(
                 Objects.requireNonNull(
                         argumentName ) );
+    }
+
+    @SuppressWarnings("javadoc")
+    public Map<String, Class<?>> procedureParameterTypes()
+    {
+        final Map<String, Class<?>> paramTypes = new HashMap<>();
+
+        for ( final Parameter param : this.params.values() )
+        {
+            paramTypes.put(
+                    param.name ,
+                    param.type );
+        }
+
+        return paramTypes;
+    }
+
+    /**
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<Entry<String, Object>> iterator()
+    {
+        return this.values.entrySet().iterator();
     }
 
     /**
@@ -153,18 +205,9 @@ implements Iterable<Entry<String, Object>>
     }
 
     /**
-     * @see java.lang.Iterable#iterator()
-     */
-    @Override
-    public Iterator<Entry<String, Object>> iterator()
-    {
-        return this.values.entrySet().iterator();
-    }
-
-    /**
      * Exception
      */
-    public static class WrongArgumentClassException
+    public static class WrongArgumentValueClassException
     extends RuntimeException
     {
         /**
@@ -174,10 +217,8 @@ implements Iterable<Entry<String, Object>>
 
         /**
          * Constructor.
-         *
-         * @param message
          */
-        public WrongArgumentClassException(
+        public WrongArgumentValueClassException(
                 final String argumentName ,
                 final Class<?> expectedClass ,
                 final Object wrongValue )
@@ -188,12 +229,11 @@ implements Iterable<Entry<String, Object>>
                     "expected class: " +
                     expectedClass + ", " +
                     "wrong value: " +
-                    wrongValue + " " +
+                    wrongValue + ", " +
                     "wrong class: " +
                     wrongValue.getClass() );
         }
     }
-
 
     /**
      * Exception
@@ -208,8 +248,6 @@ implements Iterable<Entry<String, Object>>
 
         /**
          * Constructor.
-         *
-         * @param message
          */
         public MissedArgumentException(
                 final String argumentNames )

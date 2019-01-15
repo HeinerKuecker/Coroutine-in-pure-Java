@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -166,10 +167,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         if ( localVariableTypes.containsKey( this.varName ) )
         {
@@ -187,17 +188,26 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                     this.type );
         }
 
-        this.initialVarValueExpression.checkUseUndeclaredVariables(
-                parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+        if ( initialVarValueExpression != null )
+        {
+            this.initialVarValueExpression.checkUseVariables(
+                    alreadyCheckedProcedureNames ,
+                    parent ,
+                    globalVariableTypes, localVariableTypes );
+        }
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
+    public void checkUseArguments(
+            final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent )
     {
-        this.initialVarValueExpression.checkUseUndeclaredParameters( parent );
+        if ( initialVarValueExpression != null )
+        {
+            this.initialVarValueExpression.checkUseArguments(
+                    alreadyCheckedProcedureNames ,
+                    parent );
+        }
     }
 
     /**

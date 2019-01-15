@@ -257,34 +257,34 @@ extends ComplexStep<
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        this.condition.checkUseUndeclaredVariables(
+        this.condition.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
 
-        this.thenBodyComplexStep.checkUseUndeclaredVariables(
+        this.thenBodyComplexStep.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
 
-        this.elseBodyComplexStep.checkUseUndeclaredVariables(
+        this.elseBodyComplexStep.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
-        this.condition.checkUseUndeclaredParameters( parent );
-        this.thenBodyComplexStep.checkUseUndeclaredParameters( parent );
-        this.elseBodyComplexStep.checkUseUndeclaredParameters( parent );
+        this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.thenBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.elseBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     /**

@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.condition;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -66,27 +67,27 @@ implements Condition/*<CoroutineIterator<?>>*/
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
         {
-            condition.checkUseUndeclaredVariables(
+            condition.checkUseVariables(
+                    alreadyCheckedProcedureNames ,
                     parent ,
-                    globalVariableTypes ,
-                    localVariableTypes );
+                    globalVariableTypes, localVariableTypes );
         }
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
         for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
         {
-            condition.checkUseUndeclaredParameters( parent );
+            condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
         }
     }
 

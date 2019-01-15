@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -79,22 +80,22 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     @Override
-    public void checkUseUndeclaredVariables(
+    public void checkUseVariables(
+            HashSet<String> alreadyCheckedProcedureNames ,
             final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        this.outputExpression.checkUseUndeclaredVariables(
+        this.outputExpression.checkUseVariables(
+                alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes ,
-                localVariableTypes );
+                globalVariableTypes, localVariableTypes );
     }
 
     @Override
-    public void checkUseUndeclaredParameters(
-            final CoroIteratorOrProcedure<?> parent )
+    public void checkUseArguments(
+            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
-        this.outputExpression.checkUseUndeclaredParameters( parent );
+        this.outputExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     /**
