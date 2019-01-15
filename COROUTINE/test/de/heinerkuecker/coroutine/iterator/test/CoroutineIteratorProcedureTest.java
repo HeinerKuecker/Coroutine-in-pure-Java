@@ -663,6 +663,13 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // 
+        final GetProcedureArgument<Long> argument =
+                new GetProcedureArgument<>(
+                        //procedureArgumentName
+                        "argument" ,
+                        Long.class );
+
         final Procedure<Long> procedure =
                 new Procedure<Long>(
                         "procedure" ,
@@ -679,15 +686,9 @@ public class CoroutineIteratorProcedureTest
                         // steps
                         new If<Long>(
                                 new Lesser<>(
-                                        new GetProcedureArgument<>(
-                                                //procedureArgumentName
-                                                "argument" ,
-                                                Long.class ) ,
+                                        argument ,
                                         3L ) ,
-                                new YieldReturn<>(
-                                        new GetProcedureArgument<>(
-                                                "argument" ,
-                                                Long.class ) ) ,
+                                new YieldReturn<>( argument ) ,
                                 new ProcedureCall<Long>(
                                         "procedure" ,
                                         new Argument<>(
@@ -695,14 +696,9 @@ public class CoroutineIteratorProcedureTest
                                                 "argument" ,
                                                 // expression
                                                 new Add<>(
-                                                        new GetProcedureArgument<>(
-                                                                "argument" ,
-                                                                Long.class ) ,
+                                                        argument ,
                                                         new Value<>( 1L ) ) ) ) ) ,
-                        new FinallyReturn<>(
-                                new GetProcedureArgument<>(
-                                        "argument" ,
-                                        Long.class ) ) );
+                        new FinallyReturn<>( argument ) );
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
