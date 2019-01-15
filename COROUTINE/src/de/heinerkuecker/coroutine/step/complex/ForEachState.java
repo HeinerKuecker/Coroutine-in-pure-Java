@@ -26,7 +26,7 @@ implements ComplexStepState<
     // TODO getter
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
 
-    private Iterator<ELEMENT> iterator;
+    Iterator<ELEMENT> iterator;
 
     private ELEMENT variableValue;
 

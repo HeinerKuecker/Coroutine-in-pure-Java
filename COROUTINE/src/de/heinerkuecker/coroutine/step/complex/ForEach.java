@@ -290,6 +290,22 @@ extends ComplexStep<
                     this.iterableExpression;
         }
 
+        // TODO check whether output subsequent iterator (CoroutineIterator) is usefuel
+        //final String iterableStr;
+        //if ( nextForExecuteState != null &&
+        //        nextForExecuteState.iterator != null )
+        //{
+        //    iterableStr =
+        //            indent +
+        //            "iterator: " +
+        //            nextForExecuteState.iterator +
+        //            "\n";
+        //}
+        //else
+        //{
+        //    iterableStr = "";
+        //}
+
         return
                 indent +
                 ( this.label != null ? this.label + " : " : "" ) +
@@ -297,7 +313,9 @@ extends ComplexStep<
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +
                 variableNameStr + " :\n" +
+                // TODO check whether output current (next) variable value is usefuel
                 iterableExpressionStr + " )\n" +
+                // TODO iterableStr +
                 this.bodyComplexStep.toString(
                         parent ,
                         indent + " " ,
