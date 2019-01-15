@@ -135,9 +135,9 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "counter" ,
-                                //varValue
+                                // varValue
                                 0 ) ,
                         new IncrementLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
@@ -222,9 +222,9 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "counter" ,
-                                //varValue
+                                // varValue
                                 0 ) ,
                         new IncrementLocalVar<>( "counter" ) ,
                         new YieldReturn<>(
@@ -282,9 +282,9 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "counter" ,
-                                //varValue
+                                // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) ,
@@ -314,11 +314,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class )
                         } ,
                         // steps
@@ -364,11 +364,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class )
                         } ,
                         // steps
@@ -414,18 +414,18 @@ public class CoroutineIteratorProcedureTest
                         // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument0" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class ) ,
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument1" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class )
                         } ,
                         // steps
@@ -473,16 +473,16 @@ public class CoroutineIteratorProcedureTest
                                 new Parameter(
                                         //name
                                         "argument0" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class ) ,
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument1" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class )
                         } ,
                         // steps
@@ -527,11 +527,11 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class )
                         } ,
                         // steps
@@ -551,9 +551,9 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "number" ,
-                                //varValue
+                                // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ,
@@ -587,9 +587,9 @@ public class CoroutineIteratorProcedureTest
                                 new Parameter(
                                         //name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Integer.class )
                         } ,
                         // steps
@@ -604,11 +604,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Long.class )
                         } ,
                         // steps
@@ -636,9 +636,9 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "number" ,
-                                //varValue
+                                // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure1" ,
@@ -669,11 +669,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Long.class )
                         } ,
                         // steps
@@ -769,9 +769,9 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // steps
                         new SetLocalVar<>(
-                                //varName
+                                // varName
                                 "variable" ,
-                                //varValueExpression
+                                // varValueExpression
                                 new GetProcedureArgument<>(
                                         //procedureArgumentName
                                         "argument" ,
@@ -842,14 +842,14 @@ public class CoroutineIteratorProcedureTest
             // extract get local variable expression
             final GetLocalVar<Integer> variable =
                     new GetLocalVar<>(
-                            //localVarName
+                            // localVarName
                             "variable" ,
                             Integer.class );
 
             // extract get procedure argument expression
             final GetProcedureArgument<Integer> procedureArgument =
                     new GetProcedureArgument<>(
-                            //procedureArgumentName
+                            // procedureArgumentName
                             "procedureArgument" ,
                             Integer.class );
 

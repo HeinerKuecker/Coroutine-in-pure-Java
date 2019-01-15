@@ -11,14 +11,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.expression.ArrayDeepToStrCoroExpr;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.NewArray;
-import de.heinerkuecker.coroutine.expression.StrConcat;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.ForEach;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.SystemOutPrintln;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
