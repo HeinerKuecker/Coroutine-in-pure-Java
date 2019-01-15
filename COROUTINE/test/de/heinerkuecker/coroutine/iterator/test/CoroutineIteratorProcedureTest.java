@@ -760,11 +760,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "argument" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         Long.class )
                         } ,
                         // steps
@@ -773,7 +773,7 @@ public class CoroutineIteratorProcedureTest
                                 "variable" ,
                                 // varValueExpression
                                 new GetProcedureArgument<>(
-                                        //procedureArgumentName
+                                        // procedureArgumentName
                                         "argument" ,
                                         Long.class ) ) ,
                         new If<Long>(
@@ -859,16 +859,16 @@ public class CoroutineIteratorProcedureTest
                             // params
                             new Parameter[] {
                                     new Parameter(
-                                            //name
+                                            // name
                                             "procedureArgument" ,
-                                            //isMandantory
+                                            // isMandantory
                                             true ,
-                                            //type
+                                            // type
                                             Integer.class )
                             } ,
                             // steps
                             new DeclareLocalVar<>(
-                                    //varName
+                                    // varName
                                     "variable" ,
                                     // type
                                     Integer.class ,
