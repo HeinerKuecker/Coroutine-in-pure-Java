@@ -663,7 +663,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
-        // 
+        // extract get procedure argument expression
         final GetProcedureArgument<Long> argument =
                 new GetProcedureArgument<>(
                         //procedureArgumentName
