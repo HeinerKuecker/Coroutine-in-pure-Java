@@ -163,6 +163,13 @@ public class CoroutineIteratorIfTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
                         // type
@@ -178,18 +185,14 @@ public class CoroutineIteratorIfTest
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Equals<>(
-                                                new GetLocalVar<>(
-                                                        "number" ,
-                                                        Integer.class ) ,
+                                                number ,
                                                 0 ) ,
                                         // steps
                                         new YieldReturn<>( 0 ) ) ,
                                 new If<Integer/*, CoroutineIterator<Integer>*/>(
                                         //condition
                                         new Equals<>(
-                                                new GetLocalVar<>(
-                                                        "number" ,
-                                                        Integer.class ) ,
+                                                number ,
                                                 1 ) ,
                                         // steps
                                         new FinallyReturn<>( 1 ) ) ,

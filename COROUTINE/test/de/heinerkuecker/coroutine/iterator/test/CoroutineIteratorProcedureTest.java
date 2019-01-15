@@ -747,6 +747,13 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineIterator.initializationChecks = true;
 
+        // extract get local variable expression
+        final GetLocalVar<Long> variable =
+                new GetLocalVar<>(
+                        // varName
+                        "variable" ,
+                        Long.class );
+
         final Procedure<Long> procedure =
                 new Procedure<Long>(
                         "procedure" ,
@@ -771,16 +778,9 @@ public class CoroutineIteratorProcedureTest
                                         Long.class ) ) ,
                         new If<Long>(
                                 new Lesser<>(
-                                        new GetLocalVar<>(
-                                                //localVarName
-                                                "variable" ,
-                                                Long.class ) ,
+                                        variable ,
                                         3L ) ,
-                                new YieldReturn<>(
-                                        new GetLocalVar<>(
-                                                //localVarName
-                                                "variable" ,
-                                                Long.class ) ) ,
+                                new YieldReturn<>( variable ) ,
                                 new ProcedureCall<Long>(
                                         "procedure" ,
                                         new Argument<>(
@@ -788,16 +788,9 @@ public class CoroutineIteratorProcedureTest
                                                 "argument" ,
                                                 // expression
                                                 new Add<>(
-                                                        new GetLocalVar<>(
-                                                                //localVarName
-                                                                "variable" ,
-                                                                Long.class ) ,
+                                                        variable ,
                                                         new Value<>( 1L ) ) ) ) ) ,
-                        new FinallyReturn<>(
-                                new GetLocalVar<>(
-                                        //localVarName
-                                        "variable" ,
-                                        Long.class ) ) );
+                        new FinallyReturn<>( variable ) );
 
         final CoroutineIterator<Long> coroIter =
                 new CoroutineIterator<Long>(
