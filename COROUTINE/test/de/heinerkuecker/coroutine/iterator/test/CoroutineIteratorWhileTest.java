@@ -238,7 +238,7 @@ public class CoroutineIteratorWhileTest
                                                                         new GetLocalVar<>(
                                                                                 "number0" ,
                                                                                 Integer.class ) ,
-                                                                        new Value<>( 4 ) ) ,
+                                                                        Value.intValue( 4 ) ) ,
                                                                 new GetLocalVar<>(
                                                                         "number1" ,
                                                                         Integer.class ) ) ) ) ,

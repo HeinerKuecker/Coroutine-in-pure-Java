@@ -31,8 +31,6 @@ extends CoroExpression<Boolean>
      * for using older Java versions
      * copy this method implementation
      * in all sub classes.
-     *
-     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
     default public Boolean evaluate(
@@ -42,4 +40,20 @@ extends CoroExpression<Boolean>
     }
 
     //abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
+
+    /**
+     * Get type.
+     *
+     * Using of Java8 default method,
+     * for using older Java versions
+     * copy this method implementation
+     * in all sub classes.
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    default Class<? extends Boolean>[] type()
+    {
+        //return Boolean.class;
+        return new Class[] { Boolean.class };
+    }
 }

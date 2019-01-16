@@ -353,10 +353,60 @@ public class CoroutineIteratorProcedureTest
                 coroIter );
     }
 
+    @Test( expected = Argument.WrongArgumentClassException.class )
+    public void test_ValueProcedureArgument_negative_wrong_initializationChecks()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        final Procedure<Integer> procedure =
+                new Procedure<>(
+                        "procedure" ,
+                        // params
+                        new Parameter[] {
+                                new Parameter(
+                                        // name
+                                        "argument" ,
+                                        // isMandantory
+                                        true ,
+                                        // type
+                                        Integer.class )
+                        } ,
+                        // steps
+                        new YieldReturn<>(
+                                new GetProcedureArgument<>(
+                                        "argument" ,
+                                        Integer.class ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        Arrays.asList( procedure ) ,
+                        // params
+                        null ,
+                        // args
+                        null ,
+                        // steps
+                        new ProcedureCall<Integer>(
+                                "procedure" ,
+                                new Argument<>(
+                                        // name
+                                        "wrong_argument" ,
+                                        // value
+                                        0 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
     @Test( expected = IllegalArgumentException.class )
     public void test_ValueProcedureArgument_negative_wrong()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineIterator.initializationChecks = false;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -646,7 +696,7 @@ public class CoroutineIteratorProcedureTest
                                         // procedureArgumentName
                                         "argument" ,
                                         // expression
-                                        new Value<>( 0L ) ) ) );
+                                        Value.longValue( 0L ) ) ) );
 
         System.out.println( coroIter );
 
@@ -697,7 +747,7 @@ public class CoroutineIteratorProcedureTest
                                                 // expression
                                                 new Add<>(
                                                         argument ,
-                                                        new Value<>( 1L ) ) ) ) ) ,
+                                                        Value.longValue( 1L ) ) ) ) ) ,
                         new FinallyReturn<>( argument ) );
 
         final CoroutineIterator<Long> coroIter =
@@ -785,7 +835,7 @@ public class CoroutineIteratorProcedureTest
                                                 // expression
                                                 new Add<>(
                                                         variable ,
-                                                        new Value<>( 1L ) ) ) ) ) ,
+                                                        Value.longValue( 1L ) ) ) ) ) ,
                         new FinallyReturn<>( variable ) );
 
         final CoroutineIterator<Long> coroIter =
@@ -883,7 +933,7 @@ public class CoroutineIteratorProcedureTest
                                                     // expression
                                                     new Add<>(
                                                             variable ,
-                                                            new Value<>( 1 ) ) ) ) ) ,
+                                                            Value.intValue( 1 ) ) ) ) ) ,
                             new FinallyReturn<>( variable ) );
 
             coroIter =

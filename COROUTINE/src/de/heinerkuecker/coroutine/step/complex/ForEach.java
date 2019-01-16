@@ -26,7 +26,7 @@ extends ComplexStep<
 
     public final String variableName;
 
-    final CoroExpression<Iterable<ELEMENT>> iterableExpression;
+    final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression;
 
     final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
 
@@ -36,7 +36,7 @@ extends ComplexStep<
     @SafeVarargs
     public ForEach(
             final String variableName ,
-            final CoroExpression<Iterable<ELEMENT>> iterableExpression ,
+            final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
         super(

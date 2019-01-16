@@ -52,7 +52,11 @@ implements ConditionOrBooleanExpression
             final T lhsValue ,
             final CoroExpression<? extends T> rhs )
     {
-        this.lhs = new Value<T>( lhsValue );
+        this.lhs =
+                new Value<T>(
+                        (Class<? extends T>) Comparable.class ,
+                        lhsValue );
+
         this.rhs = Objects.requireNonNull( rhs );
     }
 
@@ -67,7 +71,11 @@ implements ConditionOrBooleanExpression
             final T rhsValue )
     {
         this.lhs = Objects.requireNonNull( lhs );
-        this.rhs = new Value<T>( rhsValue );
+
+        this.rhs =
+                new Value<T>(
+                        (Class<? extends T>) Comparable.class ,
+                        rhsValue );
     }
 
     /**
@@ -80,8 +88,15 @@ implements ConditionOrBooleanExpression
             final T lhsValue ,
             final T rhsValue )
     {
-        this.lhs = new Value<T>( lhsValue );
-        this.rhs = new Value<T>( rhsValue );
+        this.lhs =
+                new Value<T>(
+                        (Class<? extends T>) Comparable.class ,
+                        lhsValue );
+
+        this.rhs =
+                new Value<T>(
+                        (Class<? extends T>) Comparable.class ,
+                        rhsValue );
     }
 
     /**

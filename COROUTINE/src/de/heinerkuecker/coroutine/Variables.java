@@ -103,7 +103,10 @@ implements Iterable<Entry<String, Object>>
             this.values.put(
                     Objects.requireNonNull(
                             variableName ) ,
-                    value );
+                    //types.get( variableName ).cast(
+                            value
+                            //)
+            );
         }
     }
 

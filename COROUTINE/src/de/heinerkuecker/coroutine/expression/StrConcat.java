@@ -48,7 +48,7 @@ implements CoroExpression<String>
             final String lhs ,
             final CoroExpression<?> rhs )
     {
-        this.lhs = new Value<>( lhs );
+        this.lhs = Value.strValue( lhs );
         this.rhs = Objects.requireNonNull( rhs );
     }
 
@@ -63,7 +63,7 @@ implements CoroExpression<String>
             final String rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
-        this.rhs = new Value<>( rhs );
+        this.rhs = Value.strValue( rhs );
     }
 
     /**
@@ -122,6 +122,14 @@ implements CoroExpression<String>
     {
         this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends String>[] type()
+    {
+        //return String.class;
+        return new Class[] { String.class };
     }
 
     /**

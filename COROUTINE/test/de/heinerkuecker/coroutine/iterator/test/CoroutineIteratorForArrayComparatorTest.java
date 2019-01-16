@@ -13,11 +13,9 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.NewArray;
-import de.heinerkuecker.coroutine.expression.StrConcat;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.ForEach;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.SystemOutPrintln;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -131,12 +129,14 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // variableName
                                         "intValue" ,
                                         // iterableExpression
-                                        new Value<>( intArrDim1CoroIterable ) ,
+                                        new Value<Iterable<int[]>>(
+                                                (Class<? extends Iterable<int[]>>) Iterable.class ,
+                                                intArrDim1CoroIterable ) ,
                                         // steps
                                         new YieldReturn<int[][]>(
                                                 new NewArray<int[]>(
-                                                        // elementClass
-                                                        int[].class ,
+                                                        // arrayClass
+                                                        int[][].class ,
                                                         new GetLocalVar<>(
                                                                 // localVarName
                                                                 "intValue" ,
@@ -147,17 +147,21 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // variableName
                                         "intValue0" ,
                                         // iterableExpression
-                                        new Value<>( intArrDim1CoroIterable ) ,
+                                        new Value<Iterable<int[]>>(
+                                                (Class<? extends Iterable<int[]>>) Iterable.class ,
+                                                intArrDim1CoroIterable ) ,
                                         // steps
                                         new ForEach<>(
                                                 // variableName
                                                 "intValue1" ,
                                                 // iterableExpression
-                                                new Value<>( intArrDim1CoroIterable ) ,
+                                                new Value<Iterable<int[]>>(
+                                                        (Class<? extends Iterable<int[]>>) Iterable.class ,
+                                                        intArrDim1CoroIterable ) ,
                                                 new YieldReturn<>(
                                                         new NewArray<int[]>(
-                                                                // elementClass
-                                                                int[].class ,
+                                                                // arrayClass
+                                                                int[][].class ,
                                                                 new GetLocalVar<>(
                                                                         // localVarName
                                                                         "intValue0" ,
@@ -269,7 +273,7 @@ public class CoroutineIteratorForArrayComparatorTest
                     public Iterator<Integer[]> iterator()
                     {
                         return
-                                new CoroutineIterator<>(
+                                new CoroutineIterator<Integer[]>(
                                         // type
                                         Integer[].class ,
                                         // steps
@@ -280,12 +284,14 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 // variableName
                                                 "intValue" ,
                                                 // iterableExpression
-                                                new Value<>( integerIterable ) ,
+                                                new Value<Iterable<Integer>>(
+                                                        (Class<? extends Iterable<Integer>>) Iterable.class ,
+                                                        integerIterable ) ,
                                                 // steps
                                                 new YieldReturn<Integer[]>(
                                                         new NewArray<Integer>(
-                                                                // elementClass
-                                                                Integer.class ,
+                                                                // arrayClass
+                                                                Integer[].class ,
                                                                 new GetLocalVar<Integer>(
                                                                         // localVarName
                                                                         "intValue" ,
@@ -296,17 +302,21 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 // variableName
                                                 "intValue0" ,
                                                 // iterableExpression
-                                                new Value<>( integerIterable ) ,
+                                                new Value<Iterable<Integer>>(
+                                                        (Class<? extends Iterable<Integer>>) Iterable.class ,
+                                                        integerIterable ) ,
                                                 // steps
-                                                new ForEach<>(
+                                                new ForEach<Integer[], Integer>(
                                                         // variableName
                                                         "intValue1" ,
                                                         // iterableExpression
-                                                        new Value<>( integerIterable ) ,
-                                                        new YieldReturn<>(
+                                                        new Value<Iterable<Integer>>(
+                                                                (Class<? extends Iterable<Integer>>) Iterable.class ,
+                                                                integerIterable ) ,
+                                                        new YieldReturn<Integer[]>(
                                                                 new NewArray<Integer>(
-                                                                        // elementClass
-                                                                        Integer.class ,
+                                                                        // arrayClass
+                                                                        Integer[].class ,
                                                                         new GetLocalVar<Integer>(
                                                                                 // localVarName
                                                                                 "intValue0" ,
@@ -345,11 +355,13 @@ public class CoroutineIteratorForArrayComparatorTest
                                 // variableName
                                 "subArr" ,
                                 // iterableExpression
-                                new Value<>( integerArrDim1Iterable ) ,
+                                new Value<Iterable<Integer[]>>(
+                                        (Class<? extends Iterable<Integer[]>>) Iterable.class ,
+                                        integerArrDim1Iterable ) ,
                                 // steps
                                 //new SystemOutPrintln<Integer[][]>(
                                 //        new StrConcat(
-                                //                new Value<>( "subArr: " ) ,
+                                //                "subArr: " ,
                                 //                new GetLocalVar<Integer[]>(
                                 //                        // localVarName
                                 //                        "subArr" ,
@@ -357,8 +369,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                 //                        Integer[].class ) ) ) ,
                                 new YieldReturn<Integer[][]>(
                                         new NewArray<Integer[]>(
-                                                // componentClass
-                                                Integer[].class ,
+                                                // arrayClass
+                                                Integer[][].class ,
                                                 new GetLocalVar<Integer[]>(
                                                         // localVarName
                                                         "subArr" ,
@@ -368,7 +380,9 @@ public class CoroutineIteratorForArrayComparatorTest
                                 // variableName
                                 "subArr0" ,
                                 // iterableExpression
-                                new Value<>( integerArrDim1Iterable ) ,
+                                new Value<Iterable<Integer[]>>(
+                                        (Class<? extends Iterable<Integer[]>>) Iterable.class ,
+                                        integerArrDim1Iterable ) ,
                                 // steps
                                 //new SystemOutPrintln<Integer[][]>(
                                 //        new StrConcat(
@@ -382,7 +396,9 @@ public class CoroutineIteratorForArrayComparatorTest
                                         // variableName
                                         "subArr1" ,
                                         // iterableExpression
-                                        new Value<>( integerArrDim1Iterable ) ,
+                                        new Value<Iterable<Integer[]>>(
+                                                (Class<? extends Iterable<Integer[]>>) Iterable.class ,
+                                                integerArrDim1Iterable ) ,
                                         // steps
                                         //new SystemOutPrintln<Integer[][]>(
                                         //        new StrConcat(
@@ -394,8 +410,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                         //                        Integer[].class ) ) ) ,
                                         new YieldReturn<Integer[][]>(
                                                 new NewArray<Integer[]>(
-                                                        // componentClass
-                                                        Integer[].class ,
+                                                        // arrayClass
+                                                        Integer[][].class ,
                                                         new GetLocalVar<Integer[]>(
                                                                 // localVarName
                                                                 "subArr0" ,

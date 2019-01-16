@@ -60,14 +60,14 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public While(
-            final Boolean condition ,
+            final boolean condition ,
             final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
     {
         super(
                 //label
                 null ,
                 new IsTrue(
-                        new Value<Boolean>(
+                        Value.booleanValue(
                                 condition ) ) ,
                 steps );
     }
@@ -121,13 +121,13 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final String label ,
-            final Boolean condition ,
+            final boolean condition ,
             final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
     {
         super(
                 label ,
                 new IsTrue(
-                        new Value<Boolean>(
+                        Value.booleanValue(
                                 condition ) ) ,
                 steps );
     }

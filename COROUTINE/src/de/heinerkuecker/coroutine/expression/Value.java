@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
@@ -12,6 +13,13 @@ import de.heinerkuecker.util.ArrayDeepToString;
 public class Value<T>
 implements CoroExpression<T>
 {
+    /**
+     * For type check.
+     *
+     * Solve unchecked cast.
+     */
+    public final Class<? extends T> type;
+
     public final T value;
 
     /**
@@ -20,14 +28,16 @@ implements CoroExpression<T>
      * @param value
      */
     public Value(
+            final Class<? extends T> type ,
             final T value )
     {
+        this.type =
+                Objects.requireNonNull(
+                        type );
+
         this.value = value;
     }
 
-    /**
-     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
-     */
     @Override
     public T evaluate(
             final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
@@ -35,9 +45,6 @@ implements CoroExpression<T>
         return this.value;
     }
 
-    /**
-     * @see CoroExpression#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -60,6 +67,49 @@ implements CoroExpression<T>
         // nothing to do
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        return new Class[] { type };
+    }
+
+    public static Value<Boolean> booleanValue(
+            final boolean value )
+    {
+        return
+                new Value<Boolean>(
+                        Boolean.class ,
+                        value );
+    }
+
+    public static Value<Integer> intValue(
+            final int value )
+    {
+        return
+                new Value<Integer>(
+                        Integer.class ,
+                        value );
+    }
+
+    public static Value<Long> longValue(
+            final long value )
+    {
+        return
+                new Value<Long>(
+                        Long.class ,
+                        value );
+    }
+
+    public static Value<String> strValue(
+            final String value )
+    {
+        return
+                new Value<String>(
+                        String.class ,
+                        value );
+    }
+
     /**
      * @see Object#toString()
      */
@@ -72,7 +122,7 @@ implements CoroExpression<T>
                 //"value=" +
                 //String.valueOf( this.value )
                 ArrayDeepToString.deepToString( this.value );
-                //"]";
+        //"]";
     }
 
 }

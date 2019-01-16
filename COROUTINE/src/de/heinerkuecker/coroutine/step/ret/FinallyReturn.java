@@ -61,7 +61,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 );
 
         this.expression =
-                new Value<>( value );
+                new Value<RESULT>(
+                        (Class<? extends RESULT>) value.getClass() ,
+                        value );
     }
 
     /**

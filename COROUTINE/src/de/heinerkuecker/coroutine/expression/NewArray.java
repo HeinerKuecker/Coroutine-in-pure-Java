@@ -16,7 +16,8 @@ import de.heinerkuecker.util.ArrayTypeName;
 public class NewArray<ELEMENT>
 implements CoroExpression<ELEMENT[]>
 {
-    private final Class<? extends ELEMENT> elementClass;
+    //public final Class<? extends ELEMENT> elementClass;
+    public final Class<? extends ELEMENT[]> arrayClass;
 
     private final CoroExpression<ELEMENT>[] arrayElementExpressions;
 
@@ -28,26 +29,24 @@ implements CoroExpression<ELEMENT[]>
      */
     @SafeVarargs
     public NewArray(
-            final Class<? extends ELEMENT> elementClass ,
-            CoroExpression<ELEMENT>... arrayElementExpressions )
+            //final Class<? extends ELEMENT> elementClass ,
+            final Class<? extends ELEMENT[]> arrayClass ,
+            final CoroExpression<ELEMENT>... arrayElementExpressions )
     {
-        this.elementClass =
-                Objects.requireNonNull(
-                        elementClass );
+        //this.elementClass = Objects.requireNonNull( elementClass );
+        this.arrayClass = Objects.requireNonNull( arrayClass );
 
         this.arrayElementExpressions =
                 Objects.requireNonNull(
                         arrayElementExpressions );
     }
 
-    /**
-     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
-     */
     @Override
     public ELEMENT[] evaluate(
             final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
-        final Class<? extends ELEMENT> componentClass = elementClass;
+        //final Class<? extends ELEMENT> componentClass = elementClass;
+        final Class<?> componentClass = arrayClass.getComponentType();
 
         @SuppressWarnings("unchecked")
         final ELEMENT[] result = (ELEMENT[]) Array.newInstance( componentClass ,  this.arrayElementExpressions.length );
@@ -102,6 +101,17 @@ implements CoroExpression<ELEMENT[]>
         }
     }
 
+    //@Override
+    //public Class<? extends ELEMENT[]> type()
+    //{
+    //    return elementClass[].class;
+    //}
+    @Override
+    public Class<? extends ELEMENT[]>[] type()
+    {
+        return new Class[]{ arrayClass };
+    }
+
     /**
      * @see Object#toString()
      */
@@ -111,7 +121,8 @@ implements CoroExpression<ELEMENT[]>
         return
                 this.getClass().getSimpleName() +
                 "<" +
-                ArrayTypeName.toStr( this.elementClass ) +
+                //ArrayTypeName.toStr( this.elementClass ) +
+                ArrayTypeName.toStr( this.arrayClass.getComponentType() ) +
                 ">" +
                 Arrays.toString( this.arrayElementExpressions );
     }

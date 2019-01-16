@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.iterator.test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -27,14 +28,15 @@ public class CoroutineIteratorForeachTest
                         // type
                         Integer.class ,
                         // steps
-                        new ForEach<>(
+                        new ForEach<Integer, Integer>(
                                 // variableName
                                 "for_variable" ,
                                 // iterableExpression
-                                new Value<>(
+                                new Value<List<Integer>>(
+                                        (Class<? extends List<Integer>>) List.class ,
                                         Arrays.asList( 1 , 2 , 3 ) ) ,
                                 // steps
-                                new YieldReturn<>(
+                                new YieldReturn<Integer>(
                                         new GetLocalVar<>(
                                                 "for_variable" ,
                                                 Integer.class ) ) ) );

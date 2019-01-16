@@ -530,7 +530,7 @@ public class CoroutineIteratorBreakTest
                                         new Lesser<>(
                                                 number ,
                                                 //compareValue
-                                                new Value<>( 1 ) ) ,
+                                                Value.intValue( 1 ) ) ,
                                         //steps
                                         new Break<>(
                                                 // label

@@ -68,6 +68,7 @@ implements HasVariableName
 
         this.varValueExpression =
                 new Value<>(
+                        varValue.getClass() ,
                         varValue );
     }
 

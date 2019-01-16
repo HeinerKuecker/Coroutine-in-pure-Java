@@ -80,6 +80,13 @@ implements CoroExpression<Integer>
         this.numberExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
+    @Override
+    public Class<? extends Integer>[] type()
+    {
+        //return Integer.class;
+        return new Class[] { Integer.class };
+    }
+
     /**
      * @see Object#toString()
      */

@@ -116,6 +116,14 @@ implements CoroExpression<T> , HasVariableName
         // nothing to do
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        //return type;
+        return new Class[] { type };
+    }
+
     /**
      * @see Object#toString()
      */

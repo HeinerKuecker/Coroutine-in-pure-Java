@@ -125,7 +125,7 @@ extends ComplexStep<
      * Constructor.
      */
     public IfElse(
-            final Boolean condition ,
+            final boolean condition ,
             final CoroIterStep<RESULT/*, CoroutineIterator<RESULT>*/>[] thenSteps ,
             final CoroIterStep<RESULT/*, CoroutineIterator<RESULT>*/>[] elseSteps )
     {
@@ -135,7 +135,7 @@ extends ComplexStep<
 
         this.condition =
                 new IsTrue(
-                        new Value<>(
+                        Value.booleanValue(
                                 condition ) );
 
         if ( thenSteps.length == 1 &&

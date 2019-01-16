@@ -80,6 +80,17 @@ implements CoroExpression<T>
         // nothing to do
     }
 
+    @Override
+    public Class<? extends T>[] type()
+    {
+        // special class instance for null
+        //return null;
+        //return void.class;
+        //return Void.class;
+        // das array besteht aus und-verknuepften typen beim pruefen, beim aufzaehlen oder-verknuepft, ein leeres und wird zu true evaluiert, null ist also immer ein gueltiger typ
+        return new Class[] {};
+    }
+
     /**
      * @see Object#toString()
      */

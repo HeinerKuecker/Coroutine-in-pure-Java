@@ -147,6 +147,14 @@ implements CoroExpression<T>
         this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        //return (Class<? extends T>) Number.class;
+        return new Class[] { Number.class };
+    }
+
     /**
      * @see Object#toString()
      */

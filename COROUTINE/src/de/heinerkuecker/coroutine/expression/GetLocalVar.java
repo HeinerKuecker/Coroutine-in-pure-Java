@@ -118,6 +118,14 @@ implements CoroExpression<T> , HasVariableName
         // nothing to do
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        //return type;
+        return new Class[] { type };
+    }
+
     /**
      * @see Object#toString()
      */
@@ -176,13 +184,13 @@ implements CoroExpression<T> , HasVariableName
          * Constructor.
          */
         public WrongVariableClassException(
-                final HasVariableName wrongNamedExpression ,
+                final HasVariableName wrongExpression ,
                 final Class<?> wrongClass ,
                 final Class<?> expectedClass )
         {
             super(
                     "wrong variable class for expression: " +
-                    wrongNamedExpression + ",\n" +
+                    wrongExpression + ",\n" +
                     "expected class: " +
                     expectedClass + ", " +
                     "wrong class: " +

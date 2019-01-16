@@ -75,7 +75,7 @@ extends ComplexStep<
      */
     @SafeVarargs
     public If(
-            final Boolean condition ,
+            final boolean condition ,
             final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... steps )
     {
         super(
@@ -84,7 +84,7 @@ extends ComplexStep<
 
         this.condition =
                 new IsTrue(
-                        new Value<Boolean>(
+                        Value.booleanValue(
                                 condition ) );
 
         this.thenBodyComplexStep =
@@ -94,9 +94,6 @@ extends ComplexStep<
                         steps );
     }
 
-    /**
-     * @see ComplexStep#newState()
-     */
     @Override
     public IfState<RESULT/*, PARENT*/> newState(
             final CoroIteratorOrProcedure<RESULT> parent )
@@ -106,9 +103,6 @@ extends ComplexStep<
                 parent );
     }
 
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,

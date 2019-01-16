@@ -94,6 +94,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
         this.initialVarValueExpression =
                 new Value<>(
+                        type ,
                         initialVarValue );
     }
 

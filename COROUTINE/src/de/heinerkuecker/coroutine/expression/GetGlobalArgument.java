@@ -126,6 +126,14 @@ implements CoroExpression<T> , HasArgumentName
         return this.globalArgumentName;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        //return type;
+        return new Class[] { type };
+    }
+
     /**
      * @see Object#toString()
      */

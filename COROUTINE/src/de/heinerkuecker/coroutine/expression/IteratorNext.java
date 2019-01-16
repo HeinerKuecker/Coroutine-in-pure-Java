@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
@@ -12,6 +13,8 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 public class IteratorNext<T>
 implements CoroExpression<T>
 {
+    public final Class<? extends T> elementType;
+
     /**
      * Expression to get {@link Iterator}.
      */
@@ -23,21 +26,27 @@ implements CoroExpression<T>
      * @param value
      */
     public IteratorNext(
+            final Class<? extends T> elementType ,
             final CoroExpression<? extends Iterator<? extends T>> iteratorExpression )
     {
-        this.iteratorExpression = iteratorExpression;
+        this.elementType =
+                Objects.requireNonNull(
+                        elementType );
+
+        this.iteratorExpression =
+                Objects.requireNonNull(
+                iteratorExpression );
     }
 
-    /**
-     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
-     */
     @Override
     public T evaluate(
             final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
     {
         final Iterator<? extends T> iterator = iteratorExpression.evaluate( parent );
-        // TODO null handling
-        return iterator.next();
+
+        // TODO null handling iterator
+
+        return elementType.cast( iterator.next() );
     }
 
     /**
@@ -66,6 +75,12 @@ implements CoroExpression<T>
             HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
     {
         this.iteratorExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+    }
+
+    @Override
+    public Class<? extends T>[] type()
+    {
+        return new Class[] { elementType };
     }
 
     /**
