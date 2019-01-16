@@ -9,6 +9,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.util.ArrayDeepToString;
 
 public class StrConcat
 implements CoroExpression<String>
@@ -37,11 +38,36 @@ implements CoroExpression<String>
         this.rhs = Objects.requireNonNull( rhs );
     }
 
+    /**
+     * Constructor.
+     *
+     * @param lhs
+     * @param rhs
+     */
+    public StrConcat(
+            final String lhs ,
+            final CoroExpression<?> rhs )
+    {
+        this.lhs = new Value<>( lhs );
+        this.rhs = Objects.requireNonNull( rhs );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param lhs
+     * @param rhs
+     */
+    public StrConcat(
+            final CoroExpression<?> lhs ,
+            final String rhs )
+    {
+        this.lhs = Objects.requireNonNull( lhs );
+        this.rhs = new Value<>( rhs );
+    }
 
     /**
      * Add.
-     *
-     * @see CoroExpression#evaluate(CoroIteratorOrProcedure)
      */
     @Override
     public String evaluate(
@@ -51,7 +77,9 @@ implements CoroExpression<String>
         final Object rhsResult = rhs.evaluate( parent );
 
 
-        return lhsResult + "" + rhsResult;
+        return
+                ArrayDeepToString.deepToString( lhsResult ) +
+                ArrayDeepToString.deepToString( rhsResult );
     }
 
     /**

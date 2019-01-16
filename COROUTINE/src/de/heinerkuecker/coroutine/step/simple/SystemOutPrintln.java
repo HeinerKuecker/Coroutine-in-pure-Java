@@ -12,6 +12,7 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
  * Step {@link CoroIterStep} to
@@ -56,7 +57,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public CoroIterStepResult<RESULT> execute(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        System.out.println( outputExpression.evaluate( parent ) );
+        System.out.println( ArrayDeepToString.deepToString( outputExpression.evaluate( parent ) ) );
         return CoroIterStepResult.continueCoroutine();
     }
 
