@@ -46,3 +46,5 @@ To extend this library for your own tasks, you can extend the Java classes Simpl
 Local and global variables are stored in HashMaps.
 
 The parameters of the procedures are stored in immutable maps because I am a supporter of immutable parameters.
+
+It is planned to use this library also on Android.
