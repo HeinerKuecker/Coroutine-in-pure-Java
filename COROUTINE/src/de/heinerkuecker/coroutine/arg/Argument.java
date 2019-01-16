@@ -11,6 +11,13 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
 
+/**
+ * Argument for procedure or
+ * the entire coroutine.
+ *
+ * @param <T> argument/parameter type
+ * @author Heiner K&uuml;cker
+ */
 public class Argument<T>
 implements CoroCheckable
 {
