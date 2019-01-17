@@ -54,7 +54,7 @@ extends ComplexStep<
                         iterableExpression );
 
         this.bodyComplexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
                         steps );
@@ -85,7 +85,7 @@ extends ComplexStep<
                         iterableExpression );
 
         this.bodyComplexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
                         steps );

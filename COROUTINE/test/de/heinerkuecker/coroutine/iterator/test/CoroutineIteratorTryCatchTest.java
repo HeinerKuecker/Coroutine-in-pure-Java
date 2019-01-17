@@ -3,7 +3,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.step.complex.StepSequence;
+import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.complex.TryCatch;
 import de.heinerkuecker.coroutine.step.flow.Throw;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
@@ -45,7 +45,7 @@ public class CoroutineIteratorTryCatchTest
                         // steps
                         TryCatch.<Integer/*, CoroutineIterator<Integer>*/>newTryCatch(
                                 // tryStep
-                                new StepSequence<Integer/*, CoroutineIterator<Integer>*/>(
+                                new Block<Integer/*, CoroutineIterator<Integer>*/>(
                                         // creationStackOffset
                                         0 ,
                                         new Throw<>(

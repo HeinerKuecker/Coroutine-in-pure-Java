@@ -18,7 +18,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
-import de.heinerkuecker.coroutine.step.complex.StepSequence;
+import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.util.ArrayDeepToString;
@@ -128,7 +128,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                         resultType );
 
         this.complexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         5 ,
                         steps );
@@ -194,7 +194,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                         resultType );
 
         this.complexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         5 ,
                         steps );
@@ -228,14 +228,13 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                     new HashSet<>() ,
                     this );
 
-            // TODO
-            //this.complexStep.checkUseUndeclaredVariables(
-            //        // alreadyCheckedProcedureNames
-            //        new HashSet<>() ,
-            //        // parent
-            //        this ,
-            //        new HashMap<>() ,
-            //        new HashMap<>() );
+            this.complexStep.checkUseVariables(
+                    // alreadyCheckedProcedureNames
+                    new HashSet<>() ,
+                    // parent
+                    this ,
+                    new HashMap<>() ,
+                    new HashMap<>() );
         }
     }
 

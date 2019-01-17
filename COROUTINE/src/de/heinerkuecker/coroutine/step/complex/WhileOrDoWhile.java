@@ -49,7 +49,7 @@ extends ComplexStep<
         this.condition = Objects.requireNonNull( condition );
 
         this.bodyComplexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         5 ,
                         steps );

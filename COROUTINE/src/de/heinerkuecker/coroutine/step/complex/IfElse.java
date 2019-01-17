@@ -50,7 +50,7 @@ extends ComplexStep<
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             thenSteps );
@@ -65,7 +65,7 @@ extends ComplexStep<
         else
         {
             this.elseBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             elseSteps );
@@ -98,7 +98,7 @@ extends ComplexStep<
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             thenSteps );
@@ -113,7 +113,7 @@ extends ComplexStep<
         else
         {
             this.elseBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             elseSteps );
@@ -147,7 +147,7 @@ extends ComplexStep<
         else
         {
             this.thenBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             thenSteps );
@@ -162,7 +162,7 @@ extends ComplexStep<
         else
         {
             this.elseBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             elseSteps );

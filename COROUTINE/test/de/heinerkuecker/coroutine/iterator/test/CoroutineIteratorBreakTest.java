@@ -8,7 +8,7 @@ import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.complex.For;
-import de.heinerkuecker.coroutine.step.complex.StepSequence;
+import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.flow.Break;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
@@ -157,7 +157,7 @@ public class CoroutineIteratorBreakTest
                                         0 ) ,
                                 new For<Integer/*, CoroutineIterator<Integer>*/>(
                                         // initialStep
-                                        new StepSequence<>(
+                                        new Block<>(
                                                 // creationStackOffset
                                                 1 ,
                                                 // steps
@@ -255,7 +255,7 @@ public class CoroutineIteratorBreakTest
                                         // condition
                                         new True() ,
                                         // updateStep
-                                        new StepSequence<>(
+                                        new Block<>(
                                                 // creationStackOffset
                                                 1 ,
                                                 // steps

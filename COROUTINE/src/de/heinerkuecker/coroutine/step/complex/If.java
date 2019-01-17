@@ -41,7 +41,7 @@ extends ComplexStep<
         this.condition = condition;
 
         this.thenBodyComplexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
                         steps );
@@ -64,7 +64,7 @@ extends ComplexStep<
                         condition );
 
         this.thenBodyComplexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
                         steps );
@@ -88,7 +88,7 @@ extends ComplexStep<
                                 condition ) );
 
         this.thenBodyComplexStep =
-                StepSequence.convertStepsToComplexStep(
+                Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
                         steps );

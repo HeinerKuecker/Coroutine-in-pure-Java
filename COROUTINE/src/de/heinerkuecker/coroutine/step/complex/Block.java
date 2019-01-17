@@ -22,10 +22,10 @@ import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
  *
  * TODO rename to Block
  */
-public class StepSequence<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+public class Block<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
 extends ComplexStep<
-    StepSequence<RESULT /*, PARENT*/> ,
-    StepSequenceState<RESULT /*, PARENT*/> ,
+    Block<RESULT /*, PARENT*/> ,
+    BlockState<RESULT /*, PARENT*/> ,
     RESULT /*,
     PARENT*/
     >
@@ -36,7 +36,7 @@ extends ComplexStep<
      * Constructor.
      */
     @SafeVarargs
-    public StepSequence(
+    public Block(
             final int creationStackOffset ,
             final CoroIterStep<? extends RESULT /*, PARENT*/>... steps )
     {
@@ -68,10 +68,10 @@ extends ComplexStep<
      * @see ComplexStep#newState()
      */
     @Override
-    public StepSequenceState<RESULT /*, PARENT*/> newState(
+    public BlockState<RESULT /*, PARENT*/> newState(
             final CoroIteratorOrProcedure<RESULT> parent )
     {
-        return new StepSequenceState<>(
+        return new BlockState<>(
                 this ,
                 parent );
     }
@@ -186,12 +186,12 @@ extends ComplexStep<
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final StepSequenceState<RESULT /*, PARENT*/> lastSequenceExecuteState =
-                (StepSequenceState<RESULT /*, PARENT*/>) lastStepExecuteState;
+        final BlockState<RESULT /*, PARENT*/> lastSequenceExecuteState =
+                (BlockState<RESULT /*, PARENT*/>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final StepSequenceState<RESULT /*, PARENT*/> nextSequenceExecuteState =
-                (StepSequenceState<RESULT /*, PARENT*/>) nextStepExecuteState;
+        final BlockState<RESULT /*, PARENT*/> nextSequenceExecuteState =
+                (BlockState<RESULT /*, PARENT*/>) nextStepExecuteState;
 
         final StringBuilder buff = new StringBuilder();
 
@@ -280,7 +280,7 @@ extends ComplexStep<
         else
         {
             complexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             creationStackOffset ,
                             steps );
         }

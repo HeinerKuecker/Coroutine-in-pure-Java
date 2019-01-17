@@ -9,7 +9,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
-import de.heinerkuecker.coroutine.step.complex.StepSequence;
+import de.heinerkuecker.coroutine.step.complex.Block;
 
 public class Procedure<RESULT>
 extends HasCreationStackTraceElement
@@ -64,7 +64,7 @@ extends HasCreationStackTraceElement
         else
         {
             this.bodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             bodySteps );

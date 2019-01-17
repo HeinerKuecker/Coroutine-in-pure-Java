@@ -77,7 +77,7 @@ RESULT
         //else
         //{
         //    this.bodyComplexStep =
-        //            new StepSequence(
+        //            new Block(
         //                    // creationStackOffset
         //                    3 ,
         //                    bodySteps );

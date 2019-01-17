@@ -48,7 +48,7 @@ extends ComplexStep<
         {
             // TODO support simple step
             this.tryBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             tryStep );
@@ -67,7 +67,7 @@ extends ComplexStep<
         else
         {
             this.catchBodyComplexStep =
-                    new StepSequence<>(
+                    new Block<>(
                             // creationStackOffset
                             3 ,
                             catchBodySteps );

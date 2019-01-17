@@ -8,10 +8,10 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-class StepSequenceState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
-implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
+class BlockState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+implements ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
 {
-    private final StepSequence<RESULT /*, PARENT*/> sequence;
+    private final Block<RESULT /*, PARENT*/> sequence;
 
     // TODO getter to ensure unmodifiable from other class
     int currentStepIndex;
@@ -23,8 +23,8 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
     /**
      *
      */
-    public StepSequenceState(
-            final StepSequence<RESULT /*, PARENT*/> sequence ,
+    public BlockState(
+            final Block<RESULT /*, PARENT*/> sequence ,
             //final CoroutineIterator<RESULT> rootParent
             final CoroIteratorOrProcedure<RESULT> parent )
     {
@@ -127,7 +127,7 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
      * @see ComplexStepState#getStep()
      */
     @Override
-    public StepSequence<RESULT /*, PARENT*/> getStep()
+    public Block<RESULT /*, PARENT*/> getStep()
     {
         return this.sequence;
     }
@@ -136,10 +136,10 @@ implements ComplexStepState<StepSequenceState<RESULT /*, PARENT*/>, StepSequence
      * @see HCloneable#createClone()
      */
     @Override
-    public StepSequenceState<RESULT /*, PARENT*/> createClone()
+    public BlockState<RESULT /*, PARENT*/> createClone()
     {
-        final StepSequenceState<RESULT /*, PARENT*/> clone =
-                new StepSequenceState<>(
+        final BlockState<RESULT /*, PARENT*/> clone =
+                new BlockState<>(
                         sequence ,
                         //this.rootParent
                         this.parent );
