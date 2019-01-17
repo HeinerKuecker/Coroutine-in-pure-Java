@@ -17,6 +17,7 @@ import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 public class CoroutineIteratorTryCatchTest
 {
     @Test
+    @SuppressWarnings("javadoc")
     public void test_TryCatch_0()
     {
         CoroutineIterator.initializationChecks = true;
