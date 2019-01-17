@@ -19,8 +19,6 @@ import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
- *
- * TODO rename to Block
  */
 public class Block<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
 extends ComplexStep<
