@@ -12,6 +12,7 @@ import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassException;
 
 /**
  * Step {@link CoroIterStep} to
@@ -91,6 +92,17 @@ implements HasVariableName
         if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
         {
             throw new GetGlobalVar.GlobalVariableNotDeclaredException( this );
+        }
+
+        if ( ! Integer.class.equals( globalVariableTypes.get( globalVarName ) ) )
+        {
+            throw new WrongVariableClassException(
+                    //wrongStep
+                    this ,
+                    //wrongClass
+                    globalVariableTypes.get( globalVarName ) ,
+                    //expectedClass
+                    Integer.class );
         }
     }
 

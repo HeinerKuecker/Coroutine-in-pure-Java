@@ -13,6 +13,7 @@ import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassException;
 
 /**
  * Step {@link CoroIterStep} to
@@ -90,6 +91,17 @@ implements HasVariableName
         if ( ! localVariableTypes.containsKey( this.localVarName ) )
         {
             throw new GetLocalVar.LocalVariableNotDeclaredException( this );
+        }
+
+        if ( ! Integer.class.equals( localVariableTypes.get( localVarName ) ) )
+        {
+            throw new WrongVariableClassException(
+                    //wrongStep
+                    this ,
+                    //wrongClass
+                    localVariableTypes.get( localVarName ) ,
+                    //expectedClass
+                    Integer.class );
         }
     }
 

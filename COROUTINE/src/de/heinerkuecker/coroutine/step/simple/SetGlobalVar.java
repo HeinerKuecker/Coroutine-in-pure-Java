@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetGlobalVar;
@@ -24,9 +25,9 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  * @param <RESULT> result type of coroutine, here unused
  */
-public final class SetGlobalVar<RESULT>
+public final class SetGlobalVar<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-implements HasVariableName
+implements CoroExpression<T> , HasVariableName
 {
     /**
      * Name of variable to set in
@@ -38,14 +39,14 @@ implements HasVariableName
      * This is the expression whose result
      * should be set as the value of the variable.
      */
-    public final CoroExpression<?> varValueExpression;
+    public final CoroExpression<T> varValueExpression;
 
     /**
      * Constructor.
      */
     public SetGlobalVar(
             final String globalVarName ,
-            final CoroExpression<?> varValueExpression )
+            final CoroExpression<T> varValueExpression )
     {
         this.globalVarName =
                 Objects.requireNonNull(
@@ -61,7 +62,7 @@ implements HasVariableName
      */
     public SetGlobalVar(
             final String globalVarName ,
-            final Object varValue )
+            final T varValue )
     {
         this.globalVarName =
                 Objects.requireNonNull(
@@ -69,7 +70,7 @@ implements HasVariableName
 
         this.varValueExpression =
                 new Value<>(
-                        varValue.getClass() ,
+                        (Class<? extends T>) varValue.getClass() ,
                         varValue );
     }
 
@@ -89,6 +90,24 @@ implements HasVariableName
                 varValue );
 
         return CoroIterStepResult.continueCoroutine();
+    }
+
+    @Override
+    public T evaluate(
+            final HasArgumentsAndVariables parent )
+    // for using in expressions
+    {
+        execute( (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
+
+        return (T) parent.globalVars().get( globalVarName );
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        //return new Class[] { type };
+        return varValueExpression.type();
     }
 
     /**
