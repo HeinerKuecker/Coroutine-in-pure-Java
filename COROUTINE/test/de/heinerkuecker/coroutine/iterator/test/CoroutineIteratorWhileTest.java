@@ -99,7 +99,7 @@ public class CoroutineIteratorWhileTest
                                         3 ) ,
                                 // steps
                                 new YieldReturn<>( number ) ,
-                                new IncrementLocalVar<Integer>( "number" ) ) );
+                                new IncrementLocalVar<>( "number" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
