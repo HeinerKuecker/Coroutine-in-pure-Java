@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.NullValue;
@@ -38,6 +39,7 @@ import de.heinerkuecker.util.ArrayTypeName;
  */
 public final class DeclareLocalVar<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+implements CoroExpression<T>
 {
     /**
      * Name of variable to set in
@@ -168,6 +170,23 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         }
 
         return CoroIterStepResult.continueCoroutine();
+    }
+
+    @Override
+    public T evaluate(
+            final HasArgumentsAndVariables parent )
+    // for using in expressions
+    {
+        execute( (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
+
+        return (T) parent.localVars().get( varName );
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends T>[] type()
+    {
+        return new Class[] { type };
     }
 
     /**

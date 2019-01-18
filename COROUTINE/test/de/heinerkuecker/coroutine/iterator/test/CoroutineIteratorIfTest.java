@@ -210,4 +210,40 @@ public class CoroutineIteratorIfTest
                 coroIter );
     }
 
+    @Test
+    public void test_While_DeclareLocalVar_in_Condition_0()
+    {
+        CoroutineIterator.initializationChecks = true;
+
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                                // condition
+                                new Equals<>(
+                                        // use DeclareLocalVar as expression
+                                        new DeclareLocalVar<>(
+                                                "number" ,
+                                                0 ) ,
+                                        0 ) ,
+                                // steps
+                                new FinallyReturn<>( number ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
 }
