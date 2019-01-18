@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
@@ -19,7 +19,7 @@ implements CoroExpression<T> , HasArgumentName
 {
     /**
      * Name of procedure argument in
-     * {@link CoroIteratorOrProcedure#procedureArgumentValues()}
+     * {@link CoroutineOrProcedureOrComplexstep#procedureArgumentValues()}
      * to return.
      */
     public final String procedureArgumentName;
@@ -54,7 +54,7 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
         final Object procArgValue = parent.procedureArgumentValues().get( procedureArgumentName );
 
@@ -86,20 +86,22 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         // nothing to do
     }
 
     /**
-     * @see CoroCheckable#checkUseArguments(HashSet, CoroIteratorOrProcedure)
+     * @see CoroCheckable#checkUseArguments(HashSet, CoroutineOrProcedureOrComplexstep)
      */
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         if ( ! parent.procedureParameterTypes().containsKey( this.procedureArgumentName ) )
         {

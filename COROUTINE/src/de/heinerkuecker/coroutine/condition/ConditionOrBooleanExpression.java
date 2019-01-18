@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.condition;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import javafx.beans.binding.BooleanExpression;
@@ -18,11 +18,11 @@ extends CoroExpression<Boolean>
     /**
      * Execute the condition and return the result.
      *
-     * @param parent the {@link CoroIteratorOrProcedure} instance
+     * @param parent the {@link CoroutineOrProcedureOrComplexstep} instance
      * @return condition result
      */
     boolean execute(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent );
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent );
 
     /**
      * Evaluates expression.
@@ -34,7 +34,7 @@ extends CoroExpression<Boolean>
      */
     @Override
     default public Boolean evaluate(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
         return execute( parent );
     }

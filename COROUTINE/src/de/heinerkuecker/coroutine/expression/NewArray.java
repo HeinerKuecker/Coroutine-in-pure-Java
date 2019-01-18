@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.util.ArrayTypeName;
@@ -43,7 +43,7 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public ELEMENT[] evaluate(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
         //final Class<? extends ELEMENT> componentClass = elementClass;
         final Class<?> componentClass = arrayClass.getComponentType();
@@ -78,13 +78,16 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseVariables(
+                    isCoroutineRoot ,
                     alreadyCheckedProcedureNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );
@@ -93,7 +96,7 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {

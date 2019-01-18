@@ -128,6 +128,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                 new ForEach<int[][], int[]>(
                                         // variableName
                                         "intValue" ,
+                                        // elementType
+                                        int[].class ,
                                         // iterableExpression
                                         new Value<Iterable<int[]>>(
                                                 (Class<? extends Iterable<int[]>>) Iterable.class ,
@@ -146,14 +148,18 @@ public class CoroutineIteratorForArrayComparatorTest
                                 new ForEach<int[][], int[]>(
                                         // variableName
                                         "intValue0" ,
+                                        // elementType
+                                        int[].class ,
                                         // iterableExpression
                                         new Value<Iterable<int[]>>(
                                                 (Class<? extends Iterable<int[]>>) Iterable.class ,
                                                 intArrDim1CoroIterable ) ,
                                         // steps
-                                        new ForEach<>(
+                                        new ForEach<int[][], int[]>(
                                                 // variableName
                                                 "intValue1" ,
+                                                // elementType
+                                                int[].class ,
                                                 // iterableExpression
                                                 new Value<Iterable<int[]>>(
                                                         (Class<? extends Iterable<int[]>>) Iterable.class ,
@@ -283,6 +289,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                         new ForEach<Integer[], Integer>(
                                                 // variableName
                                                 "intValue" ,
+                                                // elementType
+                                                Integer.class ,
                                                 // iterableExpression
                                                 new Value<Iterable<Integer>>(
                                                         (Class<? extends Iterable<Integer>>) Iterable.class ,
@@ -301,6 +309,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                         new ForEach<Integer[], Integer>(
                                                 // variableName
                                                 "intValue0" ,
+                                                // elementType
+                                                Integer.class ,
                                                 // iterableExpression
                                                 new Value<Iterable<Integer>>(
                                                         (Class<? extends Iterable<Integer>>) Iterable.class ,
@@ -309,6 +319,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 new ForEach<Integer[], Integer>(
                                                         // variableName
                                                         "intValue1" ,
+                                                        // elementType
+                                                        Integer.class ,
                                                         // iterableExpression
                                                         new Value<Iterable<Integer>>(
                                                                 (Class<? extends Iterable<Integer>>) Iterable.class ,
@@ -354,6 +366,8 @@ public class CoroutineIteratorForArrayComparatorTest
                         new ForEach<Integer[][], Integer[]>(
                                 // variableName
                                 "subArr" ,
+                                // elementType
+                                Integer[].class ,
                                 // iterableExpression
                                 new Value<Iterable<Integer[]>>(
                                         (Class<? extends Iterable<Integer[]>>) Iterable.class ,
@@ -379,6 +393,8 @@ public class CoroutineIteratorForArrayComparatorTest
                         new ForEach<Integer[][], Integer[]>(
                                 // variableName
                                 "subArr0" ,
+                                // elementType
+                                Integer[].class ,
                                 // iterableExpression
                                 new Value<Iterable<Integer[]>>(
                                         (Class<? extends Iterable<Integer[]>>) Iterable.class ,
@@ -395,6 +411,8 @@ public class CoroutineIteratorForArrayComparatorTest
                                 new ForEach<Integer[][], Integer[]>(
                                         // variableName
                                         "subArr1" ,
+                                        // elementType
+                                        Integer[].class ,
                                         // iterableExpression
                                         new Value<Iterable<Integer[]>>(
                                                 (Class<? extends Iterable<Integer[]>>) Iterable.class ,

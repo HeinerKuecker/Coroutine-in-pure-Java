@@ -1,13 +1,14 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -26,6 +27,8 @@ extends ComplexStep<
 
     public final String variableName;
 
+    public final Class<? extends ELEMENT> elementType;
+
     final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression;
 
     final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
@@ -36,6 +39,7 @@ extends ComplexStep<
     @SafeVarargs
     public ForEach(
             final String variableName ,
+            final Class<? extends ELEMENT> elementType ,
             final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
@@ -48,6 +52,10 @@ extends ComplexStep<
         this.variableName =
                 Objects.requireNonNull(
                         variableName );
+
+        this.elementType =
+                Objects.requireNonNull(
+                        elementType );
 
         this.iterableExpression =
                 Objects.requireNonNull(
@@ -67,6 +75,7 @@ extends ComplexStep<
     public ForEach(
             final String label ,
             final String variableName ,
+            final Class<? extends ELEMENT> elementType ,
             final CoroExpression<Iterable<ELEMENT>> iterableExpression ,
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/>... steps )
     {
@@ -79,6 +88,10 @@ extends ComplexStep<
         this.variableName =
                 Objects.requireNonNull(
                         variableName );
+
+        this.elementType =
+                Objects.requireNonNull(
+                        elementType );
 
         this.iterableExpression =
                 Objects.requireNonNull(
@@ -96,7 +109,7 @@ extends ComplexStep<
      */
     @Override
     public ForEachState<RESULT/*, PARENT*/, ELEMENT> newState(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         return new ForEachState<>(
                 this ,
@@ -110,7 +123,7 @@ extends ComplexStep<
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
@@ -164,7 +177,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final Set<String> labels )
     {
         if ( label != null )
@@ -184,16 +197,32 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
-        throw new RuntimeException( "not implemented" );
+        //throw new RuntimeException( "not implemented" );
+        final Map<String, Class<?>> thisLocalVariableTypes = new HashMap<>();
+        thisLocalVariableTypes.putAll( localVariableTypes );
+
+        thisLocalVariableTypes.put(
+                variableName ,
+                elementType );
+
+        this.bodyComplexStep.checkUseVariables(
+                isCoroutineRoot ,
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                thisLocalVariableTypes );
     }
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.iterableExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
@@ -203,7 +232,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final String indent ,
             ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             ComplexStepState<?, ?, RESULT> nextStepExecuteState )

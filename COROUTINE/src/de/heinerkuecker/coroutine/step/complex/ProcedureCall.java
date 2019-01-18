@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
@@ -16,14 +16,14 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.util.ArrayDeepToString;
 
-public class ProcedureCall<RESULT/*, PARENT extends CoroIteratorOrProcedure<RESULT, PARENT>*/>
+public class ProcedureCall<RESULT/*, PARENT extends CoroutineOrProcedureOrComplexstep<RESULT, PARENT>*/>
 extends ComplexStep<
 ProcedureCall<RESULT/*, PARENT*/> ,
 ProcedureCallState<RESULT> ,
 RESULT
 //PARENT
 >
-//implements CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
+//implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     ///**
     // * Es muss ein ComplexStep sein,
@@ -120,7 +120,7 @@ RESULT
      */
     @Override
     public ProcedureCallState<RESULT> newState(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         //final Map<String, Object> procedureArgumentValues = new LinkedHashMap<>();
         //for ( ProcedureArgument<?> arg : procedureArguments.values() )
@@ -152,7 +152,7 @@ RESULT
         return procedureCallState;
     }
     public ProcedureCallState<RESULT> newStateForCheck(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final Arguments arguments =
                 new Arguments(
@@ -178,7 +178,7 @@ RESULT
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         if ( alreadyCheckedProcedureNames.contains( procedureName ) )
         {
@@ -196,7 +196,7 @@ RESULT
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final Set<String> labels )
     {
         if ( alreadyCheckedProcedureNames.contains( procedureName ) )
@@ -231,8 +231,9 @@ RESULT
 
     @Override
     public void checkUseVariables(
+            final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -244,6 +245,8 @@ RESULT
         alreadyCheckedProcedureNames.add( procedureName );
 
         parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseVariables(
+                //isCoroutineRoot
+                false ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
@@ -254,7 +257,7 @@ RESULT
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         for ( final Argument<?> procArg : this.procedureArguments )
         {
@@ -262,7 +265,7 @@ RESULT
                     alreadyCheckedProcedureNames,
                     //parent
                     this.newStateForCheck(
-                            (CoroIteratorOrProcedure<RESULT>) parent ) );
+                            (CoroutineOrProcedureOrComplexstep<RESULT>) parent ) );
         }
 
         if ( alreadyCheckedProcedureNames.contains( procedureName ) )
@@ -276,12 +279,12 @@ RESULT
                 alreadyCheckedProcedureNames ,
                 //parent
                 this.newStateForCheck(
-                        (CoroIteratorOrProcedure<RESULT>) parent ) );
+                        (CoroutineOrProcedureOrComplexstep<RESULT>) parent ) );
     }
 
     @Override
     public String toString(
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT> nextStepExecuteState )

@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.NullValue;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
@@ -31,15 +32,16 @@ import de.heinerkuecker.util.ArrayTypeName;
  * variables in the root of the
  * coroutine.
  *
- * @author Heiner K&uuml;cker
  * @param <RESULT> result type of coroutine, here unused
+ * @param <T> variable type
+ * @author Heiner K&uuml;cker
  */
 public final class DeclareLocalVar<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
      * Name of variable to set in
-     * {@link CoroIteratorOrProcedure#localVars()}
+     * {@link CoroutineOrProcedureOrComplexstep#localVars()}
      */
     public final String varName;
 
@@ -99,6 +101,27 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
+     * Convenience constructor.
+     */
+    public DeclareLocalVar(
+            final String varName ,
+            // null is forbidden
+            final T initialVarValue )
+    {
+        this.varName =
+                Objects.requireNonNull(
+                        varName );
+
+        this.type =
+                (Class<T>) initialVarValue.getClass();
+
+        this.initialVarValueExpression =
+                new Value<>(
+                        type ,
+                        initialVarValue );
+    }
+
+    /**
      * Constructor.
      */
     public DeclareLocalVar(
@@ -113,7 +136,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
                 Objects.requireNonNull(
                         type );
 
-        this.initialVarValueExpression = null;
+        this.initialVarValueExpression =
+                //null
+                NullValue.nullValue();
     }
 
     /**
@@ -123,9 +148,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         if ( this.initialVarValueExpression == null )
+            // TODO no more needed
         {
             parent.localVars().declare(
                     varName ,
@@ -169,9 +195,11 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         if ( localVariableTypes.containsKey( this.varName ) )
         {
@@ -192,6 +220,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( initialVarValueExpression != null )
         {
             this.initialVarValueExpression.checkUseVariables(
+                    isCoroutineRoot ,
                     alreadyCheckedProcedureNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );
@@ -201,7 +230,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         if ( initialVarValueExpression != null )
         {
@@ -255,7 +284,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
          *
          * @param declareLocalVar
          */
-        VariableAlreadyDeclaredException(
+        public VariableAlreadyDeclaredException(
                 final DeclareLocalVar<?, ?> declareLocalVar )
         {
             super(

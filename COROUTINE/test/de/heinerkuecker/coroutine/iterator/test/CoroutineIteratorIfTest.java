@@ -11,8 +11,8 @@ import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -68,7 +68,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "condition_var" ,
                                 // varValue
@@ -110,7 +110,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "condition_var" ,
                                 // varValue
@@ -175,7 +175,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(

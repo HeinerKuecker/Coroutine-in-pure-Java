@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetGlobalVar;
@@ -30,7 +30,7 @@ implements HasVariableName
 {
     /**
      * Name of variable to set in
-     * {@link CoroIteratorOrProcedure#globalVars()}
+     * {@link CoroutineOrProcedureOrComplexstep#globalVars()}
      */
     public final String globalVarName;
 
@@ -80,7 +80,7 @@ implements HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final Object varValue = varValueExpression.evaluate( parent );
 
@@ -112,9 +112,11 @@ implements HasVariableName
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
         {
@@ -122,6 +124,7 @@ implements HasVariableName
         }
 
         this.varValueExpression.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -129,7 +132,7 @@ implements HasVariableName
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.varValueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

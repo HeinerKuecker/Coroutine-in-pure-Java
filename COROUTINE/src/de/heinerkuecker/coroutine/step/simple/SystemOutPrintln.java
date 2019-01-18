@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -55,7 +55,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         System.out.println( ArrayDeepToString.deepToString( outputExpression.evaluate( parent ) ) );
         return CoroIterStepResult.continueCoroutine();
@@ -82,11 +82,14 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         this.outputExpression.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -94,7 +97,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.outputExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

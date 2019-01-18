@@ -25,7 +25,6 @@ import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementGlobalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -135,9 +134,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "counter" ,
+                                // type
+                                Integer.class ,
                                 // varValue
                                 0 ) ,
                         new IncrementLocalVar<>( "counter" ) ,
@@ -195,9 +196,11 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "counter" ,
+                                // type
+                                Integer.class ,
                                 // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
@@ -222,9 +225,11 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "counter" ,
+                                // type
+                                Integer.class ,
                                 // varValue
                                 0 ) ,
                         new IncrementLocalVar<>( "counter" ) ,
@@ -282,9 +287,11 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "counter" ,
+                                // type
+                                Integer.class ,
                                 // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
@@ -601,9 +608,11 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "number" ,
+                                // type
+                                Integer.class ,
                                 // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
@@ -686,9 +695,11 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "number" ,
+                                // type
+                                Integer.class ,
                                 // varValue
                                 0 ) ,
                         new ProcedureCall<Integer>(
@@ -815,9 +826,11 @@ public class CoroutineIteratorProcedureTest
                                         Long.class )
                         } ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 // varName
                                 "variable" ,
+                                // type
+                                Long.class ,
                                 // varValueExpression
                                 new GetProcedureArgument<>(
                                         // procedureArgumentName

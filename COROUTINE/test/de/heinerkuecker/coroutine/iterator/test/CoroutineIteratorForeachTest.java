@@ -31,6 +31,8 @@ public class CoroutineIteratorForeachTest
                         new ForEach<Integer, Integer>(
                                 // variableName
                                 "for_variable" ,
+                                // elementType
+                                Integer.class ,
                                 // iterableExpression
                                 new Value<List<Integer>>(
                                         (Class<? extends List<Integer>>) List.class ,

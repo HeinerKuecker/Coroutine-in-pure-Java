@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -39,7 +39,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
      */
     @Override
     public boolean execute(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
         return lhs.execute( parent ) != rhs.execute( parent );
     }
@@ -63,16 +63,20 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         this.lhs.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.rhs.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -80,7 +84,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );

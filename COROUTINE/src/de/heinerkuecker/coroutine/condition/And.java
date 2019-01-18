@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
@@ -37,7 +37,7 @@ implements Condition/*<CoroutineIterator<?>>*/
      */
     @Override
     public boolean execute(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
         for ( final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         {
@@ -68,13 +68,15 @@ implements Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         {
             condition.checkUseVariables(
+                    isCoroutineRoot ,
                     alreadyCheckedProcedureNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );
@@ -83,7 +85,7 @@ implements Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         {

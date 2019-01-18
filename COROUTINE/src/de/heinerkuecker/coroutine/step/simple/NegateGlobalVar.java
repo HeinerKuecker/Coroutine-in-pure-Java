@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassException;
 
 public final class NegateGlobalVar<RESULT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
@@ -19,7 +20,7 @@ implements HasVariableName
 {
     /**
      * Name of variable to negate in
-     * {@link CoroIteratorOrProcedure#globalVars()}
+     * {@link CoroutineOrProcedureOrComplexstep#globalVars()}
      */
     public final String globalVarName;
 
@@ -48,7 +49,7 @@ implements HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final Object varValue = parent.globalVars().get( globalVarName );
 
@@ -95,19 +96,32 @@ implements HasVariableName
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
         {
             throw new GetGlobalVar.GlobalVariableNotDeclaredException( this );
         }
+
+        if ( ! Boolean.class.equals( globalVariableTypes.get( globalVarName ) ) )
+        {
+            throw new WrongVariableClassException(
+                    //wrongStep
+                    this ,
+                    //wrongClass
+                    globalVariableTypes.get( globalVarName ) ,
+                    //expectedClass
+                    Boolean.class );
+        }
     }
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         // nothing to do
     }

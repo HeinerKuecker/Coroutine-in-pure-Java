@@ -1,10 +1,11 @@
-package de.heinerkuecker.coroutine;
+package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -13,13 +14,26 @@ import de.heinerkuecker.util.ArrayDeepToString;
  *
  * @author Heiner K&uuml;cker
  */
-public class Variables
+public class BlockLocalVariables
 //implements Iterable<Entry<String, Object>>
 implements VariablesOrLocalVariables
 {
+    private final VariablesOrLocalVariables parentVariables;
+
     private final HashMap<String, Object> values = new HashMap<>();
 
     private final HashMap<String, Class<?>> types = new HashMap<>();
+
+    /**
+     * Constructor.
+     *
+     * @param parentVariables
+     */
+    protected BlockLocalVariables(
+            final VariablesOrLocalVariables parentVariables )
+    {
+        this.parentVariables = parentVariables;
+    }
 
     /**
      * Get variable value.
@@ -31,9 +45,13 @@ implements VariablesOrLocalVariables
             final String variableName )
     {
         // TODO throw exception, when variableName is unknown
-        return this.values.get(
-                Objects.requireNonNull(
-                        variableName ) );
+        if ( this.types.containsKey( variableName ) )
+        {
+            return this.values.get(
+                    Objects.requireNonNull(
+                            variableName ) );
+        }
+        return parentVariables.get( variableName );
     }
 
     public void declare(
@@ -42,7 +60,7 @@ implements VariablesOrLocalVariables
     {
         if ( types.containsKey( variableName ) )
         {
-            throw new Variables.VariableAlreadyDeclaredException(
+            throw new BlockLocalVariables.VariableAlreadyDeclaredException(
                     variableName );
         }
 
@@ -79,35 +97,44 @@ implements VariablesOrLocalVariables
             final String variableName ,
             final Object value )
     {
-        if ( value == null )
+        if ( types.containsKey(variableName))
         {
-            this.values.remove(
-                    Objects.requireNonNull(
-                            variableName ) );
+            if ( value == null )
+            {
+                this.values.remove(
+                        Objects.requireNonNull(
+                                variableName ) );
+            }
+            else
+            {
+                if ( types.containsKey( variableName ) )
+                {
+                    if ( ! types.get( variableName ).isInstance( value ) )
+                    {
+                        //throw new ClassCastException( value.getClass().toString() );
+                        throw new BlockLocalVariables.WrongVariableClassException(
+                                variableName ,
+                                // expectedClass
+                                types.get( variableName ) ,
+                                // wrongValue
+                                value );
+                    }
+                }
+
+                this.values.put(
+                        Objects.requireNonNull(
+                                variableName ) ,
+                        // TODO types.get( variableName ).cast(
+                                value
+                                //)
+                );
+            }
         }
         else
         {
-            if ( types.containsKey( variableName ) )
-            {
-                if ( ! types.get( variableName ).isInstance( value ) )
-                {
-                    //throw new ClassCastException( value.getClass().toString() );
-                    throw new Variables.WrongVariableClassException(
-                            variableName ,
-                            // expectedClass
-                            types.get( variableName ) ,
-                            // wrongValue
-                            value );
-                }
-            }
-
-            this.values.put(
-                    Objects.requireNonNull(
-                            variableName ) ,
-                    // TODO types.get( variableName ).cast(
-                            value
-                            //)
-            );
+            parentVariables.set(
+                    variableName ,
+                    value );
         }
     }
 

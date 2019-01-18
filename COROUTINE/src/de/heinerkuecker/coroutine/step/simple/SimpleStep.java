@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine.step.simple;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
@@ -46,5 +46,5 @@ extends CoroIterStep<RESULT /*,PARENT*/>
      */
     abstract public CoroIterStepResult<RESULT> execute(
             //final PARENT parent
-            final CoroIteratorOrProcedure<RESULT> parent );
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent );
 }

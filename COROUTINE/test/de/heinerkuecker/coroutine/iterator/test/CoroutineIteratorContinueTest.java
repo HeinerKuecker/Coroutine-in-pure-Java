@@ -12,6 +12,7 @@ import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.flow.Continue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
@@ -33,7 +34,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new For<>(
@@ -83,7 +84,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
@@ -345,7 +346,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
@@ -391,8 +392,9 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
+                                Integer.class ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 // label

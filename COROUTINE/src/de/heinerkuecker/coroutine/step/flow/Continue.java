@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine.step.flow;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
@@ -59,7 +59,7 @@ extends BreakOrContinue<RESULT>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         return new CoroIterStepResult.ContinueLoop<RESULT>( this.label );
     }

@@ -2,13 +2,13 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
 class IfState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
-implements ComplexStepState<
+extends ComplexStepState<
     IfState<RESULT/*, PARENT*/>,
     If<RESULT/*, PARENT*/>,
     RESULT
@@ -25,7 +25,7 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> thenBodyComplexState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroIteratorOrProcedure<RESULT> parent;
+    private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
      * Constructor.
@@ -33,8 +33,9 @@ implements ComplexStepState<
     public IfState(
             final If<RESULT/*, PARENT*/> _if ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
+        super( parent );
         this._if = _if;
 
         //this.rootParent = Objects.requireNonNull( rootParent );
@@ -49,7 +50,7 @@ implements ComplexStepState<
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         if ( this.runInCondition )
         {

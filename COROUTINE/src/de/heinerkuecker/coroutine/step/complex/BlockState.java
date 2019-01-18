@@ -2,14 +2,14 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
 class BlockState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
-implements ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
+extends ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
 {
     private final Block<RESULT /*, PARENT*/> sequence;
 
@@ -18,7 +18,7 @@ implements ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PA
     ComplexStepState<?, ?, RESULT /*, ? super PARENT*/> currentComplexState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroIteratorOrProcedure<RESULT> parent;
+    private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
      *
@@ -26,8 +26,9 @@ implements ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PA
     public BlockState(
             final Block<RESULT /*, PARENT*/> sequence ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
+        super( parent );
         this.sequence = sequence;
 
         //this.rootParent = Objects.requireNonNull( rootParent );
@@ -37,13 +38,9 @@ implements ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PA
                         parent );
     }
 
-    /**
-     * @see CoroIterStep#execute
-     */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            //final PARENT parent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         while ( currentStepIndex < sequence.length() )
         {

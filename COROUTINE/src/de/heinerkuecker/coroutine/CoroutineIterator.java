@@ -16,9 +16,9 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
-import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.util.ArrayDeepToString;
@@ -229,6 +229,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                     this );
 
             this.complexStep.checkUseVariables(
+                    //isCoroutineRoot
+                    true ,
                     // alreadyCheckedProcedureNames
                     new HashSet<>() ,
                     // parent
@@ -383,7 +385,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#saveLastStepState()
+     * @see CoroutineOrProcedureOrComplexstep#saveLastStepState()
      */
     @Override
     public void saveLastStepState()
@@ -392,7 +394,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#localVars()
+     * @see CoroutineOrProcedureOrComplexstep#localVars()
      */
     @Override
     //public Map<String, Object> localVars()
@@ -402,7 +404,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#globalVars()
+     * @see CoroutineOrProcedureOrComplexstep#globalVars()
      */
     @Override
     //public Map<String, Object> globalVars()
@@ -412,7 +414,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#procedureArgumentValues()
+     * @see CoroutineOrProcedureOrComplexstep#procedureArgumentValues()
      */
     @Override
     public Arguments procedureArgumentValues()
@@ -432,7 +434,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#getRootParent()
+     * @see CoroutineOrProcedureOrComplexstep#getRootParent()
      */
     @Override
     public CoroutineIterator<RESULT> getRootParent()

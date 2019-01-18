@@ -8,10 +8,10 @@ import de.heinerkuecker.coroutine.condition.LesserOrEqual;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NegateLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -39,7 +39,7 @@ public class CoroutineIteratorForTest
                         // steps
                         new For<>(
                                 // initialStep
-                                new SetLocalVar<>(
+                                new DeclareLocalVar<>(
                                         "number" ,
                                         0 ) ,
                                 // condition
@@ -84,7 +84,7 @@ public class CoroutineIteratorForTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new YieldReturn<>( number ) ,
@@ -139,7 +139,7 @@ public class CoroutineIteratorForTest
                         // steps
                         new For<>(
                                 // initialStep
-                                new SetLocalVar<>(
+                                new DeclareLocalVar<>(
                                         "number" ,
                                         0 ) ,
                                 // condition
@@ -190,7 +190,7 @@ public class CoroutineIteratorForTest
                         // steps
                         new For<>(
                                 // initialStep
-                                new SetLocalVar<>(
+                                new DeclareLocalVar<>(
                                         "number" ,
                                         0 ) ,
                                 // condition
@@ -235,7 +235,7 @@ public class CoroutineIteratorForTest
                         // steps
                         new For<>(
                                 // initialStep
-                                new SetLocalVar<>(
+                                new DeclareLocalVar<>(
                                         // varName
                                         "first_round" ,
                                         // varValue

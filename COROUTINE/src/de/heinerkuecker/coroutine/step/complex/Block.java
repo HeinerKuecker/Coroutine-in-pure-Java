@@ -1,17 +1,19 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 
 /**
  * Sequence of {@link CoroIterStep} steps.
@@ -62,25 +64,19 @@ extends ComplexStep<
         return steps[ index ];
     }
 
-    /**
-     * @see ComplexStep#newState()
-     */
     @Override
     public BlockState<RESULT /*, PARENT*/> newState(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         return new BlockState<>(
                 this ,
                 parent );
     }
 
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
@@ -139,7 +135,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final Set<String> labels )
     {
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
@@ -156,16 +152,74 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
-        throw new RuntimeException( "not implemented" );
+        //throw new RuntimeException( "not implemented" );
+        final Map<String, Class<?>> thisLocalVariableTypes =
+                new HashMap<>(
+                        localVariableTypes );
+
+        final Map<String, Class<?>> thisGlobalVariableTypes;
+        if ( isCoroutineRoot )
+        {
+            // block local scope
+            thisGlobalVariableTypes =
+                    new HashMap<>(
+                            globalVariableTypes );
+        }
+        else
+        {
+            thisGlobalVariableTypes = globalVariableTypes;
+        }
+
+        for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
+        {
+            if ( step instanceof DeclareLocalVar )
+            {
+                final DeclareLocalVar<?, ?> declareLocalVar = (DeclareLocalVar<?, ?>) step;
+
+                if ( thisLocalVariableTypes.containsKey( declareLocalVar.varName ) )
+                {
+                    throw new DeclareLocalVar.VariableAlreadyDeclaredException(
+                            declareLocalVar );
+                }
+
+                thisLocalVariableTypes.put(
+                        declareLocalVar.varName ,
+                        declareLocalVar.type );
+
+                if ( isCoroutineRoot )
+                {
+                    if ( thisGlobalVariableTypes.containsKey( declareLocalVar.varName ) )
+                    {
+                        throw new DeclareLocalVar.VariableAlreadyDeclaredException(
+                                declareLocalVar );
+                    }
+
+                    thisGlobalVariableTypes.put(
+                            declareLocalVar.varName ,
+                            declareLocalVar.type );
+                }
+            }
+            else
+            {
+                step.checkUseVariables(
+                        isCoroutineRoot ,
+                        alreadyCheckedProcedureNames ,
+                        parent ,
+                        thisGlobalVariableTypes ,
+                        thisLocalVariableTypes );
+            }
+        }
     }
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
@@ -178,7 +232,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )

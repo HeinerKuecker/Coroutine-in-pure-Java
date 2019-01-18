@@ -1,13 +1,14 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.condition.True;
@@ -302,7 +303,7 @@ extends ComplexStep<
      */
     @Override
     public ForState<RESULT/*, PARENT*/> newState(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         return new ForState<>(
                 this ,
@@ -313,7 +314,7 @@ extends ComplexStep<
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         if ( initialStep instanceof ComplexStep )
         {
@@ -416,7 +417,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final Set<String> labels )
     {
         if ( label != null )
@@ -436,16 +437,47 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        throw new RuntimeException( "not implemented" );
+        //throw new RuntimeException( "not implemented" );
+        final Map<String, Class<?>> thisLocalVariableTypes = new HashMap<>();
+        thisLocalVariableTypes.putAll( localVariableTypes );
+
+        this.initialStep.checkUseVariables(
+                isCoroutineRoot ,
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                thisLocalVariableTypes );
+
+        this.condition.checkUseVariables(
+                isCoroutineRoot ,
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                thisLocalVariableTypes );
+
+        this.bodyComplexStep.checkUseVariables(
+                isCoroutineRoot ,
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                thisLocalVariableTypes );
+
+        this.updateStep.checkUseVariables(
+                isCoroutineRoot ,
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                thisLocalVariableTypes );
     }
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.initialStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
@@ -458,7 +490,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final String indent ,
             ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
             ComplexStepState<?, ?, RESULT> nextStepExecuteState )

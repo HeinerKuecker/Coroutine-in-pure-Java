@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 public class IteratorNext<T>
@@ -40,7 +40,7 @@ implements CoroExpression<T>
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
         final Iterator<? extends T> iterator = iteratorExpression.evaluate( parent );
 
@@ -60,11 +60,14 @@ implements CoroExpression<T>
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         this.iteratorExpression.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -72,7 +75,7 @@ implements CoroExpression<T>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.iteratorExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

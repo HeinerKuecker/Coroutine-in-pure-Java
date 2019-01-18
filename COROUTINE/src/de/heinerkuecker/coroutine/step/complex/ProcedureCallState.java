@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.Variables;
@@ -14,13 +14,13 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
 class ProcedureCallState<RESULT>
-implements ComplexStepState<
+extends ComplexStepState<
     ProcedureCallState<RESULT>,
     ProcedureCall<RESULT>,
     RESULT
     //ProcedureCall<RESULT>
-    > ,
-CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
+    >
+implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     private final ProcedureCall<RESULT/*, PARENT*/> procedureCall;
 
@@ -30,7 +30,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     ComplexStepState<?, ?, RESULT/*, PARENT*/> bodyComplexState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroIteratorOrProcedure<RESULT> parent;
+    private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     //final Map<String, Object> procedureArgumentValues;
     final Arguments arguments;
@@ -51,8 +51,9 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
             final Class<? extends RESULT> resultType ,
             //final Map<String, Object> procedureArgumentValues
             final Arguments arguments ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
+        super( parent );
         this.procedureCall =
                 Objects.requireNonNull(
                         procedureCall );
@@ -87,7 +88,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         if ( runInProcedure )
         {
@@ -183,7 +184,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#saveLastStepState()
+     * @see CoroutineOrProcedureOrComplexstep#saveLastStepState()
      */
     @Override
     public void saveLastStepState()
@@ -192,7 +193,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#localVars()
+     * @see CoroutineOrProcedureOrComplexstep#localVars()
      */
     @Override
     //public Map<String, Object> localVars()
@@ -202,7 +203,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#globalVars()
+     * @see CoroutineOrProcedureOrComplexstep#globalVars()
      */
     @Override
     //public Map<String, Object> globalVars()
@@ -212,7 +213,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#procedureArgumentValues()
+     * @see CoroutineOrProcedureOrComplexstep#procedureArgumentValues()
      */
     @Override
     //public Map<String, Object> procedureArgumentValues()
@@ -233,7 +234,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#getRootParent()
+     * @see CoroutineOrProcedureOrComplexstep#getRootParent()
      */
     @Override
     public CoroutineIterator<RESULT> getRootParent()
@@ -242,7 +243,7 @@ CoroIteratorOrProcedure<RESULT/*, CoroutineIterator<RESULT>*/>
     }
 
     /**
-     * @see CoroIteratorOrProcedure#getProcedure(String)
+     * @see CoroutineOrProcedureOrComplexstep#getProcedure(String)
      */
     @Override
     public Procedure<RESULT> getProcedure(

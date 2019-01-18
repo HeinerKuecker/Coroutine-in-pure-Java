@@ -10,9 +10,9 @@ import de.heinerkuecker.coroutine.expression.GetGlobalArgument;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.
@@ -155,8 +155,9 @@ public class CoroutineIteratorTest
                         // type
                         String.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "str" ,
+                                String.class ,
                                 "a" ) ,
                         new YieldReturn<>(
                                 new GetLocalVar<>(
@@ -188,8 +189,9 @@ public class CoroutineIteratorTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
+                                Integer.class ,
                                 0 ) ,
                         new YieldReturn<>( number ) );
 
@@ -220,8 +222,9 @@ public class CoroutineIteratorTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
+                                Integer.class ,
                                 0 ) ,
                         new IncrementLocalVar<>( "number" ) ,
                         new YieldReturn<>( number ) );
@@ -251,8 +254,9 @@ public class CoroutineIteratorTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
+                                Integer.class ,
                                 1 ) ,
                         new DecrementLocalVar<>( "number" ) ,
                         new YieldReturn<>( number ) );

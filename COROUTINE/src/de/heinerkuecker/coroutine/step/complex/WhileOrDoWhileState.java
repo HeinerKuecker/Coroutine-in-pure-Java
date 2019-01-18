@@ -2,8 +2,8 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 abstract class WhileOrDoWhileState<
@@ -12,7 +12,7 @@ abstract class WhileOrDoWhileState<
     RESULT
     //PARENT extends CoroutineIterator<RESULT>
     >
-implements ComplexStepState<
+extends ComplexStepState<
     WHILE_OR_DO_WHILE_STATE,
     WHILE_OR_DO_WHILE,
     RESULT
@@ -27,7 +27,7 @@ implements ComplexStepState<
     protected ComplexStepState<?, ?, RESULT /*, PARENT*/> bodyComplexState;
 
     //protected final CoroutineIterator<RESULT> rootParent;
-    protected final CoroIteratorOrProcedure<RESULT> parent;
+    protected final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
      * Constructor.
@@ -35,8 +35,9 @@ implements ComplexStepState<
     protected WhileOrDoWhileState(
             final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/> whileOrDoWhile ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
+        super( parent );
         this.whileOrDoWhile = whileOrDoWhile;
 
         //this.rootParent = Objects.requireNonNull( rootParent );
@@ -52,7 +53,7 @@ implements ComplexStepState<
     @Override
     public CoroIterStepResult<RESULT> execute(
             //final PARENT parent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         while ( true )
         {

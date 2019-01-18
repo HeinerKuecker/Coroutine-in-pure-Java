@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine.condition;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 /**
@@ -18,10 +18,10 @@ extends ConditionOrBooleanExpression
     /**
      * Execute the condition and return the result.
      *
-     * @param parent the {@link CoroIteratorOrProcedure} instance
+     * @param parent the {@link CoroutineOrProcedureOrComplexstep} instance
      * @return condition result
      */
     @Override
     boolean execute(
-            final HasArgumentsAndVariables/*CoroIteratorOrProcedure<?>*/ parent );
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent );
 }

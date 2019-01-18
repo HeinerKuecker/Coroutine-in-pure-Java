@@ -7,12 +7,13 @@ import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
-import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.complex.Block;
+import de.heinerkuecker.coroutine.step.complex.For;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.flow.Break;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -33,7 +34,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new For<>(
@@ -72,7 +73,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new For<Integer/*, CoroutineIterator<Integer>*/>(
@@ -370,7 +371,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
@@ -412,7 +413,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(

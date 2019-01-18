@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.step.complex;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.util.HCloneable;
 
 class DoWhileState<
@@ -21,7 +21,7 @@ extends WhileOrDoWhileState<
     protected DoWhileState(
             final DoWhile<RESULT/*, PARENT*/> doWhile ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         super(
                 doWhile ,

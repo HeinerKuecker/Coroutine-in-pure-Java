@@ -52,7 +52,7 @@ public class CoroutineIteratorWhileTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<Integer>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<>(
@@ -89,7 +89,7 @@ public class CoroutineIteratorWhileTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<Integer>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<>(
@@ -134,7 +134,7 @@ public class CoroutineIteratorWhileTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<>(
@@ -172,7 +172,7 @@ public class CoroutineIteratorWhileTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 3 ) ,
                         new While<>(
@@ -372,7 +372,7 @@ public class CoroutineIteratorWhileTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
@@ -417,7 +417,7 @@ public class CoroutineIteratorWhileTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 2 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
@@ -460,7 +460,7 @@ public class CoroutineIteratorWhileTest
                 // type
                 Integer.class ,
                 // steps
-                new SetLocalVar<Integer>(
+                new DeclareLocalVar<>(
                         "first" ,
                         true ) ,
                 new While<Integer/*, CoroutineIterator<Integer>*/>(

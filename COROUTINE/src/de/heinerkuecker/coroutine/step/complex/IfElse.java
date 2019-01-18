@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
@@ -175,7 +175,7 @@ extends ComplexStep<
      */
     @Override
     public IfElseState<RESULT/*, PARENT*/> newState(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         return new IfElseState<>(
                 this ,
@@ -188,7 +188,7 @@ extends ComplexStep<
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
 
@@ -242,7 +242,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final Set<String> labels )
     {
         this.thenBodyComplexStep.checkLabelAlreadyInUse(
@@ -258,21 +258,25 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<?> parent ,
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.condition.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.thenBodyComplexStep.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.elseBodyComplexStep.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -280,7 +284,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroIteratorOrProcedure<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.thenBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
@@ -292,7 +296,7 @@ extends ComplexStep<
      */
     @Override
     public String toString(
-            final CoroIteratorOrProcedure<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
             final String indent ,
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> lastStepExecuteState ,
             final ComplexStepState<?, /*STEP*/?, RESULT/*, PARENT*/> nextStepExecuteState )

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
@@ -58,7 +58,7 @@ implements CoroCheckable
     }
 
     public T getValue(
-            final CoroIteratorOrProcedure<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         @SuppressWarnings("unchecked")
         final Class<T> parameterType = (Class<T>) parent.procedureParameterTypes().get( name );
@@ -76,12 +76,14 @@ implements CoroCheckable
 
     @Override
     public void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            CoroIteratorOrProcedure<?> parent ,
+            final boolean isCoroutineRoot ,
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent ,
             Map<String, Class<?>> globalVariableTypes ,
             Map<String, Class<?>> localVariableTypes )
     {
         this.expression.checkUseVariables(
+                isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -90,7 +92,7 @@ implements CoroCheckable
     @Override
     public void checkUseArguments(
             HashSet<String> alreadyCheckedProcedureNames ,
-            CoroIteratorOrProcedure<?> parent )
+            CoroutineOrProcedureOrComplexstep<?> parent )
     {
         final Class<?> parameterType = parent.procedureParameterTypes().get( name );
 

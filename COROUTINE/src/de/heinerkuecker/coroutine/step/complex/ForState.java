@@ -2,15 +2,15 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
 class ForState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
-implements ComplexStepState<
+extends ComplexStepState<
     ForState<RESULT/*, PARENT*/>,
     For<RESULT/*, PARENT*/>,
     RESULT
@@ -31,7 +31,7 @@ implements ComplexStepState<
     private ComplexStepState<?, ?, RESULT/*, ? super PARENT*/> updateComplexStepState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroIteratorOrProcedure<RESULT> parent;
+    private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
      * Constructor.
@@ -39,8 +39,9 @@ implements ComplexStepState<
     public ForState(
             final For<RESULT/*, PARENT*/> _for ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
+        super( parent );
         this._for = _for;
 
         //this.rootParent = Objects.requireNonNull( rootParent );
@@ -55,7 +56,7 @@ implements ComplexStepState<
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         if ( runInInitializer )
         {

@@ -14,8 +14,8 @@ import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface CoroIteratorOrProcedure<RESULT, /*PARENT*/ THIS extends CoroIteratorOrProcedure<RESULT, /*PARENT*/ THIS>>
-public interface CoroIteratorOrProcedure<RESULT>
+//public interface CoroutineOrProcedureOrComplexstep<RESULT, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<RESULT, /*PARENT*/ THIS>>
+public interface CoroutineOrProcedureOrComplexstep<RESULT>
 extends HasArgumentsAndVariables
 {
     /**

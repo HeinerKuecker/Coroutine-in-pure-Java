@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -39,7 +39,7 @@ implements Iterable<Entry<String, Object>>
             final boolean checkMandantoryValues ,
             final Map<String, Parameter> params ,
             final Argument<?>[] args ,
-            final CoroIteratorOrProcedure<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         Set<String> missedMandantoryParamNames = null;
 

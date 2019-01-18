@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.Block;
+import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 
 public class Procedure<RESULT>
 extends HasCreationStackTraceElement
@@ -107,7 +107,7 @@ extends HasCreationStackTraceElement
      */
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         this.bodyComplexStep.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,

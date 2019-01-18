@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.step.complex;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
@@ -137,7 +137,7 @@ extends WhileOrDoWhile<
      */
     @Override
     public WhileState<RESULT/*, PARENT*/> newState(
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         return new WhileState<>(
                 this ,

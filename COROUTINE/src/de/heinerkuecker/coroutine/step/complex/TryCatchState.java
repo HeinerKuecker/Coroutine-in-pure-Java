@@ -2,14 +2,14 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroIteratorOrProcedure;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
 import de.heinerkuecker.util.HCloneable;
 
 class TryCatchState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
-implements ComplexStepState<
+extends ComplexStepState<
     TryCatchState<RESULT/*, PARENT*/>,
     TryCatch<RESULT/*, PARENT*/>,
     RESULT
@@ -25,7 +25,7 @@ implements ComplexStepState<
     ComplexStepState<?, ?, RESULT/*, PARENT*/> catchBodyComplexState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroIteratorOrProcedure<RESULT> parent;
+    private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
      * Constructor.
@@ -33,11 +33,11 @@ implements ComplexStepState<
     protected TryCatchState(
             final TryCatch<RESULT/*, PARENT*/> tryCatch ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroIteratorOrProcedure<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
-        this.tryCatch =
-                Objects.requireNonNull(
-                        tryCatch );
+        super( parent );
+
+        this.tryCatch = tryCatch;
 
         //this.rootParent = Objects.requireNonNull( rootParent );
 
@@ -51,7 +51,7 @@ implements ComplexStepState<
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroIteratorOrProcedure<RESULT> parent)
+            final CoroutineOrProcedureOrComplexstep<RESULT> parent)
     {
         if ( runInTry )
         {
