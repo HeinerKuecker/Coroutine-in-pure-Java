@@ -36,7 +36,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     private final BlockLocalVariables blockLocalVariables;
 
     /**
-     * @param blockLocalVariables
+     * Constructor.
      */
     protected ComplexStepState(
             //final BlockLocalVariables blockLocalVariables

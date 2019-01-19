@@ -2,7 +2,6 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
@@ -26,6 +25,8 @@ extends ComplexStepState<
 
     //private final CoroutineIterator<RESULT> rootParent;
     private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
+
+    private Throwable catchedThr;
 
     /**
      * Constructor.
@@ -95,6 +96,7 @@ extends ComplexStepState<
                     ExceptionUnchecker.rethrow( thr );
                 }
 
+                this.catchedThr = thr;
                 runInTry = false;
                 runInCatch = true;
                 tryBodyComplexState = null;
@@ -116,12 +118,21 @@ extends ComplexStepState<
                                 this );
             }
 
-            // TODO only before executing simple step: parent.saveLastStepState();
+            this.catchBodyComplexState.localVars().declare(
+                    //declareStepOrExpression
+                    this.tryCatch ,
+                    //variableName
+                    this.tryCatch.catchedExceptionVariableName ,
+                    //type
+                    this.tryCatch.catchExceptionClass ,
+                    // value
+                    this.tryCatch.catchExceptionClass.cast( catchedThr ) );
 
             final CoroIterStepResult<RESULT> executeResult =
                     this.catchBodyComplexState.execute(
                             //parent
-                            this );
+                            //this
+                            catchBodyComplexState );
 
             if ( this.catchBodyComplexState.isFinished() )
             {

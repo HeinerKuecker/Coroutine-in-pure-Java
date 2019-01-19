@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ extends ComplexStep<
 
     final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> tryBodyComplexStep;
     final Class<? extends Throwable> catchExceptionClass;
+    final String catchedExceptionVariableName;
     final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> catchBodyComplexStep;
 
     /**
@@ -33,45 +35,32 @@ extends ComplexStep<
     public TryCatch(
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
+            final String catchedExceptionVariableName ,
             final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
     {
         super(
                 //creationStackOffset
                 3 );
 
-        if ( tryStep instanceof ComplexStep )
-        {
-            this.tryBodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT*/>) tryStep;
-        }
-        else
-        {
-            // TODO support simple step
-            this.tryBodyComplexStep =
-                    new Block<>(
-                            // creationStackOffset
-                            3 ,
-                            tryStep );
-        }
+        this.tryBodyComplexStep =
+                Block.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        tryStep );
 
         this.catchExceptionClass =
                 Objects.requireNonNull(
                         catchExceptionClass );
 
-        if ( catchBodySteps.length == 1 &&
-                catchBodySteps[ 0 ] instanceof ComplexStep )
-        {
-            this.catchBodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) catchBodySteps[ 0 ];
-        }
-        else
-        {
-            this.catchBodyComplexStep =
-                    new Block<>(
-                            // creationStackOffset
-                            3 ,
-                            catchBodySteps );
-        }
+        this.catchedExceptionVariableName =
+                Objects.requireNonNull(
+                        catchedExceptionVariableName );
+
+        this.catchBodyComplexStep =
+                Block.convertStepsToComplexStep(
+                        // creationStackOffset
+                        4 ,
+                        catchBodySteps );
     }
 
     /**
@@ -81,17 +70,16 @@ extends ComplexStep<
     public static <RESULT/*, PARENT extends CoroutineIterator<RESULT>*/> TryCatch<RESULT/*, PARENT*/> newTryCatch(
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
+            final String catchedExceptionVariableName ,
             final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
     {
         return new TryCatch<>(
                 tryStep ,
                 catchExceptionClass ,
+                catchedExceptionVariableName ,
                 catchBodySteps);
     }
 
-    /**
-     * @see ComplexStep#newState()
-     */
     @Override
     public TryCatchState<RESULT/*, PARENT*/> newState(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
@@ -101,9 +89,6 @@ extends ComplexStep<
                 parent );
     }
 
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
     @Override
     public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
@@ -156,9 +141,6 @@ extends ComplexStep<
         this.catchBodyComplexStep.setResultType( resultType );
     }
 
-    /**
-     * @see ComplexStep#checkLabelAlreadyInUse(Set)
-     */
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
@@ -181,19 +163,30 @@ extends ComplexStep<
             final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         this.tryBodyComplexStep.checkUseVariables(
                 isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes, localVariableTypes );
+                globalVariableTypes ,
+                localVariableTypes );
+
+        final Map<String, Class<?>> catchLocalVariableTypes =
+                new HashMap<String, Class<?>>(
+                        localVariableTypes );
+
+        catchLocalVariableTypes.put(
+                catchedExceptionVariableName ,
+                catchExceptionClass );
 
         this.catchBodyComplexStep.checkUseVariables(
                 isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
-                globalVariableTypes, localVariableTypes );
+                globalVariableTypes ,
+                catchLocalVariableTypes );
     }
 
     @Override

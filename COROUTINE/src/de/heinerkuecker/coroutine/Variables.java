@@ -80,7 +80,7 @@ implements VariablesOrLocalVariables
             //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
-            final Class<T> type ,
+            final Class<? extends T> type ,
             final T value )
     {
         declare(

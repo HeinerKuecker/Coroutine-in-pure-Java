@@ -23,7 +23,7 @@ extends Iterable<Entry<String, Object>>
             //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
-            final Class<T> type ,
+            final Class<? extends T> type ,
             final T value );
 
     void set(
