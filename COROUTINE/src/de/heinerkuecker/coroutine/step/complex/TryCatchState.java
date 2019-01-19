@@ -49,7 +49,8 @@ extends ComplexStepState<
 
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent)
+            //final CoroutineOrProcedureOrComplexstep<RESULT> parent
+            )
     {
         if ( runInTry )
         {
@@ -74,7 +75,8 @@ extends ComplexStepState<
                 executeResult =
                         this.tryBodyComplexState.execute(
                                 //parent
-                                this );
+                                //this
+                                );
 
                 if ( this.tryBodyComplexState.isFinished() )
                 {
@@ -132,7 +134,8 @@ extends ComplexStepState<
                     this.catchBodyComplexState.execute(
                             //parent
                             //this
-                            catchBodyComplexState );
+                            //catchBodyComplexState
+                            );
 
             if ( this.catchBodyComplexState.isFinished() )
             {

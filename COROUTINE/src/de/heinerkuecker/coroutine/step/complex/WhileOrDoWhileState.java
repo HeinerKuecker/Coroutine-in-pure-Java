@@ -50,7 +50,8 @@ extends ComplexStepState<
     @Override
     public CoroIterStepResult<RESULT> execute(
             //final PARENT parent
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            //final CoroutineOrProcedureOrComplexstep<RESULT> parent
+            )
     {
         while ( true )
         {
@@ -97,7 +98,8 @@ extends ComplexStepState<
                 final CoroIterStepResult<RESULT> bodyExecuteResult =
                         this.bodyComplexState.execute(
                                 //parent
-                                this );
+                                //this
+                                );
 
                 if ( this.bodyComplexState.isFinished() )
                 {

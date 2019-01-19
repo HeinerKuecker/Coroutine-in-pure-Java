@@ -47,7 +47,8 @@ extends ComplexStepState<
 
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            //final CoroutineOrProcedureOrComplexstep<RESULT> parent
+            )
     {
         while ( currentStepIndex < sequence.length() )
         {
@@ -90,7 +91,8 @@ extends ComplexStepState<
                 executeResult =
                         this.currentComplexState.execute(
                                 //parent
-                                this );
+                                //this
+                                );
 
                 if ( this.currentComplexState.isFinished() )
                 {

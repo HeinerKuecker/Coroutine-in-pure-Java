@@ -296,7 +296,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         final CoroIterStepResult<RESULT> executeResult =
                 this.nextComplexStepState.execute(
-                        this );
+                        //this
+                        );
 
         if ( executeResult == null ||
                 executeResult instanceof CoroIterStepResult.ContinueCoroutine )

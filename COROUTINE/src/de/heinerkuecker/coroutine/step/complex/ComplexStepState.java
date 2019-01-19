@@ -58,7 +58,8 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
      */
     abstract public CoroIterStepResult<RESULT> execute(
             //PARENT parent
-            CoroutineOrProcedureOrComplexstep<RESULT> parent );
+            //CoroutineOrProcedureOrComplexstep<RESULT> parent
+            );
 
     /**
      * This method returns if all sub steps have been executed.
