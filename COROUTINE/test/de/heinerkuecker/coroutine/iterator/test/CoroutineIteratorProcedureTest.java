@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.arg.Argument;
@@ -36,7 +37,7 @@ public class CoroutineIteratorProcedureTest
     @Test( expected = IllegalArgumentException.class )
     public void testConstructor_Empty()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> empty_procedure =
                 new Procedure<>(
@@ -64,7 +65,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_0_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -93,7 +94,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_0_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -126,7 +127,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_1_0_LocalVar()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -171,7 +172,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_1_0_GlobalVar()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -217,7 +218,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_1_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -263,7 +264,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_2_0_GlobalVar()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -314,7 +315,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_ValueProcedureArgument_0_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -364,7 +365,7 @@ public class CoroutineIteratorProcedureTest
     @Test( expected = Argument.ArgumentNotDeclaredException.class )
     public void test_ValueProcedureArgument_negative_wrong_initializationChecks()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -414,7 +415,7 @@ public class CoroutineIteratorProcedureTest
     @Test( expected = IllegalArgumentException.class )
     public void test_ValueProcedureArgument_negative_wrong()
     {
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -464,7 +465,7 @@ public class CoroutineIteratorProcedureTest
     @Test( expected = GetProcedureArgument.ProcedureArgumentNotDeclaredException.class )
     public void test_ValueProcedureArgument_negative_not_declared()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -521,7 +522,7 @@ public class CoroutineIteratorProcedureTest
     @Test( expected = Arguments.MissedArgumentException.class )
     public void test_ValueProcedureArgument_negative_missed()
     {
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -578,7 +579,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_LocalVarProcedureArgument_0_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -637,7 +638,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_GlobalVarProcedureArgument_0_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final Procedure<Integer> procedure0 =
                 new Procedure<>(
@@ -723,7 +724,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_ValueProcedureArgument_Recursive()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get procedure argument expression
         final GetProcedureArgument<Long> argument =
@@ -803,7 +804,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_ValueProcedureArgument_LocalVariable_Recursive_Long()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Long> variable =
@@ -893,7 +894,7 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_ValueProcedureArgument_LocalVariable_Recursive_Int()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> variable =

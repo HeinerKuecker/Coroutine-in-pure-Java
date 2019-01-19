@@ -52,7 +52,10 @@ implements CoroExpression<T> , HasVariableName
     public T evaluate(
             final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
-        final Object localVarValue = parent.localVars().get( localVarName );
+        final Object localVarValue =
+                parent.localVars().get(
+                        this ,
+                        localVarName );
 
         if ( localVarValue != null &&
                 ! type.isInstance( localVarValue ) )
@@ -136,13 +139,17 @@ implements CoroExpression<T> , HasVariableName
     {
         return
                 this.getClass().getSimpleName() +
-                "[" +
-                //"localVarName=" +
-                this.localVarName +
-                ":" +
+                //"[" +
+                " " +
                 //this.type.getName() +
                 ArrayTypeName.toStr( this.type ) +
-                "]";
+                " " +
+                //"localVarName=" +
+                this.localVarName +
+                //"]"
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
     /**

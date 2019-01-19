@@ -1,15 +1,24 @@
 package de.heinerkuecker.coroutine.step.complex;
 
+import java.util.Map;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.Variables;
+import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
 class BlockState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
-extends ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PARENT*/>, RESULT /*, PARENT*/>
+extends ComplexStepState<
+    BlockState<RESULT /*, PARENT*/>,
+    Block<RESULT /*, PARENT*/>,
+    RESULT /*, PARENT*/
+    >
 {
     private final Block<RESULT /*, PARENT*/> sequence;
 
@@ -18,7 +27,7 @@ extends ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PAREN
     ComplexStepState<?, ?, RESULT /*, ? super PARENT*/> currentComplexState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
+    //private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
      *
@@ -33,9 +42,7 @@ extends ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PAREN
 
         //this.rootParent = Objects.requireNonNull( rootParent );
 
-        this.parent =
-                Objects.requireNonNull(
-                        parent );
+        //this.parent = Objects.requireNonNull( parent );
     }
 
     @Override
@@ -74,14 +81,16 @@ extends ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PAREN
                     this.currentComplexState =
                             currentComplexStep.newState(
                                     //this.rootParent
-                                    this.parent );
+                                    //parent
+                                    this );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
                 executeResult =
                         this.currentComplexState.execute(
-                                parent );
+                                //parent
+                                this );
 
                 if ( this.currentComplexState.isFinished() )
                 {
@@ -99,7 +108,8 @@ extends ComplexStepState<BlockState<RESULT /*, PARENT*/>, Block<RESULT /*, PAREN
                         ( (ComplexStep<?, ?, RESULT>) sequence.getStep(
                                 this.currentStepIndex ) ).newState(
                                         //this.rootParent
-                                        this.parent );
+                                        //this.parent
+                                        this );
             }
 
             if ( ! ( executeResult == null ||

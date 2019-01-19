@@ -20,7 +20,6 @@ extends ComplexStepState<
     RESULT
     //ProcedureCall<RESULT>
     >
-implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     private final ProcedureCall<RESULT/*, PARENT*/> procedureCall;
 
@@ -47,6 +46,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>
      * @param procedureCall
      */
     protected ProcedureCallState(
+            final boolean isInitializationCheck ,
             final ProcedureCall<RESULT> procedureCall ,
             final Class<? extends RESULT> resultType ,
             //final Map<String, Object> procedureArgumentValues
@@ -71,10 +71,13 @@ implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>
                 this.parent/*.getRootParent()*/.getProcedure(
                         procedureCall.procedureName );
 
-        // for showing next step in toString
-        this.bodyComplexState =
-                procedure.bodyComplexStep.newState(
-                        this );
+        if ( ! isInitializationCheck )
+        {
+            // for showing next step in toString
+            this.bodyComplexState =
+                    procedure.bodyComplexStep.newState(
+                            this );
+        }
 
         if ( resultType != null )
         {
@@ -162,6 +165,8 @@ implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>
     {
         final ProcedureCallState<RESULT/*, PARENT*/> clone =
                 new ProcedureCallState<>(
+                        // isInitializationCheck TODO wrong using of argument
+                        true ,
                         this.procedureCall ,
                         // resultType null, because only for first call necessary
                         null ,

@@ -3,7 +3,9 @@ package de.heinerkuecker.coroutine.iterator.test;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
@@ -27,7 +29,7 @@ public class CoroutineIteratorContinueTest
     @Test
     public void test_For_Continue()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -70,7 +72,7 @@ public class CoroutineIteratorContinueTest
     @Test
     public void test_For_Continue_Label()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -120,7 +122,7 @@ public class CoroutineIteratorContinueTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_in_Initializer()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -150,7 +152,7 @@ public class CoroutineIteratorContinueTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_labeled_in_Initializer()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -180,7 +182,7 @@ public class CoroutineIteratorContinueTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_in_Update()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -210,7 +212,7 @@ public class CoroutineIteratorContinueTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Continue_labeled_in_Update()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -237,11 +239,11 @@ public class CoroutineIteratorContinueTest
         coroIter.hasNext();
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = Variables.VariableNotDeclaredException.class )
     public void test_Negative_For_Continue_wrong_labeled()
     {
         // avoid initialization checks
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -290,7 +292,7 @@ public class CoroutineIteratorContinueTest
     @Test( expected = UnresolvedBreakOrContinueException.class )
     public void test_Negative_For_Continue_wrong_labeled_with_initialization_checks()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -339,7 +341,7 @@ public class CoroutineIteratorContinueTest
     @Test
     public void test_While_Continue()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -378,7 +380,7 @@ public class CoroutineIteratorContinueTest
     @Test
     public void test_While_Continue_Label()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -419,10 +421,10 @@ public class CoroutineIteratorContinueTest
                 coroIter );
     }
 
-    @Test( expected = IllegalStateException.class )
+    @Test( expected = Variables.VariableNotDeclaredException.class )
     public void test_Negative_While_Continue_wrong_labeled()
     {
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -464,7 +466,7 @@ public class CoroutineIteratorContinueTest
     @Test( expected = UnresolvedBreakOrContinueException.class )
     public void test_Negative_While_Continue_wrong_labeled_with_initialization_checks()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =

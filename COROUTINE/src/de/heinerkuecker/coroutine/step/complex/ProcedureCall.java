@@ -133,6 +133,8 @@ RESULT
 
         final Arguments arguments =
                 new Arguments(
+                        // isInitializationCheck
+                        false ,
                         // checkMandantoryValues
                         true ,
                         //params
@@ -143,6 +145,8 @@ RESULT
 
         final ProcedureCallState<RESULT> procedureCallState =
                 new ProcedureCallState<>(
+                        // isInitializationCheck
+                        false ,
                         this ,
                         resultType ,
                         //procedureArgumentValues
@@ -151,11 +155,14 @@ RESULT
 
         return procedureCallState;
     }
+
     public ProcedureCallState<RESULT> newStateForCheck(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         final Arguments arguments =
                 new Arguments(
+                        // isInitializationCheck
+                        true ,
                         // checkMandantoryValues
                         false ,
                         //params
@@ -166,6 +173,8 @@ RESULT
 
         final ProcedureCallState<RESULT> procedureCallState =
                 new ProcedureCallState<>(
+                        // isInitializationCheck
+                        true ,
                         this ,
                         resultType ,
                         //procedureArgumentValues

@@ -223,7 +223,9 @@ extends ComplexStep<
     {
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
-            step.checkUseArguments( alreadyCheckedProcedureNames, parent );
+            step.checkUseArguments(
+                    alreadyCheckedProcedureNames ,
+                    parent );
         }
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.Value;
@@ -21,7 +22,7 @@ public class CoroutineIteratorForeachTest
     @Test
     public void test_For_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(

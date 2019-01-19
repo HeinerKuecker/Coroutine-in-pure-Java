@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.complex.TryCatch;
@@ -20,7 +21,7 @@ public class CoroutineIteratorTryCatchTest
     @SuppressWarnings("javadoc")
     public void test_TryCatch_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         @SuppressWarnings("serial")
         class TestException

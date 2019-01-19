@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
@@ -21,7 +22,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
     @Test( expected = LabelAlreadyInUseException.class )
     public void test_Negative_LabelAlreadyInUse_While()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         new CoroutineIterator<Integer>(
                 // type
@@ -57,7 +58,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
     @Test( expected = LabelAlreadyInUseException.class )
     public void test_Negative_LabelAlreadyInUse_DoWhile()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         new CoroutineIterator<Integer>(
                 // type
@@ -93,7 +94,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
     @Test( expected = LabelAlreadyInUseException.class )
     public void test_Negative_LabelAlreadyInUse_For()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         new CoroutineIterator<Integer>(
                 // type

@@ -98,7 +98,9 @@ implements CoroExpression<T> , HasVariableName
     {
         execute( (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
 
-        return (T) parent.localVars().get( localVarName );
+        return (T) parent.localVars().get(
+                this ,
+                localVarName );
     }
 
     @SuppressWarnings("unchecked")

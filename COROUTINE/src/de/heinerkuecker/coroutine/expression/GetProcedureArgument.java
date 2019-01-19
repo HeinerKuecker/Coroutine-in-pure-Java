@@ -12,6 +12,7 @@ import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
+import de.heinerkuecker.util.ArrayTypeName;
 
 public class GetProcedureArgument<T>
 extends HasCreationStackTraceElement
@@ -144,10 +145,17 @@ implements CoroExpression<T> , HasArgumentName
     {
         return
                 this.getClass().getSimpleName() +
-                "[" +
+                //"[" +
+                " " +
+                //this.type.getName() +
+                ArrayTypeName.toStr( this.type ) +
+                " " +
                 //"procedureArgumentName=" +
                 this.procedureArgumentName +
-                "]";
+                //"]"
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
     /**

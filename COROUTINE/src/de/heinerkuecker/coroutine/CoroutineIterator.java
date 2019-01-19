@@ -38,25 +38,6 @@ public class CoroutineIterator<RESULT>
 implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 {
     /**
-     * Global switch to check
-     * coroutine on initialization.
-     *
-     * For better performance of well tested
-     * coroutines switch this off.
-     */
-    public static boolean initializationChecks = true;
-
-    /**
-     * Global switch to save source position
-     * (file name, line number, class, method)
-     * on step creation as debug info.
-     *
-     * For better performance of well tested
-     * coroutines switch this off.
-     */
-    public static boolean saveCreationSourcePosition = true;
-
-    /**
      * Es muss ein ComplexStep sein,
      * weil dieser mit ComplexStepState
      * einen State hat, welcher bei
@@ -167,6 +148,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
         this.arguments =
                 new Arguments(
+                        // isInitializationCheck
+                        false ,
                         // checkMandantoryValues
                         true ,
                         this.params ,
@@ -210,7 +193,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
     private void doMoreInitializations()
     {
-        if ( initializationChecks )
+        if ( CoroutineDebugSwitches.initializationChecks )
         {
             checkForUnresolvedBreaksAndContinues();
 
@@ -390,7 +373,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     public void saveLastStepState()
     {
-        this.lastComplexStepState = nextComplexStepState.createClone();
+        if ( CoroutineDebugSwitches.saveToStringInfos )
+        {
+            this.lastComplexStepState = nextComplexStepState.createClone();
+        }
     }
 
     /**

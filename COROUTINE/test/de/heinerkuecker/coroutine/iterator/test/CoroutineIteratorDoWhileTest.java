@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.step.complex.DoWhile;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
@@ -16,7 +17,7 @@ public class CoroutineIteratorDoWhileTest
     @Test
     public void test_DoWhile_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -45,7 +46,7 @@ public class CoroutineIteratorDoWhileTest
     @Test
     public void test_DoWhile_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(

@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.LesserOrEqual;
@@ -23,7 +24,7 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -70,7 +71,7 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_00()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -123,7 +124,7 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -174,7 +175,7 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_2()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -226,7 +227,7 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_3()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(

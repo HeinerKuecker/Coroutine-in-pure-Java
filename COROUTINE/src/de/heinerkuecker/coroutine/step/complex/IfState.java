@@ -45,9 +45,6 @@ extends ComplexStepState<
                         parent );
     }
 
-    /**
-     * @see ComplexStepState#execute(CoroutineIterator)
-     */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
@@ -83,14 +80,16 @@ extends ComplexStepState<
                 this.thenBodyComplexState =
                         thenBodyStep.newState(
                                 //this.rootParent
-                                this.parent );
+                                //this.parent
+                                this );
             }
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
             final CoroIterStepResult<RESULT> executeResult =
                     this.thenBodyComplexState.execute(
-                            parent );
+                            //parent
+                            this );
 
             if ( this.thenBodyComplexState.isFinished() )
             {

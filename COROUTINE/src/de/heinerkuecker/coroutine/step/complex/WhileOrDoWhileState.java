@@ -47,9 +47,6 @@ extends ComplexStepState<
                         parent );
     }
 
-    /**
-     * @see ComplexStepState#execute(CoroutineIterator)
-     */
     @Override
     public CoroIterStepResult<RESULT> execute(
             //final PARENT parent
@@ -59,12 +56,13 @@ extends ComplexStepState<
         {
             if ( runInCondition )
             {
-                // TODO ist dies notwendig?
+                // for debug toString
                 parent.saveLastStepState();
 
                 final boolean conditionResult =
                         whileOrDoWhile.condition.execute(
-                                parent );
+                                //parent
+                                this );
 
                 this.runInCondition = false;
 
@@ -90,20 +88,22 @@ extends ComplexStepState<
                     this.bodyComplexState =
                             bodyStep.newState(
                                     //this.rootParent
-                                    this.parent );
+                                    //this.parent
+                                    this );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
                 final CoroIterStepResult<RESULT> bodyExecuteResult =
                         this.bodyComplexState.execute(
-                                parent );
+                                //parent
+                                this );
 
                 if ( this.bodyComplexState.isFinished() )
                 {
                     this.runInCondition = true;
                     this.runInBody = false;
-                    bodyComplexState = null;
+                    this.bodyComplexState = null;
                 }
 
                 if ( bodyExecuteResult instanceof CoroIterStepResult.Break )
@@ -138,7 +138,7 @@ extends ComplexStepState<
 
                 this.runInCondition = true;
                 this.runInBody = false;
-                bodyComplexState = null;
+                this.bodyComplexState = null;
             }
         }
     }
@@ -147,6 +147,7 @@ extends ComplexStepState<
     {
         this.runInCondition = false;
         this.runInBody = false;
+        // keep for debug: this.bodyComplexState = null;
     }
 
     /**

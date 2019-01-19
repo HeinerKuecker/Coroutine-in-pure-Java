@@ -51,7 +51,10 @@ implements HasVariableName
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
-        final Object varValue = parent.globalVars().get( globalVarName );
+        final Object varValue =
+                parent.globalVars().get(
+                        this ,
+                        globalVarName );
 
         if ( varValue instanceof Boolean )
         {

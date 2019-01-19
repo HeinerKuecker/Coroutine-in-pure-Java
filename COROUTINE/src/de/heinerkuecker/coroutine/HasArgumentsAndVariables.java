@@ -11,7 +11,8 @@ public interface HasArgumentsAndVariables
      * @return Map with local variables
      */
     //abstract public Map<String, Object> localVars();
-    abstract public Variables localVars();
+    //abstract public Variables localVars();
+    abstract public VariablesOrLocalVariables localVars();
 
     /**
      * @return Map with global variables

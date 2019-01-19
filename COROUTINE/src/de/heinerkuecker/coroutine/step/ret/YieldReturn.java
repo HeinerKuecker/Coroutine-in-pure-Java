@@ -68,8 +68,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     /**
      * Compute result value and wrap it in yield return.
-     *
-     * @see CoroIterStep#execute(Object)
      */
     @Override
     public CoroIterStepResult<RESULT> execute(

@@ -156,6 +156,7 @@ implements CoroExpression<T>
             // TODO no more needed
         {
             parent.localVars().declare(
+                    this ,
                     varName ,
                     type );
         }
@@ -164,6 +165,7 @@ implements CoroExpression<T>
             final T varValue = initialVarValueExpression.evaluate( parent );
 
             parent.localVars().declare(
+                    this ,
                     varName ,
                     type ,
                     varValue );
@@ -179,7 +181,9 @@ implements CoroExpression<T>
     {
         execute( (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
 
-        return (T) parent.localVars().get( varName );
+        return (T) parent.localVars().get(
+                this ,
+                varName );
     }
 
     @SuppressWarnings("unchecked")

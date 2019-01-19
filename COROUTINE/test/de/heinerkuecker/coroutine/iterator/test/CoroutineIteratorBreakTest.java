@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
@@ -27,7 +28,7 @@ public class CoroutineIteratorBreakTest
     @Test
     public void test_For_Break()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -66,7 +67,7 @@ public class CoroutineIteratorBreakTest
     @Test
     public void test_For_Break_Label()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -112,7 +113,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_in_Initializer()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -142,7 +143,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_in_complex_Initializer()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -176,7 +177,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_labeled_in_Initializer()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -206,7 +207,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_in_Update()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -236,7 +237,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_in_Complex_Update()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -270,7 +271,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalArgumentException.class )
     public void test_Negative_For_Break_labeled_in_Update()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -300,7 +301,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalStateException.class )
     public void test_Negative_For_Break_wrong_labeled()
     {
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -332,7 +333,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = UnresolvedBreakOrContinueException.class )
     public void test_Negative_For_Break_wrong_labeled_with_initialization_checks()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -364,7 +365,7 @@ public class CoroutineIteratorBreakTest
     @Test
     public void test_While_Break()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -399,7 +400,7 @@ public class CoroutineIteratorBreakTest
     @Test
     public void test_While_Break_Label()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -452,7 +453,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = IllegalStateException.class )
     public void test_Negative_While_Break_wrong_labeled()
     {
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -466,7 +467,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // steps
-                        new SetLocalVar<>(
+                        new DeclareLocalVar<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
@@ -500,7 +501,7 @@ public class CoroutineIteratorBreakTest
     @Test( expected = UnresolvedBreakOrContinueException.class )
     public void test_Negative_While_Break_wrong_labeled_with_initialization_checks()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =

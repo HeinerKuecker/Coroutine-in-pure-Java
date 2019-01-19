@@ -50,7 +50,10 @@ implements HasVariableName
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
-        final Object varValue = parent.localVars().get( localVarName );
+        final Object varValue =
+                parent.localVars().get(
+                        this ,
+                        localVarName );
 
         if ( varValue instanceof Boolean )
         {

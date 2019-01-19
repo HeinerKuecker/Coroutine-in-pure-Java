@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
- * Variables {@link Map} with
+ * Block local variables with
  * type check at runtime.
  *
  * @author Heiner K&uuml;cker
@@ -41,7 +43,9 @@ implements VariablesOrLocalVariables
      * @param variableName
      * @return variable value
      */
+    @Override
     public Object get(
+            final HasCreationStackTraceElement accessStepOrExpression ,
             final String variableName )
     {
         // TODO throw exception, when variableName is unknown
@@ -51,16 +55,22 @@ implements VariablesOrLocalVariables
                     Objects.requireNonNull(
                             variableName ) );
         }
-        return parentVariables.get( variableName );
+        return parentVariables.get(
+                accessStepOrExpression ,
+                variableName );
     }
 
+    @Override
     public void declare(
+            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<?> type )
     {
         if ( types.containsKey( variableName ) )
         {
             throw new BlockLocalVariables.VariableAlreadyDeclaredException(
+                    declareStepOrExpression ,
                     variableName );
         }
 
@@ -78,12 +88,16 @@ implements VariablesOrLocalVariables
      * @param type
      * @param value
      */
+    @Override
     public <T> void declare(
+            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<T> type ,
             final T value )
     {
         declare(
+                declareStepOrExpression ,
                 variableName ,
                 type );
 
@@ -192,9 +206,19 @@ implements VariablesOrLocalVariables
          * Constructor.
          */
         public VariableAlreadyDeclaredException(
+                //final DeclareLocalVar<?, ?> declareLocalVar
+                final HasCreationStackTraceElement declareStepOrExpression ,
                 final String variableName )
         {
-            super( "variable already declared: " + variableName );
+            //super( "variable already declared: " + variableName );
+            super(
+                    "variable already declared: " +
+                    variableName +
+                    " " +
+                    declareStepOrExpression.getClass().getSimpleName() +
+                    ( declareStepOrExpression.creationStackTraceElement != null
+                        ? " " + declareStepOrExpression.creationStackTraceElement
+                        : "" ) );
         }
     }
 

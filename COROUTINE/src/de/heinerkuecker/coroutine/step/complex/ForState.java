@@ -51,9 +51,6 @@ extends ComplexStepState<
                         parent );
     }
 
-    /**
-     * @see ComplexStepState#execute(CoroutineIterator)
-     */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
@@ -89,14 +86,16 @@ extends ComplexStepState<
                     this.initializerComplexStepState =
                             initializerComplexStep.newState(
                                     //this.rootParent
-                                    this.parent );
+                                    //this.parent
+                                    this );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
                 initializerExecuteResult =
                         this.initializerComplexStepState.execute(
-                                parent );
+                                //parent
+                                this );
 
                 if ( this.initializerComplexStepState.isFinished() )
                 {
@@ -141,7 +140,8 @@ extends ComplexStepState<
                     this.bodyComplexState =
                             _for.bodyComplexStep.newState(
                                     //this.rootParent
-                                    this.parent );
+                                    //this.parent
+                                    this );
                 }
                 else
                 {
@@ -161,14 +161,16 @@ extends ComplexStepState<
                     this.bodyComplexState =
                             bodyComplexStep.newState(
                                     //this.rootParent
-                                    this.parent );
+                                    //this.parent
+                                    this );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
                 final CoroIterStepResult<RESULT> bodyExecuteResult =
                         this.bodyComplexState.execute(
-                                parent );
+                                //parent
+                                this );
 
                 if ( this.bodyComplexState.isFinished() )
                 {
@@ -243,14 +245,16 @@ extends ComplexStepState<
                         this.updateComplexStepState =
                                 updateComplexStep.newState(
                                         //this.rootParent
-                                        this.parent );
+                                        //this.parent
+                                        this );
                     }
 
                     // TODO only before executing simple step: parent.saveLastStepState();
 
                     updateExecuteResult =
                             this.updateComplexStepState.execute(
-                                    parent );
+                                    //parent
+                                    this );
 
                     if ( this.updateComplexStepState.isFinished() )
                     {

@@ -36,6 +36,7 @@ implements Iterable<Entry<String, Object>>
      * @param parent
      */
     public Arguments(
+            final boolean isInitializationCheck ,
             final boolean checkMandantoryValues ,
             final Map<String, Parameter> params ,
             final Argument<?>[] args ,
@@ -78,7 +79,7 @@ implements Iterable<Entry<String, Object>>
                 {
                     throw new IllegalArgumentException(
                             "undefined argument name: " +
-                            argument.name );
+                                    argument.name );
                 }
 
                 if ( checkMandantoryValues )
@@ -86,29 +87,32 @@ implements Iterable<Entry<String, Object>>
                     missedMandantoryParamNames.remove( argument.name );
                 }
 
-                final Object argumentValue =
-                        argument.expression.evaluate(
-                                parent );
-
-                if ( argumentValue != null )
+                if ( ! isInitializationCheck )
                 {
-                    final Parameter param =
-                            params.get(
-                                    argument.name );
+                    final Object argumentValue =
+                            argument.expression.evaluate(
+                                    parent );
 
-                    if ( ! param.type.isInstance( argumentValue ) )
+                    if ( argumentValue != null )
                     {
-                        throw new WrongArgumentValueClassException(
+                        final Parameter param =
+                                params.get(
+                                        argument.name );
+
+                        if ( ! param.type.isInstance( argumentValue ) )
+                        {
+                            throw new WrongArgumentValueClassException(
+                                    argument.name ,
+                                    //expectedClass
+                                    param.type ,
+                                    //wrongValue
+                                    argumentValue );
+                        }
+
+                        values.put(
                                 argument.name ,
-                                //expectedClass
-                                param.type ,
-                                //wrongValue
                                 argumentValue );
                     }
-
-                    values.put(
-                            argument.name ,
-                            argumentValue );
                 }
             }
         }
@@ -126,6 +130,8 @@ implements Iterable<Entry<String, Object>>
      */
     public static Arguments EMPTY =
             new Arguments(
+                    // isInitializationCheck
+                    false ,
                     // checkMandantoryValues
                     false ,
                     //params
@@ -198,8 +204,8 @@ implements Iterable<Entry<String, Object>>
             sb.append('=');
             sb.append(
                     value == this.values
-                        ? "(this Map circular reference)"
-                        : ArrayDeepToString.deepToString( value ) );
+                    ? "(this Map circular reference)"
+                            : ArrayDeepToString.deepToString( value ) );
         }
         return "" + '{' + sb + '}';
     }
@@ -225,13 +231,13 @@ implements Iterable<Entry<String, Object>>
         {
             super(
                     "wrong class for argument: " +
-                    argumentName + ", " +
-                    "expected class: " +
-                    expectedClass + ", " +
-                    "wrong value: " +
-                    wrongValue + ", " +
-                    "wrong class: " +
-                    wrongValue.getClass() );
+                            argumentName + ", " +
+                            "expected class: " +
+                            expectedClass + ", " +
+                            "wrong value: " +
+                            wrongValue + ", " +
+                            "wrong class: " +
+                            wrongValue.getClass() );
         }
     }
 

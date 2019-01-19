@@ -56,7 +56,10 @@ implements HasVariableName
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
-        final int var = (int) parent.globalVars().get( globalVarName );
+        final int var =
+                (int) parent.globalVars().get(
+                        this ,
+                        globalVarName );
 
         parent.globalVars().set(
                 globalVarName ,

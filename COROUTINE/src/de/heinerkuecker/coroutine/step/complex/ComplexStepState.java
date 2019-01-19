@@ -1,6 +1,14 @@
 package de.heinerkuecker.coroutine.step.complex;
 
+import java.util.Map;
+import java.util.Objects;
+
+import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.Variables;
+import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
+import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
@@ -21,8 +29,10 @@ abstract public /*interface*/class ComplexStepState<
     RESULT
     //PARENT extends CoroutineOrProcedureOrComplexstep<RESULT>
 >
-implements HCloneable<STEP_STATE>
+implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
 {
+    protected final CoroutineOrProcedureOrComplexstep<RESULT> parent;
+
     private final BlockLocalVariables blockLocalVariables;
 
     /**
@@ -32,6 +42,9 @@ implements HCloneable<STEP_STATE>
             //final BlockLocalVariables blockLocalVariables
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
+        this.parent = Objects.requireNonNull( parent );
+
+        System.out.println( new Exception().getStackTrace()[ 0 ] + " " + this.getClass().getSimpleName() + " new blockLocalVariables " + parent.localVars() );
         this.blockLocalVariables =
                 new BlockLocalVariables(
                         parent.localVars() );
@@ -56,5 +69,65 @@ implements HCloneable<STEP_STATE>
 
     abstract public STEP getStep();
 
-    //abstract public void setRootParent( final CoroutineIterator<RESULT> rootParent );
+    @Override
+    public void saveLastStepState()
+    {
+        getRootParent().saveLastStepState();
+    }
+
+    @Override
+    public CoroutineIterator getRootParent()
+    {
+        return parent.getRootParent();
+    }
+
+    @Override
+    public boolean isCoroutineRoot()
+    {
+        return parent.isCoroutineRoot();
+    }
+
+    @Override
+    public Procedure getProcedure(
+            final String procedureName )
+    {
+        return parent.getProcedure( procedureName );
+    }
+
+    @Override
+    public VariablesOrLocalVariables localVars()
+    {
+        return this.blockLocalVariables;
+    }
+
+    @Override
+    public Variables globalVars()
+    {
+        return parent.globalVars();
+    }
+
+    @Override
+    public Arguments procedureArgumentValues()
+    {
+        return parent.procedureArgumentValues();
+    }
+
+    @Override
+    public Map<String, Class<?>> procedureParameterTypes()
+    {
+        return parent.procedureParameterTypes();
+    }
+
+    @Override
+    public Arguments globalArgumentValues()
+    {
+        return parent.globalArgumentValues();
+    }
+
+    @Override
+    public Map<String, Class<?>> globalParameterTypes()
+    {
+        return parent.globalParameterTypes();
+    }
+
 }

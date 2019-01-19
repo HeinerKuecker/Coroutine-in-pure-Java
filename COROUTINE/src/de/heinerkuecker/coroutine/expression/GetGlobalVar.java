@@ -11,6 +11,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
+import de.heinerkuecker.util.ArrayTypeName;
 
 public class GetGlobalVar<T>
 extends HasCreationStackTraceElement
@@ -50,7 +51,10 @@ implements CoroExpression<T> , HasVariableName
     public T evaluate(
             final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
     {
-        final Object globalVarValue = parent.globalVars().get( globalVarName );
+        final Object globalVarValue =
+                parent.globalVars().get(
+                        this ,
+                        globalVarName );
 
         if ( globalVarValue != null &&
                 ! type.isInstance( globalVarValue ) )
@@ -133,10 +137,17 @@ implements CoroExpression<T> , HasVariableName
     {
         return
                 this.getClass().getSimpleName() +
-                "[" +
+                //"[" +
+                " " +
+                //this.type.getName() +
+                ArrayTypeName.toStr( this.type ) +
+                " " +
                 //"globalVarName=" +
                 this.globalVarName +
-                "]";
+                //"]"
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
     /**

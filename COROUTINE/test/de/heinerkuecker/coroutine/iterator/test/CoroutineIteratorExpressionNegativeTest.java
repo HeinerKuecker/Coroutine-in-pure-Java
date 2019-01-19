@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.condition.IsNull;
@@ -22,7 +23,7 @@ public class CoroutineIteratorExpressionNegativeTest
     @Test( expected = UseGetProcedureArgumentOutsideOfProcedureException.class )
     public void testUseGetProcedureArgumentOutsideOfProcedureException()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         new CoroutineIterator<Object>(
                 // type
@@ -40,7 +41,7 @@ public class CoroutineIteratorExpressionNegativeTest
     @Test( expected = Variables.WrongVariableClassException.class )
     public void testWrongVariableClassException()
     {
-        CoroutineIterator.initializationChecks = false;
+        CoroutineDebugSwitches.initializationChecks = false;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(

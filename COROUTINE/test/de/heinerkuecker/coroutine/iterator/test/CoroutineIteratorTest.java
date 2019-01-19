@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 import org.junit.Assert;
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Parameter;
@@ -24,7 +25,7 @@ public class CoroutineIteratorTest
     @Test
     public void testConstructor_Empty()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<?> coroIter =
                 new CoroutineIterator<>(
@@ -40,7 +41,7 @@ public class CoroutineIteratorTest
     @Test
     public void testConstructor_Params_Args()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
 
         final Parameter[] params = {
@@ -86,7 +87,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_1_YieldReturnWithResult()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
@@ -106,7 +107,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_1_FinallyReturnWithResult()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
@@ -126,7 +127,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_2_FinallyReturnWithResult()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<>(
@@ -148,7 +149,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_SetVar_String()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<String> coroIter =
                 new CoroutineIterator<String>(
@@ -175,7 +176,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_SetVar_Integer()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -209,7 +210,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_IncVar()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -240,7 +241,7 @@ public class CoroutineIteratorTest
     @Test
     public void test_DecVar()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =

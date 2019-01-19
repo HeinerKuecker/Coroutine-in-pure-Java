@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Equals;
 import de.heinerkuecker.coroutine.condition.False;
@@ -38,7 +39,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -75,7 +76,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -120,7 +121,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_2()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -158,7 +159,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_Not()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -194,9 +195,9 @@ public class CoroutineIteratorWhileTest
     }
 
     @Test
-    public void test_While_While_Not()
+    public void test_While_While_Not_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -257,9 +258,66 @@ public class CoroutineIteratorWhileTest
     }
 
     @Test
+    public void test_While_While_Not_1()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
+                        new DeclareLocalVar<>(
+                                "number0" ,
+                                3 ) ,
+                        new While<Integer>(
+                                //condition
+                                new GreaterOrEqual<>(
+                                        new GetLocalVar<>(
+                                                "number0" ,
+                                                Integer.class ) ,
+                                        0 ) ,
+                                // steps
+                                new DeclareLocalVar<>(
+                                        "number1" ,
+                                        3 ) ,
+                                new While<Integer>(
+                                        //condition
+                                        new GreaterOrEqual<>(
+                                                new GetLocalVar<>(
+                                                        "number1" ,
+                                                        Integer.class ) ,
+                                                0 ) ,
+                                        // steps
+                                        new YieldReturn<Integer>(
+                                                new CastToInt<>(
+                                                        new Add<Integer>(
+                                                                new Multiply<Integer>(
+                                                                        new GetLocalVar<>(
+                                                                                "number0" ,
+                                                                                Integer.class ) ,
+                                                                        Value.intValue( 4 ) ) ,
+                                                                new GetLocalVar<>(
+                                                                        "number1" ,
+                                                                        Integer.class ) ) ) ) ,
+                                        new DecrementLocalVar<>( "number1" ) ) ,
+                                new DecrementLocalVar<>( "number0" ) ) );
+
+        for ( int i = 15 ; i >= 0 ; i-- )
+        {
+            CoroutineIteratorTest.assertNext(
+                    coroIter ,
+                    i );
+        }
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
     public void test_While_True()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -288,7 +346,7 @@ public class CoroutineIteratorWhileTest
     // endless loop: @Test
     public void test_While_No_Steps_Endless_Loop()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -308,7 +366,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_No_Steps()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -328,7 +386,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_True_FinallyReturnWithoutResult()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -358,7 +416,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_If_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -403,7 +461,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_If_2()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -452,7 +510,7 @@ public class CoroutineIteratorWhileTest
     @Test
     public void test_While_IfElse()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         @SuppressWarnings("unchecked")
         final CoroutineIterator<Integer> coroIter =

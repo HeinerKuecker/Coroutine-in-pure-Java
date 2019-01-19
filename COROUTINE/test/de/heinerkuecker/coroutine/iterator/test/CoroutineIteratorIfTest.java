@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import org.junit.Test;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Equals;
 import de.heinerkuecker.coroutine.condition.Not;
@@ -24,7 +25,7 @@ public class CoroutineIteratorIfTest
     @Test
     public void test_If_True_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -53,7 +54,7 @@ public class CoroutineIteratorIfTest
     @Test
     public void test_If_True_1_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Boolean> condition_var =
@@ -95,7 +96,7 @@ public class CoroutineIteratorIfTest
     @Test
     public void test_If_True_1_1()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Boolean> condition_var =
@@ -141,7 +142,7 @@ public class CoroutineIteratorIfTest
     @Test
     public void test_If_True_No_Steps()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -161,7 +162,7 @@ public class CoroutineIteratorIfTest
     @Test
     public void test_While_If_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =
@@ -213,7 +214,7 @@ public class CoroutineIteratorIfTest
     @Test
     public void test_While_DeclareLocalVar_in_Condition_0()
     {
-        CoroutineIterator.initializationChecks = true;
+        CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
         final GetLocalVar<Integer> number =

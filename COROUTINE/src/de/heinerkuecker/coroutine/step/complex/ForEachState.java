@@ -6,6 +6,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
+import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
 import de.heinerkuecker.util.HCloneable;
 
 class ForEachState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/, ELEMENT>
@@ -49,11 +50,12 @@ extends ComplexStepState<
         this.parent =
                 Objects.requireNonNull(
                         parent );
+
+        new DeclareLocalVar<>(
+                forEach.variableName ,
+                forEach.elementType ).execute( this );
     }
 
-    /**
-     * @see ComplexStepState#execute(CoroutineIterator)
-     */
     @Override
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
@@ -73,14 +75,15 @@ extends ComplexStepState<
 
             this.variableValue = iterator.next();
 
-            parent.localVars().set(
+            /*parent*/this.localVars().set(
                     forEach.variableName ,
                     variableValue );
 
             // for toString
             this.bodyComplexState =
                     forEach.bodyComplexStep.newState(
-                            this.parent );
+                            //this.parent
+                            this );
 
             runInInitializer = false;
             runInBody = true;
@@ -100,7 +103,7 @@ extends ComplexStepState<
 
                 this.variableValue = iterator.next();
 
-                parent.localVars().set(
+                /*parent*/this.localVars().set(
                         forEach.variableName ,
                         variableValue );
 
@@ -119,14 +122,16 @@ extends ComplexStepState<
                     this.bodyComplexState =
                             bodyComplexStep.newState(
                                     //this.rootParent
-                                    this.parent );
+                                    //this.parent
+                                    this );
                 }
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
                 final CoroIterStepResult<RESULT> bodyExecuteResult =
                         this.bodyComplexState.execute(
-                                parent );
+                                //parent
+                                this );
 
                 if ( this.bodyComplexState.isFinished() )
                 {
