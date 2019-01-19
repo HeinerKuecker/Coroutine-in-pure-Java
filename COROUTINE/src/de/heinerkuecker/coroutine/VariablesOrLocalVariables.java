@@ -2,7 +2,7 @@ package de.heinerkuecker.coroutine;
 
 import java.util.Map.Entry;
 
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 
 // TODO Klasse Variables und BlockLocalVariables zu einer Klasse zusammerfassen mit parentVariables == null bei Variables
 public interface VariablesOrLocalVariables
@@ -14,13 +14,13 @@ extends Iterable<Entry<String, Object>>
             final String variableName );
 
     void declare(
-            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<?> type );
 
     <T> void declare(
-            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<T> type ,

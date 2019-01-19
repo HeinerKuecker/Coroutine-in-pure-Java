@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -49,7 +49,7 @@ implements VariablesOrLocalVariables
 
     @Override
     public void declare(
-            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<?> type )
@@ -77,7 +77,7 @@ implements VariablesOrLocalVariables
      */
     @Override
     public <T> void declare(
-            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<T> type ,

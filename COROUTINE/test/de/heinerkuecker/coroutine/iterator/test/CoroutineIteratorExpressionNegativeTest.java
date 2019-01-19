@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine.condition.IsNull;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
 import de.heinerkuecker.coroutine.step.complex.If;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
 import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 
@@ -48,7 +48,7 @@ public class CoroutineIteratorExpressionNegativeTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName ,
                                 "int_number" ,
                                 // type

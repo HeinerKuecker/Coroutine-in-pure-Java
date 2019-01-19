@@ -6,7 +6,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.HCloneable;
 
 class ForEachState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/, ELEMENT>
@@ -51,7 +51,7 @@ extends ComplexStepState<
                 Objects.requireNonNull(
                         parent );
 
-        new DeclareLocalVar<>(
+        new DeclareVariable<>(
                 forEach.variableName ,
                 forEach.elementType ).execute( this );
     }

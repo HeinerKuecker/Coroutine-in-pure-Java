@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.expression.GetGlobalArgument;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 
@@ -156,7 +156,7 @@ public class CoroutineIteratorTest
                         // type
                         String.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 "str" ,
                                 String.class ,
                                 "a" ) ,
@@ -190,7 +190,7 @@ public class CoroutineIteratorTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 "number" ,
                                 Integer.class ,
                                 0 ) ,
@@ -223,7 +223,7 @@ public class CoroutineIteratorTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 "number" ,
                                 Integer.class ,
                                 0 ) ,
@@ -255,7 +255,7 @@ public class CoroutineIteratorTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 "number" ,
                                 Integer.class ,
                                 1 ) ,

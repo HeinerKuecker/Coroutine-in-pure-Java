@@ -18,32 +18,28 @@ import de.heinerkuecker.util.ArrayTypeName;
 
 /**
  * {@link SimpleStep} to declare
- * local variable with specified
+ * variable with specified
  * type (class).
  *
  * The value of the variable can
- * optional initialized with
+ * optional initialized with an
  * specified value or result of
  * specified expression.
  *
- * There is no DeclareGlobalVar step,
- * because global variables are
- * local for the root of coroutine.
- * Declare global variables as local
- * variables in the root of the
- * coroutine.
+ * Variables can be global or
+ * local in the scoped block or
+ * statement.
  *
  * @param <RESULT> result type of coroutine, here unused
  * @param <T> variable type
  * @author Heiner K&uuml;cker
  */
-public final class DeclareLocalVar<RESULT, T>
+public final class DeclareVariable<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 implements CoroExpression<T>
 {
     /**
-     * Name of variable to set in
-     * {@link CoroutineOrProcedureOrComplexstep#localVars()}
+     * Name of variable.
      */
     public final String varName;
 
@@ -62,7 +58,7 @@ implements CoroExpression<T>
     /**
      * Constructor.
      */
-    public DeclareLocalVar(
+    public DeclareVariable(
             final String varName ,
             final Class<T> type ,
             final CoroExpression<? extends T> initialVarValueExpression )
@@ -83,7 +79,7 @@ implements CoroExpression<T>
     /**
      * Convenience constructor.
      */
-    public DeclareLocalVar(
+    public DeclareVariable(
             final String varName ,
             final Class<T> type ,
             final T initialVarValue )
@@ -105,7 +101,7 @@ implements CoroExpression<T>
     /**
      * Convenience constructor.
      */
-    public DeclareLocalVar(
+    public DeclareVariable(
             final String varName ,
             // null is forbidden
             final T initialVarValue )
@@ -126,7 +122,7 @@ implements CoroExpression<T>
     /**
      * Constructor.
      */
-    public DeclareLocalVar(
+    public DeclareVariable(
             final String varName ,
             final Class<T> type )
     {
@@ -308,7 +304,7 @@ implements CoroExpression<T>
          * @param declareLocalVar
          */
         public VariableAlreadyDeclaredException(
-                final DeclareLocalVar<?, ?> declareLocalVar )
+                final DeclareVariable<?, ?> declareLocalVar )
         {
             super(
                     "variable already declared: " +

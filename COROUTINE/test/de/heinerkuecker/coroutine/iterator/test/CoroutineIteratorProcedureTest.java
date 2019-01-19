@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.coroutine.step.simple.IncrementGlobalVar;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
@@ -135,7 +135,7 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "counter" ,
                                 // type
@@ -197,7 +197,7 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "counter" ,
                                 // type
@@ -226,7 +226,7 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "counter" ,
                                 // type
@@ -288,7 +288,7 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "counter" ,
                                 // type
@@ -609,7 +609,7 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "number" ,
                                 // type
@@ -696,7 +696,7 @@ public class CoroutineIteratorProcedureTest
                         // args
                         null ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "number" ,
                                 // type
@@ -827,7 +827,7 @@ public class CoroutineIteratorProcedureTest
                                         Long.class )
                         } ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "variable" ,
                                 // type
@@ -924,7 +924,7 @@ public class CoroutineIteratorProcedureTest
                                         Integer.class )
                         } ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "variable" ,
                                 // type

@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 
 /**
  * Sequence of {@link CoroIterStep} steps.
@@ -178,13 +178,13 @@ extends ComplexStep<
 
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
-            if ( step instanceof DeclareLocalVar )
+            if ( step instanceof DeclareVariable )
             {
-                final DeclareLocalVar<?, ?> declareLocalVar = (DeclareLocalVar<?, ?>) step;
+                final DeclareVariable<?, ?> declareLocalVar = (DeclareVariable<?, ?>) step;
 
                 if ( thisLocalVariableTypes.containsKey( declareLocalVar.varName ) )
                 {
-                    throw new DeclareLocalVar.VariableAlreadyDeclaredException(
+                    throw new DeclareVariable.VariableAlreadyDeclaredException(
                             declareLocalVar );
                 }
 
@@ -196,7 +196,7 @@ extends ComplexStep<
                 {
                     if ( thisGlobalVariableTypes.containsKey( declareLocalVar.varName ) )
                     {
-                        throw new DeclareLocalVar.VariableAlreadyDeclaredException(
+                        throw new DeclareVariable.VariableAlreadyDeclaredException(
                                 declareLocalVar );
                     }
 

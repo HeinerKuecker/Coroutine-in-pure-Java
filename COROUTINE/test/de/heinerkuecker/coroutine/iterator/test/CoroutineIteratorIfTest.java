@@ -12,7 +12,7 @@ import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
 
 /**
@@ -69,7 +69,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "condition_var" ,
                                 // varValue
@@ -111,7 +111,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 // varName
                                 "condition_var" ,
                                 // varValue
@@ -176,7 +176,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new DeclareLocalVar<>(
+                        new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
@@ -231,8 +231,8 @@ public class CoroutineIteratorIfTest
                         new While<Integer/*, CoroutineIterator<Integer>*/>(
                                 // condition
                                 new Equals<>(
-                                        // use DeclareLocalVar as expression
-                                        new DeclareLocalVar<>(
+                                        // use DeclareVariable as expression
+                                        new DeclareVariable<>(
                                                 "number" ,
                                                 0 ) ,
                                         0 ) ,

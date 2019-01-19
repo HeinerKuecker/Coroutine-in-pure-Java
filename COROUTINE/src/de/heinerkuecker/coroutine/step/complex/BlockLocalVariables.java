@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
-import de.heinerkuecker.coroutine.step.simple.DeclareLocalVar;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -62,7 +62,7 @@ implements VariablesOrLocalVariables
 
     @Override
     public void declare(
-            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<?> type )
@@ -90,7 +90,7 @@ implements VariablesOrLocalVariables
      */
     @Override
     public <T> void declare(
-            //final DeclareLocalVar<?, ?> declareLocalVar ,
+            //final DeclareVariable<?, ?> declareLocalVar ,
             final HasCreationStackTraceElement declareStepOrExpression ,
             final String variableName ,
             final Class<T> type ,
@@ -206,7 +206,7 @@ implements VariablesOrLocalVariables
          * Constructor.
          */
         public VariableAlreadyDeclaredException(
-                //final DeclareLocalVar<?, ?> declareLocalVar
+                //final DeclareVariable<?, ?> declareLocalVar
                 final HasCreationStackTraceElement declareStepOrExpression ,
                 final String variableName )
         {
