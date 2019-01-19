@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**

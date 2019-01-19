@@ -2,7 +2,6 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
@@ -57,7 +56,10 @@ extends ComplexStepState<
             // TODO ist dies notwendig?
             parent.saveLastStepState();
 
-            final boolean conditionResult = ifElse.condition.execute( parent );
+            final boolean conditionResult =
+                    ifElse.condition.execute(
+                            //parent
+                            this );
 
             this.runInCondition = false;
 

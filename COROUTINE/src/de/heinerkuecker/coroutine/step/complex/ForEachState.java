@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.Iterator;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
@@ -53,7 +52,8 @@ extends ComplexStepState<
 
         new DeclareVariable<>(
                 forEach.variableName ,
-                forEach.elementType ).execute( this );
+                forEach.elementType ).execute(
+                        this );
     }
 
     @Override

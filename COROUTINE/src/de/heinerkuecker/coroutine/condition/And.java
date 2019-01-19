@@ -32,8 +32,6 @@ implements Condition/*<CoroutineIterator<?>>*/
 
     /**
      * Negates the specified {@link Condition}.
-     *
-     * @see Condition#execute(java.lang.Object)
      */
     @Override
     public boolean execute(

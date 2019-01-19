@@ -19,7 +19,9 @@ public interface CoroutineOrProcedureOrComplexstep<RESULT>
 extends HasArgumentsAndVariables
 {
     /**
-     * Save last step state for {@link ComplexStep#toString(String, ComplexStepState, ComplexStepState)}
+     * Save last step state for {@link ComplexStep#toString(String, ComplexStepState, ComplexStepState)}.
+     *
+     * Call it before execute expressions or simple statements
      */
     abstract public void saveLastStepState();
 

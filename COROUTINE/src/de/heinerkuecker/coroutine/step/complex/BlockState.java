@@ -1,13 +1,6 @@
 package de.heinerkuecker.coroutine.step.complex;
 
-import java.util.Map;
-import java.util.Objects;
-
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.Procedure;
-import de.heinerkuecker.coroutine.Variables;
-import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
@@ -66,7 +59,8 @@ extends ComplexStepState<
 
                 executeResult =
                         currentSimpleStep.execute(
-                                parent );
+                                //parent
+                                this );
 
                 this.currentStepIndex++;
             }

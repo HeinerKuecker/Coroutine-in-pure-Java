@@ -76,6 +76,7 @@ public class CoroutineIteratorTryCatchTest
     public void test_TryCatch_1()
     {
         CoroutineDebugSwitches.initializationChecks = true;
+        //CoroutineDebugSwitches.saveToStringInfos = false;
 
         @SuppressWarnings("serial")
         class TestException

@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**

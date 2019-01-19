@@ -2,8 +2,6 @@ package de.heinerkuecker.coroutine;
 
 import java.util.Map.Entry;
 
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-
 // TODO Klasse Variables und BlockLocalVariables zu einer Klasse zusammerfassen mit parentVariables == null bei Variables
 public interface VariablesOrLocalVariables
 extends Iterable<Entry<String, Object>>

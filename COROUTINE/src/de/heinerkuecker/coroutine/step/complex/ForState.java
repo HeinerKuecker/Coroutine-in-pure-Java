@@ -2,7 +2,6 @@ package de.heinerkuecker.coroutine.step.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
@@ -71,7 +70,8 @@ extends ComplexStepState<
 
                 initializerExecuteResult =
                         initializerSimpleStep.execute(
-                                parent );
+                                //parent
+                                this );
 
                 runInInitializer = false;
                 runInCondition = true;
@@ -128,11 +128,12 @@ extends ComplexStepState<
         {
             if ( runInCondition )
             {
-                // TODO ist dies notwendig?
                 parent.saveLastStepState();
 
                 final boolean conditionResult =
-                        _for.condition.execute( parent );
+                        _for.condition.execute(
+                                //parent
+                                this );
 
                 if ( conditionResult )
                 {
@@ -232,7 +233,8 @@ extends ComplexStepState<
 
                     updateExecuteResult =
                             updateSimpleStep.execute(
-                                    parent );
+                                    //parent
+                                    this );
 
                     this.runInUpdate = false;
                     this.runInCondition = true;

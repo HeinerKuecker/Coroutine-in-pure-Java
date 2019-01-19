@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.condition.IsNull;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.exc.UseGetProcedureArgumentOutsideOfProcedureException;
+import de.heinerkuecker.coroutine.step.complex.BlockLocalVariables;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.coroutine.step.simple.NoOperation;
@@ -38,7 +38,7 @@ public class CoroutineIteratorExpressionNegativeTest
                         new NoOperation<>() ) );
     }
 
-    @Test( expected = Variables.WrongVariableClassException.class )
+    @Test( expected = BlockLocalVariables.WrongVariableClassException.class )
     public void testWrongVariableClassException()
     {
         CoroutineDebugSwitches.initializationChecks = false;

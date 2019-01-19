@@ -50,8 +50,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     /**
      * print with newline to
      * {@link System#out}.
-     *
-     * @see SimpleStep#execute(Object)
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
@@ -61,9 +59,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         return CoroIterStepResult.continueCoroutine();
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
