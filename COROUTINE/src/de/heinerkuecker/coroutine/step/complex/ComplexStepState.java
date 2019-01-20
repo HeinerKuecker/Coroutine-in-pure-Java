@@ -141,7 +141,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
         final String variablesStr;
 
         variablesStr =
-                    indent + " " +
+                    indent +
                     "variables: " +
                     blockLocalVariables +
                     "\n";

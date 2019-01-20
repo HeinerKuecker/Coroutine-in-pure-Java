@@ -315,6 +315,66 @@ public class CoroutineIteratorWhileTest
     }
 
     @Test
+    public void test_While_While_Not_2()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
+                        new DeclareVariable<>(
+                                "number0" ,
+                                3 ) ,
+                        new While<Integer>(
+                                //condition
+                                new GreaterOrEqual<>(
+                                        new DeclareVariable<>(
+                                                "number00" ,
+                                                Integer.class ,
+                                                new GetLocalVar<>(
+                                                        "number0" ,
+                                                        Integer.class ) ) ,
+                                        0 ) ,
+                                // steps
+                                new DeclareVariable<>(
+                                        "number1" ,
+                                        3 ) ,
+                                new While<Integer>(
+                                        //condition
+                                        new GreaterOrEqual<>(
+                                                new GetLocalVar<>(
+                                                        "number1" ,
+                                                        Integer.class ) ,
+                                                0 ) ,
+                                        // steps
+                                        new YieldReturn<Integer>(
+                                                new CastToInt<>(
+                                                        new Add<Integer>(
+                                                                new Multiply<Integer>(
+                                                                        new GetLocalVar<>(
+                                                                                "number00" ,
+                                                                                Integer.class ) ,
+                                                                        Value.intValue( 4 ) ) ,
+                                                                new GetLocalVar<>(
+                                                                        "number1" ,
+                                                                        Integer.class ) ) ) ) ,
+                                        new DecrementLocalVar<>( "number1" ) ) ,
+                                new DecrementLocalVar<>( "number0" ) ) );
+
+        for ( int i = 15 ; i >= 0 ; i-- )
+        {
+            CoroutineIteratorTest.assertNext(
+                    coroIter ,
+                    i );
+        }
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
     public void test_While_True()
     {
         CoroutineDebugSwitches.initializationChecks = true;
@@ -508,37 +568,37 @@ public class CoroutineIteratorWhileTest
     }
 
     @Test
-    public void test_While_IfElse()
+    public void test_While_IfElse_0()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
         @SuppressWarnings("unchecked")
         final CoroutineIterator<Integer> coroIter =
-        new CoroutineIterator<Integer>(
-                // type
-                Integer.class ,
-                // steps
-                new DeclareVariable<>(
-                        "first" ,
-                        true ) ,
-                new While<Integer/*, CoroutineIterator<Integer>*/>(
-                        // condition
-                        new True() ,
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
                         // steps
-                        new IfElse<>(
-                                //condition
-                                new GetLocalVar<>(
-                                        "first" ,
-                                        Boolean.class ) ,
-                                // thenSteps
-                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[] {
-                                        new YieldReturn<>( 0 ) ,
-                                } ,
-                                // elseSteps
-                                (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[] {
-                                        new FinallyReturn<>( 1 ) ,
-                                } ) ,
-                        new NegateLocalVar<>( "first" ) ) );
+                        new DeclareVariable<>(
+                                "first" ,
+                                true ) ,
+                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                                // condition
+                                new True() ,
+                                // steps
+                                new IfElse<>(
+                                        //condition
+                                        new GetLocalVar<>(
+                                                "first" ,
+                                                Boolean.class ) ,
+                                        // thenSteps
+                                        (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[] {
+                                                new YieldReturn<>( 0 ) ,
+                                        } ,
+                                        // elseSteps
+                                        (CoroIterStep<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStep[] {
+                                                new FinallyReturn<>( 1 ) ,
+                                        } ) ,
+                                new NegateLocalVar<>( "first" ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -547,6 +607,116 @@ public class CoroutineIteratorWhileTest
         CoroutineIteratorTest.assertNext(
                 coroIter ,
                 1 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_While_IfElse_1()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        // extract get local variable expression
+        final GetLocalVar<Boolean> first =
+                new GetLocalVar<>(
+                        "first" ,
+                        Boolean.class );
+
+        @SuppressWarnings("unchecked")
+        final CoroutineIterator<Boolean> coroIter =
+                new CoroutineIterator<Boolean>(
+                        // type
+                        Boolean.class ,
+                        // steps
+                        new DeclareVariable<>(
+                                "first" ,
+                                true ) ,
+                        new While<>(
+                                // condition
+                                new True() ,
+                                // steps
+                                new IfElse<>(
+                                        //condition
+                                        new DeclareVariable<Boolean, Boolean>(
+                                                "copyOfFirst" ,
+                                                Boolean.class ,
+                                                first ) ,
+                                        // thenSteps
+                                        (CoroIterStep<Boolean>[]) new CoroIterStep[] {
+                                                new YieldReturn<>( first ) ,
+                                        } ,
+                                        // elseSteps
+                                        (CoroIterStep<Boolean>[]) new CoroIterStep[] {
+                                                new FinallyReturn<>( first ) ,
+                                        } ) ,
+                                new NegateLocalVar<>( "first" ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                true );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                false );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_While_IfElse_2()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        // extract get local variable expression
+        final GetLocalVar<Boolean> first =
+                new GetLocalVar<>(
+                        "first" ,
+                        Boolean.class );
+
+        // extract get local variable expression
+        final GetLocalVar<Boolean> copyOfFirst =
+                new GetLocalVar<>(
+                        "copyOfFirst" ,
+                        Boolean.class );
+
+        @SuppressWarnings("unchecked")
+        final CoroutineIterator<Boolean> coroIter =
+                new CoroutineIterator<Boolean>(
+                        // type
+                        Boolean.class ,
+                        // steps
+                        new DeclareVariable<>(
+                                "first" ,
+                                true ) ,
+                        new While<>(
+                                // condition
+                                new True() ,
+                                // steps
+                                new IfElse<>(
+                                        //condition
+                                        new DeclareVariable<Boolean, Boolean>(
+                                                "copyOfFirst" ,
+                                                Boolean.class ,
+                                                first ) ,
+                                        // thenSteps
+                                        (CoroIterStep<Boolean>[]) new CoroIterStep[] {
+                                                new YieldReturn<>( copyOfFirst ) ,
+                                        } ,
+                                        // elseSteps
+                                        (CoroIterStep<Boolean>[]) new CoroIterStep[] {
+                                                new FinallyReturn<>( copyOfFirst ) ,
+                                        } ) ,
+                                new NegateLocalVar<>( "first" ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                true );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                false );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
