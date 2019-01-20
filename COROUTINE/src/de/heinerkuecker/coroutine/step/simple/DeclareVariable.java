@@ -148,15 +148,15 @@ implements CoroExpression<T>
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT> parent )
     {
-        if ( this.initialVarValueExpression == null )
-            // TODO no more needed
-        {
-            parent.localVars().declare(
-                    this ,
-                    varName ,
-                    type );
-        }
-        else
+        //if ( this.initialVarValueExpression == null )
+        //    // TODO no more needed
+        //{
+        //    parent.localVars().declare(
+        //            this ,
+        //            varName ,
+        //            type );
+        //}
+        //else
         {
             final T varValue = initialVarValueExpression.evaluate( parent );
 
@@ -175,7 +175,8 @@ implements CoroExpression<T>
             final HasArgumentsAndVariables parent )
     // for using in expressions
     {
-        execute( (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
+        execute(
+                (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
 
         return (T) parent.localVars().get(
                 this ,

@@ -174,6 +174,12 @@ implements VariablesOrLocalVariables
         return types.isEmpty();
     }
 
+    void reset()
+    {
+        this.types.clear();
+        this.values.clear();
+    }
+
     /**
      * @see Object#toString()
      */

@@ -81,6 +81,8 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     //public final HashMap<String, Object> vars = new HashMap<>();
     public final GlobalVariables globalVariables = new GlobalVariables();
 
+    //public final BlockLocalVariables blockLocalVariables = new BlockLocalVariables();
+
     private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
 
     public final Map<String, Parameter> params;
@@ -398,8 +400,12 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     @Override
     //public Map<String, Object> localVars()
     public VariablesOrLocalVariables localVars()
+    //public BlockLocalVariables localVars()
     {
         return this.globalVariables;
+        //throw new IllegalStateException( this.getClass().getSimpleName() + " has no local variables" );
+        //return BlockLocalVariables.EMPTY;
+        //return null;
     }
 
     /**

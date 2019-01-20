@@ -95,7 +95,8 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     }
 
     @Override
-    public VariablesOrLocalVariables localVars()
+    //public VariablesOrLocalVariables localVars()
+    public BlockLocalVariables localVars()
     {
         return this.blockLocalVariables;
     }

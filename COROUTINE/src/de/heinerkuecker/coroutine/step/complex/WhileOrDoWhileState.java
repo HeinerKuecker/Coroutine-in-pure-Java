@@ -140,6 +140,7 @@ extends ComplexStepState<
                 this.runInCondition = true;
                 this.runInBody = false;
                 this.bodyComplexState = null;
+                super.localVars().reset();
             }
         }
     }
