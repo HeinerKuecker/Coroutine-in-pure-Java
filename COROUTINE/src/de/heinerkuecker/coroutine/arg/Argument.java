@@ -91,8 +91,8 @@ implements CoroCheckable
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            CoroutineOrProcedureOrComplexstep<?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         final Class<?> parameterType = parent.procedureParameterTypes().get( name );
 

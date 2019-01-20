@@ -451,14 +451,16 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     public Map<String, Class<?>> procedureParameterTypes()
     {
         //throw new RuntimeException( "not implemented" );
-        return this.arguments.procedureParameterTypes();
+        //return this.arguments.procedureParameterTypes();
+        throw new IllegalStateException( "this is no procedure" );
     }
 
     @Override
     public Map<String, Class<?>> globalParameterTypes()
     {
         //throw new RuntimeException( "not implemented" );
-        return procedureParameterTypes();
+        //return procedureParameterTypes();
+        return globalVariables.getVariableTypes();
     }
 
     /**

@@ -87,7 +87,14 @@ implements Iterable<Entry<String, Object>>
                     missedMandantoryParamNames.remove( argument.name );
                 }
 
-                if ( ! isInitializationCheck )
+                if ( isInitializationCheck )
+                {
+                    values.put(
+                            argument.name ,
+                            //argumentValue
+                            null );
+                }
+                else
                 {
                     final Object argumentValue =
                             argument.expression.evaluate(

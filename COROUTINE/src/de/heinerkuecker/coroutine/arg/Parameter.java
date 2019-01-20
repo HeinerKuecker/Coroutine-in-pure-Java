@@ -33,4 +33,18 @@ public class Parameter
                         type );
     }
 
+    @Override
+    public String toString()
+    {
+        return
+                this.getClass().getSimpleName() +
+                " " +
+                this.type +
+                " " +
+                this.name +
+                ( this.isMandantory
+                    ? " isMandantory"
+                    : "" );
+    }
+
 }

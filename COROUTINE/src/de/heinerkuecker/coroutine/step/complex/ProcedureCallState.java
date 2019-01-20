@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.step.complex;
 
+import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
@@ -199,14 +200,17 @@ extends ComplexStepState<
     //    return this.parent/*.getRootParent()*/.globalVars();
     //}
 
-    //@Override
-    ////public Map<String, Object> procedureArgumentValues()
-    //public Arguments procedureArgumentValues()
-    //{
-    //    return
-    //            //this.procedureArgumentValues;
-    //            this.arguments;
-    //}
+    /**
+     * Overidden to access arguments of this procedure
+     */
+    @Override
+    //public Map<String, Object> procedureArgumentValues()
+    public Arguments procedureArgumentValues()
+    {
+        return
+                //this.procedureArgumentValues;
+                this.arguments;
+    }
 
     //@Override
     //public Arguments globalArgumentValues()
@@ -233,11 +237,14 @@ extends ComplexStepState<
     //    return false;
     //}
 
-    //@Override
-    //public Map<String, Class<?>> procedureParameterTypes()
-    //{
-    //    return this.arguments.procedureParameterTypes();
-    //}
+    /**
+     * Overidden to access parameter of this procedure
+     */
+    @Override
+    public Map<String, Class<?>> procedureParameterTypes()
+    {
+        return this.arguments.procedureParameterTypes();
+    }
 
     //@Override
     //public Map<String, Class<?>> globalParameterTypes()
