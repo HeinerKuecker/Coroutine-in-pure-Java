@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -9,12 +10,12 @@ import java.util.Objects;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
- * Variables {@link Map} with
+ * Global variables {@link Map} with
  * type check at runtime.
  *
  * @author Heiner K&uuml;cker
  */
-public class Variables
+public class GlobalVariables
 //implements Iterable<Entry<String, Object>>
 implements VariablesOrLocalVariables
 {
@@ -55,7 +56,7 @@ implements VariablesOrLocalVariables
     {
         if ( types.containsKey( variableName ) )
         {
-            throw new Variables.VariableAlreadyDeclaredException(
+            throw new GlobalVariables.VariableAlreadyDeclaredException(
                     declareStepOrExpression ,
                     variableName );
         }
@@ -111,7 +112,7 @@ implements VariablesOrLocalVariables
                 if ( ! types.get( variableName ).isInstance( value ) )
                 {
                     //throw new ClassCastException( value.getClass().toString() );
-                    throw new Variables.WrongVariableClassException(
+                    throw new GlobalVariables.WrongVariableClassException(
                             variableName ,
                             // expectedClass
                             types.get( variableName ) ,
@@ -131,12 +132,33 @@ implements VariablesOrLocalVariables
     }
 
     /**
+     * @see Iterable#iterator()
+     */
+    @Override
+    public Iterator<Entry<String, Object>> iterator()
+    {
+        return this.values.entrySet().iterator();
+    }
+
+    @Override
+    public Map<String, Class<?>> getVariableTypes()
+    {
+        return Collections.unmodifiableMap( this.types );
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        return types.isEmpty();
+    }
+
+    /**
      * @see Object#toString()
      */
     @Override
     public String toString()
     {
-        //return "Variables [innerVars=" + this.innerVars + "]";
+        //return "GlobalVariables [innerVars=" + this.innerVars + "]";
         //return String.valueOf( this.values );
 
         StringBuilder sb = new StringBuilder();
@@ -160,15 +182,6 @@ implements VariablesOrLocalVariables
                         : ArrayDeepToString.deepToString( value ) );
         }
         return "" + '{' + sb + '}';
-    }
-
-    /**
-     * @see Iterable#iterator()
-     */
-    @Override
-    public Iterator<Entry<String, Object>> iterator()
-    {
-        return this.values.entrySet().iterator();
     }
 
     /**

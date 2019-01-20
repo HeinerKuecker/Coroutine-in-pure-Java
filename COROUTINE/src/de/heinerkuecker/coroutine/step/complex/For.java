@@ -437,7 +437,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
@@ -447,28 +447,28 @@ extends ComplexStep<
         thisLocalVariableTypes.putAll( localVariableTypes );
 
         this.initialStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 thisLocalVariableTypes );
 
         this.condition.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 thisLocalVariableTypes );
 
         this.bodyComplexStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 thisLocalVariableTypes );
 
         this.updateStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
@@ -610,6 +610,18 @@ extends ComplexStep<
             throw new IllegalStateException( String.valueOf( updateStep ) );
         }
 
+        final String variablesStr;
+        if ( nextForExecuteState == null )
+        {
+            variablesStr = "";
+        }
+        else
+        {
+            variablesStr =
+                    nextForExecuteState.getVariablesStr(
+                            indent );
+        }
+
         return
                 indent +
                 ( this.label != null ? this.label + " : " : "" ) +
@@ -619,6 +631,7 @@ extends ComplexStep<
                 initialStepStr + " ;\n" +
                 conditionStr + " ;\n" +
                 updateStepStr + " )\n" +
+                variablesStr +
                 this.bodyComplexStep.toString(
                         parent ,
                         indent + " " ,

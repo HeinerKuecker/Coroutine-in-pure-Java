@@ -17,7 +17,7 @@ import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassE
 /**
  * Step {@link CoroIterStep} to
  * increment an {@link Number}
- * variable in variables
+ * variable in globalVariables
  * {@link CoroutineOrProcedureOrComplexstep#globalVars()}
  *
  * @param <RESULT>
@@ -86,7 +86,7 @@ implements HasVariableName
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,

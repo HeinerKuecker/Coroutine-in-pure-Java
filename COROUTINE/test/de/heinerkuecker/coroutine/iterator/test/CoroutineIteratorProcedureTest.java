@@ -54,6 +54,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "empty_procedure" ) );
@@ -83,6 +85,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
@@ -111,6 +115,8 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // args
+                        null ,
+                        // globalVariables
                         null ,
                         // steps
                         new ProcedureCall<Integer>(
@@ -157,6 +163,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
@@ -196,14 +204,17 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        new DeclareVariable[] {
+                                new DeclareVariable<>(
+                                        // varName
+                                        "counter" ,
+                                        // type
+                                        Integer.class ,
+                                        // varValue
+                                        0 )
+                        } ,
                         // steps
-                        new DeclareVariable<>(
-                                // varName
-                                "counter" ,
-                                // type
-                                Integer.class ,
-                                // varValue
-                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
 
@@ -249,6 +260,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ) );
@@ -264,7 +277,9 @@ public class CoroutineIteratorProcedureTest
     @Test
     public void test_2_0_GlobalVar()
     {
+        //CoroutineDebugSwitches.initializationChecks = true;
         CoroutineDebugSwitches.initializationChecks = true;
+        CoroutineDebugSwitches.saveToStringInfos = true;
 
         final Procedure<Integer> procedure =
                 new Procedure<>(
@@ -287,14 +302,17 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        new DeclareVariable[] {
+                            new DeclareVariable<>(
+                                    // varName
+                                    "counter" ,
+                                    // type
+                                    Integer.class ,
+                                    // varValue
+                                    0 )
+                        } ,
                         // steps
-                        new DeclareVariable<>(
-                                // varName
-                                "counter" ,
-                                // type
-                                Integer.class ,
-                                // varValue
-                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ) ,
                         new ProcedureCall<Integer>(
@@ -344,6 +362,8 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // args
+                        null ,
+                        // globalVariables
                         null ,
                         // steps
                         new ProcedureCall<Integer>(
@@ -395,6 +415,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
@@ -444,6 +466,8 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // args
+                        null ,
+                        // globalVariables
                         null ,
                         // steps
                         new ProcedureCall<Integer>(
@@ -502,6 +526,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
@@ -559,6 +585,8 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        null ,
                         // steps
                         new ProcedureCall<Integer>(
                                 "procedure" ,
@@ -608,14 +636,17 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        new DeclareVariable[] {
+                                new DeclareVariable<>(
+                                        // varName
+                                        "number" ,
+                                        // type
+                                        Integer.class ,
+                                        // varValue
+                                        0 ) ,
+                        } ,
                         // steps
-                        new DeclareVariable<>(
-                                // varName
-                                "number" ,
-                                // type
-                                Integer.class ,
-                                // varValue
-                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure" ,
                                 new Argument<>(
@@ -695,14 +726,17 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // args
                         null ,
+                        // globalVariables
+                        new DeclareVariable[] {
+                                new DeclareVariable<>(
+                                        // varName
+                                        "number" ,
+                                        // type
+                                        Integer.class ,
+                                        // varValue
+                                        0 ) ,
+                        } ,
                         // steps
-                        new DeclareVariable<>(
-                                // varName
-                                "number" ,
-                                // type
-                                Integer.class ,
-                                // varValue
-                                0 ) ,
                         new ProcedureCall<Integer>(
                                 "procedure1" ,
                                 new Argument<>(
@@ -771,6 +805,8 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // args
+                        null ,
+                        // globalVariables
                         null ,
                         // steps
                         new ProcedureCall<Long>(
@@ -861,6 +897,8 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // args
+                        null ,
+                        // globalVariables
                         null ,
                         // steps
                         new ProcedureCall<Long>(
@@ -956,6 +994,8 @@ public class CoroutineIteratorProcedureTest
                         // params
                         null ,
                         // args
+                        null ,
+                        // globalVariables
                         null ,
                         // steps
                         new ProcedureCall<Integer>(

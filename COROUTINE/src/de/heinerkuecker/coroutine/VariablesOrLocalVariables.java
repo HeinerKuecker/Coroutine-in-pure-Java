@@ -1,8 +1,9 @@
 package de.heinerkuecker.coroutine;
 
+import java.util.Map;
 import java.util.Map.Entry;
 
-// TODO Klasse Variables und BlockLocalVariables zu einer Klasse zusammerfassen mit parentVariables == null bei Variables
+// TODO Klasse GlobalVariables und BlockLocalVariables zu einer Klasse zusammerfassen mit parentVariables == null bei GlobalVariables
 public interface VariablesOrLocalVariables
 extends Iterable<Entry<String, Object>>
 {
@@ -28,6 +29,8 @@ extends Iterable<Entry<String, Object>>
             final String variableName ,
             final Object value );
 
+    Map<String, Class<?>> getVariableTypes();
 
+    boolean isEmpty();
 
 }

@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.Variables;
+import de.heinerkuecker.coroutine.GlobalVariables;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
@@ -239,7 +239,7 @@ public class CoroutineIteratorContinueTest
         coroIter.hasNext();
     }
 
-    @Test( expected = Variables.VariableNotDeclaredException.class )
+    @Test( expected = GlobalVariables.VariableNotDeclaredException.class )
     public void test_Negative_For_Continue_wrong_labeled()
     {
         // avoid initialization checks
@@ -421,7 +421,7 @@ public class CoroutineIteratorContinueTest
                 coroIter );
     }
 
-    @Test( expected = Variables.VariableNotDeclaredException.class )
+    @Test( expected = GlobalVariables.VariableNotDeclaredException.class )
     public void test_Negative_While_Continue_wrong_labeled()
     {
         CoroutineDebugSwitches.initializationChecks = false;

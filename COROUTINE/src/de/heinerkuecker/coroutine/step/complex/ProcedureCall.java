@@ -240,7 +240,7 @@ RESULT
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -255,7 +255,7 @@ RESULT
 
         parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseVariables(
                 //isCoroutineRoot
-                false ,
+                //false ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
@@ -343,21 +343,21 @@ RESULT
                             "\n";
         }
 
-        final String procedureVariablesStr;
-        if ( nextProcExecuteState == null ||
-                ( lastBodyState == null &&
-                nextBodyState == null ) )
-        {
-            procedureVariablesStr = "";
-        }
-        else
-        {
-            procedureVariablesStr =
-                    indent + " " +
-                            "procedure variables: " +
-                            nextProcExecuteState.variables +
-                            "\n";
-        }
+        //final String procedureVariablesStr;
+        //if ( nextProcExecuteState == null ||
+        //        ( lastBodyState == null &&
+        //        nextBodyState == null ) )
+        //{
+        //    procedureVariablesStr = "";
+        //}
+        //else
+        //{
+        //    procedureVariablesStr =
+        //            indent + " " +
+        //                    "procedure variables: " +
+        //                    nextProcExecuteState.variables +
+        //                    "\n";
+        //}
 
         final String procedureBodyComplexStepStr;
         if ( lastBodyState == null &&
@@ -395,7 +395,7 @@ RESULT
                 "\n" +
                 procedureArgumentExpressionsStr +
                 procedureArgumentsStr +
-                procedureVariablesStr +
+                //procedureVariablesStr +
                 procedureBodyComplexStepStr;
     }
 

@@ -76,14 +76,14 @@ implements CoroCheckable
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             Map<String, Class<?>> globalVariableTypes ,
             Map<String, Class<?>> localVariableTypes )
     {
         this.expression.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );

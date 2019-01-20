@@ -1,14 +1,9 @@
 package de.heinerkuecker.coroutine.step.complex;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.Procedure;
-import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
@@ -33,12 +28,6 @@ extends ComplexStepState<
 
     //final Map<String, Object> procedureArgumentValues;
     final Arguments arguments;
-
-    /**
-     * Variables.
-     */
-    //public final HashMap<String, Object> vars = new HashMap<>();
-    public final Variables variables = new Variables();
 
     /**
      * Constructor.
@@ -180,102 +169,81 @@ extends ComplexStepState<
         clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
 
         //clone.vars.putAll( this.vars );
-        for ( Entry<String, ? extends Object> initialVariableEntry : this.variables )
-        {
-            clone.variables.set(
-                    initialVariableEntry.getKey() ,
-                    initialVariableEntry.getValue() );
-        }
+        //for ( Entry<String, ? extends Object> initialVariableEntry : this.globalVariables )
+        //{
+        //    clone.globalVariables.set(
+        //            initialVariableEntry.getKey() ,
+        //            initialVariableEntry.getValue() );
+        //}
 
         return clone;
     }
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#saveLastStepState()
-     */
-    @Override
-    public void saveLastStepState()
-    {
-        this.parent.getRootParent().saveLastStepState();
-    }
+    //@Override
+    //public void saveLastStepState()
+    //{
+    //    this.parent.getRootParent().saveLastStepState();
+    //}
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#localVars()
-     */
-    @Override
-    //public Map<String, Object> localVars()
-    public Variables localVars()
-    {
-        return this.variables;
-    }
+    //@Override
+    ////public Map<String, Object> localVars()
+    //public GlobalVariables localVars()
+    //{
+    //    return this.globalVariables;
+    //}
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#globalVars()
-     */
-    @Override
-    //public Map<String, Object> globalVars()
-    public Variables globalVars()
-    {
-        return this.parent/*.getRootParent()*/.globalVars();
-    }
+    //@Override
+    ////public Map<String, Object> globalVars()
+    //public GlobalVariables globalVars()
+    //{
+    //    return this.parent/*.getRootParent()*/.globalVars();
+    //}
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#procedureArgumentValues()
-     */
-    @Override
-    //public Map<String, Object> procedureArgumentValues()
-    public Arguments procedureArgumentValues()
-    {
-        return
-                //this.procedureArgumentValues;
-                this.arguments;
-    }
+    //@Override
+    ////public Map<String, Object> procedureArgumentValues()
+    //public Arguments procedureArgumentValues()
+    //{
+    //    return
+    //            //this.procedureArgumentValues;
+    //            this.arguments;
+    //}
 
-    /**
-     * @see HasArgumentsAndVariables#globalArgumentValues()
-     */
-    @Override
-    public Arguments globalArgumentValues()
-    {
-        return this.parent.globalArgumentValues();
-    }
+    //@Override
+    //public Arguments globalArgumentValues()
+    //{
+    //    return this.parent.globalArgumentValues();
+    //}
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#getRootParent()
-     */
-    @Override
-    public CoroutineIterator<RESULT> getRootParent()
-    {
-        return this.parent.getRootParent();
-    }
+    //@Override
+    //public CoroutineIterator<RESULT> getRootParent()
+    //{
+    //    return this.parent.getRootParent();
+    //}
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#getProcedure(String)
-     */
-    @Override
-    public Procedure<RESULT> getProcedure(
-            final String procedureName )
-    {
-        return this.getRootParent().getProcedure( procedureName );
-    }
+    //@Override
+    //public Procedure<RESULT> getProcedure(
+    //        final String procedureName )
+    //{
+    //    return this.getRootParent().getProcedure( procedureName );
+    //}
 
-    @Override
-    public boolean isCoroutineRoot()
-    {
-        return false;
-    }
+    //@Override
+    //public boolean isCoroutineRoot()
+    //{
+    //    return false;
+    //}
 
-    @Override
-    public Map<String, Class<?>> procedureParameterTypes()
-    {
-        return this.arguments.procedureParameterTypes();
-    }
+    //@Override
+    //public Map<String, Class<?>> procedureParameterTypes()
+    //{
+    //    return this.arguments.procedureParameterTypes();
+    //}
 
-    @Override
-    public Map<String, Class<?>> globalParameterTypes()
-    {
-        //throw new RuntimeException( "not implemented" );
-        return this.getRootParent().arguments.procedureParameterTypes();
-    }
+    //@Override
+    //public Map<String, Class<?>> globalParameterTypes()
+    //{
+    //    //throw new RuntimeException( "not implemented" );
+    //    return this.getRootParent().arguments.procedureParameterTypes();
+    //}
 
 }

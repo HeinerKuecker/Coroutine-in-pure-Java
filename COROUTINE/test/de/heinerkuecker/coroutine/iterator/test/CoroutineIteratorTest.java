@@ -70,6 +70,8 @@ public class CoroutineIteratorTest
                         null ,
                         params ,
                         args ,
+                        // globalVariables
+                        null ,
                         // steps
                         new YieldReturn<>(
                                 new GetGlobalArgument<>(

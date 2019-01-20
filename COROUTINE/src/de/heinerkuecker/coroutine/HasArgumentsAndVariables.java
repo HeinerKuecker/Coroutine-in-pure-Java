@@ -8,17 +8,19 @@ public interface HasArgumentsAndVariables
 {
 
     /**
-     * @return Map with local variables
+     * @return Map with local globalVariables
      */
     //abstract public Map<String, Object> localVars();
-    //abstract public Variables localVars();
+    //abstract public GlobalVariables localVars();
+    //abstract public BlockLocalVariables localVars();
     abstract public VariablesOrLocalVariables localVars();
 
     /**
-     * @return Map with global variables
+     * @return Map with global globalVariables
      */
     //abstract public Map<String, Object> globalVars();
-    abstract public Variables globalVars();
+    //abstract public GlobalVariables globalVars();
+    abstract public VariablesOrLocalVariables globalVars();
 
     /**
      * @return Map with procedure arguments

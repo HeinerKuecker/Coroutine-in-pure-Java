@@ -27,7 +27,8 @@ extends HasArgumentsAndVariables
 
     abstract CoroutineIterator<RESULT> getRootParent();
 
-    abstract boolean isCoroutineRoot();
+    // TODO remove, was intented for glabal variables
+    //abstract boolean isCoroutineRoot();
 
     abstract public Procedure<RESULT> getProcedure(
             final String procedureName );

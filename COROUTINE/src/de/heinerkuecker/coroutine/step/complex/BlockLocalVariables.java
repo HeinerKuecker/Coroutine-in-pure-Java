@@ -1,7 +1,9 @@
 package de.heinerkuecker.coroutine.step.complex;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -152,6 +154,27 @@ implements VariablesOrLocalVariables
     }
 
     /**
+     * @see Iterable#iterator()
+     */
+    @Override
+    public Iterator<Entry<String, Object>> iterator()
+    {
+        return this.values.entrySet().iterator();
+    }
+
+    @Override
+    public Map<String, Class<?>> getVariableTypes()
+    {
+        return Collections.unmodifiableMap( this.types );
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        return types.isEmpty();
+    }
+
+    /**
      * @see Object#toString()
      */
     @Override
@@ -179,15 +202,6 @@ implements VariablesOrLocalVariables
                         : ArrayDeepToString.deepToString( value ) );
         }
         return "" + '{' + sb + '}';
-    }
-
-    /**
-     * @see Iterable#iterator()
-     */
-    @Override
-    public Iterator<Entry<String, Object>> iterator()
-    {
-        return this.values.entrySet().iterator();
     }
 
     /**

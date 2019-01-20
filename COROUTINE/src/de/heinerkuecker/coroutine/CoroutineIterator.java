@@ -21,6 +21,7 @@ import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
+import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -75,10 +76,10 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     private final Class<? extends RESULT> resultType;
 
     /**
-     * Variables.
+     * GlobalVariables.
      */
     //public final HashMap<String, Object> vars = new HashMap<>();
-    public final Variables variables = new Variables();
+    public final GlobalVariables globalVariables = new GlobalVariables();
 
     private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
 
@@ -90,7 +91,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      * Constructor.
      *
      * @param procedures can be <code>null</code>
-     * @param initialVariableValues key value pairs to put initial in variables {@link #vars}, can be <code>null</code>
+     * @param initialVariableValues key value pairs to put initial in globalVariables {@link #vars}, can be <code>null</code>
      * @param steps steps for coroutine processor
      */
     @SafeVarargs
@@ -100,6 +101,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<?>[] args ,
+            final DeclareVariable<RESULT, ?>[] globalVariableDeclarations ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
@@ -157,6 +159,14 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                         //parent
                         this );
 
+        if ( globalVariableDeclarations != null )
+        {
+            for ( DeclareVariable<RESULT, ?> globalVariableDeclaration : globalVariableDeclarations )
+            {
+                globalVariableDeclaration.execute( this );
+            }
+        }
+
         this.complexStep.setResultType( resultType );
 
         doMoreInitializations();
@@ -213,12 +223,14 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
             this.complexStep.checkUseVariables(
                     //isCoroutineRoot
-                    true ,
+                    //true ,
                     // alreadyCheckedProcedureNames
                     new HashSet<>() ,
                     // parent
                     this ,
-                    new HashMap<>() ,
+                    // globalVariableTypes
+                    this.globalVariables.getVariableTypes() ,
+                    // localVariableTypes
                     new HashMap<>() );
         }
     }
@@ -385,9 +397,9 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     //public Map<String, Object> localVars()
-    public Variables localVars()
+    public VariablesOrLocalVariables localVars()
     {
-        return this.variables;
+        return this.globalVariables;
     }
 
     /**
@@ -395,9 +407,9 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     //public Map<String, Object> globalVars()
-    public Variables globalVars()
+    public VariablesOrLocalVariables globalVars()
     {
-        return this.variables;
+        return this.globalVariables;
     }
 
     /**
@@ -429,11 +441,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         return this;
     }
 
-    @Override
-    public boolean isCoroutineRoot()
-    {
-        return true;
-    }
+    //@Override
+    //public boolean isCoroutineRoot()
+    //{
+    //    return true;
+    //}
 
     @Override
     public Map<String, Class<?>> procedureParameterTypes()
@@ -460,7 +472,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                 "finallyReturnRaised=" + this.finallyReturnRaised + ", " +
                 "hasNext=" + this.hasNext + ", " +
                 "next=" + ArrayDeepToString.deepToString( this.next ) + ", " +
-                "variables=" + this.variables + "\n" +
+                "globalVariables=" + this.globalVariables + "\n" +
                 this.complexStep.toString(
                         //parent
                         this ,

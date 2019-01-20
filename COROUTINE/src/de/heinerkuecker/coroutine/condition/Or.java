@@ -68,7 +68,7 @@ implements Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -77,7 +77,7 @@ implements Condition/*<CoroutineIterator<?>>*/
         for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
         {
             condition.checkUseVariables(
-                    isCoroutineRoot ,
+                    //isCoroutineRoot ,
                     alreadyCheckedProcedureNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );

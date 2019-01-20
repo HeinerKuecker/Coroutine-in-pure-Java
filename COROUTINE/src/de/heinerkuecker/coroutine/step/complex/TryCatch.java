@@ -160,14 +160,14 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
         this.tryBodyComplexStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
@@ -182,7 +182,7 @@ extends ComplexStep<
                 catchExceptionClass );
 
         this.catchBodyComplexStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,

@@ -152,7 +152,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -163,18 +163,18 @@ extends ComplexStep<
                 new HashMap<>(
                         localVariableTypes );
 
-        final Map<String, Class<?>> thisGlobalVariableTypes;
-        if ( isCoroutineRoot )
-        {
-            // block local scope
-            thisGlobalVariableTypes =
-                    new HashMap<>(
-                            globalVariableTypes );
-        }
-        else
-        {
-            thisGlobalVariableTypes = globalVariableTypes;
-        }
+        //final Map<String, Class<?>> thisGlobalVariableTypes;
+        //if ( isCoroutineRoot )
+        //{
+        //    // block local scope
+        //    thisGlobalVariableTypes =
+        //            new HashMap<>(
+        //                    globalVariableTypes );
+        //}
+        //else
+        //{
+        //    thisGlobalVariableTypes = globalVariableTypes;
+        //}
 
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
@@ -192,26 +192,27 @@ extends ComplexStep<
                         declareLocalVar.varName ,
                         declareLocalVar.type );
 
-                if ( isCoroutineRoot )
-                {
-                    if ( thisGlobalVariableTypes.containsKey( declareLocalVar.varName ) )
-                    {
-                        throw new DeclareVariable.VariableAlreadyDeclaredException(
-                                declareLocalVar );
-                    }
-
-                    thisGlobalVariableTypes.put(
-                            declareLocalVar.varName ,
-                            declareLocalVar.type );
-                }
+                //if ( isCoroutineRoot )
+                //{
+                //    if ( thisGlobalVariableTypes.containsKey( declareLocalVar.varName ) )
+                //    {
+                //        throw new DeclareVariable.VariableAlreadyDeclaredException(
+                //                declareLocalVar );
+                //    }
+                //
+                //    thisGlobalVariableTypes.put(
+                //            declareLocalVar.varName ,
+                //            declareLocalVar.type );
+                //}
             }
             else
             {
                 step.checkUseVariables(
-                        isCoroutineRoot ,
+                        //isCoroutineRoot ,
                         alreadyCheckedProcedureNames ,
                         parent ,
-                        thisGlobalVariableTypes ,
+                        //thisGlobalVariableTypes
+                        globalVariableTypes ,
                         thisLocalVariableTypes );
             }
         }
@@ -248,6 +249,11 @@ extends ComplexStep<
                 (BlockState<RESULT /*, PARENT*/>) nextStepExecuteState;
 
         final StringBuilder buff = new StringBuilder();
+
+        if ( nextSequenceExecuteState != null )
+        {
+            buff.append( nextSequenceExecuteState.getVariablesStr( indent ) );
+        }
 
         for ( int i = 0 ; i < steps.length ; i++ )
         {

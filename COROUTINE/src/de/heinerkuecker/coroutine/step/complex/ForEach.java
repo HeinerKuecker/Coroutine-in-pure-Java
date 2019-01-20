@@ -197,7 +197,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -212,7 +212,7 @@ extends ComplexStep<
                 elementType );
 
         this.bodyComplexStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
@@ -238,17 +238,17 @@ extends ComplexStep<
             ComplexStepState<?, ?, RESULT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final ForEachState<RESULT/*, PARENT*/, ELEMENT> lastForExecuteState =
+        final ForEachState<RESULT/*, PARENT*/, ELEMENT> lastForeachExecuteState =
                 (ForEachState<RESULT/*, PARENT*/, ELEMENT>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final ForEachState<RESULT/*, PARENT*/, ELEMENT> nextForExecuteState =
+        final ForEachState<RESULT/*, PARENT*/, ELEMENT> nextForeachExecuteState =
                 (ForEachState<RESULT/*, PARENT*/, ELEMENT>) nextStepExecuteState;
 
         final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastBodyState;
-        if ( lastForExecuteState != null )
+        if ( lastForeachExecuteState != null )
         {
-            lastBodyState = lastForExecuteState.bodyComplexState;
+            lastBodyState = lastForeachExecuteState.bodyComplexState;
         }
         else
         {
@@ -256,9 +256,9 @@ extends ComplexStep<
         }
 
         final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextBodyState;
-        if ( nextForExecuteState != null )
+        if ( nextForeachExecuteState != null )
         {
-            nextBodyState = nextForExecuteState.bodyComplexState;
+            nextBodyState = nextForeachExecuteState.bodyComplexState;
         }
         else
         {
@@ -266,8 +266,8 @@ extends ComplexStep<
         }
 
         final String variableNameStr;
-        if ( lastForExecuteState != null &&
-                lastForExecuteState.runInConditionAndUpdate )
+        if ( lastForeachExecuteState != null &&
+                lastForeachExecuteState.runInConditionAndUpdate )
         {
             variableNameStr =
                     "last:" +
@@ -275,8 +275,8 @@ extends ComplexStep<
                     "   " +
                     this.variableName;
         }
-        else if ( nextForExecuteState != null &&
-                nextForExecuteState.runInConditionAndUpdate )
+        else if ( nextForeachExecuteState != null &&
+                nextForeachExecuteState.runInConditionAndUpdate )
         {
             variableNameStr =
                     "next:" +
@@ -293,8 +293,8 @@ extends ComplexStep<
         }
 
         final String iterableExpressionStr;
-        if ( lastForExecuteState != null &&
-                lastForExecuteState.runInInitializer )
+        if ( lastForeachExecuteState != null &&
+                lastForeachExecuteState.runInInitializer )
         {
             iterableExpressionStr =
                     "last:" +
@@ -302,8 +302,8 @@ extends ComplexStep<
                     "   " +
                     this.iterableExpression;
         }
-        else if ( nextForExecuteState != null &&
-                nextForExecuteState.runInInitializer )
+        else if ( nextForeachExecuteState != null &&
+                nextForeachExecuteState.runInInitializer )
         {
             iterableExpressionStr =
                     "next:" +
@@ -321,19 +321,31 @@ extends ComplexStep<
 
         // TODO check whether output subsequent iterator (CoroutineIterator) is usefuel
         //final String iterableStr;
-        //if ( nextForExecuteState != null &&
-        //        nextForExecuteState.iterator != null )
+        //if ( nextForeachExecuteState != null &&
+        //        nextForeachExecuteState.iterator != null )
         //{
         //    iterableStr =
         //            indent +
         //            "iterator: " +
-        //            nextForExecuteState.iterator +
+        //            nextForeachExecuteState.iterator +
         //            "\n";
         //}
         //else
         //{
         //    iterableStr = "";
         //}
+
+        final String variablesStr;
+        if ( nextForeachExecuteState == null )
+        {
+            variablesStr = "";
+        }
+        else
+        {
+            variablesStr =
+                    nextForeachExecuteState.getVariablesStr(
+                            indent );
+        }
 
         return
                 indent +
@@ -345,6 +357,7 @@ extends ComplexStep<
                 // TODO check whether output current (next) variable value is usefuel
                 iterableExpressionStr + " )\n" +
                 // TODO iterableStr +
+                variablesStr +
                 this.bodyComplexStep.toString(
                         parent ,
                         indent + " " ,

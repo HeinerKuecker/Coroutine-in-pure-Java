@@ -258,25 +258,25 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            final boolean isCoroutineRoot ,
+            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.condition.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.thenBodyComplexStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.elseBodyComplexStep.checkUseVariables(
-                isCoroutineRoot ,
+                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -376,12 +376,25 @@ extends ComplexStep<
                     this.condition;
         }
 
+        final String variablesStr;
+        if ( nextIfElseExecuteState == null )
+        {
+            variablesStr = "";
+        }
+        else
+        {
+            variablesStr =
+                    nextIfElseExecuteState.getVariablesStr(
+                            indent );
+        }
+
         return
                 indent +
                 this.getClass().getSimpleName() + " (" +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "\n" +
                 conditionStr + " )\n" +
+                variablesStr +
                 this.thenBodyComplexStep.toString(
                         parent ,
                         indent + " " ,

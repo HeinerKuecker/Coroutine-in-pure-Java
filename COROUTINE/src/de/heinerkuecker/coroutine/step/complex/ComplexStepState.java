@@ -6,7 +6,6 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.Procedure;
-import de.heinerkuecker.coroutine.Variables;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
@@ -77,19 +76,19 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     }
 
     @Override
-    public CoroutineIterator getRootParent()
+    public CoroutineIterator<RESULT> getRootParent()
     {
         return parent.getRootParent();
     }
 
-    @Override
-    public boolean isCoroutineRoot()
-    {
-        return parent.isCoroutineRoot();
-    }
+    //@Override
+    //public boolean isCoroutineRoot()
+    //{
+    //    return parent.isCoroutineRoot();
+    //}
 
     @Override
-    public Procedure getProcedure(
+    public Procedure<RESULT> getProcedure(
             final String procedureName )
     {
         return parent.getProcedure( procedureName );
@@ -102,7 +101,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     }
 
     @Override
-    public Variables globalVars()
+    public VariablesOrLocalVariables globalVars()
     {
         return parent.globalVars();
     }
@@ -131,4 +130,22 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
         return parent.globalParameterTypes();
     }
 
+    protected String getVariablesStr(
+            final String indent )
+    {
+        if ( this.blockLocalVariables.isEmpty() )
+        {
+            return "";
+        }
+
+        final String variablesStr;
+
+        variablesStr =
+                    indent + " " +
+                    "variables: " +
+                    blockLocalVariables +
+                    "\n";
+
+        return variablesStr;
+    }
 }
