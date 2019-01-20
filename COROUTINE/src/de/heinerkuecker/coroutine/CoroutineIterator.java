@@ -460,7 +460,7 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
     {
         //throw new RuntimeException( "not implemented" );
         //return procedureParameterTypes();
-        return globalVariables.getVariableTypes();
+        return arguments.procedureParameterTypes();
     }
 
     /**

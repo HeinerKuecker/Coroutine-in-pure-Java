@@ -52,7 +52,7 @@ implements Iterable<Entry<String, Object>>
         if ( params != null )
         {
             if ( checkMandantoryValues )
-            {
+            { // collect mandatory argument names
                 for ( Parameter param : params.values() )
                 {
                     if ( param.isMandantory )

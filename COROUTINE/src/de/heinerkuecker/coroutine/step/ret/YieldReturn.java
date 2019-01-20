@@ -132,7 +132,9 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public void checkUseArguments(
             HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
     {
-        this.expression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.expression.checkUseArguments(
+                alreadyCheckedProcedureNames ,
+                parent );
     }
 
     /**
