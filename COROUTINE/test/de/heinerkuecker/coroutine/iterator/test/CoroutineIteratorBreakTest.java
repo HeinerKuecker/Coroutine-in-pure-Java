@@ -25,6 +25,7 @@ import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
  */
 public class CoroutineIteratorBreakTest
 {
+    @SuppressWarnings("javadoc")
     @Test
     public void test_For_Break()
     {

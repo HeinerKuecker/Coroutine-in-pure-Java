@@ -19,27 +19,73 @@ import de.heinerkuecker.coroutine.step.ret.YieldReturn;
  */
 public class CoroutineIteratorTryCatchTest
 {
+
+    @SuppressWarnings("serial")
+    static class TestException
+    extends RuntimeException
+    {
+        /**
+         * Constructor.
+         *
+         * @param message
+         */
+        public TestException(
+                final String message )
+        {
+            super( message );
+        }
+
+        @Override
+        public int hashCode()
+        {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((this.getMessage() == null) ? 0 : this.getMessage().hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(
+                final Object obj )
+        {
+            if ( this == obj )
+            {
+                return true;
+            }
+
+            if ( obj == null )
+            {
+                return false;
+            }
+
+            if ( getClass() != obj.getClass() )
+            {
+                return false;
+            }
+
+            final TestException other = (TestException) obj;
+
+            if ( this.getMessage() == null )
+            {
+                if (other.getMessage() != null)
+                {
+                    return false;
+                }
+            }
+            else if ( ! this.getMessage().equals( other.getMessage() ) )
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
     @Test
     @SuppressWarnings("javadoc")
     public void test_TryCatch_0()
     {
         CoroutineDebugSwitches.initializationChecks = true;
-
-        @SuppressWarnings("serial")
-        class TestException
-        extends RuntimeException
-        {
-            /**
-             * Constructor.
-             *
-             * @param message
-             */
-            public TestException(
-                    final String message )
-            {
-                super( message );
-            }
-        }
 
         final CoroutineIterator<Integer> coroIter =
                 new CoroutineIterator<Integer>(
@@ -77,67 +123,6 @@ public class CoroutineIteratorTryCatchTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
         //CoroutineDebugSwitches.saveToStringInfos = false;
-
-        @SuppressWarnings("serial")
-        class TestException
-        extends RuntimeException
-        {
-            /**
-             * Constructor.
-             *
-             * @param message
-             */
-            public TestException(
-                    final String message )
-            {
-                super( message );
-            }
-
-            @Override
-            public int hashCode()
-            {
-                final int prime = 31;
-                int result = 1;
-                result = prime * result + ((this.getMessage() == null) ? 0 : this.getMessage().hashCode());
-                return result;
-            }
-
-            @Override
-            public boolean equals(
-                    final Object obj )
-            {
-                if ( this == obj )
-                {
-                    return true;
-                }
-
-                if ( obj == null )
-                {
-                    return false;
-                }
-
-                if ( getClass() != obj.getClass() )
-                {
-                    return false;
-                }
-
-                final TestException other = (TestException) obj;
-
-                if ( this.getMessage() == null )
-                {
-                    if (other.getMessage() != null)
-                    {
-                        return false;
-                    }
-                }
-                else if ( ! this.getMessage().equals( other.getMessage() ) )
-                {
-                    return false;
-                }
-
-                return true;
-            }
-        }
 
         final CoroutineIterator<TestException> coroIter =
                 new CoroutineIterator<TestException>(
