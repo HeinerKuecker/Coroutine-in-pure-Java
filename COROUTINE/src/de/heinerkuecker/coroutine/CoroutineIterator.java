@@ -36,7 +36,7 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * @author Heiner K&uuml;cker
  */
 public class CoroutineIterator<RESULT>
-implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
+implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
 {
     /**
      * Es muss ein ComplexStep sein,
@@ -51,7 +51,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
 
     // for debug
     private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> lastComplexStepState;
-
 
     private boolean finallyReturnRaised;
 
@@ -80,8 +79,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     //public final HashMap<String, Object> vars = new HashMap<>();
     public final GlobalVariables globalVariables = new GlobalVariables();
-
-    //public final BlockLocalVariables blockLocalVariables = new BlockLocalVariables();
 
     private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
 
@@ -134,17 +131,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
                         procedure );
             }
         }
-
-        //if ( initialVariableValues != null )
-        //{
-        //    //this.vars.putAll( initialVariableValues );
-        //    for ( Entry<String, ? extends Object> initialVariableEntry : initialVariableValues.entrySet() )
-        //    {
-        //        this.variables.set(
-        //                initialVariableEntry.getKey() ,
-        //                initialVariableEntry.getValue() );
-        //    }
-        //}
 
         this.params =
                 Procedure.initParams(
@@ -337,7 +323,6 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
             final CoroIterStepResult.FinallyReturnWithResult<RESULT> yieldReturnWithResult =
                     (CoroIterStepResult.FinallyReturnWithResult<RESULT>) executeResult;
 
-
             this.next =
                     resultType.cast(
                             yieldReturnWithResult.result );
@@ -438,14 +423,11 @@ implements AbstrCoroIterator<RESULT/*, CoroutineIterator<RESULT>*/>
         return this.arguments;
     }
 
-    /**
-     * @see CoroutineOrProcedureOrComplexstep#getRootParent()
-     */
-    @Override
-    public CoroutineIterator<RESULT> getRootParent()
-    {
-        return this;
-    }
+    //@Override
+    //public CoroutineIterator<RESULT> getRootParent()
+    //{
+    //    return this;
+    //}
 
     //@Override
     //public boolean isCoroutineRoot()

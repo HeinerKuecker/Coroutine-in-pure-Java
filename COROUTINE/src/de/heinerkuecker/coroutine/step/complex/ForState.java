@@ -33,6 +33,20 @@ extends ComplexStepState<
     private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
 
     /**
+     * Local variables for
+     * condition,
+     * body and
+     * update step.
+     *
+     * The super {@link ComplexStepState#blockLocalVariables}
+     * is used for
+     * initial step
+     * and as parent for this
+     * {@link #subBlockLocalVariables}.
+     */
+    private final BlockLocalVariables subBlockLocalVariables;
+
+    /**
      * Constructor.
      */
     public ForState(
@@ -48,6 +62,10 @@ extends ComplexStepState<
         this.parent =
                 Objects.requireNonNull(
                         parent );
+
+        this.subBlockLocalVariables =
+                new BlockLocalVariables(
+                        super.localVars() );
     }
 
     @Override

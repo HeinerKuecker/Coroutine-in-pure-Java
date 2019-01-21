@@ -47,6 +47,20 @@ implements CoroExpression<Integer>
     }
 
     /**
+     * Conenience constructor.
+     *
+     * @param lhs
+     * @param rhs
+     */
+    public IntAdd(
+            final CoroExpression<Integer> lhs ,
+            final Integer rhs )
+    {
+        this.lhs = Objects.requireNonNull( lhs );
+        this.rhs = new Value<Integer>( rhs );
+    }
+
+    /**
      * Add.
      */
     @Override

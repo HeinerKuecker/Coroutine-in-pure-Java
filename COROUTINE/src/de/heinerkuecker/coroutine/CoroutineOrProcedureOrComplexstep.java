@@ -25,7 +25,8 @@ extends HasArgumentsAndVariables
      */
     abstract public void saveLastStepState();
 
-    abstract CoroutineIterator<RESULT> getRootParent();
+    // TODO wird dies noch gebraucht
+    //abstract CoroutineIterator<RESULT> getRootParent();
 
     // TODO remove, was intented for glabal variables
     //abstract boolean isCoroutineRoot();

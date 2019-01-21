@@ -442,9 +442,7 @@ extends ComplexStep<
             final CoroutineOrProcedureOrComplexstep<?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        //throw new RuntimeException( "not implemented" );
-        final Map<String, Class<?>> thisLocalVariableTypes = new HashMap<>();
-        thisLocalVariableTypes.putAll( localVariableTypes );
+        final Map<String, Class<?>> thisLocalVariableTypes = new HashMap<>( localVariableTypes );
 
         this.initialStep.checkUseVariables(
                 //isCoroutineRoot ,

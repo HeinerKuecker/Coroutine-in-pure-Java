@@ -38,6 +38,19 @@ implements CoroExpression<T>
         this.value = value;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param value
+     */
+    public Value(
+            final T value )
+    {
+        this.type = (Class<? extends T>) value.getClass();
+
+        this.value = value;
+    }
+
     @Override
     public T evaluate(
             final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )

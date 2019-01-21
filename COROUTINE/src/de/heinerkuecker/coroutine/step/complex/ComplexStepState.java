@@ -3,7 +3,6 @@ package de.heinerkuecker.coroutine.step.complex;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
@@ -72,14 +71,15 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     @Override
     public void saveLastStepState()
     {
-        getRootParent().saveLastStepState();
+        //getRootParent().saveLastStepState();
+        this.parent.saveLastStepState();
     }
 
-    @Override
-    public CoroutineIterator<RESULT> getRootParent()
-    {
-        return parent.getRootParent();
-    }
+    //@Override
+    //public CoroutineIterator<RESULT> getRootParent()
+    //{
+    //    return parent.getRootParent();
+    //}
 
     //@Override
     //public boolean isCoroutineRoot()
