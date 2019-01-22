@@ -1,8 +1,6 @@
 package de.heinerkuecker.coroutine.step.simple;
 
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -10,7 +8,6 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassException;
@@ -25,7 +22,8 @@ import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassE
  * @author Heiner K&uuml;cker
  */
 public final class DecrementLocalVar<RESULT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+//extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+extends SimpleStepWithoutExpression<RESULT>
 implements HasVariableName
 {
     /**
@@ -67,11 +65,11 @@ implements HasVariableName
         return CoroIterStepResult.continueCoroutine();
     }
 
-    @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    {
-        return Collections.emptyList();
-    }
+    //@Override
+    //public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    //{
+    //    return Collections.emptyList();
+    //}
 
     /**
      * @see CoroIterStep#setResultType(Class)
@@ -114,12 +112,12 @@ implements HasVariableName
         return this.localVarName;
     }
 
-    @Override
-    public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
-    {
-        // nothing to do
-    }
+    //@Override
+    //public void checkUseArguments(
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+    //{
+    //    // nothing to do
+    //}
 
     /**
      * @see Object#toString()
