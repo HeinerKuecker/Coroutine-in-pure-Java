@@ -87,7 +87,8 @@ implements CoroExpression<T> , HasVariableName
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         if ( ! globalVariableTypes.containsKey( this.globalVarName ) )
         {
@@ -116,7 +117,8 @@ implements CoroExpression<T> , HasVariableName
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         // nothing to do
     }

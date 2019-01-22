@@ -2,17 +2,10 @@ package de.heinerkuecker.coroutine.expression;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
  * Multiply
@@ -24,17 +17,18 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
  * @author Heiner K&uuml;cker
  */
 public class Multiply<T extends Number>
-implements CoroExpression<T>
+//implements CoroExpression<T>
+extends LhsRhsExpression<T>
 {
     /**
      * Left hand side expression.
      */
-    public final CoroExpression<? extends T> lhs;
+    //public final CoroExpression<? extends T> lhs;
 
     /**
      * Right hand side expression to multiply with.
      */
-    public final CoroExpression<? extends T> rhs;
+    //public final CoroExpression<? extends T> rhs;
 
     /**
      * Constructor.
@@ -46,14 +40,15 @@ implements CoroExpression<T>
             final CoroExpression<? extends T> lhs ,
             final CoroExpression<? extends T> rhs )
     {
-        this.lhs = Objects.requireNonNull( lhs );
-        this.rhs = Objects.requireNonNull( rhs );
+        //this.lhs = Objects.requireNonNull( lhs );
+        //this.rhs = Objects.requireNonNull( rhs );
+        super(
+                lhs ,
+                rhs );
     }
 
     /**
      * Add.
-     *
-     * @see CoroExpression#evaluate(CoroutineOrProcedureOrComplexstep)
      */
     @Override
     public T evaluate(
@@ -107,50 +102,47 @@ implements CoroExpression<T>
         return (T) (Double) ( lhsResult.doubleValue() * rhsResult.doubleValue() );
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
-    @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    {
-        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+    //@Override
+    //public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    //{
+    //    final List<GetProcedureArgument<?>> result = new ArrayList<>();
+    //
+    //    result.addAll(
+    //            lhs.getProcedureArgumentGetsNotInProcedure() );
+    //
+    //    result.addAll(
+    //            rhs.getProcedureArgumentGetsNotInProcedure() );
+    //
+    //    return result;
+    //}
 
-        result.addAll(
-                lhs.getProcedureArgumentGetsNotInProcedure() );
+    //@Override
+    //public void checkUseVariables(
+    //        //final boolean isCoroutineRoot ,
+    //        final HashSet<String> alreadyCheckedProcedureNames ,
+    //        final CoroutineOrProcedureOrComplexstep<?> parent ,
+    //        final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+    //{
+    //    this.lhs.checkUseVariables(
+    //            //isCoroutineRoot ,
+    //            alreadyCheckedProcedureNames ,
+    //            parent ,
+    //            globalVariableTypes, localVariableTypes );
+    //
+    //    this.rhs.checkUseVariables(
+    //            //isCoroutineRoot ,
+    //            alreadyCheckedProcedureNames ,
+    //            parent ,
+    //            globalVariableTypes, localVariableTypes );
+    //}
 
-        result.addAll(
-                rhs.getProcedureArgumentGetsNotInProcedure() );
-
-        return result;
-    }
-
-    @Override
-    public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
-    {
-        this.lhs.checkUseVariables(
-                //isCoroutineRoot ,
-                alreadyCheckedProcedureNames ,
-                parent ,
-                globalVariableTypes, localVariableTypes );
-
-        this.rhs.checkUseVariables(
-                //isCoroutineRoot ,
-                alreadyCheckedProcedureNames ,
-                parent ,
-                globalVariableTypes, localVariableTypes );
-    }
-
-    @Override
-    public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
-    {
-        this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-    }
+    //@Override
+    //public void checkUseArguments(
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+    //{
+    //    this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
+    //    this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
+    //}
 
     @SuppressWarnings("unchecked")
     @Override

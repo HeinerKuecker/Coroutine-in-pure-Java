@@ -93,7 +93,8 @@ implements CoroExpression<T> , HasArgumentName
      */
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?> parent )
     {
         if ( ! parent.globalParameterTypes().containsKey( this.globalArgumentName ) )
         {
