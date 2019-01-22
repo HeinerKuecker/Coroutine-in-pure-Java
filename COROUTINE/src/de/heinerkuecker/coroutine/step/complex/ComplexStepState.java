@@ -42,7 +42,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     {
         this.parent = Objects.requireNonNull( parent );
 
-        System.out.println( new Exception().getStackTrace()[ 0 ] + " " + this.getClass().getSimpleName() + " new blockLocalVariables " + parent.localVars() );
+        //System.out.println( new Exception().getStackTrace()[ 0 ] + " " + this.getClass().getSimpleName() + " new blockLocalVariables " + parent.localVars() );
         this.blockLocalVariables =
                 new BlockLocalVariables(
                         parent.localVars() );
