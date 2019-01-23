@@ -19,3 +19,5 @@ Boolean paramater condition (@see If)
 remove: IsTrue, IsFalse
 
 varargs: Add, StrConcat
+
+rename: step to statement

@@ -7,7 +7,7 @@ import java.util.List;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 
-abstract public class SimpleStepWithoutExpression<RESULT>
+abstract public class SimpleStepWithoutArguments<RESULT>
 extends SimpleStep<RESULT>
 {
 

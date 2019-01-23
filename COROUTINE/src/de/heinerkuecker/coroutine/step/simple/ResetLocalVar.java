@@ -12,7 +12,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 public final class ResetLocalVar<RESULT>
 //extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutExpression<RESULT>
+extends SimpleStepWithoutArguments<RESULT>
 implements HasVariableName
 {
     /**

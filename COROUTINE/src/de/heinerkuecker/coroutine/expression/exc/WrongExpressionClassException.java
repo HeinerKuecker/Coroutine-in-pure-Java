@@ -6,7 +6,7 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
  * Exception like {@link ClassCastException},
  * but more informations.
  */
-public class WrongClassException
+public class WrongExpressionClassException
 extends RuntimeException
 {
     /**
@@ -17,7 +17,7 @@ extends RuntimeException
     /**
      * Constructor.
      */
-    public WrongClassException(
+    public WrongExpressionClassException(
             final CoroExpression<?> valueExpression ,
             final Class<?> expectedClass ,
             final Object wrongValue )

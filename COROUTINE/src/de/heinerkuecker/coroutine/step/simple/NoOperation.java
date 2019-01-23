@@ -17,7 +17,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  */
 public final class NoOperation<RESULT>
 //extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutExpression<RESULT>
+extends SimpleStepWithoutArguments<RESULT>
 {
 
     /**

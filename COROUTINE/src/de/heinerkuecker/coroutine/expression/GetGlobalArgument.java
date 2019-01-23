@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
-import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
+import de.heinerkuecker.coroutine.expression.exc.WrongExpressionClassException;
 
 public class GetGlobalArgument<T>
 extends HasCreationStackTraceElement
@@ -66,7 +66,7 @@ implements CoroExpression<T> , HasArgumentName
             //        ( this.creationStackTraceElement != null
             //            ? " " + this.creationStackTraceElement
             //            : "" ) );
-            throw new WrongClassException(
+            throw new WrongExpressionClassException(
                     //valueExpression
                     this ,
                     //expectedClass

@@ -24,7 +24,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  * @param <RESULT> result type of coroutine, here unused
  */
-public final class SetLocalVar<RESULT, T>
+public /*final*/ class SetLocalVar<RESULT, T>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 implements CoroExpression<T> , HasVariableName
 {

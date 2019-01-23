@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.expression.GetGlobalVar;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
-import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassException;
+import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
 /**
  * Step {@link CoroIterStep} to
@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.step.simple.NegateLocalVar.WrongVariableClassE
  */
 public final class DecrementGlobalVar<RESULT>
 //extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutExpression<RESULT>
+extends SimpleStepWithoutArguments<RESULT>
 implements HasVariableName
 {
     /**
@@ -104,7 +104,7 @@ implements HasVariableName
 
         if ( ! Integer.class.equals( globalVariableTypes.get( globalVarName ) ) )
         {
-            throw new WrongVariableClassException(
+            throw new WrongStmtVariableClassException(
                     //wrongStep
                     this ,
                     //wrongClass

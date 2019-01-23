@@ -10,7 +10,8 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
+import de.heinerkuecker.coroutine.expression.exc.WrongExpressionClassException;
+import de.heinerkuecker.coroutine.expression.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
 public class GetGlobalVar<T>
@@ -64,7 +65,7 @@ implements CoroExpression<T> , HasVariableName
             //        ( this.creationStackTraceElement != null
             //            ? " " + this.creationStackTraceElement
             //            : "" ) );
-            throw new WrongClassException(
+            throw new WrongExpressionClassException(
                     //valueExpression
                     this ,
                     //expectedClass
@@ -99,7 +100,7 @@ implements CoroExpression<T> , HasVariableName
 
         if ( ! variableType.isAssignableFrom( this.type ) )
         {
-            throw new GetLocalVar.WrongVariableClassException(
+            throw new WrongExpressionVariableClassException(
                     //wrongNamedExpression
                     this ,
                     //wrongClass

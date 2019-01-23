@@ -10,7 +10,7 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.Value;
-import de.heinerkuecker.coroutine.expression.exc.WrongClassException;
+import de.heinerkuecker.coroutine.expression.exc.WrongExpressionClassException;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
@@ -80,7 +80,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
         if ( resultValue != null &&
                 ! resultType.isInstance( resultValue ) )
         {
-            throw new WrongClassException(
+            throw new WrongExpressionClassException(
                     //valueExpression
                     expression ,
                     //expectedClass
