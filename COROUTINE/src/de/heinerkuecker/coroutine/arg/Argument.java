@@ -58,7 +58,7 @@ implements CoroCheckable
     }
 
     public T getValue(
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         @SuppressWarnings("unchecked")
         final Class<T> parameterType = (Class<T>) parent.procedureParameterTypes().get( name );
@@ -78,7 +78,7 @@ implements CoroCheckable
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             Map<String, Class<?>> globalVariableTypes ,
             Map<String, Class<?>> localVariableTypes )
     {
@@ -92,7 +92,7 @@ implements CoroCheckable
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         final Class<?> parameterType = parent.procedureParameterTypes().get( name );
 
@@ -150,7 +150,7 @@ implements CoroCheckable
         //public <T extends HasCreationStackTraceElement & HasVariableName> ArgumentNotDeclaredException(
         //        final T stepOrExpression )
         public ArgumentNotDeclaredException(
-                final Argument argument )
+                final Argument<?> argument )
         {
             super(
                     "argument not declared: " +

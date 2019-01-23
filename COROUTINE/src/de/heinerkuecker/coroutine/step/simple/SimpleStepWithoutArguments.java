@@ -7,8 +7,8 @@ import java.util.List;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 
-abstract public class SimpleStepWithoutArguments<RESULT>
-extends SimpleStep<RESULT>
+abstract public class SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
+extends SimpleStep<RESULT , RESUME_ARGUMENT>
 {
 
     @Override
@@ -21,7 +21,7 @@ extends SimpleStep<RESULT>
     @Override
     final public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         // nothing to do
     }

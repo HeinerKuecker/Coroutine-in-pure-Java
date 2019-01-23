@@ -11,9 +11,9 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
-public final class NegateLocalVar<RESULT>
+public final class NegateLocalVar<RESULT , RESUME_ARGUMENT>
 //extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutArguments<RESULT>
+extends SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -33,7 +33,7 @@ implements HasVariableName
                         localVarName );
     }
 
-    public static <RESULT> NegateLocalVar<RESULT> negate(
+    public static <RESULT , RESUME_ARGUMENT> NegateLocalVar<RESULT , RESUME_ARGUMENT> negate(
             final String varName )
     {
         return new NegateLocalVar<>(
@@ -47,7 +47,7 @@ implements HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         final Object varValue =
                 parent.localVars().get(
@@ -90,7 +90,7 @@ implements HasVariableName
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -119,7 +119,7 @@ implements HasVariableName
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     //{
     //    // nothing to do
     //}

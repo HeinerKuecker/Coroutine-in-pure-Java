@@ -25,8 +25,8 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  * @param <RESULT> result type of coroutine, here unused
  */
-public final class SetGlobalVar<RESULT, T>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+public final class SetGlobalVar<RESULT, RESUME_ARGUMENT , T>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 implements CoroExpression<T> , HasVariableName
 {
     /**
@@ -81,7 +81,7 @@ implements CoroExpression<T> , HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         final Object varValue = varValueExpression.evaluate( parent );
 
@@ -97,7 +97,7 @@ implements CoroExpression<T> , HasVariableName
             final HasArgumentsAndVariables parent )
     // for using in expressions
     {
-        execute( (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
+        execute( (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent );
 
         return (T) parent.globalVars().get(
                 this ,
@@ -135,7 +135,7 @@ implements CoroExpression<T> , HasVariableName
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -153,7 +153,7 @@ implements CoroExpression<T> , HasVariableName
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.varValueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

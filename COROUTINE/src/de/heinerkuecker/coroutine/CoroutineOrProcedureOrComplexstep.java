@@ -15,8 +15,8 @@ import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
  * @author Heiner K&uuml;cker
  */
 //public interface CoroutineOrProcedureOrComplexstep<RESULT, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<RESULT, /*PARENT*/ THIS>>
-public interface CoroutineOrProcedureOrComplexstep<RESULT>
-extends HasArgumentsAndVariables
+public interface CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
+extends HasArgumentsAndVariables<RESUME_ARGUMENT>
 {
     /**
      * Save last step state for {@link ComplexStep#toString(String, ComplexStepState, ComplexStepState)}.
@@ -31,6 +31,6 @@ extends HasArgumentsAndVariables
     // TODO remove, was intented for glabal variables
     //abstract boolean isCoroutineRoot();
 
-    abstract public Procedure<RESULT> getProcedure(
+    abstract public Procedure<RESULT, RESUME_ARGUMENT> getProcedure(
             final String procedureName );
 }

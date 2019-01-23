@@ -43,7 +43,7 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public ELEMENT[] evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         //final Class<? extends ELEMENT> componentClass = elementClass;
         final Class<?> componentClass = arrayClass.getComponentType();
@@ -80,7 +80,7 @@ implements CoroExpression<ELEMENT[]>
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -96,7 +96,7 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {

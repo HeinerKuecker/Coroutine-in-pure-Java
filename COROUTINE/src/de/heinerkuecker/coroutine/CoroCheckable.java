@@ -15,12 +15,12 @@ public interface CoroCheckable
             // is coroutine or coroutine iterator, no procedure
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes );
 
     abstract public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent );
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent );
 
 }

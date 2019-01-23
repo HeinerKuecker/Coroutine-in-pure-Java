@@ -55,7 +55,7 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Object procArgValue = parent.procedureArgumentValues().get( procedureArgumentName );
 
@@ -89,7 +89,7 @@ implements CoroExpression<T> , HasArgumentName
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -102,7 +102,7 @@ implements CoroExpression<T> , HasArgumentName
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         if ( ! parent.procedureParameterTypes().containsKey( this.procedureArgumentName ) )
         {

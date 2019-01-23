@@ -22,14 +22,17 @@ import de.heinerkuecker.util.HCloneable;
  * TODO rename to ComplexStepExecuteState
  */
 abstract public /*interface*/class ComplexStepState<
-    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT /*, PARENT*/>,
-    STEP extends ComplexStep<STEP, STEP_STATE, RESULT /*, PARENT*/>,
-    RESULT
-    //PARENT extends CoroutineOrProcedureOrComplexstep<RESULT>
+    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
+    STEP extends ComplexStep<STEP, STEP_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
+    RESULT ,
+    //PARENT extends CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
+    RESUME_ARGUMENT
 >
-implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
+implements
+    CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> ,
+    HCloneable<STEP_STATE>
 {
-    protected final CoroutineOrProcedureOrComplexstep<RESULT> parent;
+    protected final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
 
     private final BlockLocalVariables blockLocalVariables;
 
@@ -38,7 +41,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
      */
     protected ComplexStepState(
             //final BlockLocalVariables blockLocalVariables
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         this.parent = Objects.requireNonNull( parent );
 
@@ -56,7 +59,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
      */
     abstract public CoroIterStepResult<RESULT> execute(
             //PARENT parent
-            //CoroutineOrProcedureOrComplexstep<RESULT> parent
+            //CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
             );
 
     /**
@@ -88,7 +91,7 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
     //}
 
     @Override
-    public Procedure<RESULT> getProcedure(
+    public Procedure<RESULT , RESUME_ARGUMENT> getProcedure(
             final String procedureName )
     {
         return parent.getProcedure( procedureName );
@@ -149,4 +152,11 @@ implements CoroutineOrProcedureOrComplexstep , HCloneable<STEP_STATE>
 
         return variablesStr;
     }
+
+    @Override
+    public RESUME_ARGUMENT getResumeArgument()
+    {
+        return this.parent.getResumeArgument();
+    }
+
 }

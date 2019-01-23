@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueExcepti
 import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 
 public class Coroutine<RESULT, RESUME_ARGUMENT>
-implements CoroutineOrProcedureOrComplexstep<RESULT>
+implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
 {
     /**
      * Es muss ein ComplexStep sein,
@@ -32,11 +32,11 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> complexStep;
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> nextComplexStepState;
+    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> complexStep;
+    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> nextComplexStepState;
 
     // for debug
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> lastComplexStepState;
+    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> lastComplexStepState;
 
     private boolean finallyReturnRaised;
 
@@ -51,11 +51,13 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
     //public final HashMap<String, Object> vars = new HashMap<>();
     private final GlobalVariables globalVariables = new GlobalVariables();
 
-    private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
+    private final Map<String, Procedure<RESULT , RESUME_ARGUMENT>> procedures = new HashMap<>();
 
     public final Map<String, Parameter> params;
 
     public final Arguments arguments;
+
+    private RESUME_ARGUMENT resumeArgument;
 
     public RESULT resume(
             final RESUME_ARGUMENT resumeArgument )
@@ -146,11 +148,11 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
     @SafeVarargs
     public Coroutine(
             final Class<? extends RESULT> resultType ,
-            final Iterable<Procedure<RESULT>> procedures ,
+            final Iterable<Procedure<RESULT , RESUME_ARGUMENT>> procedures ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<?>[] args ,
-            final DeclareVariable<RESULT, ?>[] globalVariableDeclarations ,
+            final DeclareVariable<RESULT, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
@@ -167,7 +169,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
 
         if ( procedures != null )
         {
-            for ( final Procedure<RESULT> procedure : procedures )
+            for ( final Procedure<RESULT , RESUME_ARGUMENT> procedure : procedures )
             {
                 if ( this.procedures.containsKey( procedure.name ) )
                 {
@@ -199,7 +201,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
 
         if ( globalVariableDeclarations != null )
         {
-            for ( DeclareVariable<RESULT, ?> globalVariableDeclaration : globalVariableDeclarations )
+            for ( DeclareVariable<RESULT, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
             {
                 globalVariableDeclaration.execute( this );
             }
@@ -274,7 +276,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
     }
 
     @Override
-    public Procedure<RESULT> getProcedure(
+    public Procedure<RESULT , RESUME_ARGUMENT> getProcedure(
             final String procedureName )
     {
         return this.procedures.get( procedureName );
@@ -285,7 +287,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
      */
     private void checkForUnresolvedBreaksAndContinues()
     {
-        final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+        final List<BreakOrContinue<?, ?>> unresolvedBreaksOrContinues =
                 complexStep.getUnresolvedBreaksOrContinues(
                         new HashSet<>() ,
                         this );
@@ -396,6 +398,12 @@ implements CoroutineOrProcedureOrComplexstep<RESULT>
         //throw new RuntimeException( "not implemented" );
         //return procedureParameterTypes();
         return arguments.procedureParameterTypes();
+    }
+
+    @Override
+    public RESUME_ARGUMENT getResumeArgument()
+    {
+        return this.resumeArgument;
     }
 
     /**

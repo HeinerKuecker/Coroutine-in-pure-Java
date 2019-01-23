@@ -20,8 +20,8 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * @author Heiner K&uuml;cker
  */
 //public interface BreakOrContinue<RESULT>
-abstract public class BreakOrContinue<RESULT>
-extends SimpleStep<RESULT /*, CoroutineIterator<RESULT>*/>
+abstract public class BreakOrContinue<RESULT , RESUME_ARGUMENT>
+extends SimpleStep<RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 {
     /**
      * Constructor.
@@ -59,7 +59,7 @@ extends SimpleStep<RESULT /*, CoroutineIterator<RESULT>*/>
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -68,7 +68,7 @@ extends SimpleStep<RESULT /*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         // nothing to do
     }

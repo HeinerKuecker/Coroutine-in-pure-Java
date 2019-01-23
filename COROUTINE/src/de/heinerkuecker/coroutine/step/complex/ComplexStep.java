@@ -22,10 +22,11 @@ import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
  */
 //public interface ComplexStep<STEP extends ComplexStep<STEP, RESULT, PARENT>, RESULT, PARENT extends CoroutineIterator<RESULT>>
 abstract public class ComplexStep<
-    STEP extends ComplexStep<STEP, STEP_STATE, RESULT/*, PARENT*/>,
-    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT/*, PARENT*/>,
-    RESULT
+    STEP extends ComplexStep<STEP, STEP_STATE, RESULT/*, PARENT*/, RESUME_ARGUMENT>,
+    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT/*, PARENT*/, RESUME_ARGUMENT>,
+    RESULT ,
     //PARENT extends CoroutineOrProcedureOrComplexstep<RESULT/*, PARENT*/>
+    RESUME_ARGUMENT
     >
 extends CoroIterStep<RESULT/*, PARENT*/>
 {
@@ -41,15 +42,15 @@ extends CoroIterStep<RESULT/*, PARENT*/>
     // TODO rename to newExecuteState
     //abstract public ComplexStepState<ComplexStepState<?, STEP, RESULT, PARENT>, STEP, RESULT, PARENT> newState();
     abstract public STEP_STATE newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent );
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent );
 
-    abstract public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+    abstract public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent );
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent );
 
     abstract public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final Set<String> labels );
 
     /**
@@ -62,11 +63,11 @@ extends CoroIterStep<RESULT/*, PARENT*/>
      * @return formatted {@link String}
      */
     abstract public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
             //final STEP_STATE lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState
             //final STEP_STATE nextStepExecuteState
             );
 

@@ -40,7 +40,7 @@ implements CoroExpression<Integer>
      */
     @Override
     public Integer evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Number numberExpressionResult = numberExpression.evaluate( parent );
 
@@ -65,7 +65,7 @@ implements CoroExpression<Integer>
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -78,7 +78,7 @@ implements CoroExpression<Integer>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.numberExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

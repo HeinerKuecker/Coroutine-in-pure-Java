@@ -22,7 +22,7 @@ extends CoroExpression<Boolean>
      * @return condition result
      */
     boolean execute(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent );
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent );
 
     /**
      * Evaluates expression.
@@ -34,7 +34,7 @@ extends CoroExpression<Boolean>
      */
     @Override
     default public Boolean evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         return execute( parent );
     }

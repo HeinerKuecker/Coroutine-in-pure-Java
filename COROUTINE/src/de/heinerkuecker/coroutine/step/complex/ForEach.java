@@ -15,12 +15,13 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.LabelAlreadyInUseException;
 
-public class ForEach<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, ELEMENT>
+public class ForEach<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT , ELEMENT>
 extends ComplexStep<
-    ForEach<RESULT/*, PARENT*/, ELEMENT>,
-    ForEachState<RESULT/*, PARENT*/, ELEMENT>,
-    RESULT
+    ForEach<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
+    ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
     public final String label;
@@ -31,7 +32,7 @@ extends ComplexStep<
 
     final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression;
 
-    final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> bodyComplexStep;
+    final ComplexStep<?, ?, RESULT/*, PARENT /*CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> bodyComplexStep;
 
     /**
      * Constructor.
@@ -108,8 +109,8 @@ extends ComplexStep<
      * @see ComplexStep#newState
      */
     @Override
-    public ForEachState<RESULT/*, PARENT*/, ELEMENT> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+    public ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         return new ForEachState<>(
                 this ,
@@ -121,13 +122,13 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+    public List<BreakOrContinue<? , ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
-        final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
+        final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
-        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
+        for ( BreakOrContinue<? , ?> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
                 alreadyCheckedProcedureNames ,
                 parent ) )
         {
@@ -171,13 +172,10 @@ extends ComplexStep<
         this.bodyComplexStep.setResultType( resultType );
     }
 
-    /**
-     * @see ComplexStep#checkLabelAlreadyInUse(Set)
-     */
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         if ( label != null )
@@ -199,7 +197,7 @@ extends ComplexStep<
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -222,7 +220,7 @@ extends ComplexStep<
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.iterableExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
@@ -232,20 +230,20 @@ extends ComplexStep<
      */
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final String indent ,
-            ComplexStepState<?, ?, RESULT> lastStepExecuteState ,
-            ComplexStepState<?, ?, RESULT> nextStepExecuteState )
+            ComplexStepState<?, ?, RESULT , RESUME_ARGUMENT> lastStepExecuteState ,
+            ComplexStepState<?, ?, RESULT , RESUME_ARGUMENT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final ForEachState<RESULT/*, PARENT*/, ELEMENT> lastForeachExecuteState =
-                (ForEachState<RESULT/*, PARENT*/, ELEMENT>) lastStepExecuteState;
+        final ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> lastForeachExecuteState =
+                (ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final ForEachState<RESULT/*, PARENT*/, ELEMENT> nextForeachExecuteState =
-                (ForEachState<RESULT/*, PARENT*/, ELEMENT>) nextStepExecuteState;
+        final ForEachState<RESULT/*, PARENT*/, RESUME_ARGUMENT , ELEMENT> nextForeachExecuteState =
+                (ForEachState<RESULT/*, PARENT*/, RESUME_ARGUMENT , ELEMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
         if ( lastForeachExecuteState != null )
         {
             lastBodyState = lastForeachExecuteState.bodyComplexState;
@@ -255,7 +253,7 @@ extends ComplexStep<
             lastBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
         if ( nextForeachExecuteState != null )
         {
             nextBodyState = nextForeachExecuteState.bodyComplexState;

@@ -21,9 +21,9 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class Continue<RESULT>
+public class Continue<RESULT , RESUME_ARGUMENT>
 //implements SimpleStep<RESULT, CoroutineIterator<RESULT>>
-extends BreakOrContinue<RESULT>
+extends BreakOrContinue<RESULT , RESUME_ARGUMENT>
 {
     /**
      * Label of the loop
@@ -59,7 +59,7 @@ extends BreakOrContinue<RESULT>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         return new CoroIterStepResult.ContinueLoop<RESULT>( this.label );
     }

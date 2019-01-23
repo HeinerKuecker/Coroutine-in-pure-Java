@@ -122,10 +122,10 @@ public class CoroutineIteratorForArrayComparatorTest
                                 // type
                                 int[][].class ,
                                 // steps
-                                new YieldReturn<int[][]>( nullValue() ) ,
-                                new YieldReturn<int[][]>( new int[][] {} ) ,
+                                new YieldReturn<int[][] , Void>( nullValue() ) ,
+                                new YieldReturn<int[][] , Void>( new int[][] {} ) ,
                                 // generate arrays of size 1
-                                new ForEach<int[][], int[]>(
+                                new ForEach<int[][], Void , int[]>(
                                         // variableName
                                         "intValue" ,
                                         // elementType
@@ -135,7 +135,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 (Class<? extends Iterable<int[]>>) Iterable.class ,
                                                 intArrDim1CoroIterable ) ,
                                         // steps
-                                        new YieldReturn<int[][]>(
+                                        new YieldReturn<int[][] , Void>(
                                                 new NewArray<int[]>(
                                                         // arrayClass
                                                         int[][].class ,
@@ -145,7 +145,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                 // type
                                                                 int[].class ) ) ) ) ,
                                 // generate arrays of size 2
-                                new ForEach<int[][], int[]>(
+                                new ForEach<int[][] , Void, int[]>(
                                         // variableName
                                         "intValue0" ,
                                         // elementType
@@ -155,7 +155,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                 (Class<? extends Iterable<int[]>>) Iterable.class ,
                                                 intArrDim1CoroIterable ) ,
                                         // steps
-                                        new ForEach<int[][], int[]>(
+                                        new ForEach<int[][], Void , int[]>(
                                                 // variableName
                                                 "intValue1" ,
                                                 // elementType
@@ -286,7 +286,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         new YieldReturn<>( nullValue() ) ,
                                         new YieldReturn<>( new Integer[] {} ) ,
                                         // generate arrays of size 1
-                                        new ForEach<Integer[], Integer>(
+                                        new ForEach<Integer[] , Void, Integer>(
                                                 // variableName
                                                 "intValue" ,
                                                 // elementType
@@ -296,7 +296,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                         (Class<? extends Iterable<Integer>>) Iterable.class ,
                                                         integerIterable ) ,
                                                 // steps
-                                                new YieldReturn<Integer[]>(
+                                                new YieldReturn<Integer[] , Void>(
                                                         new NewArray<Integer>(
                                                                 // arrayClass
                                                                 Integer[].class ,
@@ -306,7 +306,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                                         // type
                                                                         Integer.class ) ) ) ) ,
                                         // generate arrays of size 2
-                                        new ForEach<Integer[], Integer>(
+                                        new ForEach<Integer[] , Void, Integer>(
                                                 // variableName
                                                 "intValue0" ,
                                                 // elementType
@@ -316,7 +316,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                         (Class<? extends Iterable<Integer>>) Iterable.class ,
                                                         integerIterable ) ,
                                                 // steps
-                                                new ForEach<Integer[], Integer>(
+                                                new ForEach<Integer[] , Void , Integer>(
                                                         // variableName
                                                         "intValue1" ,
                                                         // elementType
@@ -325,7 +325,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                         new Value<Iterable<Integer>>(
                                                                 (Class<? extends Iterable<Integer>>) Iterable.class ,
                                                                 integerIterable ) ,
-                                                        new YieldReturn<Integer[]>(
+                                                        new YieldReturn<Integer[] , Void>(
                                                                 new NewArray<Integer>(
                                                                         // arrayClass
                                                                         Integer[].class ,
@@ -363,7 +363,7 @@ public class CoroutineIteratorForArrayComparatorTest
                         // steps
                         new YieldReturn<>( nullValue() ) ,
                         new YieldReturn<>( new Integer[][] {} ) ,
-                        new ForEach<Integer[][], Integer[]>(
+                        new ForEach<Integer[][] , Void , Integer[]>(
                                 // variableName
                                 "subArr" ,
                                 // elementType
@@ -381,7 +381,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                 //                        "subArr" ,
                                 //                        // type
                                 //                        Integer[].class ) ) ) ,
-                                new YieldReturn<Integer[][]>(
+                                new YieldReturn<Integer[][] , Void>(
                                         new NewArray<Integer[]>(
                                                 // arrayClass
                                                 Integer[][].class ,
@@ -390,7 +390,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                                         "subArr" ,
                                                         // type
                                                         Integer[].class ) ) ) ) ,
-                        new ForEach<Integer[][], Integer[]>(
+                        new ForEach<Integer[][] , Void , Integer[]>(
                                 // variableName
                                 "subArr0" ,
                                 // elementType
@@ -408,7 +408,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                 //                        "subArr0" ,
                                 //                        // type
                                 //                        Integer[].class ) ) ) ,
-                                new ForEach<Integer[][], Integer[]>(
+                                new ForEach<Integer[][] , Void , Integer[]>(
                                         // variableName
                                         "subArr1" ,
                                         // elementType
@@ -426,7 +426,7 @@ public class CoroutineIteratorForArrayComparatorTest
                                         //                        "subArr1" ,
                                         //                        // type
                                         //                        Integer[].class ) ) ) ,
-                                        new YieldReturn<Integer[][]>(
+                                        new YieldReturn<Integer[][] , Void>(
                                                 new NewArray<Integer[]>(
                                                         // arrayClass
                                                         Integer[][].class ,

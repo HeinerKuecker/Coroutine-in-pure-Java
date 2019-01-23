@@ -14,7 +14,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  */
 //public interface SimpleStep<RESULT, PARENT>
-abstract public class SimpleStep<RESULT/*, PARENT*/>
+abstract public class SimpleStep<RESULT/*, PARENT*/, RESUME_ARGUMENT>
 extends CoroIterStep<RESULT /*,PARENT*/>
 {
     /**
@@ -46,5 +46,5 @@ extends CoroIterStep<RESULT /*,PARENT*/>
      */
     abstract public CoroIterStepResult<RESULT> execute(
             //final PARENT parent
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent );
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent );
 }

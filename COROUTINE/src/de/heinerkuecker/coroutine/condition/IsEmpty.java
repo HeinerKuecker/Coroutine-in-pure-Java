@@ -55,7 +55,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
      */
     @Override
     public boolean execute(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         //final Object varValue = parent.localVars().get( varName );
         final Object varValue = expression.evaluate( parent );
@@ -141,7 +141,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.expression.checkUseVariables(
@@ -153,7 +153,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.expression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

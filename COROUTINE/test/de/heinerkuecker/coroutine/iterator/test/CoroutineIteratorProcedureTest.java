@@ -39,7 +39,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> empty_procedure =
+        final Procedure<Integer , Void> empty_procedure =
                 new Procedure<>(
                         "empty_procedure" ,
                         // params
@@ -57,7 +57,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "empty_procedure" ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
@@ -69,7 +69,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -88,7 +88,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
@@ -100,7 +100,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -119,7 +119,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
@@ -135,7 +135,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -166,7 +166,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
@@ -182,7 +182,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -215,7 +215,7 @@ public class CoroutineIteratorProcedureTest
                                         0 )
                         } ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
@@ -231,7 +231,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -263,7 +263,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
@@ -281,7 +281,7 @@ public class CoroutineIteratorProcedureTest
         CoroutineDebugSwitches.initializationChecks = true;
         CoroutineDebugSwitches.saveToStringInfos = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -313,9 +313,9 @@ public class CoroutineIteratorProcedureTest
                                     0 )
                         } ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) ,
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ) );
 
         CoroutineIteratorTest.assertNext(
@@ -335,7 +335,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -366,7 +366,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -387,7 +387,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -418,7 +418,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -439,7 +439,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = false;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -470,7 +470,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -491,7 +491,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -529,7 +529,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -550,7 +550,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = false;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         // params
@@ -588,7 +588,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -609,7 +609,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure =
+        final Procedure<Integer , Void> procedure =
                 new Procedure<>(
                         "procedure" ,
                         new Parameter[] {
@@ -647,7 +647,7 @@ public class CoroutineIteratorProcedureTest
                                         0 ) ,
                         } ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // procedureArgumentName
@@ -671,7 +671,7 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer> procedure0 =
+        final Procedure<Integer , Void> procedure0 =
                 new Procedure<>(
                         "procedure0" ,
                         // params
@@ -690,7 +690,7 @@ public class CoroutineIteratorProcedureTest
                                         "argument" ,
                                         Integer.class ) ) );
 
-        final Procedure<Integer> procedure1 =
+        final Procedure<Integer , Void> procedure1 =
                 new Procedure<>(
                         "procedure1" ,
                         // params
@@ -704,7 +704,7 @@ public class CoroutineIteratorProcedureTest
                                         Long.class )
                         } ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure0" ,
                                 new Argument<>(
                                         // procedureArgumentName
@@ -737,7 +737,7 @@ public class CoroutineIteratorProcedureTest
                                         0 ) ,
                         } ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure1" ,
                                 new Argument<>(
                                         // procedureArgumentName
@@ -767,8 +767,8 @@ public class CoroutineIteratorProcedureTest
                         "argument" ,
                         Long.class );
 
-        final Procedure<Long> procedure =
-                new Procedure<Long>(
+        final Procedure<Long , Void> procedure =
+                new Procedure<Long , Void>(
                         "procedure" ,
                         // params
                         new Parameter[] {
@@ -781,12 +781,12 @@ public class CoroutineIteratorProcedureTest
                                         Long.class )
                         } ,
                         // steps
-                        new If<Long>(
+                        new If<>(
                                 new Lesser<>(
                                         argument ,
                                         3L ) ,
                                 new YieldReturn<>( argument ) ,
-                                new ProcedureCall<Long>(
+                                new ProcedureCall<>(
                                         "procedure" ,
                                         new Argument<>(
                                                 // name
@@ -809,7 +809,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Long>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -849,8 +849,8 @@ public class CoroutineIteratorProcedureTest
                         "variable" ,
                         Long.class );
 
-        final Procedure<Long> procedure =
-                new Procedure<Long>(
+        final Procedure<Long , Void> procedure =
+                new Procedure<Long , Void>(
                         "procedure" ,
                         // params
                         new Parameter[] {
@@ -873,12 +873,12 @@ public class CoroutineIteratorProcedureTest
                                         // procedureArgumentName
                                         "argument" ,
                                         Long.class ) ) ,
-                        new If<Long>(
+                        new If<>(
                                 new Lesser<>(
                                         variable ,
                                         3L ) ,
                                 new YieldReturn<>( variable ) ,
-                                new ProcedureCall<Long>(
+                                new ProcedureCall<>(
                                         "procedure" ,
                                         new Argument<>(
                                                 // name
@@ -901,7 +901,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Long>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name
@@ -948,8 +948,8 @@ public class CoroutineIteratorProcedureTest
                         "procedureArgument" ,
                         Integer.class );
 
-        final Procedure<Integer> procedure =
-                new Procedure<Integer>(
+        final Procedure<Integer , Void> procedure =
+                new Procedure<Integer , Void>(
                         "procedure" ,
                         // params
                         new Parameter[] {
@@ -974,7 +974,7 @@ public class CoroutineIteratorProcedureTest
                                         variable ,
                                         3 ) ,
                                 new YieldReturn<>( variable ) ,
-                                new ProcedureCall<Integer>(
+                                new ProcedureCall<>(
                                         "procedure" ,
                                         new Argument<>(
                                                 // name
@@ -998,7 +998,7 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // steps
-                        new ProcedureCall<Integer>(
+                        new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
                                         // name

@@ -29,7 +29,7 @@ public class CoroutineIteratorForeachTest
                         // type
                         Integer.class ,
                         // steps
-                        new ForEach<Integer, Integer>(
+                        new ForEach<Integer, Void , Integer>(
                                 // variableName
                                 "for_variable" ,
                                 // elementType
@@ -39,7 +39,7 @@ public class CoroutineIteratorForeachTest
                                         (Class<? extends List<Integer>>) List.class ,
                                         Arrays.asList( 1 , 2 , 3 ) ) ,
                                 // steps
-                                new YieldReturn<Integer>(
+                                new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 "for_variable" ,
                                                 Integer.class ) ) ) );

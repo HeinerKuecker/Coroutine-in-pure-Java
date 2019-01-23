@@ -40,7 +40,7 @@ implements Iterable<Entry<String, Object>>
             final boolean checkMandantoryValues ,
             final Map<String, Parameter> params ,
             final Argument<?>[] args ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         Set<String> missedMandantoryParamNames = null;
 

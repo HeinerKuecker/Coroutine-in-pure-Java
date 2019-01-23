@@ -20,9 +20,9 @@ import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassExceptio
  * @param <RESULT>
  * @author Heiner K&uuml;cker
  */
-public final class DecrementGlobalVar<RESULT>
+public final class DecrementGlobalVar<RESULT , RESUME_ARGUMENT>
 //extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutArguments<RESULT>
+extends SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -51,7 +51,7 @@ implements HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
         final int var =
@@ -93,7 +93,7 @@ implements HasVariableName
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -117,7 +117,7 @@ implements HasVariableName
     //@Override
     //public void checkUseArguments(
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?> parent )
+    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     //{
     //    // nothing to do
     //}

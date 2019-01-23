@@ -32,7 +32,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new If<Integer/*, CoroutineIterator<Integer>*/>(
+                        new If< Integer , Void >(
                                 // condition
                                 true ,
                                 // steps
@@ -74,12 +74,12 @@ public class CoroutineIteratorIfTest
                                 "condition_var" ,
                                 // varValue
                                 true ) ,
-                        new If<Integer/*, CoroutineIterator<Integer>*/>(
+                        new If<Integer , Void>(
                                 // condition
                                 condition_var ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
-                                new If<Integer/*, CoroutineIterator<Integer>*/>(
+                                new If<Integer , Void>(
                                         // condition
                                         new Not( condition_var ) ,
                                         // steps
@@ -116,12 +116,12 @@ public class CoroutineIteratorIfTest
                                 "condition_var" ,
                                 // varValue
                                 true ) ,
-                        new If<Integer/*, CoroutineIterator<Integer>*/>(
+                        new If<Integer , Void>(
                                 // condition
                                 condition_var ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
-                                new If<Integer/*, CoroutineIterator<Integer>*/>(
+                                new If<Integer , Void>(
                                         // condition
                                         condition_var ,
                                         // steps
@@ -149,7 +149,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new If<Integer/*, CoroutineIterator<Integer>*/>(
+                        new If<Integer , Void>(
                                 // condition
                                 true
                                 // steps
@@ -179,18 +179,18 @@ public class CoroutineIteratorIfTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                        new While<Integer , Void>(
                                 // condition
                                 new True() ,
                                 // steps
-                                new If<Integer/*, CoroutineIterator<Integer>*/>(
+                                new If<Integer , Void>(
                                         // condition
                                         new Equals<>(
                                                 number ,
                                                 0 ) ,
                                         // steps
                                         new YieldReturn<>( 0 ) ) ,
-                                new If<Integer/*, CoroutineIterator<Integer>*/>(
+                                new If<Integer , Void>(
                                         // condition
                                         new Equals<>(
                                                 number ,
@@ -228,7 +228,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // steps
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                        new While<Integer , Void>(
                                 // condition
                                 new Equals<>(
                                         // use DeclareVariable as expression

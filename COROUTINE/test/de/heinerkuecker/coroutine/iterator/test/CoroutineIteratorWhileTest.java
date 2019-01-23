@@ -213,7 +213,7 @@ public class CoroutineIteratorWhileTest
                         new SetLocalVar<>(
                                 "number0" ,
                                 3 ) ,
-                        new While<Integer>(
+                        new While<Integer , Void>(
                                 //condition
                                 new GreaterOrEqual<>(
                                         new GetLocalVar<>(
@@ -224,7 +224,7 @@ public class CoroutineIteratorWhileTest
                                 new SetLocalVar<>(
                                         "number1" ,
                                         3 ) ,
-                                new While<Integer>(
+                                new While<>(
                                         //condition
                                         new GreaterOrEqual<>(
                                                 new GetLocalVar<>(
@@ -232,7 +232,7 @@ public class CoroutineIteratorWhileTest
                                                         Integer.class ) ,
                                                 0 ) ,
                                         // steps
-                                        new YieldReturn<Integer>(
+                                        new YieldReturn<>(
                                                 new CastToInt<>(
                                                         new Add<Integer>(
                                                                 new Multiply<Integer>(
@@ -270,7 +270,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "number0" ,
                                 3 ) ,
-                        new While<Integer>(
+                        new While<Integer , Void>(
                                 //condition
                                 new GreaterOrEqual<>(
                                         new GetLocalVar<>(
@@ -281,7 +281,7 @@ public class CoroutineIteratorWhileTest
                                 new DeclareVariable<>(
                                         "number1" ,
                                         3 ) ,
-                                new While<Integer>(
+                                new While<>(
                                         //condition
                                         new GreaterOrEqual<>(
                                                 new GetLocalVar<>(
@@ -289,7 +289,7 @@ public class CoroutineIteratorWhileTest
                                                         Integer.class ) ,
                                                 0 ) ,
                                         // steps
-                                        new YieldReturn<Integer>(
+                                        new YieldReturn<>(
                                                 new CastToInt<>(
                                                         new Add<Integer>(
                                                                 new Multiply<Integer>(
@@ -327,7 +327,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "number0" ,
                                 3 ) ,
-                        new While<Integer>(
+                        new While<Integer , Void>(
                                 //condition
                                 new GreaterOrEqual<>(
                                         new DeclareVariable<>(
@@ -341,7 +341,7 @@ public class CoroutineIteratorWhileTest
                                 new DeclareVariable<>(
                                         "number1" ,
                                         3 ) ,
-                                new While<Integer>(
+                                new While<>(
                                         //condition
                                         new GreaterOrEqual<>(
                                                 new GetLocalVar<>(
@@ -349,7 +349,7 @@ public class CoroutineIteratorWhileTest
                                                         Integer.class ) ,
                                                 0 ) ,
                                         // steps
-                                        new YieldReturn<Integer>(
+                                        new YieldReturn<>(
                                                 new CastToInt<>(
                                                         new Add<Integer>(
                                                                 new Multiply<Integer>(
@@ -493,7 +493,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                        new While<>(
                                 //condition
                                 new Lesser<>(
                                         number ,
@@ -538,7 +538,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "number" ,
                                 2 ) ,
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                        new While<>(
                                 //condition
                                 new Or(
                                         new Greater<>(
@@ -581,7 +581,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "first" ,
                                 true ) ,
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                        new While<>(
                                 // condition
                                 new True() ,
                                 // steps
@@ -638,7 +638,7 @@ public class CoroutineIteratorWhileTest
                                 // steps
                                 new IfElse<>(
                                         //condition
-                                        new DeclareVariable<Boolean, Boolean>(
+                                        new DeclareVariable<>(
                                                 "copyOfFirst" ,
                                                 Boolean.class ,
                                                 first ) ,
@@ -696,7 +696,7 @@ public class CoroutineIteratorWhileTest
                                 // steps
                                 new IfElse<>(
                                         //condition
-                                        new DeclareVariable<Boolean, Boolean>(
+                                        new DeclareVariable<>(
                                                 "copyOfFirst" ,
                                                 Boolean.class ,
                                                 first ) ,

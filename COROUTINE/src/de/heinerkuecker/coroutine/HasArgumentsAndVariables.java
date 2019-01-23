@@ -4,7 +4,7 @@ import java.util.Map;
 
 import de.heinerkuecker.coroutine.arg.Arguments;
 
-public interface HasArgumentsAndVariables
+public interface HasArgumentsAndVariables<RESUME_ARGUMENT>
 {
 
     /**
@@ -36,4 +36,7 @@ public interface HasArgumentsAndVariables
     abstract public Arguments globalArgumentValues();
 
     abstract public Map<String, Class<?>> globalParameterTypes();
+
+    abstract RESUME_ARGUMENT getResumeArgument();
+
 }

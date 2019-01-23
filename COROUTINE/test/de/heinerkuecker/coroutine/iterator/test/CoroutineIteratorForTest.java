@@ -148,7 +148,7 @@ public class CoroutineIteratorForTest
                                         0 ) ,
                                 // condition
                                 new Lesser<>(
-                                        new DeclareVariable<Integer, Integer>(
+                                        new DeclareVariable<>(
                                                 "number1" ,
                                                 Integer.class ,
                                                 number ) ,
@@ -213,7 +213,7 @@ public class CoroutineIteratorForTest
                                         0 ) ,
                                 // condition
                                 new Lesser<>(
-                                        new DeclareVariable<Integer, Integer>(
+                                        new DeclareVariable<>(
                                                 "number1" ,
                                                 Integer.class ,
                                                 number ) ,

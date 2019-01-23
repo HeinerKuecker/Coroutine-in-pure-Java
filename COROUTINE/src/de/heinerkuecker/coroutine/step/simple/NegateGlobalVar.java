@@ -11,9 +11,9 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
-public final class NegateGlobalVar<RESULT>
+public final class NegateGlobalVar<RESULT , RESUME_ARGUMENT>
 //extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutArguments<RESULT>
+extends SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -33,7 +33,7 @@ implements HasVariableName
                         globalVarName );
     }
 
-    public static <RESULT> NegateGlobalVar<RESULT> negate(
+    public static <RESULT , RESUME_ARGUMENT> NegateGlobalVar<RESULT , RESUME_ARGUMENT> negate(
             final String globalVarName )
     {
         return new NegateGlobalVar<>(
@@ -47,7 +47,7 @@ implements HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         final Object varValue =
                 parent.globalVars().get(
@@ -96,7 +96,7 @@ implements HasVariableName
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -119,7 +119,7 @@ implements HasVariableName
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     //{
     //    // nothing to do
     //}

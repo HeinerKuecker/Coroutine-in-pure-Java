@@ -6,29 +6,31 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-class BlockState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+class BlockState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
 extends ComplexStepState<
-    BlockState<RESULT /*, PARENT*/>,
-    Block<RESULT /*, PARENT*/>,
-    RESULT /*, PARENT*/
+    BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT>,
+    Block<RESULT /*, PARENT*/, RESUME_ARGUMENT>,
+    RESULT ,
+    /*, PARENT*/
+    RESUME_ARGUMENT
     >
 {
-    private final Block<RESULT /*, PARENT*/> sequence;
+    private final Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> sequence;
 
     // TODO getter to ensure unmodifiable from other class
     int currentStepIndex;
-    ComplexStepState<?, ?, RESULT /*, ? super PARENT*/> currentComplexState;
+    ComplexStepState<?, ?, RESULT /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
 
     //private final CoroutineIterator<RESULT> rootParent;
-    //private final CoroutineOrProcedureOrComplexstep<RESULT> parent;
+    //private final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
 
     /**
      *
      */
     public BlockState(
-            final Block<RESULT /*, PARENT*/> sequence ,
+            final Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> sequence ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.sequence = sequence;
@@ -40,7 +42,7 @@ extends ComplexStepState<
 
     @Override
     public CoroIterStepResult<RESULT> execute(
-            //final CoroutineOrProcedureOrComplexstep<RESULT> parent
+            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
             )
     {
         while ( currentStepIndex < sequence.length() )
@@ -52,8 +54,8 @@ extends ComplexStepState<
             if ( currentStep instanceof SimpleStep )
             {
                 @SuppressWarnings("unchecked")
-                final SimpleStep<RESULT /*, ? super PARENT*/> currentSimpleStep =
-                        (SimpleStep<RESULT /*, ? super PARENT*/>) currentStep;
+                final SimpleStep<RESULT /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStep =
+                        (SimpleStep<RESULT /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStep;
 
                 parent.saveLastStepState();
 
@@ -67,8 +69,8 @@ extends ComplexStepState<
             else
             {
                 @SuppressWarnings("unchecked")
-                final ComplexStep<?, ?, RESULT /*, ? super PARENT*/> currentComplexStep =
-                        (ComplexStep<?, ?, RESULT /*, ? super PARENT*/>) currentStep;
+                final ComplexStep<?, ?, RESULT /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStep =
+                        (ComplexStep<?, ?, RESULT /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStep;
 
                 if ( this.currentComplexState == null )
                     // no existing state from previous execute call
@@ -101,7 +103,7 @@ extends ComplexStepState<
                      sequence.getStep( this.currentStepIndex ) instanceof ComplexStep )
             {
                 this.currentComplexState =
-                        ( (ComplexStep<?, ?, RESULT>) sequence.getStep(
+                        ( (ComplexStep<?, ?, RESULT, RESUME_ARGUMENT>) sequence.getStep(
                                 this.currentStepIndex ) ).newState(
                                         //this.rootParent
                                         //this.parent
@@ -130,7 +132,7 @@ extends ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public Block<RESULT /*, PARENT*/> getStep()
+    public Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> getStep()
     {
         return this.sequence;
     }
@@ -139,9 +141,9 @@ extends ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public BlockState<RESULT /*, PARENT*/> createClone()
+    public BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT> createClone()
     {
-        final BlockState<RESULT /*, PARENT*/> clone =
+        final BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT> clone =
                 new BlockState<>(
                         sequence ,
                         //this.rootParent

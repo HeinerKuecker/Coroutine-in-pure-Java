@@ -34,8 +34,8 @@ import de.heinerkuecker.util.ArrayTypeName;
  * @param <T> variable type
  * @author Heiner K&uuml;cker
  */
-public final class DeclareVariable<RESULT, T>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+public final class DeclareVariable<RESULT, RESUME_ARGUMENT, T>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
 implements CoroExpression<T>
 {
     /**
@@ -46,7 +46,7 @@ implements CoroExpression<T>
     /**
      * Type (class) of the variable.
      */
-    public final Class<T> type;
+    public final Class<? extends T> type;
 
     /**
      * This is the expression whose result
@@ -60,7 +60,7 @@ implements CoroExpression<T>
      */
     public DeclareVariable(
             final String varName ,
-            final Class<T> type ,
+            final Class<? extends T> type ,
             final CoroExpression<? extends T> initialVarValueExpression )
     {
         this.varName =
@@ -81,7 +81,7 @@ implements CoroExpression<T>
      */
     public DeclareVariable(
             final String varName ,
-            final Class<T> type ,
+            final Class<? extends T> type ,
             final T initialVarValue )
     {
         this.varName =
@@ -111,7 +111,7 @@ implements CoroExpression<T>
                         varName );
 
         this.type =
-                (Class<T>) initialVarValue.getClass();
+                (Class<? extends T>) initialVarValue.getClass();
 
         this.initialVarValueExpression =
                 new Value<>(
@@ -124,7 +124,7 @@ implements CoroExpression<T>
      */
     public DeclareVariable(
             final String varName ,
-            final Class<T> type )
+            final Class<? extends T> type )
     {
         this.varName =
                 Objects.requireNonNull(
@@ -146,7 +146,7 @@ implements CoroExpression<T>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         //if ( this.initialVarValueExpression == null )
         //    // TODO no more needed
@@ -176,7 +176,7 @@ implements CoroExpression<T>
     // for using in expressions
     {
         execute(
-                (CoroutineOrProcedureOrComplexstep<RESULT>) parent );
+                (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent );
 
         return (T) parent.localVars().get(
                 this ,
@@ -217,7 +217,7 @@ implements CoroExpression<T>
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -250,7 +250,7 @@ implements CoroExpression<T>
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         if ( initialVarValueExpression != null )
         {
@@ -305,7 +305,7 @@ implements CoroExpression<T>
          * @param declareLocalVar
          */
         public VariableAlreadyDeclaredException(
-                final DeclareVariable<?, ?> declareLocalVar )
+                final DeclareVariable<?, ?, ?> declareLocalVar )
         {
             super(
                     "variable already declared: " +

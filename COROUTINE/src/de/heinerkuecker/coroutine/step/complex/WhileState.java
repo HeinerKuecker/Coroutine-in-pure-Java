@@ -4,14 +4,16 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.util.HCloneable;
 
 class WhileState<
-    RESULT
+    RESULT ,
     //PARENT extends CoroutineIterator<RESULT>
+    RESUME_ARGUMENT
     >
 extends WhileOrDoWhileState<
-    While<RESULT/*, PARENT*/>,
-    WhileState<RESULT/*, PARENT*/>,
-    RESULT
+    While<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
+    WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
 
@@ -19,9 +21,9 @@ extends WhileOrDoWhileState<
      * @param _while
      */
     protected WhileState(
-            final While<RESULT/*, PARENT*/> _while ,
+            final While<RESULT/*, PARENT*/, RESUME_ARGUMENT> _while ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         super(
                 _while ,
@@ -35,19 +37,19 @@ extends WhileOrDoWhileState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public While<RESULT/*, PARENT*/> getStep()
+    public While<RESULT/*, PARENT*/, RESUME_ARGUMENT> getStep()
     {
-        return (While<RESULT/*, PARENT*/>) this.whileOrDoWhile;
+        return (While<RESULT/*, PARENT*/, RESUME_ARGUMENT>) this.whileOrDoWhile;
     }
 
     /**
      * @see HCloneable#createClone()
      */
     @Override
-    public WhileState<RESULT/*, PARENT*/> createClone()
+    public WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT> createClone()
     {
-        final WhileState<RESULT/*, PARENT*/> clone =
-                new WhileState<RESULT/*, PARENT*/>(
+        final WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT> clone =
+                new WhileState<>(
                         getStep() ,
                         //super.rootParent
                         super.parent );

@@ -31,7 +31,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 new SetLocalVar<>(
                         "number" ,
                         0 ) ,
-                new While<Integer/*, CoroutineIterator<Integer>*/>(
+                new While<Integer , Void>(
                         // label
                         "label_already_in_use" ,
                         // condition
@@ -41,7 +41,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         Integer.class ) ,
                                 1 ) ,
                         // steps
-                        new While<Integer/*, CoroutineIterator<Integer>*/>(
+                        new While<Integer , Void>(
                                 // label
                                 "label_already_in_use" ,
                                 // condition
@@ -67,7 +67,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 new SetLocalVar<>(
                         "number" ,
                         0 ) ,
-                new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
+                new DoWhile<Integer , Void>(
                         // label
                         "label_already_in_use" ,
                         // condition
@@ -77,7 +77,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         Integer.class ) ,
                                 1 ) ,
                         // steps
-                        new DoWhile<Integer/*, CoroutineIterator<Integer>*/>(
+                        new DoWhile<Integer , Void>(
                                 // label
                                 "label_already_in_use" ,
                                 // condition
@@ -103,7 +103,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 new SetLocalVar<>(
                         "number" ,
                         0 ) ,
-                new For<Integer/*, CoroutineIterator<Integer>*/>(
+                new For<Integer , Void>(
                         //label
                         "label_already_in_use" ,
                         // initialStep

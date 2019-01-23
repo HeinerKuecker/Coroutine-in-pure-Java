@@ -13,8 +13,8 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.ExceptionUnchecker;
 
-public class Throw<RESULT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+public class Throw<RESULT , RESUME_ARGUMENT>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 {
     // TODO use expression
     private final Exception exception;
@@ -36,7 +36,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         return ExceptionUnchecker.returnRethrow( exception );
     }
@@ -76,7 +76,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -86,7 +86,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         // nothing to do
         // TODO change it, when expression for exception is used

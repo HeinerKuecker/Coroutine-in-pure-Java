@@ -64,7 +64,7 @@ extends LhsRhsExpression<Long>
      */
     @Override
     public Long evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Long lhsResult = lhs.evaluate( parent );
         final Long rhsResult = rhs.evaluate( parent );
@@ -100,7 +100,7 @@ extends LhsRhsExpression<Long>
     //public void checkUseVariables(
     //        //final boolean isCoroutineRoot ,
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?> parent,
+    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent,
     //        final Map<String, Class<?>> globalVariableTypes ,
     //        final Map<String, Class<?>> localVariableTypes)
     //{
@@ -119,7 +119,7 @@ extends LhsRhsExpression<Long>
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     //{
     //    this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
     //    this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );

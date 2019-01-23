@@ -4,14 +4,16 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.util.HCloneable;
 
 class DoWhileState<
-    RESULT
+    RESULT ,
     //PARENT extends CoroutineIterator<RESULT>
+    RESUME_ARGUMENT
     >
 extends WhileOrDoWhileState<
-    DoWhile<RESULT/*, PARENT*/>,
-    DoWhileState<RESULT/*, PARENT*/>,
-    RESULT
+    DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
+    DoWhileState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> ,
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
 
@@ -19,9 +21,9 @@ extends WhileOrDoWhileState<
      * @param doWhile
      */
     protected DoWhileState(
-            final DoWhile<RESULT/*, PARENT*/> doWhile ,
+            final DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT> doWhile ,
             //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         super(
                 doWhile ,
@@ -35,19 +37,19 @@ extends WhileOrDoWhileState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public DoWhile<RESULT/*, PARENT*/> getStep()
+    public DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT> getStep()
     {
-        return (DoWhile<RESULT/*, PARENT*/>) this.whileOrDoWhile;
+        return (DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT>) this.whileOrDoWhile;
     }
 
     /**
      * @see HCloneable#createClone()
      */
     @Override
-    public DoWhileState<RESULT/*, PARENT*/> createClone()
+    public DoWhileState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final DoWhileState<RESULT/*, PARENT*/> clone =
-                new DoWhileState<RESULT/*, PARENT*/>(
+        final DoWhileState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> clone =
+                new DoWhileState<>(
                         getStep() ,
                         //super.rootParent
                         super.parent );

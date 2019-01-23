@@ -22,12 +22,13 @@ import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-public class Block<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+public class Block<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
 extends ComplexStep<
-    Block<RESULT /*, PARENT*/> ,
-    BlockState<RESULT /*, PARENT*/> ,
-    RESULT /*,
-    PARENT*/
+    Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> ,
+    BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT> ,
+    RESULT ,
+    /*,PARENT*/
+    RESUME_ARGUMENT
     >
 {
     private final CoroIterStep<? extends RESULT/*, PARENT*/>[] steps;
@@ -65,8 +66,8 @@ extends ComplexStep<
     }
 
     @Override
-    public BlockState<RESULT /*, PARENT*/> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+    public BlockState<RESULT /*, PARENT*/ , RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         return new BlockState<>(
                 this ,
@@ -74,23 +75,23 @@ extends ComplexStep<
     }
 
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+    public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
-        final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
+        final List<BreakOrContinue<?, ?>> result = new ArrayList<>();
 
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
             if ( step instanceof BreakOrContinue )
             {
                 result.add(
-                        (BreakOrContinue<RESULT>) step );
+                        (BreakOrContinue<RESULT , RESUME_ARGUMENT>) step );
             }
             else if ( step instanceof ComplexStep )
             {
                 result.addAll(
-                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) step).getUnresolvedBreaksOrContinues(
+                        ((ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>) step).getUnresolvedBreaksOrContinues(
                                 alreadyCheckedProcedureNames ,
                                 parent ) );
             }
@@ -135,14 +136,14 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
             if ( step instanceof ComplexStep )
             {
-                ((ComplexStep<?, ?, RESULT>) step).checkLabelAlreadyInUse(
+                ((ComplexStep<?, ?, RESULT , RESUME_ARGUMENT>) step).checkLabelAlreadyInUse(
                         alreadyCheckedProcedureNames ,
                         parent ,
                         labels );
@@ -154,7 +155,7 @@ extends ComplexStep<
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -180,7 +181,7 @@ extends ComplexStep<
         {
             if ( step instanceof DeclareVariable )
             {
-                final DeclareVariable<?, ?> declareLocalVar = (DeclareVariable<?, ?>) step;
+                final DeclareVariable<?, ?, ?> declareLocalVar = (DeclareVariable<?, ?, ?>) step;
 
                 if ( thisLocalVariableTypes.containsKey( declareLocalVar.varName ) )
                 {
@@ -220,7 +221,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         for ( final CoroIterStep<? extends RESULT /*, PARENT*/> step : this.steps )
         {
@@ -235,18 +236,18 @@ extends ComplexStep<
      */
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final BlockState<RESULT /*, PARENT*/> lastSequenceExecuteState =
-                (BlockState<RESULT /*, PARENT*/>) lastStepExecuteState;
+        final BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT> lastSequenceExecuteState =
+                (BlockState<RESULT /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final BlockState<RESULT /*, PARENT*/> nextSequenceExecuteState =
-                (BlockState<RESULT /*, PARENT*/>) nextStepExecuteState;
+        final BlockState<RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextSequenceExecuteState =
+                (BlockState<RESULT /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
         final StringBuilder buff = new StringBuilder();
 
@@ -261,7 +262,7 @@ extends ComplexStep<
 
             if ( step instanceof ComplexStep )
             {
-                final ComplexStepState<?, ?, RESULT> lastSubStepExecuteState;
+                final ComplexStepState<?, ?, RESULT , RESUME_ARGUMENT> lastSubStepExecuteState;
                 if ( lastSequenceExecuteState != null &&
                         lastSequenceExecuteState.currentStepIndex == i )
                 {
@@ -272,7 +273,7 @@ extends ComplexStep<
                     lastSubStepExecuteState = null;
                 }
 
-                final ComplexStepState<?, ?, RESULT> nextSubStepExecuteState;
+                final ComplexStepState<?, ?, RESULT , RESUME_ARGUMENT> nextSubStepExecuteState;
                 if ( nextSequenceExecuteState != null &&
                         nextSequenceExecuteState.currentStepIndex == i )
                 {
@@ -284,7 +285,7 @@ extends ComplexStep<
                 }
 
                 buff.append(
-                        ( (ComplexStep<?, ?, RESULT>) step ).toString(
+                        ( (ComplexStep<?, ?, RESULT , RESUME_ARGUMENT>) step ).toString(
                                 parent ,
                                 //indent
                                 indent /*+ " "*/ ,
@@ -326,16 +327,16 @@ extends ComplexStep<
 
     @SuppressWarnings("unchecked")
     @SafeVarargs
-    public static <RESULT> ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> convertStepsToComplexStep(
+    public static <RESULT , RESUME_ARGUMENT> ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/, RESUME_ARGUMENT> convertStepsToComplexStep(
             final int creationStackOffset ,
             final CoroIterStep<? extends RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
-        final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> complexStep;
+        final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/, RESUME_ARGUMENT> complexStep;
         if ( steps.length == 1 &&
                 steps[ 0 ] instanceof ComplexStep )
         {
             complexStep =
-                    (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/>) steps[ 0 ];
+                    (ComplexStep<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>) steps[ 0 ];
         }
         else
         {

@@ -27,7 +27,7 @@ implements CoroExpression<T>
     @Override
     public final void checkUseVariables(
             HashSet<String> alreadyCheckedProcedureNames ,
-            CoroutineOrProcedureOrComplexstep<?> parent ,
+            CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             Map<String, Class<?>> globalVariableTypes ,
             Map<String, Class<?>> localVariableTypes )
     {
@@ -39,7 +39,7 @@ implements CoroExpression<T>
      */
     @Override
     public final void checkUseArguments(HashSet<String> alreadyCheckedProcedureNames,
-            CoroutineOrProcedureOrComplexstep<?> parent)
+            CoroutineOrProcedureOrComplexstep<?, ?> parent)
     {
         // nothing to do
     }

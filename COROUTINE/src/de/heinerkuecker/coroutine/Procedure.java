@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.complex.ComplexStep;
 
-public class Procedure<RESULT>
+public class Procedure<RESULT, RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
 {
     public final String name;
@@ -24,7 +24,7 @@ extends HasCreationStackTraceElement
      * ist und dessen State in dieser
      * Klasse verwaltet werden muesste.
      */
-    public final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
+    public final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> bodyComplexStep;
 
     public final Map<String, Parameter> params;
 
@@ -59,7 +59,7 @@ extends HasCreationStackTraceElement
                 bodySteps[ 0 ] instanceof ComplexStep )
         {
             this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) bodySteps[ 0 ];
+                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>) bodySteps[ 0 ];
         }
         else
         {
@@ -107,7 +107,7 @@ extends HasCreationStackTraceElement
      */
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         this.bodyComplexStep.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,

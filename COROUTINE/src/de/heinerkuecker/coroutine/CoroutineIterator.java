@@ -36,7 +36,9 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * @author Heiner K&uuml;cker
  */
 public class CoroutineIterator<RESULT>
-implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
+implements
+    CoroutineOrProcedureOrComplexstep<RESULT, Void> ,
+    Iterator<RESULT>
 {
     /**
      * Es muss ein ComplexStep sein,
@@ -46,11 +48,11 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> complexStep;
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> nextComplexStepState;
+    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/ , Void> complexStep;
+    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , Void> nextComplexStepState;
 
     // for debug
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/> lastComplexStepState;
+    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , Void> lastComplexStepState;
 
     private boolean finallyReturnRaised;
 
@@ -80,7 +82,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
     //public final HashMap<String, Object> vars = new HashMap<>();
     public final GlobalVariables globalVariables = new GlobalVariables();
 
-    private final Map<String, Procedure<RESULT>> procedures = new HashMap<>();
+    private final Map<String, Procedure<RESULT , Void>> procedures = new HashMap<>();
 
     public final Map<String, Parameter> params;
 
@@ -96,11 +98,11 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
     @SafeVarargs
     public CoroutineIterator(
             final Class<? extends RESULT> resultType ,
-            final Iterable<Procedure<RESULT>> procedures ,
+            final Iterable<Procedure<RESULT , Void>> procedures ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<?>[] args ,
-            final DeclareVariable<RESULT, ?>[] globalVariableDeclarations ,
+            final DeclareVariable<RESULT, Void, ?>[] globalVariableDeclarations ,
             final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
     {
         //this( steps );
@@ -117,7 +119,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
 
         if ( procedures != null )
         {
-            for ( final Procedure<RESULT> procedure : procedures )
+            for ( final Procedure<RESULT , Void> procedure : procedures )
             {
                 if ( this.procedures.containsKey( procedure.name ) )
                 {
@@ -149,7 +151,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
 
         if ( globalVariableDeclarations != null )
         {
-            for ( DeclareVariable<RESULT, ?> globalVariableDeclaration : globalVariableDeclarations )
+            for ( DeclareVariable<RESULT, Void, ?> globalVariableDeclaration : globalVariableDeclarations )
             {
                 globalVariableDeclaration.execute( this );
             }
@@ -224,7 +226,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
     }
 
     @Override
-    public Procedure<RESULT> getProcedure(
+    public Procedure<RESULT , Void> getProcedure(
             final String procedureName )
     {
         return this.procedures.get( procedureName );
@@ -235,7 +237,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
      */
     private void checkForUnresolvedBreaksAndContinues()
     {
-        final List<BreakOrContinue<RESULT>> unresolvedBreaksOrContinues =
+        final List<BreakOrContinue<?, ?>> unresolvedBreaksOrContinues =
                 complexStep.getUnresolvedBreaksOrContinues(
                         new HashSet<>() ,
                         this );
@@ -449,6 +451,14 @@ implements CoroutineOrProcedureOrComplexstep<RESULT> , Iterator<RESULT>
         //throw new RuntimeException( "not implemented" );
         //return procedureParameterTypes();
         return arguments.procedureParameterTypes();
+    }
+
+    @Override
+    public Void getResumeArgument()
+    {
+        // TODO code smell ausgeschlagenes Erbe Refused bequest
+        //return null;
+        throw new IllegalStateException( this.getClass().getSimpleName() + " has no procedure arguments" );
     }
 
     /**

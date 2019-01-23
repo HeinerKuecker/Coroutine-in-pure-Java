@@ -15,21 +15,23 @@ import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.LabelAlreadyInUseException;
 
 abstract public class WhileOrDoWhile<
-    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/>,
-    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/>,
-    RESULT
+    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
+    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
+    RESULT ,
     //PARENT extends CoroutineIterator<RESULT>
+    RESUME_ARGUMENT
     >
 extends ComplexStep<
     /*WhileOrDoWhile<RESULT, PARENT>*/WHILE_OR_DO_WHILE,
     /*WhileOrDoWhileState<WhileOrDoWhile<RESULT, PARENT>, RESULT, PARENT>*/WHILE_OR_DO_WHILE_STATE,
-    RESULT
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
     public final String label;
     final ConditionOrBooleanExpression condition;
-    final ComplexStep<?, ?, RESULT /*, PARENT*/> bodyComplexStep;
+    final ComplexStep<?, ?, RESULT /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStep;
 
     /**
      * Constructor.
@@ -59,13 +61,13 @@ extends ComplexStep<
      * @see ComplexStep#getUnresolvedBreaksOrContinues()
      */
     @Override
-    final public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+    final public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
-        final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
+        final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
-        for ( BreakOrContinue<RESULT> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
+        for ( BreakOrContinue<? , ?> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
                 alreadyCheckedProcedureNames ,
                 parent ) )
         {
@@ -115,7 +117,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         if ( label != null )
@@ -138,7 +140,7 @@ extends ComplexStep<
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.condition.checkUseVariables(
@@ -156,7 +158,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.bodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
@@ -167,18 +169,18 @@ extends ComplexStep<
      */
     @Override
     final public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextStepExecuteState )
+            final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
+            final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
     {
-        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/> lastWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/>) lastStepExecuteState;
+        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastWhileExecuteState =
+                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
 
-        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/> nextWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/>) nextStepExecuteState;
+        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextWhileExecuteState =
+                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/> lastBodyState;
+        final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
         if ( lastWhileExecuteState != null )
         {
             lastBodyState = lastWhileExecuteState.bodyComplexState;
@@ -188,7 +190,7 @@ extends ComplexStep<
             lastBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/> nextBodyState;
+        final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
         if ( nextWhileExecuteState != null )
         {
             nextBodyState = nextWhileExecuteState.bodyComplexState;

@@ -7,12 +7,13 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
-public class DoWhile<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+public class DoWhile<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 extends WhileOrDoWhile<
-    DoWhile<RESULT /*, PARENT*/>,
-    DoWhileState<RESULT /*, PARENT*/>,
-    RESULT
+    DoWhile<RESULT /*, PARENT*/ , RESUME_ARGUMENT>,
+    DoWhileState<RESULT /*, PARENT*/ , RESUME_ARGUMENT>,
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
     /**
@@ -136,8 +137,8 @@ extends WhileOrDoWhile<
      * @see ComplexStep#newState()
      */
     @Override
-    public DoWhileState<RESULT /*, PARENT*/> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+    public DoWhileState<RESULT /*, PARENT*/ , RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<RESULT , RESUME_ARGUMENT> parent )
     {
         return new DoWhileState<>(
                 this ,

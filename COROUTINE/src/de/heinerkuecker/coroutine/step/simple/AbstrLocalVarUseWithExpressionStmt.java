@@ -13,11 +13,10 @@ import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
-import de.heinerkuecker.coroutine.step.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
-abstract public class AbstrLocalVarUseWithExpressionStmt<RESULT, VARIABLE, EXPRESSION>
-extends SimpleStep<RESULT>
+abstract public class AbstrLocalVarUseWithExpressionStmt<RESULT , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
+extends SimpleStep<RESULT , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -67,7 +66,7 @@ implements HasVariableName
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         final VARIABLE varValue =
                 (VARIABLE) parent.localVars().get(
@@ -105,7 +104,7 @@ implements HasVariableName
     @Override
     final public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent )
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         // nothing to do
     }
@@ -113,7 +112,7 @@ implements HasVariableName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {

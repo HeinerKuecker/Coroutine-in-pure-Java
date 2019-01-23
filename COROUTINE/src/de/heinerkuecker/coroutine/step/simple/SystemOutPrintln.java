@@ -25,8 +25,8 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public final class SystemOutPrintln<RESULT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+public final class SystemOutPrintln<RESULT , RESUME_ARGUMENT>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 {
     /**
      * Expression to deliver value to print.
@@ -53,7 +53,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         System.out.println( ArrayDeepToString.deepToString( outputExpression.evaluate( parent ) ) );
         return CoroIterStepResult.continueCoroutine();
@@ -79,7 +79,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -92,7 +92,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.outputExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

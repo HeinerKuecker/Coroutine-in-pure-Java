@@ -23,8 +23,8 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * @param <RESULT> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class YieldReturn<RESULT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
+public class YieldReturn<RESULT , RESUME_ARGUMENT>
+extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 {
     public final CoroExpression<? extends RESULT> expression;
 
@@ -71,7 +71,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
      */
     @Override
     public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         final RESULT resultValue =
                 expression.evaluate(
@@ -117,7 +117,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
     public void checkUseVariables(
             //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -130,7 +130,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.expression.checkUseArguments(
                 alreadyCheckedProcedureNames ,

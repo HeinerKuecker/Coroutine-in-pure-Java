@@ -13,20 +13,21 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 
-public class TryCatch<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/>
+public class TryCatch<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 extends ComplexStep<
-    TryCatch<RESULT/*, PARENT*/>,
-    TryCatchState<RESULT/*, PARENT*/>,
-    RESULT
+    TryCatch<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
+    TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
     // TODO variable to enable access to exception
 
-    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> tryBodyComplexStep;
+    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> tryBodyComplexStep;
     final Class<? extends Throwable> catchExceptionClass;
     final String catchedExceptionVariableName;
-    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/> catchBodyComplexStep;
+    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> catchBodyComplexStep;
 
     /**
      * Constructor.
@@ -67,7 +68,7 @@ extends ComplexStep<
      * Factroy method.
      */
     @SafeVarargs
-    public static <RESULT/*, PARENT extends CoroutineIterator<RESULT>*/> TryCatch<RESULT/*, PARENT*/> newTryCatch(
+    public static <RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> TryCatch<RESULT/*, PARENT*/, RESUME_ARGUMENT> newTryCatch(
             final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
             final String catchedExceptionVariableName ,
@@ -81,31 +82,31 @@ extends ComplexStep<
     }
 
     @Override
-    public TryCatchState<RESULT/*, PARENT*/> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+    public TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
-        return new TryCatchState<RESULT/*, PARENT*/>(
+        return new TryCatchState<>(
                 this ,
                 parent );
     }
 
     @Override
-    public List<BreakOrContinue<RESULT>> getUnresolvedBreaksOrContinues(
+    public List<BreakOrContinue<? , ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
-        final List<BreakOrContinue<RESULT>> result = new ArrayList<>();
+        final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
         if ( tryBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep<?, ?, RESULT>) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
+            result.addAll( ((ComplexStep<?, ?, RESULT , RESUME_ARGUMENT>) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
                     alreadyCheckedProcedureNames ,
                     parent ) );
         }
 
         if ( catchBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep<?, ?, RESULT>) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
+            result.addAll( ((ComplexStep<?, ?, RESULT , RESUME_ARGUMENT>) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
                     alreadyCheckedProcedureNames ,
                     parent ) );
         }
@@ -144,7 +145,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         this.tryBodyComplexStep.checkLabelAlreadyInUse(
@@ -162,7 +163,7 @@ extends ComplexStep<
     public void checkUseVariables(
             ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?> parent ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -191,7 +192,7 @@ extends ComplexStep<
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.tryBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.catchBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
@@ -199,20 +200,20 @@ extends ComplexStep<
 
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent ,
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             String indent ,
-            ComplexStepState<?, ?, RESULT/*, PARENT*/> lastStepExecuteState ,
-            ComplexStepState<?, ?, RESULT/*, PARENT*/> nextStepExecuteState )
+            ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
+            ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final TryCatchState<RESULT/*, PARENT*/> lastTryCatchExecuteState =
-                (TryCatchState<RESULT/*, PARENT*/>) lastStepExecuteState;
+        final TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastTryCatchExecuteState =
+                (TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final TryCatchState<RESULT/*, PARENT*/> nextTryCatchExecuteState =
-                (TryCatchState<RESULT/*, PARENT*/>) nextStepExecuteState;
+        final TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextTryCatchExecuteState =
+                (TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastTryBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastTryBodyState;
         if ( lastTryCatchExecuteState != null )
         {
             lastTryBodyState = lastTryCatchExecuteState.tryBodyComplexState;
@@ -222,7 +223,7 @@ extends ComplexStep<
             lastTryBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextTryBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextTryBodyState;
         if ( nextTryCatchExecuteState != null )
         {
             nextTryBodyState = nextTryCatchExecuteState.tryBodyComplexState;
@@ -232,7 +233,7 @@ extends ComplexStep<
             nextTryBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/> lastCatchBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastCatchBodyState;
         if ( lastTryCatchExecuteState != null )
         {
             lastCatchBodyState = lastTryCatchExecuteState.catchBodyComplexState;
@@ -242,7 +243,7 @@ extends ComplexStep<
             lastCatchBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/> nextCatchBodyState;
+        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextCatchBodyState;
         if ( nextTryCatchExecuteState != null )
         {
             nextCatchBodyState = nextTryCatchExecuteState.catchBodyComplexState;

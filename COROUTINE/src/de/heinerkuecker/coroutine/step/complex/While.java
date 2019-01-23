@@ -7,12 +7,13 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
-public class While<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/>
+public class While<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
 extends WhileOrDoWhile<
-    While<RESULT/*, PARENT*/>,
-    WhileState<RESULT/*, PARENT*/>,
-    RESULT
+    While<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
+    WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
+    RESULT ,
     //PARENT
+    RESUME_ARGUMENT
     >
 {
     /**
@@ -136,8 +137,8 @@ extends WhileOrDoWhile<
      * @see ComplexStep#newState()
      */
     @Override
-    public WhileState<RESULT/*, PARENT*/> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT> parent )
+    public WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
         return new WhileState<>(
                 this ,

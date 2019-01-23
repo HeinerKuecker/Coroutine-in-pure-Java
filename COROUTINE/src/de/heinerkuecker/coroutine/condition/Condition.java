@@ -23,5 +23,5 @@ extends ConditionOrBooleanExpression
      */
     @Override
     boolean execute(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent );
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent );
 }

@@ -45,7 +45,7 @@ extends NoVariablesNoArgumentsExpression<T>
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?>*/ parent )
+            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         return null;
     }
@@ -60,7 +60,7 @@ extends NoVariablesNoArgumentsExpression<T>
     //public void checkUseVariables(
     //        //final boolean isCoroutineRoot ,
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?> parent ,
+    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
     //        final Map<String, Class<?>> globalVariableTypes ,
     //        final Map<String, Class<?>> localVariableTypes )
     //{
@@ -69,7 +69,7 @@ extends NoVariablesNoArgumentsExpression<T>
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     //{
     //    // nothing to do
     //}
