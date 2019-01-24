@@ -20,10 +20,10 @@ extends SimpleStep<RESULT , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
-     * Name of {@link List} variable to use in
+     * Name of variable to use in
      * {@link CoroutineOrProcedureOrComplexstep#localVars()}
      */
-    public final String listLocalVarName;
+    public final String localVarName;
 
     /**
      * This is the expression whose result
@@ -34,7 +34,7 @@ implements HasVariableName
 
     /**
      * Method to implement the
-     * peration with the variable.
+     * operation with the variable.
      *
      * @param varvalue
      * @param expressionValue
@@ -44,13 +44,20 @@ implements HasVariableName
             final EXPRESSION expressionValue );
 
     /**
+     * For using in {@link #toString()}.
+     *
+     * @return operation or field name
+     */
+    abstract protected String opString();
+
+    /**
      * Constructor.
      */
     public AbstrLocalVarUseWithExpressionStmt(
             final String localVarName ,
             final CoroExpression<EXPRESSION> expression )
     {
-        this.listLocalVarName =
+        this.localVarName =
                 Objects.requireNonNull(
                         localVarName );
 
@@ -71,7 +78,7 @@ implements HasVariableName
         final VARIABLE varValue =
                 (VARIABLE) parent.localVars().get(
                         this ,
-                        listLocalVarName );
+                        localVarName );
 
         final EXPRESSION expressionValue =
                 expression.evaluate(
@@ -116,27 +123,35 @@ implements HasVariableName
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        if ( ! localVariableTypes.containsKey( this.listLocalVarName ) )
-        {
-            throw new GetLocalVar.LocalVariableNotDeclaredException( this );
-        }
+        //if ( ! localVariableTypes.containsKey( this.localVarName ) )
+        //{
+        //    throw new GetLocalVar.LocalVariableNotDeclaredException( this );
+        //}
+        //
+        //if ( ! List.class.equals( localVariableTypes.get( localVarName ) ) )
+        //{
+        //    throw new WrongStmtVariableClassException(
+        //            //wrongStep
+        //            this ,
+        //            //wrongClass
+        //            localVariableTypes.get( localVarName ) ,
+        //            //expectedClass
+        //            List.class );
+        //}
 
-        if ( ! List.class.equals( localVariableTypes.get( listLocalVarName ) ) )
-        {
-            throw new WrongStmtVariableClassException(
-                    //wrongStep
-                    this ,
-                    //wrongClass
-                    localVariableTypes.get( listLocalVarName ) ,
-                    //expectedClass
-                    List.class );
-        }
+        // TODO check variable like GetLocalVar
+
+        this.expression.checkUseVariables(
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
     }
 
     @Override
     public String getVariableName()
     {
-        return this.listLocalVarName;
+        return this.localVarName;
     }
 
     /**
@@ -145,7 +160,7 @@ implements HasVariableName
     @Override
     public String toString()
     {
-        return listLocalVarName + " = ! " + listLocalVarName +
+        return localVarName + "." + opString() +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

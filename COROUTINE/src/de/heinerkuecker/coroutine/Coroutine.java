@@ -63,6 +63,8 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
             final RESUME_ARGUMENT resumeArgument )
     {
         //throw new RuntimeException( "not implemented" );
+        this.resumeArgument = resumeArgument;
+
         if ( finallyReturnRaised )
         {
             return null;

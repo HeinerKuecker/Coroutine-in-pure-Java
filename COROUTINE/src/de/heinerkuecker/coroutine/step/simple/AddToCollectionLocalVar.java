@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine.step.simple;
 
 import java.util.HashSet;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
@@ -14,31 +14,31 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
-public final class AddToListLocalVar<RESULT , RESUME_ARGUMENT, ELEMENT_TO_ADD>
+public final class AddToCollectionLocalVar<RESULT , RESUME_ARGUMENT, ELEMENT_TO_ADD>
 extends SimpleStepWithoutArguments<RESULT, RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
-     * Name of {@link List} variable to add in
+     * Name of {@link Collection} variable to add in
      * {@link CoroutineOrProcedureOrComplexstep#localVars()}
      */
-    public final String listLocalVarName;
+    public final String collectionLocalVarName;
 
     /**
      * This is the expression whose result
      * is to add to the value of the
-     * {@link List} variable.
+     * {@link Collection} variable.
      */
     public final CoroExpression<ELEMENT_TO_ADD> elementToAddExpression;
 
     /**
      * Constructor.
      */
-    public AddToListLocalVar(
+    public AddToCollectionLocalVar(
             final String localVarName ,
             final CoroExpression<ELEMENT_TO_ADD> elementToAddExpression )
     {
-        this.listLocalVarName =
+        this.collectionLocalVarName =
                 Objects.requireNonNull(
                         localVarName );
 
@@ -48,7 +48,7 @@ implements HasVariableName
     }
 
     /**
-     * Add element to {@link List} variable.
+     * Add element to {@link Collection} variable.
      *
      * @see SimpleStep#execute
      */
@@ -59,15 +59,15 @@ implements HasVariableName
         final Object varValue =
                 parent.localVars().get(
                         this ,
-                        listLocalVarName );
+                        collectionLocalVarName );
 
-        if ( varValue instanceof List )
+        if ( varValue instanceof Collection )
         {
             final ELEMENT_TO_ADD elementToAdd =
                     elementToAddExpression.evaluate(
                             parent );
 
-            ((List<ELEMENT_TO_ADD>) varValue).add(
+            ((Collection<ELEMENT_TO_ADD>) varValue).add(
                     elementToAdd );
         }
         else if ( varValue == null )
@@ -76,7 +76,7 @@ implements HasVariableName
                     // wrongStmt
                     this ,
                     // expectedClass
-                    List.class );
+                    Collection.class );
         }
         else
         {
@@ -86,7 +86,7 @@ implements HasVariableName
                     //wrongClass
                     varValue.getClass() ,
                     //expectedClass
-                    List.class );
+                    Collection.class );
         }
         return CoroIterStepResult.continueCoroutine();
     }
@@ -108,27 +108,27 @@ implements HasVariableName
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        if ( ! localVariableTypes.containsKey( this.listLocalVarName ) )
+        if ( ! localVariableTypes.containsKey( this.collectionLocalVarName ) )
         {
             throw new GetLocalVar.LocalVariableNotDeclaredException( this );
         }
 
-        if ( ! List.class.equals( localVariableTypes.get( listLocalVarName ) ) )
+        if ( ! Collection.class.isAssignableFrom( localVariableTypes.get( collectionLocalVarName ) ) )
         {
             throw new WrongStmtVariableClassException(
                     //wrongStep
                     this ,
                     //wrongClass
-                    localVariableTypes.get( listLocalVarName ) ,
+                    localVariableTypes.get( collectionLocalVarName ) ,
                     //expectedClass
-                    List.class );
+                    Collection.class );
         }
     }
 
     @Override
     public String getVariableName()
     {
-        return this.listLocalVarName;
+        return this.collectionLocalVarName;
     }
 
     /**
@@ -137,7 +137,7 @@ implements HasVariableName
     @Override
     public String toString()
     {
-        return listLocalVarName + " = ! " + listLocalVarName +
+        return collectionLocalVarName + ".add( " + elementToAddExpression + " )" +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );

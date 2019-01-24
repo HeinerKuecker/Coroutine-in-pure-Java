@@ -28,7 +28,7 @@ extends ComplexStepState<
     protected ComplexStepState<?, ?, RESULT /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
 
     //protected final CoroutineIterator<RESULT> rootParent;
-    protected final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //protected final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
@@ -43,9 +43,7 @@ extends ComplexStepState<
 
         //this.rootParent = Objects.requireNonNull( rootParent );
 
-        this.parent =
-                Objects.requireNonNull(
-                        parent );
+        //this.parent = Objects.requireNonNull( parent );
     }
 
     @Override
