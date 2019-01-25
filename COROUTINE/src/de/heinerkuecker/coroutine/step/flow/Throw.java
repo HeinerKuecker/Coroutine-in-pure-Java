@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
@@ -16,19 +18,34 @@ import de.heinerkuecker.util.ExceptionUnchecker;
 public class Throw<RESULT , RESUME_ARGUMENT>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
 {
-    // TODO use expression
-    private final Exception exception;
+    private final CoroExpression<? extends Throwable> exceptionExpression;
 
     /**
-     * @param creationStackOffset
+     * Constructor.
+     *
+     * @param exceptionExpression
+     */
+    public Throw(
+            //final Exception exception
+            final CoroExpression<? extends Throwable> exceptionExpression )
+    {
+        this.exceptionExpression =
+                Objects.requireNonNull(
+                        exceptionExpression );
+    }
+
+    /**
+     * Constructor.
+     *
      * @param exception
      */
     public Throw(
-            final Exception exception )
+            final Throwable exception )
     {
-        this.exception =
-                Objects.requireNonNull(
-                        exception );
+        this.exceptionExpression =
+                new Value<Throwable>(
+                        Objects.requireNonNull(
+                                exception ) );
     }
 
     /**
@@ -38,6 +55,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
+        final Throwable exception = exceptionExpression.evaluate( parent );
+
         return ExceptionUnchecker.returnRethrow( exception );
     }
 
@@ -50,7 +69,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
         return
                 this.getClass().getSimpleName() +
                 " " +
-                this.exception +
+                this.exceptionExpression +
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
                     : "" );
