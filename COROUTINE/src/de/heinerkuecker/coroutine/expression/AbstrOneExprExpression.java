@@ -12,8 +12,9 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
  * Like map from expression
  * to expression.
  *
+ * @param <RETURN> return type
+ * @param <ARGUMENT> argument type
  * @author Heiner K&uuml;cker
- * @param <T>
  */
 public abstract class AbstrOneExprExpression<RETURN, ARGUMENT>
 implements CoroExpression<RETURN>
