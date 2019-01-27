@@ -29,7 +29,7 @@ In the coroutine is the full power of the Turing machine available, not just an 
 
 In the coroutine procedures can be used, which can call themselves or each other recursively.
 
-The programming of functions is not possible and not planned.
+The programming of functions is not possible.
 
 Instead of formulating functions in the steps of the coroutine, custom functions should be implemented as derivatives of CoroExpression in Java.
 
