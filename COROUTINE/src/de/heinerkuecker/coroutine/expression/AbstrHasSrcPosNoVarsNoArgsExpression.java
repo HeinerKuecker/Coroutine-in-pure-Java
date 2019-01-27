@@ -8,7 +8,7 @@ import java.util.Map;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
-public abstract class AbstrHasCrtStckTrcNoVarsNoArgsExpression<T>
+public abstract class AbstrHasSrcPosNoVarsNoArgsExpression<T>
 extends HasCreationStackTraceElement
 implements CoroExpression<T>
 {
@@ -18,7 +18,7 @@ implements CoroExpression<T>
      *
      * @param creationStackOffset
      */
-    protected AbstrHasCrtStckTrcNoVarsNoArgsExpression(
+    protected AbstrHasSrcPosNoVarsNoArgsExpression(
             final int creationStackOffset )
     {
         super( creationStackOffset );

@@ -45,6 +45,7 @@ implements CoroExpression<RETURN>
         return type.cast( ret );
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends RETURN>[] type()
     {

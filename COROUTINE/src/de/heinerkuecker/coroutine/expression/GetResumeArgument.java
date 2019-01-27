@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine.expression.exc.WrongExpressionClassException;
 
 public class GetResumeArgument<T>
 //implements CoroExpression<T>
-extends AbstrHasCrtStckTrcNoVarsNoArgsExpression<T>
+extends AbstrHasSrcPosNoVarsNoArgsExpression<T>
 {
     /**
      * For type check.
