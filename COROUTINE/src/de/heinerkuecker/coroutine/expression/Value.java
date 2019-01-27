@@ -13,7 +13,7 @@ import de.heinerkuecker.util.ArrayDeepToString;
  */
 public class Value<T>
 //implements CoroExpression<T>
-extends NoVariablesNoArgumentsExpression<T>
+extends AbstrNoVarsNoArgsExpression<T>
 {
     /**
      * For type check.

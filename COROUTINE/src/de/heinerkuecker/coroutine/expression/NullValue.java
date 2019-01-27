@@ -17,7 +17,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  */
 public class NullValue<T>
 //implements CoroExpression<T>
-extends NoVariablesNoArgumentsExpression<T>
+extends AbstrNoVarsNoArgsExpression<T>
 {
     /**
      * Singleton instance.

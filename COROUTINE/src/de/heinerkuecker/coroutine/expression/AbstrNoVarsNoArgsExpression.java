@@ -7,13 +7,18 @@ import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 
-public abstract class NoVariablesNoArgumentsExpression<T>
+/**
+ * Abstract super class for
+ * expressions without access
+ * to variables or arguments.
+ *
+ * @param <T> expression return type
+ * @author Heiner K&uuml;cker
+ */
+abstract public class AbstrNoVarsNoArgsExpression<T>
 implements CoroExpression<T>
 {
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine.CoroCheckable#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public final List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -21,9 +26,6 @@ implements CoroExpression<T>
         return Collections.emptyList();
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine.CoroCheckable#checkUseVariables(java.util.HashSet, de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep, java.util.Map, java.util.Map)
-     */
     @Override
     public final void checkUseVariables(
             HashSet<String> alreadyCheckedProcedureNames ,
@@ -34,9 +36,6 @@ implements CoroExpression<T>
         // nothing to do
     }
 
-    /* (non-Javadoc)
-     * @see de.heinerkuecker.coroutine.CoroCheckable#checkUseArguments(java.util.HashSet, de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep)
-     */
     @Override
     public final void checkUseArguments(HashSet<String> alreadyCheckedProcedureNames,
             CoroutineOrProcedureOrComplexstep<?, ?> parent)

@@ -25,13 +25,13 @@ import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.Equals;
 import de.heinerkuecker.coroutine.condition.Not;
 import de.heinerkuecker.coroutine.expression.AbstrExprsUseExprs;
+import de.heinerkuecker.coroutine.expression.AbstrNoVarsNoArgsExpression;
 import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.expression.GetResumeArgument;
 import de.heinerkuecker.coroutine.expression.InstanceOf;
 import de.heinerkuecker.coroutine.expression.NewIllegalStateException;
-import de.heinerkuecker.coroutine.expression.NoVariablesNoArgumentsExpression;
 import de.heinerkuecker.coroutine.expression.NullValue;
 import de.heinerkuecker.coroutine.expression.StrConcat;
 import de.heinerkuecker.coroutine.expression.Value;
@@ -374,7 +374,7 @@ public class CoroutineSaxParserTest
     }
 
     static class NewStudent
-    extends NoVariablesNoArgumentsExpression<Student>
+    extends AbstrNoVarsNoArgsExpression<Student>
     {
         @Override
         public Student evaluate(
