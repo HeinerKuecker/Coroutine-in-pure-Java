@@ -45,7 +45,7 @@ extends NoVariablesNoArgumentsExpression<T>
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         return null;
     }

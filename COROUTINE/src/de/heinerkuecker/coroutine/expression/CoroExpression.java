@@ -8,7 +8,7 @@ extends CoroCheckable
 {
 
     T evaluate(
-            final HasArgumentsAndVariables parent );
+            final HasArgumentsAndVariables<?> parent );
 
     //abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 

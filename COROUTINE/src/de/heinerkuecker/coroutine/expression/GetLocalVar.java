@@ -51,7 +51,7 @@ implements CoroExpression<T> , HasVariableName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         System.out.println( "evaluate " + this );
 

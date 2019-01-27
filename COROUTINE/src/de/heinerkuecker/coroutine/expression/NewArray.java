@@ -43,7 +43,7 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public ELEMENT[] evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         //final Class<? extends ELEMENT> componentClass = elementClass;
         final Class<?> componentClass = arrayClass.getComponentType();

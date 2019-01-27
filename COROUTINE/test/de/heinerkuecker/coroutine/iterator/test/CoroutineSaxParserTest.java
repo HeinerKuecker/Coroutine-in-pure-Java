@@ -378,7 +378,7 @@ public class CoroutineSaxParserTest
     {
         @Override
         public Student evaluate(
-                final HasArgumentsAndVariables parent )
+                final HasArgumentsAndVariables<?> parent )
         {
             return new Student();
         }

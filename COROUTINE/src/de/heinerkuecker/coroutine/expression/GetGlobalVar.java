@@ -50,7 +50,7 @@ implements CoroExpression<T> , HasVariableName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Object globalVarValue =
                 parent.globalVars().get(

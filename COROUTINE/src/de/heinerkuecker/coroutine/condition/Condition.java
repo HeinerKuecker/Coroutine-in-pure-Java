@@ -1,8 +1,6 @@
 package de.heinerkuecker.coroutine.condition;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 /**
  * Interface for condition
@@ -15,13 +13,13 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 public interface Condition/*<PARENT>*/
 extends ConditionOrBooleanExpression
 {
-    /**
-     * Execute the condition and return the result.
-     *
-     * @param parent the {@link CoroutineOrProcedureOrComplexstep} instance
-     * @return condition result
-     */
-    @Override
-    boolean execute(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent );
+    ///**
+    // * Execute the condition and return the result.
+    // *
+    // * @param parent the {@link CoroutineOrProcedureOrComplexstep} instance
+    // * @return condition result
+    // */
+    //@Override
+    //boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent );
 }

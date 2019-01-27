@@ -5,6 +5,12 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.util.ArrayDeepToString;
 
+/**
+ * Expression to return the specified value.
+ *
+ * @param <T> value type
+ * @author Heiner K&uuml;cker
+ */
 public class Value<T>
 //implements CoroExpression<T>
 extends NoVariablesNoArgumentsExpression<T>
@@ -16,12 +22,16 @@ extends NoVariablesNoArgumentsExpression<T>
      */
     public final Class<? extends T> type;
 
+    /**
+     * The value they return the expression.
+     */
     public final T value;
 
     /**
      * Constructor.
      *
-     * @param value
+     * @param type value type
+     * @param value value to return
      */
     public Value(
             final Class<? extends T> type ,
@@ -42,14 +52,16 @@ extends NoVariablesNoArgumentsExpression<T>
     public Value(
             final T value )
     {
-        this.type = (Class<? extends T>) value.getClass();
+        @SuppressWarnings("unchecked")
+        final Class<? extends T> valueType = (Class<? extends T>) value.getClass();
+        this.type = valueType;
 
         this.value = value;
     }
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         return this.value;
     }
@@ -85,6 +97,12 @@ extends NoVariablesNoArgumentsExpression<T>
         return new Class[] { type };
     }
 
+    /**
+     * Factory method.
+     *
+     * @param value the value to return
+     * @return value expression
+     */
     public static Value<Boolean> booleanValue(
             final boolean value )
     {
@@ -94,6 +112,12 @@ extends NoVariablesNoArgumentsExpression<T>
                         value );
     }
 
+    /**
+     * Factory method.
+     *
+     * @param value the value to return
+     * @return value expression
+     */
     public static Value<Integer> intValue(
             final int value )
     {
@@ -103,6 +127,12 @@ extends NoVariablesNoArgumentsExpression<T>
                         value );
     }
 
+    /**
+     * Factory method.
+     *
+     * @param value the value to return
+     * @return value expression
+     */
     public static Value<Long> longValue(
             final long value )
     {
@@ -112,6 +142,12 @@ extends NoVariablesNoArgumentsExpression<T>
                         value );
     }
 
+    /**
+     * Factory method.
+     *
+     * @param value the value to return
+     * @return value expression
+     */
     public static Value<String> strValue(
             final String value )
     {

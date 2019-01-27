@@ -9,8 +9,10 @@ public class StringUtil
 {
 
     /**
-     * @param str
-     * @return
+     * Convert the specified string to Java source literal string.
+     *
+     * @param str string to return as Java source literal string
+     * @return Java source literal string
      */
     public static String strAsJavaLiteral(
             final String str )

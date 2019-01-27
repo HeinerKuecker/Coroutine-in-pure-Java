@@ -41,10 +41,14 @@ extends ComplexStepState<
 
         if ( sequence.length() > 0 &&
                 sequence.getStep( 0 ) instanceof ComplexStep )
-        {
             // for toString
+        {
+            @SuppressWarnings("unchecked")
+            final ComplexStep<?, ?, RESULT, RESUME_ARGUMENT> firstComplexStmt =
+                    (ComplexStep<? , ? , RESULT , RESUME_ARGUMENT>) sequence.getStep( 0 );
+
             this.currentComplexState =
-                    ( (ComplexStep) sequence.getStep( 0 ) ).newState( this );
+                    firstComplexStmt.newState( this );
         }
     }
 

@@ -40,7 +40,7 @@ implements CoroExpression<Integer>
      */
     @Override
     public Integer evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Number numberExpressionResult = numberExpression.evaluate( parent );
 

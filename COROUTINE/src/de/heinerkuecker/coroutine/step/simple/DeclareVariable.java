@@ -174,7 +174,7 @@ implements CoroExpression<T>
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables parent )
+            final HasArgumentsAndVariables<?> parent )
     // for using in expressions
     {
         execute(

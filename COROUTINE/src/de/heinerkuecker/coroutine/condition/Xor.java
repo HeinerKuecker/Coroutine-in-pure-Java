@@ -39,7 +39,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
      */
     @Override
     public boolean execute(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         return lhs.execute( parent ) != rhs.execute( parent );
     }

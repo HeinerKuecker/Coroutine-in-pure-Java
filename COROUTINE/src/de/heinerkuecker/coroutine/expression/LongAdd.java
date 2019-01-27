@@ -64,7 +64,7 @@ extends AbstrLhsRhsExpression<Long>
      */
     @Override
     public Long evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Long lhsResult = lhs.evaluate( parent );
         final Long rhsResult = rhs.evaluate( parent );

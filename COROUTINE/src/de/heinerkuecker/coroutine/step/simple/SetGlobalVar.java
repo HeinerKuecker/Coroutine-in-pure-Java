@@ -94,7 +94,7 @@ implements CoroExpression<T> , HasVariableName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables parent )
+            final HasArgumentsAndVariables<?> parent )
     // for using in expressions
     {
         execute( (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent );

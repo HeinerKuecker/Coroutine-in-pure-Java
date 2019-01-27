@@ -34,7 +34,7 @@ implements CoroExpression<RETURN>
 
     @Override
     public RETURN evaluate(
-            final HasArgumentsAndVariables parent )
+            final HasArgumentsAndVariables<?> parent )
     {
         final ARGUMENT argument = argumentExpression.evaluate( parent );
 

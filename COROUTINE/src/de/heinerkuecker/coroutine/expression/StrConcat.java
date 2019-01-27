@@ -71,7 +71,7 @@ implements CoroExpression<String>
      */
     @Override
     public String evaluate(
-            final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         final Object lhsResult = lhs.evaluate( parent );
         final Object rhsResult = rhs.evaluate( parent );

@@ -14,12 +14,13 @@ extends AbstrOneExprExpression<IllegalStateException , String>
 
     @Override
     public IllegalStateException evaluate(
-            final HasArgumentsAndVariables parent )
+            final HasArgumentsAndVariables<?> parent )
     {
         final String message = super.expr.evaluate( parent );
         return new IllegalStateException( message );
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<IllegalStateException>[] type()
     {
