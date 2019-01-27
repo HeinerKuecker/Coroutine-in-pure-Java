@@ -9,7 +9,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
-public abstract class LhsRhsExpression<T>
+public abstract class AbstrLhsRhsExpression<T>
 implements CoroExpression<T>
 {
     /**
@@ -28,7 +28,7 @@ implements CoroExpression<T>
      * @param lhs
      * @param rhs
      */
-    protected LhsRhsExpression(
+    protected AbstrLhsRhsExpression(
             final CoroExpression<? extends T> lhs ,
             final CoroExpression<? extends T> rhs )
     {

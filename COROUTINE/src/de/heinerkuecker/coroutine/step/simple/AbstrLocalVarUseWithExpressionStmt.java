@@ -15,6 +15,7 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
+// TODO give expression instead local var name
 abstract public class AbstrLocalVarUseWithExpressionStmt<RESULT , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
 extends SimpleStep<RESULT , RESUME_ARGUMENT>
 implements HasVariableName
@@ -40,6 +41,7 @@ implements HasVariableName
      * @param expressionValue
      */
     abstract protected void execute(
+            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
             final VARIABLE varvalue ,
             final EXPRESSION expressionValue );
 
@@ -85,6 +87,7 @@ implements HasVariableName
                         parent );
 
         execute(
+                parent ,
                 varValue ,
                 expressionValue );
 

@@ -25,13 +25,13 @@ extends RuntimeException
         super(
                 "wrong value class for expression: " +
                 valueExpression + ",\n" +
-                //"expected class: " +
-                "expected: " +
+                "expected class: " +
+                //"expected: " +
                 expectedClass + ", " +
                 "wrong value: " +
                 wrongValue + ", " +
-                //"wrong class: " +
-                "wrong: " +
+                "wrong class: " +
+                //"wrong: " +
                 wrongValue.getClass() );
     }
 }

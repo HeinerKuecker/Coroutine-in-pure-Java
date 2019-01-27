@@ -89,6 +89,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
                     resultValue );
         }
 
+        System.out.println( "execute " + this );
+
         return new CoroIterStepResult.YieldReturnWithResult<RESULT>(
                 resultType.cast(
                         resultValue ) );
@@ -122,7 +124,6 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
             final Map<String, Class<?>> localVariableTypes )
     {
         this.expression.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -149,8 +150,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
                 expression +
                 "]" +
                 ( this.creationStackTraceElement != null
-                ? " " + this.creationStackTraceElement
-                        : "" );
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

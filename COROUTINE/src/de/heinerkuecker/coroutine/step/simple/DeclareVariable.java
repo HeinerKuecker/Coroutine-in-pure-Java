@@ -148,6 +148,8 @@ implements CoroExpression<T>
     public CoroIterStepResult<RESULT> execute(
             final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
+        System.out.println( "execute " + this );
+
         //if ( this.initialVarValueExpression == null )
         //    // TODO no more needed
         //{
@@ -278,6 +280,7 @@ implements CoroExpression<T>
         }
 
         return
+                this.getClass().getSimpleName() + " " +
                 //type.getName() +
                 ArrayTypeName.toStr( this.type ) +
                 " " +

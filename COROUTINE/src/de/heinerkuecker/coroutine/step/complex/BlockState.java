@@ -125,7 +125,7 @@ extends ComplexStepState<
     @Override
     public boolean isFinished()
     {
-        return this.currentStepIndex == sequence.length();
+        return this.currentStepIndex >= sequence.length();
     }
 
     /**

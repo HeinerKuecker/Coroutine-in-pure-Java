@@ -8,7 +8,7 @@ import de.heinerkuecker.util.ArrayDeepToString;
 
 public class GetResumeArgument<T>
 //implements CoroExpression<T>
-extends NoVariablesNoArgumentsExpression<T>
+extends AbstrHasCrtStckTrcNoVarsNoArgsExpression<T>
 {
     /**
      * For type check.
@@ -25,6 +25,10 @@ extends NoVariablesNoArgumentsExpression<T>
     public GetResumeArgument(
             final Class<? extends T> type )
     {
+        super(
+                // creationStackOffset
+                3 );
+
         this.type =
                 Objects.requireNonNull(
                         type );
@@ -89,7 +93,10 @@ extends NoVariablesNoArgumentsExpression<T>
     public String toString()
     {
         return
-                this.getClass().getSimpleName();
+                this.getClass().getSimpleName() +
+                ( this.creationStackTraceElement != null
+                    ? " " + this.creationStackTraceElement
+                    : "" );
     }
 
 }

@@ -18,7 +18,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  */
 public class Subtract<T extends Number>
 //implements CoroExpression<T>
-extends LhsRhsExpression<T>
+extends AbstrLhsRhsExpression<T>
 {
     /**
      * Left hand side expression.

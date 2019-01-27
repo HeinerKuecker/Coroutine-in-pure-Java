@@ -24,9 +24,9 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * @author Heiner K&uuml;cker
  * @param <RESULT> result type of coroutine, here unused
  */
-public /*final*/ class SetLocalVar<RESULT, RESUME_ARGUMENT , T>
+public /*final*/ class SetLocalVar<RESULT, RESUME_ARGUMENT , VARIABLE>
 extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
-implements CoroExpression<T> , HasVariableName
+implements CoroExpression<VARIABLE> , HasVariableName
 {
     /**
      * Name of variable to set in
@@ -38,14 +38,14 @@ implements CoroExpression<T> , HasVariableName
      * This is the expression whose result
      * should be set as the value of the variable.
      */
-    public final CoroExpression<T> varValueExpression;
+    public final CoroExpression<VARIABLE> varValueExpression;
 
     /**
      * Constructor.
      */
     public SetLocalVar(
             final String localVarName ,
-            final CoroExpression<T> varValueExpression )
+            final CoroExpression<VARIABLE> varValueExpression )
     {
         this.localVarName =
                 Objects.requireNonNull(
@@ -61,15 +61,15 @@ implements CoroExpression<T> , HasVariableName
      */
     public SetLocalVar(
             final String localVarName ,
-            final T varValue )
+            final VARIABLE varValue )
     {
         this.localVarName =
                 Objects.requireNonNull(
                         localVarName );
 
         this.varValueExpression =
-                new Value<T>(
-                        (Class<? extends T>) varValue.getClass() ,
+                new Value<VARIABLE>(
+                        (Class<? extends VARIABLE>) varValue.getClass() ,
                         varValue );
     }
 
@@ -92,20 +92,20 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public T evaluate(
+    public VARIABLE evaluate(
             final HasArgumentsAndVariables parent )
     // for using in expressions
     {
         execute( (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent );
 
-        return (T) parent.localVars().get(
+        return (VARIABLE) parent.localVars().get(
                 this ,
                 localVarName );
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends VARIABLE>[] type()
     {
         //return new Class[] { type };
         return varValueExpression.type();

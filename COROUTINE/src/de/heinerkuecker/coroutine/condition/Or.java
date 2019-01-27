@@ -111,7 +111,7 @@ implements Condition/*<CoroutineIterator<?>>*/
             buff.append( condition );
         }
 
-        return "! ( " + buff + " )";
+        return "( " + buff + " )";
     }
 
 }

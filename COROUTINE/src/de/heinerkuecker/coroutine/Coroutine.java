@@ -59,6 +59,143 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
 
     private RESUME_ARGUMENT resumeArgument;
 
+    /**
+     * Constructor.
+     *
+     * @param steps steps for coroutine processor
+     */
+    @SafeVarargs
+    public Coroutine(
+            final Class<? extends RESULT> resultType ,
+            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+    {
+        this.resultType =
+                Objects.requireNonNull(
+                        resultType );
+
+        this.complexStep =
+                Block.convertStepsToComplexStep(
+                        // creationStackOffset
+                        5 ,
+                        steps );
+
+        this.complexStep.setResultType( resultType );
+
+        this.params = Collections.emptyMap();
+
+        this.arguments = Arguments.EMPTY;
+
+        doMoreInitializations();
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param procedures can be <code>null</code>
+     * @param initialVariableValues key value pairs to put initial in globalVariables {@link #vars}, can be <code>null</code>
+     * @param steps steps for coroutine processor
+     */
+    @SafeVarargs
+    public Coroutine(
+            final Class<? extends RESULT> resultType ,
+            final Iterable<Procedure<RESULT , RESUME_ARGUMENT>> procedures ,
+            //final Map<String, ? extends Object> initialVariableValues ,
+            final Parameter[] params ,
+            final Argument<?>[] args ,
+            final DeclareVariable<RESULT, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
+            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+    {
+        //this( steps );
+
+        this.resultType =
+                Objects.requireNonNull(
+                        resultType );
+
+        this.complexStep =
+                Block.convertStepsToComplexStep(
+                        // creationStackOffset
+                        5 ,
+                        steps );
+
+        if ( procedures != null )
+        {
+            for ( final Procedure<RESULT , RESUME_ARGUMENT> procedure : procedures )
+            {
+                if ( this.procedures.containsKey( procedure.name ) )
+                {
+                    throw new IllegalArgumentException(
+                            "procedure name already in use: " +
+                                    procedure.name );
+                }
+
+                this.procedures.put(
+                        procedure.name ,
+                        procedure );
+            }
+        }
+
+        this.params =
+                Procedure.initParams(
+                        params );
+
+        this.arguments =
+                new Arguments(
+                        // isInitializationCheck
+                        false ,
+                        // checkMandantoryValues
+                        true ,
+                        this.params ,
+                        args ,
+                        //parent
+                        this );
+
+        if ( globalVariableDeclarations != null )
+        {
+            for ( DeclareVariable<RESULT, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
+            {
+                globalVariableDeclaration.execute( this );
+            }
+        }
+
+        this.complexStep.setResultType( resultType );
+
+        doMoreInitializations();
+    }
+
+    private void doMoreInitializations()
+    {
+        if ( CoroutineDebugSwitches.initializationChecks )
+        {
+            checkForUnresolvedBreaksAndContinues();
+
+            checkForUseGetProcedureArgumentOutsideOfProcedureException();
+
+            this.complexStep.checkLabelAlreadyInUse(
+                    // alreadyCheckedProcedureNames
+                    new HashSet<>() ,
+                    this ,
+                    // labels
+                    new HashSet<>() );
+
+            this.complexStep.checkUseArguments(
+                    // alreadyCheckedProcedureNames
+                    new HashSet<>() ,
+                    this );
+
+            this.complexStep.checkUseVariables(
+                    //isCoroutineRoot
+                    //true ,
+                    // alreadyCheckedProcedureNames
+                    new HashSet<>() ,
+                    // parent
+                    this ,
+                    // globalVariableTypes
+                    this.globalVariables.getVariableTypes() ,
+                    // localVariableTypes
+                    new HashMap<>() );
+        }
+    }
+
     public RESULT resume(
             final RESUME_ARGUMENT resumeArgument )
     {
@@ -138,143 +275,6 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
                 finallyReturnRaised ||
                 ( this.nextComplexStepState != null &&
                 this.nextComplexStepState.isFinished() );
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param procedures can be <code>null</code>
-     * @param initialVariableValues key value pairs to put initial in globalVariables {@link #vars}, can be <code>null</code>
-     * @param steps steps for coroutine processor
-     */
-    @SafeVarargs
-    public Coroutine(
-            final Class<? extends RESULT> resultType ,
-            final Iterable<Procedure<RESULT , RESUME_ARGUMENT>> procedures ,
-            //final Map<String, ? extends Object> initialVariableValues ,
-            final Parameter[] params ,
-            final Argument<?>[] args ,
-            final DeclareVariable<RESULT, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
-            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
-    {
-        //this( steps );
-
-        this.resultType =
-                Objects.requireNonNull(
-                        resultType );
-
-        this.complexStep =
-                Block.convertStepsToComplexStep(
-                        // creationStackOffset
-                        5 ,
-                        steps );
-
-        if ( procedures != null )
-        {
-            for ( final Procedure<RESULT , RESUME_ARGUMENT> procedure : procedures )
-            {
-                if ( this.procedures.containsKey( procedure.name ) )
-                {
-                    throw new IllegalArgumentException(
-                            "procedure name already in use: " +
-                                    procedure.name );
-                }
-
-                this.procedures.put(
-                        procedure.name ,
-                        procedure );
-            }
-        }
-
-        this.params =
-                Procedure.initParams(
-                        params );
-
-        this.arguments =
-                new Arguments(
-                        // isInitializationCheck
-                        false ,
-                        // checkMandantoryValues
-                        true ,
-                        this.params ,
-                        args ,
-                        //parent
-                        this );
-
-        if ( globalVariableDeclarations != null )
-        {
-            for ( DeclareVariable<RESULT, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
-            {
-                globalVariableDeclaration.execute( this );
-            }
-        }
-
-        this.complexStep.setResultType( resultType );
-
-        doMoreInitializations();
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param steps steps for coroutine processor
-     */
-    @SafeVarargs
-    public Coroutine(
-            final Class<? extends RESULT> resultType ,
-            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
-    {
-        this.resultType =
-                Objects.requireNonNull(
-                        resultType );
-
-        this.complexStep =
-                Block.convertStepsToComplexStep(
-                        // creationStackOffset
-                        5 ,
-                        steps );
-
-        this.complexStep.setResultType( resultType );
-
-        this.params = Collections.emptyMap();
-
-        this.arguments = Arguments.EMPTY;
-
-        doMoreInitializations();
-    }
-
-    private void doMoreInitializations()
-    {
-        if ( CoroutineDebugSwitches.initializationChecks )
-        {
-            checkForUnresolvedBreaksAndContinues();
-
-            checkForUseGetProcedureArgumentOutsideOfProcedureException();
-
-            this.complexStep.checkLabelAlreadyInUse(
-                    // alreadyCheckedProcedureNames
-                    new HashSet<>() ,
-                    this ,
-                    // labels
-                    new HashSet<>() );
-
-            this.complexStep.checkUseArguments(
-                    // alreadyCheckedProcedureNames
-                    new HashSet<>() ,
-                    this );
-
-            this.complexStep.checkUseVariables(
-                    //isCoroutineRoot
-                    //true ,
-                    // alreadyCheckedProcedureNames
-                    new HashSet<>() ,
-                    // parent
-                    this ,
-                    // globalVariableTypes
-                    this.globalVariables.getVariableTypes() ,
-                    // localVariableTypes
-                    new HashMap<>() );
-        }
     }
 
     @Override

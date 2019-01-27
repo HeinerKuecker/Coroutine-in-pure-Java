@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  */
 public class IntAdd
 //implements CoroExpression<Integer>
-extends LhsRhsExpression<Integer>
+extends AbstrLhsRhsExpression<Integer>
 {
     /**
      * Left hand side expression.

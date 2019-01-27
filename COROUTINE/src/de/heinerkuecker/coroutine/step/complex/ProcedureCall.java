@@ -190,7 +190,7 @@ extends ComplexStep<
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
     {
-        if ( alreadyCheckedProcedureNames.contains( procedureName ) )
+        if ( alreadyCheckedProcedureNames.contains( this.procedureName ) )
         {
             return Collections.emptyList();
         }

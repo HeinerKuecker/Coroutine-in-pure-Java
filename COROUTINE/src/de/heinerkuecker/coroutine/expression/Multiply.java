@@ -18,7 +18,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  */
 public class Multiply<T extends Number>
 //implements CoroExpression<T>
-extends LhsRhsExpression<T>
+extends AbstrLhsRhsExpression<T>
 {
     /**
      * Left hand side expression.

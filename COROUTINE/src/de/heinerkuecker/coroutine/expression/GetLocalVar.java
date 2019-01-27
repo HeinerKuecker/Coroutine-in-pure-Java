@@ -53,6 +53,8 @@ implements CoroExpression<T> , HasVariableName
     public T evaluate(
             final HasArgumentsAndVariables/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
+        System.out.println( "evaluate " + this );
+
         final Object localVarValue =
                 parent.localVars().get(
                         this ,
