@@ -38,6 +38,14 @@ extends ComplexStepState<
         //this.rootParent = Objects.requireNonNull( rootParent );
 
         //this.parent = Objects.requireNonNull( parent );
+
+        if ( sequence.length() > 0 &&
+                sequence.getStep( 0 ) instanceof ComplexStep )
+        {
+            // for toString
+            this.currentComplexState =
+                    ( (ComplexStep) sequence.getStep( 0 ) ).newState( this );
+        }
     }
 
     @Override
