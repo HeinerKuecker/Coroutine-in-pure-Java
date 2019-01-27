@@ -10,10 +10,11 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
- * Cast
- * result of the specified
- * expression {@link CoroExpression}.
+ * Cast result of the specified
+ * expression {@link CoroExpression}
+ * to {@link Integer}.
  *
+ * @param <T> number type to cast
  * @author Heiner K&uuml;cker
  */
 public class CastToInt<T extends Number>
@@ -26,6 +27,8 @@ implements CoroExpression<Integer>
 
     /**
      * Constructor.
+     *
+     * @param numberExpression expression to cast
      */
     public CastToInt(
             final CoroExpression<? extends T> numberExpression )
@@ -35,8 +38,6 @@ implements CoroExpression<Integer>
 
     /**
      * Add.
-     *
-     * @see CoroExpression#evaluate(CoroutineOrProcedureOrComplexstep)
      */
     @Override
     public Integer evaluate(
