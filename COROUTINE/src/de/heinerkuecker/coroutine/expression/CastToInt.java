@@ -1,13 +1,6 @@
 package de.heinerkuecker.coroutine.expression;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
  * Cast result of the specified
@@ -18,22 +11,24 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
  * @author Heiner K&uuml;cker
  */
 public class CastToInt<T extends Number>
-implements CoroExpression<Integer>
+extends AbstrOneExprExpression<Integer , Number>
+//implements CoroExpression<Integer>
 {
     /**
-     * Number expression to deliver object to cast.
+     * Number expression to deliver number object to cast.
      */
-    public final CoroExpression<? extends T> numberExpression;
+    //public final CoroExpression<? extends T> numberExpression;
 
     /**
      * Constructor.
      *
-     * @param numberExpression expression to cast
+     * @param numberExpression expression to deliver number object to cast
      */
     public CastToInt(
             final CoroExpression<? extends T> numberExpression )
     {
-        this.numberExpression = Objects.requireNonNull( numberExpression );
+        //this.numberExpression = Objects.requireNonNull( numberExpression );
+        super( numberExpression );
     }
 
     /**
@@ -43,47 +38,46 @@ implements CoroExpression<Integer>
     public Integer evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
-        final Number numberExpressionResult = numberExpression.evaluate( parent );
+        final Number numberExpressionResult = /*numberExpression*/expr.evaluate( parent );
 
         if ( numberExpressionResult == null )
         {
-            throw new NullPointerException( "result of numberExpression: " + numberExpression );
+            //throw new NullPointerException( "result of numberExpression: " + /*numberExpression*/expr );
+            return null;
         }
 
         return numberExpressionResult.intValue();
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
-    @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    {
-        return numberExpression.getProcedureArgumentGetsNotInProcedure();
-    }
+    //@Override
+    //public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    //{
+    //    return numberExpression.getProcedureArgumentGetsNotInProcedure();
+    //}
 
-    @Override
-    public void checkUseVariables(
-            ////final boolean isCoroutineRoot ,
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
-    {
-        this.numberExpression.checkUseVariables(
-                //isCoroutineRoot ,
-                alreadyCheckedProcedureNames ,
-                parent ,
-                globalVariableTypes, localVariableTypes );
-    }
+    //@Override
+    //public void checkUseVariables(
+    //        ////final boolean isCoroutineRoot ,
+    //        final HashSet<String> alreadyCheckedProcedureNames ,
+    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+    //        final Map<String, Class<?>> globalVariableTypes ,
+    //        final Map<String, Class<?>> localVariableTypes )
+    //{
+    //    this.numberExpression.checkUseVariables(
+    //            //isCoroutineRoot ,
+    //            alreadyCheckedProcedureNames ,
+    //            parent ,
+    //            globalVariableTypes, localVariableTypes );
+    //}
 
-    @Override
-    public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
-    {
-        this.numberExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
-    }
+    //@Override
+    //public void checkUseArguments(
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+    //{
+    //    this.numberExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+    //}
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends Integer>[] type()
     {
@@ -97,7 +91,7 @@ implements CoroExpression<Integer>
     @Override
     public String toString()
     {
-        return " ( (int) " + numberExpression + " )";
+        return " ( (int) " + /*numberExpression*/expr + " )";
     }
 
 }
