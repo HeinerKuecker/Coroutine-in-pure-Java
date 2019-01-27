@@ -50,25 +50,16 @@ extends HasCreationStackTraceElement
                 initParams(
                         params );
 
-        if (bodySteps.length == 0 )
+        if ( bodySteps.length == 0 )
         {
             throw new IllegalArgumentException( "procedure body is empty" );
         }
 
-        if ( bodySteps.length == 1 &&
-                bodySteps[ 0 ] instanceof ComplexStep )
-        {
-            this.bodyComplexStep =
-                    (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>) bodySteps[ 0 ];
-        }
-        else
-        {
-            this.bodyComplexStep =
-                    new Block<>(
-                            // creationStackOffset
-                            3 ,
-                            bodySteps );
-        }
+        this.bodyComplexStep =
+                Block.convertStepsToComplexStep(
+                        //creationStackOffset
+                        4 ,
+                        bodySteps );
     }
 
     /**
