@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.expression.exc.WrongExpressionClassException;
-import de.heinerkuecker.util.ArrayDeepToString;
 
 public class GetResumeArgument<T>
 //implements CoroExpression<T>

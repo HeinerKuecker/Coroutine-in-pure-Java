@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 /**
  * Like map from expression

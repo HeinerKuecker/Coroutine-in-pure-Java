@@ -44,7 +44,6 @@ import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.coroutine.step.simple.AbstrLocalVarUseWithExpressionStmt;
 import de.heinerkuecker.coroutine.step.simple.AddToCollectionLocalVar;
 import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
 import de.heinerkuecker.util.StringUtil;
 
 /**
@@ -332,8 +331,6 @@ public class CoroutineSaxParserTest
         public void startElement(String uri, String localName, String qName, Attributes attributes)
                 throws SAXException
         {
-            // TODO Auto-generated method stub
-            //super.startElement(uri, localName, qName, attributes);
             final StartElement startElement = new StartElement( uri , localName , qName , attributes );
 
             System.out.println( startElement );
@@ -348,8 +345,6 @@ public class CoroutineSaxParserTest
         public void endElement(String uri, String localName, String qName)
                 throws SAXException
         {
-            // TODO Auto-generated method stub
-            //super.endElement(uri, localName, qName);
             final EndElement endElement = new EndElement( uri , localName , qName );
 
             System.out.println( endElement );
@@ -367,9 +362,6 @@ public class CoroutineSaxParserTest
                 int length )
                         throws SAXException
         {
-            // TODO Auto-generated method stub
-            //super.characters(ch, start, length);
-            //coroutine.resume( new Characters(ch, start, length) );
             final Characters characters = new Characters( new String( ch , start , length ) );
 
             System.out.println( characters );
