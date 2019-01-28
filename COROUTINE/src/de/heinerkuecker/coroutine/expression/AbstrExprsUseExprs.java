@@ -8,14 +8,14 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
-abstract public class AbstrExprsUseExprs<RETURN , ARGUMENT>
-implements CoroExpression<RETURN>
+abstract public class AbstrExprsUseExprs<EXPRESSION_RETURN , ARGUMENT>
+implements CoroExpression<EXPRESSION_RETURN>
 {
-    public final Class<? extends RETURN> type;
+    public final Class<? extends EXPRESSION_RETURN> type;
 
     public final CoroExpression<ARGUMENT> argumentExpression;
 
-    abstract public RETURN execute(
+    abstract public EXPRESSION_RETURN execute(
             final ARGUMENT argument );
 
     /**
@@ -25,7 +25,7 @@ implements CoroExpression<RETURN>
      * @param argumentExpression
      */
     protected AbstrExprsUseExprs(
-            Class<? extends RETURN> type ,
+            Class<? extends EXPRESSION_RETURN> type ,
             CoroExpression<ARGUMENT> argumentExpression )
     {
         this.type = Objects.requireNonNull( type );
@@ -33,12 +33,12 @@ implements CoroExpression<RETURN>
     }
 
     @Override
-    public RETURN evaluate(
+    public EXPRESSION_RETURN evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
         final ARGUMENT argument = argumentExpression.evaluate( parent );
 
-        final RETURN ret =
+        final EXPRESSION_RETURN ret =
                 execute(
                         argument );
 
@@ -47,7 +47,7 @@ implements CoroExpression<RETURN>
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends RETURN>[] type()
+    public Class<? extends EXPRESSION_RETURN>[] type()
     {
         return new Class[]{ type };
     }
@@ -65,7 +65,11 @@ implements CoroExpression<RETURN>
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        this.argumentExpression.checkUseVariables(alreadyCheckedProcedureNames, parent, globalVariableTypes, localVariableTypes);
+        this.argumentExpression.checkUseVariables(
+                alreadyCheckedProcedureNames ,
+                parent ,
+                globalVariableTypes ,
+                localVariableTypes );
     }
 
     @Override

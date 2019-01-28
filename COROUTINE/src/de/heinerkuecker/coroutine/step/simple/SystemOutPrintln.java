@@ -22,11 +22,11 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * Use this class as template
  * for your own log step.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public final class SystemOutPrintln<RESULT , RESUME_ARGUMENT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+public final class SystemOutPrintln<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     /**
      * Expression to deliver value to print.
@@ -52,8 +52,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      * {@link System#out}.
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         System.out.println( ArrayDeepToString.deepToString( outputExpression.evaluate( parent ) ) );
         return CoroIterStepResult.continueCoroutine();
@@ -70,7 +70,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

@@ -14,19 +14,19 @@ import de.heinerkuecker.coroutine.expression.exc.WrongExpressionClassException;
 import de.heinerkuecker.coroutine.expression.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetLocalVar<T>
+public class GetLocalVar<VARIABLE>
 extends HasCreationStackTraceElement
-implements CoroExpression<T> , HasVariableName
+implements CoroExpression<VARIABLE> , HasVariableName
 {
     public final String localVarName;
 
     /**
-     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     * Reifier for type param VARIABLE to solve unchecked casts.
      *
      * For type check.
      * Solve unchecked cast.
      */
-    public final Class<? extends T> type;
+    public final Class<? extends VARIABLE> type;
 
     /**
      * Constructor.
@@ -34,7 +34,7 @@ implements CoroExpression<T> , HasVariableName
      */
     public GetLocalVar(
             final String localVarName ,
-            final Class<? extends T> type )
+            final Class<? extends VARIABLE> type )
     {
         super(
                 //creationStackOffset
@@ -50,7 +50,7 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public T evaluate(
+    public VARIABLE evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
         System.out.println( "evaluate " + this );
@@ -129,7 +129,7 @@ implements CoroExpression<T> , HasVariableName
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends VARIABLE>[] type()
     {
         //return type;
         return new Class[] { type };

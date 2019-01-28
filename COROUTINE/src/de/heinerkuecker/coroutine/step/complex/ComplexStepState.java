@@ -15,24 +15,24 @@ import de.heinerkuecker.util.HCloneable;
  * for {@link ComplexStep}.
  *
  * @param <STEP>
- * @param <RESULT>
+ * @param <COROUTINE_RETURN>
  * @param <PARENT>
  * @author Heiner K&uuml;cker
  *
  * TODO rename to ComplexStepExecuteState
  */
 abstract public /*interface*/class ComplexStepState<
-    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
-    STEP extends ComplexStep<STEP, STEP_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
-    RESULT ,
-    //PARENT extends CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
+    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    STEP extends ComplexStep<STEP, STEP_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
+    //PARENT extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     RESUME_ARGUMENT
 >
 implements
-    CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> ,
+    CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> ,
     HCloneable<STEP_STATE>
 {
-    protected final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    protected final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     private final BlockLocalVariables blockLocalVariables;
 
@@ -41,7 +41,7 @@ implements
      */
     protected ComplexStepState(
             //final BlockLocalVariables blockLocalVariables
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         this.parent = Objects.requireNonNull( parent );
 
@@ -57,9 +57,9 @@ implements
      * @param parent
      * @return object to return a value and to control the flow
      */
-    abstract public CoroIterStepResult<RESULT> execute(
+    abstract public CoroIterStepResult<COROUTINE_RETURN> execute(
             //PARENT parent
-            //CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+            //CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             );
 
     /**
@@ -79,7 +79,7 @@ implements
     }
 
     //@Override
-    //public CoroutineIterator<RESULT> getRootParent()
+    //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
     //{
     //    return parent.getRootParent();
     //}
@@ -91,7 +91,7 @@ implements
     //}
 
     @Override
-    public Procedure<RESULT , RESUME_ARGUMENT> getProcedure(
+    public Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> getProcedure(
             final String procedureName )
     {
         return parent.getProcedure( procedureName );

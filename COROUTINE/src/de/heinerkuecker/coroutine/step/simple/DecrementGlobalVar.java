@@ -17,12 +17,12 @@ import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassExceptio
  * variable in globalVariables
  * {@link CoroutineOrProcedureOrComplexstep#globalVars()}
  *
- * @param <RESULT>
+ * @param <COROUTINE_RETURN>
  * @author Heiner K&uuml;cker
  */
-public final class DecrementGlobalVar<RESULT , RESUME_ARGUMENT>
-//extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
+public final class DecrementGlobalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
+//extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+extends SimpleStepWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -50,8 +50,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
         final int var =
@@ -84,7 +84,7 @@ implements HasVariableName
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

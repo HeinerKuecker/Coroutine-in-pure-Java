@@ -10,30 +10,30 @@ import de.heinerkuecker.coroutine.step.complex.While;
  * Interface for result of one step
  * in {@link CoroutineIterator}.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public interface CoroIterStepResult<RESULT>
+public interface CoroIterStepResult<COROUTINE_RETURN>
 {
     /**
      * This method returns a instance to enforce continue stepping.
      *
      * @return Continue stepping
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     @SuppressWarnings("unchecked")
-    public static <RESULT> ContinueCoroutine<RESULT> continueCoroutine()
+    public static <COROUTINE_RETURN> ContinueCoroutine<COROUTINE_RETURN> continueCoroutine()
     {
-        return (ContinueCoroutine<RESULT>) ContinueCoroutine.INSTANCE;
+        return (ContinueCoroutine<COROUTINE_RETURN>) ContinueCoroutine.INSTANCE;
     }
 
     /**
      * Class to enforce continue stepping.
      *
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class ContinueCoroutine<RESULT>
-    implements CoroIterStepResult<RESULT>
+    public class ContinueCoroutine<COROUTINE_RETURN>
+    implements CoroIterStepResult<COROUTINE_RETURN>
     {
         @SuppressWarnings("rawtypes")
         private static ContinueCoroutine INSTANCE = new ContinueCoroutine<>();
@@ -56,15 +56,15 @@ public interface CoroIterStepResult<RESULT>
     /**
      * Class to enforce suspend stepping and set result.
      *
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class YieldReturnWithResult<RESULT>
-    implements CoroIterStepResult<RESULT>
+    public class YieldReturnWithResult<COROUTINE_RETURN>
+    implements CoroIterStepResult<COROUTINE_RETURN>
     {
-        public final RESULT result;
+        public final COROUTINE_RETURN result;
 
         public YieldReturnWithResult(
-                final RESULT result )
+                final COROUTINE_RETURN result )
         {
             this.result = result;
         }
@@ -82,15 +82,15 @@ public interface CoroIterStepResult<RESULT>
     /**
      * Class to enforce stop stepping and set result.
      *
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class FinallyReturnWithResult<RESULT>
-    implements CoroIterStepResult<RESULT>
+    public class FinallyReturnWithResult<COROUTINE_RETURN>
+    implements CoroIterStepResult<COROUTINE_RETURN>
     {
-        public final RESULT result;
+        public final COROUTINE_RETURN result;
 
         public FinallyReturnWithResult(
-                final RESULT result )
+                final COROUTINE_RETURN result )
         {
             this.result = result;
         }
@@ -108,10 +108,10 @@ public interface CoroIterStepResult<RESULT>
     /**
      * Class to enforce stop stepping without result.
      *
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class FinallyReturnWithoutResult<RESULT>
-    implements CoroIterStepResult<RESULT>
+    public class FinallyReturnWithoutResult<COROUTINE_RETURN>
+    implements CoroIterStepResult<COROUTINE_RETURN>
     {
         /**
          * @see Object#toString()
@@ -130,10 +130,10 @@ public interface CoroIterStepResult<RESULT>
      * {@link While} or
      * {@link DoWhile}.
      *
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class Break<RESULT>
-    implements CoroIterStepResult<RESULT>
+    public class Break<COROUTINE_RETURN>
+    implements CoroIterStepResult<COROUTINE_RETURN>
     {
         /**
          * Label of loop to break.
@@ -168,10 +168,10 @@ public interface CoroIterStepResult<RESULT>
      * {@link While} or
      * {@link DoWhile}.
      *
-     * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class ContinueLoop<RESULT>
-    implements CoroIterStepResult<RESULT>
+    public class ContinueLoop<COROUTINE_RETURN>
+    implements CoroIterStepResult<COROUTINE_RETURN>
     {
         /**
          * Label of loop to continue.

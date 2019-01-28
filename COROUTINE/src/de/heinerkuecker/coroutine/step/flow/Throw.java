@@ -15,8 +15,8 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.ExceptionUnchecker;
 
-public class Throw<RESULT , RESUME_ARGUMENT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+public class Throw<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     private final CoroExpression<? extends Throwable> exceptionExpression;
 
@@ -52,8 +52,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Throwable exception = exceptionExpression.evaluate( parent );
 
@@ -86,7 +86,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

@@ -30,12 +30,12 @@ import de.heinerkuecker.util.ArrayTypeName;
  * local in the scoped block or
  * statement.
  *
- * @param <RESULT> result type of coroutine, here unused
+ * @param <COROUTINE_RETURN> result type of coroutine, here unused
  * @param <T> variable type
  * @author Heiner K&uuml;cker
  */
-public final class DeclareVariable<RESULT, RESUME_ARGUMENT, T>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
+public final class DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT, T>
+extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 implements CoroExpression<T>
 {
     /**
@@ -145,8 +145,8 @@ implements CoroExpression<T>
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         System.out.println( "execute " + this );
 
@@ -178,7 +178,7 @@ implements CoroExpression<T>
     // for using in expressions
     {
         execute(
-                (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent );
+                (CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
         return (T) parent.localVars().get(
                 this ,
@@ -210,7 +210,7 @@ implements CoroExpression<T>
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

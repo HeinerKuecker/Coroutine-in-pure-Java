@@ -4,14 +4,14 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.util.HCloneable;
 
 class DoWhileState<
-    RESULT ,
-    //PARENT extends CoroutineIterator<RESULT>
+    COROUTINE_RETURN ,
+    //PARENT extends CoroutineIterator<COROUTINE_RETURN>
     RESUME_ARGUMENT
     >
 extends WhileOrDoWhileState<
-    DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    DoWhileState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> ,
-    RESULT ,
+    DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    DoWhileState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
@@ -21,9 +21,9 @@ extends WhileOrDoWhileState<
      * @param doWhile
      */
     protected DoWhileState(
-            final DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT> doWhile ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> doWhile ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super(
                 doWhile ,
@@ -37,18 +37,18 @@ extends WhileOrDoWhileState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
     {
-        return (DoWhile<RESULT/*, PARENT*/ , RESUME_ARGUMENT>) this.whileOrDoWhile;
+        return (DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) this.whileOrDoWhile;
     }
 
     /**
      * @see HCloneable#createClone()
      */
     @Override
-    public DoWhileState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> createClone()
+    public DoWhileState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final DoWhileState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final DoWhileState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new DoWhileState<>(
                         getStep() ,
                         //super.rootParent

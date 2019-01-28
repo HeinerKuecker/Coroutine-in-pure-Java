@@ -179,8 +179,6 @@ public class CoroutineSaxParserTest
             this.qName = qName;
         }
 
-
-
         final String getElementname()
         {
             return qName;
@@ -190,27 +188,19 @@ public class CoroutineSaxParserTest
     static class StartElement
     extends SaxEventWithElementname
     {
-        //final String uri;
-        //final String localName;
         final Attributes attributes;
 
         /**
          * Constructor.
          *
-         * @param uri
-         * @param localName
          * @param qName
          * @param attributes
          */
         protected StartElement(
-                String uri,
-                String localName,
                 String qName,
                 Attributes attributes)
         {
             super( qName );
-            //this.uri = uri;
-            //this.localName = localName;
             this.attributes = attributes;
         }
 
@@ -232,8 +222,6 @@ public class CoroutineSaxParserTest
 
             return
                     "StartElement[" +
-                    //"uri=" + this.uri + ", " +
-                    //"localName=" + this.localName + ", " +
                     "qName=" + this.qName + ", " +
                     "attributes=[" + attributesBuff + "]]";
         }
@@ -242,24 +230,15 @@ public class CoroutineSaxParserTest
     static class EndElement
     extends SaxEventWithElementname
     {
-        //final String uri;
-        //final String localName;
-
         /**
          * Constructor.
          *
-         * @param uri
-         * @param localName
          * @param qName
          */
         protected EndElement(
-                String uri ,
-                String localName ,
                 String qName )
         {
             super( qName );
-            //this.uri = uri;
-            //this.localName = localName;
         }
 
         @Override
@@ -267,8 +246,6 @@ public class CoroutineSaxParserTest
         {
             return
                     "EndElement[" +
-                    //"uri=" + this.uri + ", " +
-                    //"localName=" + this.localName + ", " +
                     "qName=" + this.qName +
                     "]";
         }
@@ -277,25 +254,16 @@ public class CoroutineSaxParserTest
     static class Characters
     implements SaxEvent
     {
-        //final char[] ch;
-        //final int start;
-        //final int length;
         final String str;
 
         /**
          * Constructor.
          *
-         * @param ch
-         * @param start
-         * @param length
+         * @param str
          */
         protected Characters(
-                //char[] ch, int start, int length
                 final String str )
         {
-            //this.ch = ch;
-            //this.start = start;
-            //this.length = length;
             this.str = str;
         }
 
@@ -304,10 +272,7 @@ public class CoroutineSaxParserTest
         {
             return
                     "Characters " +
-                    //"[str=" +
-                    StringUtil.strAsJavaLiteral( this.str )
-                    //"]"
-                    ;
+                    StringUtil.strAsJavaLiteral( this.str );
         }
     }
 
@@ -328,10 +293,14 @@ public class CoroutineSaxParserTest
         }
 
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes)
+        public void startElement(
+                String uri ,
+                String localName ,
+                String qName ,
+                Attributes attributes )
                 throws SAXException
         {
-            final StartElement startElement = new StartElement( uri , localName , qName , attributes );
+            final StartElement startElement = new StartElement( qName , attributes );
 
             System.out.println( startElement );
 
@@ -342,10 +311,13 @@ public class CoroutineSaxParserTest
         }
 
         @Override
-        public void endElement(String uri, String localName, String qName)
+        public void endElement(
+                String uri ,
+                String localName ,
+                String qName )
                 throws SAXException
         {
-            final EndElement endElement = new EndElement( uri , localName , qName );
+            final EndElement endElement = new EndElement( qName );
 
             System.out.println( endElement );
 
@@ -393,7 +365,7 @@ public class CoroutineSaxParserTest
 
     static class SetStudentField
     extends AbstrLocalVarUseWithExpressionStmt<
-    /*RESULT*/Void ,
+    /*COROUTINE_RETURN*/Void ,
     /*RESUME_ARGUMENT*/Characters ,
     /*VARIABLE*/Student ,
     /*EXPRESSION*/Characters >
@@ -462,7 +434,7 @@ public class CoroutineSaxParserTest
 
     static class SetStudentRollno
     extends AbstrLocalVarUseWithExpressionStmt<
-    /*RESULT*/Void ,
+    /*COROUTINE_RETURN*/Void ,
     /*RESUME_ARGUMENT*/StartElement ,
     /*VARIABLE*/Student ,
     /*EXPRESSION*/StartElement >
@@ -529,11 +501,11 @@ public class CoroutineSaxParserTest
         final ConditionOrBooleanExpression isStartElementClass =
                 new And(
                         new InstanceOf(
-                                //valueExpression
+                                // valueExpression
                                 new GetResumeArgument<>(
-                                        //type
+                                        // type
                                         SaxEvent.class ) ,
-                                //type
+                                // type
                                 StartElement.class ) ,
                         new Equals<>(
                                 getXmlElementNameFromResumeArgument ,
@@ -542,58 +514,58 @@ public class CoroutineSaxParserTest
         // procedure to consume white space between xml elements (actually consume all characters)
         final Procedure<Void , SaxEvent> consumeWhitespaces =
                 new Procedure<>(
-                        //name
+                        // name
                         "consumeWhitespaces" ,
-                        //params
+                        // params
                         null ,
-                        //bodyStmts
+                        // bodyStmts
                         new While<>(
-                                //condition
+                                // condition
                                 new InstanceOf(
-                                        //valueExpression
+                                        // valueExpression
                                         new GetResumeArgument<>(
-                                                //type
+                                                // type
                                                 SaxEvent.class ) ,
-                                        //type
+                                        // type
                                         Characters.class ) ,
-                                //steps
+                                // steps
                                 new YieldReturn<>( NullValue.nullValue() ) ) );
 
         // procedure to consume end xml element
         final Procedure<Void , SaxEvent> consumeEndElement =
                 new Procedure<>(
-                        //name
+                        // name
                         "consumeEndElement" ,
-                        //params
+                        // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "name" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         String.class )
                         } ,
                         //bodyStmts
                         new ProcedureCall<>(
-                                //procedureName
+                                // procedureName
                                 "consumeWhitespaces" ) ,
                         new IfElse<>(
-                                //condition
+                                // condition
                                 new And(
                                         new InstanceOf(
-                                                //valueExpression
+                                                // valueExpression
                                                 new GetResumeArgument<>(
-                                                        //type
+                                                        // type
                                                         SaxEvent.class ) ,
-                                                //type
+                                                // type
                                                 EndElement.class ) ,
                                         new Equals<>(
                                                 getXmlElementNameFromResumeArgument ,
                                                 new GetProcedureArgument<>(
-                                                        //procedureArgumentName
+                                                        // procedureArgumentName
                                                         "name" ,
-                                                        //type
+                                                        // type
                                                         String.class ) ) ) ,
                                 // thenSteps
                                 new CoroIterStep[] {
@@ -615,20 +587,20 @@ public class CoroutineSaxParserTest
 
         final Procedure<Void , SaxEvent> readRollnoAttrFromStartXmlElement =
                 new Procedure<>(
-                        //name
+                        // name
                         "readRollnoAttrFromStartXmlElement" ,
-                        //params
+                        // params
                         null ,
-                        //bodyStmts
+                        // bodyStmts
                         new IfElse<>(
-                                //condition
+                                // condition
                                 new And(
                                         new InstanceOf(
-                                                //valueExpression
+                                                // valueExpression
                                                 new GetResumeArgument<>(
-                                                        //type
+                                                        // type
                                                         SaxEvent.class ) ,
-                                                //type
+                                                // type
                                                 StartElement.class ) ,
                                         new Equals<>(
                                                 getXmlElementNameFromResumeArgument ,
@@ -650,38 +622,38 @@ public class CoroutineSaxParserTest
         // procedure to consume start xml element, text and end xml element with the specified element name
         final Procedure<Void , SaxEvent> readXmlElement =
                 new Procedure<>(
-                        //name
+                        // name
                         "readXmlElement" ,
-                        //params
+                        // params
                         new Parameter[] {
                                 new Parameter(
-                                        //name
+                                        // name
                                         "name" ,
-                                        //isMandantory
+                                        // isMandantory
                                         true ,
-                                        //type
+                                        // type
                                         String.class )
                         } ,
-                        //bodyStmts
+                        // bodyStmts
                         new ProcedureCall<>(
-                                //procedureName
+                                // procedureName
                                 "consumeWhitespaces" ) ,
                         new IfElse<>(
-                                //condition
+                                // condition
                                 new And(
                                         new InstanceOf(
-                                                //valueExpression
+                                                // valueExpression
                                                 new GetResumeArgument<>(
                                                         //type
                                                         SaxEvent.class ) ,
-                                                //type
+                                                // type
                                                 StartElement.class ) ,
                                         new Equals<>(
                                                 getXmlElementNameFromResumeArgument ,
                                                 new GetProcedureArgument<>(
-                                                        //procedureArgumentName
+                                                        // procedureArgumentName
                                                         "name" ,
-                                                        //type
+                                                        // type
                                                         String.class ) ) ) ,
                                 // thenSteps
                                 new CoroIterStep[] {
@@ -702,70 +674,70 @@ public class CoroutineSaxParserTest
                                 } ) ,
                         // set text
                         new SetStudentField(
-                                //fieldName
+                                // fieldName
                                 new GetProcedureArgument<>(
-                                        //procedureArgumentName
+                                        // procedureArgumentName
                                         "name" ,
-                                        //type
+                                        // type
                                         String.class ) ) ,
                         // consume resume call
                         new YieldReturn<Void , SaxEvent>( NullValue.nullValue() ) ,
                         new ProcedureCall<>(
-                                //procedureName
+                                // procedureName
                                 "consumeEndElement" ,
                                 // args
                                 new Argument<String>(
-                                        //name
+                                        // name
                                         "name" ,
                                         // expression
                                         new GetProcedureArgument<>(
-                                                //procedureArgumentName
+                                                // procedureArgumentName
                                                 "name" ,
-                                                //type
+                                                // type
                                                 String.class ) ) ) );
 
         final List<Student> students = new ArrayList<>();
 
         final Coroutine<Void, SaxEvent> coroutine =
                 new Coroutine<Void , SaxEvent>(
-                        //resultType
+                        // resultType
                         Void.class ,
-                        //procedures
+                        // procedures
                         Arrays.asList(
                                 consumeWhitespaces ,
                                 readRollnoAttrFromStartXmlElement ,
                                 readXmlElement ,
                                 consumeEndElement ) ,
-                        //params
+                        // params
                         null ,
-                        //args
+                        // args
                         null ,
-                        //globalVariableDeclarations
+                        // globalVariableDeclarations
                         null ,
-                        //steps
+                        // steps
                         new DeclareVariable<>(
                                 "students" ,
                                 students ) ,
                         new While<>(
-                                //condition
+                                // condition
                                 isStartElementClass ,
-                                //steps
+                                // steps
                                 // consume start xml element class
                                 new YieldReturn<>( NullValue.nullValue() ) ,
                                 new ProcedureCall<>(
-                                        //procedureName
+                                        // procedureName
                                         "consumeWhitespaces" ) ,
                                 new While<Void, SaxEvent>(
-                                        //condition: ! endElement student
+                                        // condition: ! endElement student
                                         new Not(
                                                 new InstanceOf(
-                                                        //valueExpression
+                                                        // valueExpression
                                                         new GetResumeArgument<>(
-                                                                //type
+                                                                // type
                                                                 SaxEvent.class ) ,
-                                                        //type
+                                                        // type
                                                         EndElement.class ) ) ,
-                                        //steps
+                                        // steps
                                         new DeclareVariable<>(
                                                 // varName
                                                 "student" ,
@@ -778,60 +750,60 @@ public class CoroutineSaxParserTest
                                                 "students" ,
                                                 // elementToAddExpression
                                                 new GetLocalVar<>(
-                                                        //localVarName
+                                                        // localVarName
                                                         "student" ,
                                                         // type
                                                         Student.class ) ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "readRollnoAttrFromStartXmlElement" ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "readXmlElement" ,
                                                 // args
                                                 new Argument<String>(
-                                                        //name
+                                                        // name
                                                         "name" ,
                                                         // value
                                                         "firstname" ) ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "readXmlElement" ,
                                                 // args
                                                 new Argument<String>(
-                                                        //name
+                                                        // name
                                                         "name" ,
                                                         // value
                                                         "lastname" ) ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "readXmlElement" ,
                                                 // args
                                                 new Argument<String>(
-                                                        //name
+                                                        // name
                                                         "name" ,
                                                         // value
                                                         "nickname" ) ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "readXmlElement" ,
                                                 // args
                                                 new Argument<String>(
-                                                        //name
+                                                        // name
                                                         "name" ,
                                                         // value
                                                         "marks" ) ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "consumeEndElement" ,
                                                 // args
                                                 new Argument<String>(
-                                                        //name
+                                                        // name
                                                         "name" ,
                                                         // value
                                                         "student" ) ) ,
                                         new ProcedureCall<>(
-                                                //procedureName
+                                                // procedureName
                                                 "consumeWhitespaces" ) ) ) );
 
         try

@@ -20,24 +20,24 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * return a specified value
  * and stop stepping.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class FinallyReturn<RESULT , RESUME_ARGUMENT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+public class FinallyReturn<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    public final CoroExpression<? extends RESULT> expression;
+    public final CoroExpression<? extends COROUTINE_RETURN> expression;
 
     /**
-     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    private Class<? extends RESULT> resultType;
+    private Class<? extends COROUTINE_RETURN> resultType;
 
     /**
      * Constructor.
      */
     public FinallyReturn(
-            final CoroExpression<? extends RESULT> expression )
+            final CoroExpression<? extends COROUTINE_RETURN> expression )
     {
         super(
                 //creationStackOffset
@@ -53,7 +53,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      * Constructor.
      */
     public FinallyReturn(
-            final RESULT value )
+            final COROUTINE_RETURN value )
     {
         super(
                 //creationStackOffset
@@ -61,8 +61,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
                 );
 
         this.expression =
-                new Value<RESULT>(
-                        (Class<? extends RESULT>) value.getClass() ,
+                new Value<COROUTINE_RETURN>(
+                        (Class<? extends COROUTINE_RETURN>) value.getClass() ,
                         value );
     }
 
@@ -70,10 +70,10 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      * Compute result value and wrap it in finally return.
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        final RESULT resultValue =
+        final COROUTINE_RETURN resultValue =
                 expression.evaluate(
                         parent );
 
@@ -89,7 +89,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
                     resultValue );
         }
 
-        return new CoroIterStepResult.FinallyReturnWithResult<RESULT>(
+        return new CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN>(
                 resultType.cast(
                         resultValue ) );
     }
@@ -108,7 +108,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         this.resultType = resultType;
     }

@@ -17,11 +17,11 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * to stop stepping without
  * return a value.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class FinallyReturnWithoutResult<RESULT , RESUME_ARGUMENT>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+public class FinallyReturnWithoutResult<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     /**
      * Constructor.
@@ -38,8 +38,8 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      * Decrement variable.
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new CoroIterStepResult.FinallyReturnWithoutResult<>();
     }
@@ -55,7 +55,7 @@ extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

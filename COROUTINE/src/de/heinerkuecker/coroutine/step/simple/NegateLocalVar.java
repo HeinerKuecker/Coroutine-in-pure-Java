@@ -11,9 +11,9 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
-public final class NegateLocalVar<RESULT , RESUME_ARGUMENT>
-//extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
+public final class NegateLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
+//extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+extends SimpleStepWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -33,7 +33,7 @@ implements HasVariableName
                         localVarName );
     }
 
-    public static <RESULT , RESUME_ARGUMENT> NegateLocalVar<RESULT , RESUME_ARGUMENT> negate(
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> NegateLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT> negate(
             final String varName )
     {
         return new NegateLocalVar<>(
@@ -46,8 +46,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue =
                 parent.localVars().get(
@@ -81,7 +81,7 @@ implements HasVariableName
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

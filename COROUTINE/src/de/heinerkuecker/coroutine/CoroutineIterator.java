@@ -32,13 +32,13 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * memory consuming buffer or
  * bytecode manipulation.
  *
- * @param <RESULT> result type of this method {@link Iterator#next()}
+ * @param <COROUTINE_RETURN> result type of this method {@link Iterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class CoroutineIterator<RESULT>
+public class CoroutineIterator<COROUTINE_RETURN>
 implements
-    CoroutineOrProcedureOrComplexstep<RESULT, Void> ,
-    Iterator<RESULT>
+    CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, Void> ,
+    Iterator<COROUTINE_RETURN>
 {
     /**
      * Es muss ein ComplexStep sein,
@@ -48,11 +48,11 @@ implements
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/ , Void> complexStep;
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , Void> nextComplexStepState;
+    private final ComplexStep<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , Void> complexStep;
+    private ComplexStepState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , Void> nextComplexStepState;
 
     // for debug
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , Void> lastComplexStepState;
+    private ComplexStepState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , Void> lastComplexStepState;
 
     private boolean finallyReturnRaised;
 
@@ -69,12 +69,12 @@ implements
      * Lookahead return value
      * for method {@link #next()},
      */
-    private RESULT next;
+    private COROUTINE_RETURN next;
 
     /**
-     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    private final Class<? extends RESULT> resultType;
+    private final Class<? extends COROUTINE_RETURN> resultType;
 
     /**
      * GlobalVariables.
@@ -82,7 +82,7 @@ implements
     //public final HashMap<String, Object> vars = new HashMap<>();
     public final GlobalVariables globalVariables = new GlobalVariables();
 
-    private final Map<String, Procedure<RESULT , Void>> procedures = new HashMap<>();
+    private final Map<String, Procedure<COROUTINE_RETURN , Void>> procedures = new HashMap<>();
 
     public final Map<String, Parameter> params;
 
@@ -97,13 +97,13 @@ implements
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Class<? extends RESULT> resultType ,
-            final Iterable<Procedure<RESULT , Void>> procedures ,
+            final Class<? extends COROUTINE_RETURN> resultType ,
+            final Iterable<Procedure<COROUTINE_RETURN , Void>> procedures ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<?>[] args ,
-            final DeclareVariable<RESULT, Void, ?>[] globalVariableDeclarations ,
-            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+            final DeclareVariable<COROUTINE_RETURN, Void, ?>[] globalVariableDeclarations ,
+            final CoroIterStep<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
     {
         //this( steps );
 
@@ -119,7 +119,7 @@ implements
 
         if ( procedures != null )
         {
-            for ( final Procedure<RESULT , Void> procedure : procedures )
+            for ( final Procedure<COROUTINE_RETURN , Void> procedure : procedures )
             {
                 if ( this.procedures.containsKey( procedure.name ) )
                 {
@@ -151,7 +151,7 @@ implements
 
         if ( globalVariableDeclarations != null )
         {
-            for ( DeclareVariable<RESULT, Void, ?> globalVariableDeclaration : globalVariableDeclarations )
+            for ( DeclareVariable<COROUTINE_RETURN, Void, ?> globalVariableDeclaration : globalVariableDeclarations )
             {
                 globalVariableDeclaration.execute( this );
             }
@@ -169,8 +169,8 @@ implements
      */
     @SafeVarargs
     public CoroutineIterator(
-            final Class<? extends RESULT> resultType ,
-            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+            final Class<? extends COROUTINE_RETURN> resultType ,
+            final CoroIterStep<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
     {
         this.resultType =
                 Objects.requireNonNull(
@@ -226,7 +226,7 @@ implements
     }
 
     @Override
-    public Procedure<RESULT , Void> getProcedure(
+    public Procedure<COROUTINE_RETURN , Void> getProcedure(
             final String procedureName )
     {
         return this.procedures.get( procedureName );
@@ -296,7 +296,7 @@ implements
             return false;
         }
 
-        final CoroIterStepResult<RESULT> executeResult =
+        final CoroIterStepResult<COROUTINE_RETURN> executeResult =
                 this.nextComplexStepState.execute(
                         //this
                         );
@@ -311,8 +311,8 @@ implements
         }
         else if ( executeResult instanceof CoroIterStepResult.YieldReturnWithResult )
         {
-            final CoroIterStepResult.YieldReturnWithResult<RESULT> yieldReturnWithResult =
-                    (CoroIterStepResult.YieldReturnWithResult<RESULT>) executeResult;
+            final CoroIterStepResult.YieldReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroIterStepResult.YieldReturnWithResult<COROUTINE_RETURN>) executeResult;
 
             this.next =
                     resultType.cast(
@@ -322,8 +322,8 @@ implements
         }
         else if ( executeResult instanceof CoroIterStepResult.FinallyReturnWithResult )
         {
-            final CoroIterStepResult.FinallyReturnWithResult<RESULT> yieldReturnWithResult =
-                    (CoroIterStepResult.FinallyReturnWithResult<RESULT>) executeResult;
+            final CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN>) executeResult;
 
             this.next =
                     resultType.cast(
@@ -351,7 +351,7 @@ implements
      * @see Iterator#next()
      */
     @Override
-    public RESULT next()
+    public COROUTINE_RETURN next()
     {
         if ( ! hasNext() )
         {
@@ -361,7 +361,7 @@ implements
         // enforce calling lookahead code in hasNext()
         this.hasNext = null;
 
-        final RESULT result = this.next;
+        final COROUTINE_RETURN result = this.next;
 
         // free memory
         this.next = null;
@@ -426,7 +426,7 @@ implements
     }
 
     //@Override
-    //public CoroutineIterator<RESULT> getRootParent()
+    //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
     //{
     //    return this;
     //}

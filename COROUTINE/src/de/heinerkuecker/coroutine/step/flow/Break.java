@@ -18,12 +18,12 @@ import de.heinerkuecker.coroutine.step.simple.SimpleStep;
  * {@link While} or
  * {@link DoWhile}.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class Break<RESULT , RESUME_ARGUMENT>
-//implements SimpleStep<RESULT, CoroutineIterator<RESULT>>
-extends BreakOrContinue<RESULT , RESUME_ARGUMENT>
+public class Break<COROUTINE_RETURN , RESUME_ARGUMENT>
+//implements SimpleStep<COROUTINE_RETURN, CoroutineIterator<COROUTINE_RETURN>>
+extends BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Label of the loop
@@ -56,10 +56,10 @@ extends BreakOrContinue<RESULT , RESUME_ARGUMENT>
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        return new CoroIterStepResult.Break<RESULT>( this.label );
+        return new CoroIterStepResult.Break<COROUTINE_RETURN>( this.label );
     }
 
     /**

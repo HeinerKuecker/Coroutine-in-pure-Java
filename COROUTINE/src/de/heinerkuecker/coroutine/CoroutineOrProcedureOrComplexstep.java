@@ -10,12 +10,12 @@ import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
  * {@link ProcedureCall}
  * to satisfy Java generics.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface CoroutineOrProcedureOrComplexstep<RESULT, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<RESULT, /*PARENT*/ THIS>>
-public interface CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
+//public interface CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, /*PARENT*/ THIS>>
+public interface CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
 extends HasArgumentsAndVariables<RESUME_ARGUMENT>
 {
     /**
@@ -26,11 +26,11 @@ extends HasArgumentsAndVariables<RESUME_ARGUMENT>
     abstract public void saveLastStepState();
 
     // TODO wird dies noch gebraucht
-    //abstract CoroutineIterator<RESULT> getRootParent();
+    //abstract CoroutineIterator<COROUTINE_RETURN> getRootParent();
 
     // TODO remove, was intented for glabal variables
     //abstract boolean isCoroutineRoot();
 
-    abstract public Procedure<RESULT, RESUME_ARGUMENT> getProcedure(
+    abstract public Procedure<COROUTINE_RETURN, RESUME_ARGUMENT> getProcedure(
             final String procedureName );
 }

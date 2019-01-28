@@ -9,13 +9,13 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * Interface for one step
  * in {@link CoroutineIterator}.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface SimpleStep<RESULT, PARENT>
-abstract public class SimpleStep<RESULT/*, PARENT*/, RESUME_ARGUMENT>
-extends CoroIterStep<RESULT /*,PARENT*/>
+//public interface SimpleStep<COROUTINE_RETURN, PARENT>
+abstract public class SimpleStep<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
+extends CoroIterStep<COROUTINE_RETURN /*,PARENT*/>
 {
     /**
      * Constructor.
@@ -44,7 +44,7 @@ extends CoroIterStep<RESULT /*,PARENT*/>
      * @param parent
      * @return object to return a value and to control the flow
      */
-    abstract public CoroIterStepResult<RESULT> execute(
+    abstract public CoroIterStepResult<COROUTINE_RETURN> execute(
             //final PARENT parent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent );
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
 }

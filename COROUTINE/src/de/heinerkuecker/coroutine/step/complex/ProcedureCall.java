@@ -16,15 +16,15 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.util.ArrayDeepToString;
 
-public class ProcedureCall<RESULT/*, PARENT extends CoroutineOrProcedureOrComplexstep<RESULT, PARENT>*/ , RESUME_ARGUMENT>
+public class ProcedureCall<COROUTINE_RETURN/*, PARENT extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, PARENT>*/ , RESUME_ARGUMENT>
 extends ComplexStep<
-    ProcedureCall<RESULT/*, PARENT*/ , RESUME_ARGUMENT> ,
-    ProcedureCallState<RESULT , RESUME_ARGUMENT> ,
-    RESULT ,
+    ProcedureCall<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> ,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
-//implements CoroutineOrProcedureOrComplexstep<RESULT/*, CoroutineIterator<RESULT>*/>
+//implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 {
     ///**
     // * Es muss ein ComplexStep sein,
@@ -34,9 +34,9 @@ extends ComplexStep<
     // * ist und dessen State in dieser
     // * Klasse verwaltet werden müsste.
     // */
-    //final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/> bodyComplexStep;
+    //final ComplexStep<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/> bodyComplexStep;
 
-    //final Procedure<RESULT> procedure;
+    //final Procedure<COROUTINE_RETURN> procedure;
     final String procedureName;
 
     // TODO getter
@@ -44,9 +44,9 @@ extends ComplexStep<
     final Argument<?>[] procedureArguments;
 
     /**
-     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    private Class<? extends RESULT> resultType;
+    private Class<? extends COROUTINE_RETURN> resultType;
 
     /**
      * Constructor.
@@ -55,8 +55,8 @@ extends ComplexStep<
      */
     //@SafeVarargs
     public ProcedureCall(
-            //final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... bodySteps
-            //final Procedure<RESULT> procedure
+            //final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodySteps
+            //final Procedure<COROUTINE_RETURN> procedure
             final String procedureName ,
             final Argument<?>... args )
     {
@@ -73,7 +73,7 @@ extends ComplexStep<
         //        bodySteps[ 0 ] instanceof ComplexStep )
         //{
         //    this.bodyComplexStep =
-        //            (ComplexStep<?, ?, RESULT/*, PARENT/*? super CoroutineIterator<RESULT>*/>) bodySteps[ 0 ];
+        //            (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/>) bodySteps[ 0 ];
         //}
         //else
         //{
@@ -120,8 +120,8 @@ extends ComplexStep<
      * @see ComplexStep#newState
      */
     @Override
-    public ProcedureCallState<RESULT , RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         //final Map<String, Object> procedureArgumentValues = new LinkedHashMap<>();
         //for ( ProcedureArgument<?> arg : procedureArguments.values() )
@@ -138,27 +138,27 @@ extends ComplexStep<
                         false ,
                         // checkMandantoryValues
                         true ,
-                        //params
+                        // params
                         parent.getProcedure( this.procedureName ).params ,
-                        //args
+                        // args
                         procedureArguments ,
                         parent );
 
-        final ProcedureCallState<RESULT , RESUME_ARGUMENT> procedureCallState =
+        final ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> procedureCallState =
                 new ProcedureCallState<>(
                         // isInitializationCheck
                         false ,
                         this ,
                         resultType ,
-                        //procedureArgumentValues
+                        // procedureArgumentValues
                         arguments ,
                         parent );
 
         return procedureCallState;
     }
 
-    public ProcedureCallState<RESULT , RESUME_ARGUMENT> newStateForCheck(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> newStateForCheck(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Arguments arguments =
                 new Arguments(
@@ -166,19 +166,19 @@ extends ComplexStep<
                         true ,
                         // checkMandantoryValues
                         false ,
-                        //params
+                        // params
                         parent.getProcedure( this.procedureName ).params ,
-                        //args
+                        // args
                         null ,
                         parent );
 
-        final ProcedureCallState<RESULT , RESUME_ARGUMENT> procedureCallState =
+        final ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> procedureCallState =
                 new ProcedureCallState<>(
                         // isInitializationCheck
                         true ,
                         this ,
                         resultType ,
-                        //procedureArgumentValues
+                        // procedureArgumentValues
                         arguments ,
                         parent );
 
@@ -188,7 +188,7 @@ extends ComplexStep<
     @Override
     public List<BreakOrContinue<? , ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         if ( alreadyCheckedProcedureNames.contains( this.procedureName ) )
         {
@@ -206,7 +206,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         if ( alreadyCheckedProcedureNames.contains( procedureName ) )
@@ -234,7 +234,7 @@ extends ComplexStep<
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         this.resultType = resultType;
     }
@@ -255,12 +255,10 @@ extends ComplexStep<
         alreadyCheckedProcedureNames.add( procedureName );
 
         parent.getProcedure( this.procedureName ).bodyComplexStep.checkUseVariables(
-                //isCoroutineRoot
-                //false ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
-                //localVariableTypes
+                // localVariableTypes
                 new HashMap<>() );
     }
 
@@ -273,9 +271,9 @@ extends ComplexStep<
         {
             procArg.checkUseArguments(
                     alreadyCheckedProcedureNames,
-                    //parent
+                    // parent
                     this.newStateForCheck(
-                            (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent ) );
+                            (CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>) parent ) );
         }
 
         if ( alreadyCheckedProcedureNames.contains( procedureName ) )
@@ -289,25 +287,25 @@ extends ComplexStep<
                 alreadyCheckedProcedureNames ,
                 //parent
                 this.newStateForCheck(
-                        (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent ) );
+                        (CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>) parent ) );
     }
 
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStepState<?, ?, RESULT , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStepState<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT> lastStepExecuteState ,
+            final ComplexStepState<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final ProcedureCallState<RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastProcExecuteState =
-                (ProcedureCallState<RESULT /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+        final ProcedureCallState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastProcExecuteState =
+                (ProcedureCallState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final ProcedureCallState<RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextProcExecuteState =
-                (ProcedureCallState<RESULT /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+        final ProcedureCallState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextProcExecuteState =
+                (ProcedureCallState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
         if ( lastProcExecuteState != null )
         {
             lastBodyState = lastProcExecuteState.bodyComplexState;
@@ -317,7 +315,7 @@ extends ComplexStep<
             lastBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
         if ( nextProcExecuteState != null )
         {
             nextBodyState = nextProcExecuteState.bodyComplexState;

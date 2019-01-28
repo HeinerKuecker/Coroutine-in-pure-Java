@@ -10,9 +10,9 @@ import de.heinerkuecker.coroutine.expression.GetLocalVar;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
-public final class ResetLocalVar<RESULT , RESUME_ARGUMENT>
-//extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/>
-extends SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
+public final class ResetLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
+//extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+extends SimpleStepWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -38,8 +38,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         //parent.localVars().remove( varName );
         parent.localVars().set( localVarName , null );
@@ -57,7 +57,7 @@ implements HasVariableName
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

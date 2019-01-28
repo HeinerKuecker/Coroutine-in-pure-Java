@@ -7,8 +7,8 @@ import java.util.List;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 
-abstract public class SimpleStepWithoutArguments<RESULT , RESUME_ARGUMENT>
-extends SimpleStep<RESULT , RESUME_ARGUMENT>
+abstract public class SimpleStepWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStep<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
 
     @Override

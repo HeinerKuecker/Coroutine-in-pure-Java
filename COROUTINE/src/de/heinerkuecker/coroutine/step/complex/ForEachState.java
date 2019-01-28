@@ -8,16 +8,16 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 import de.heinerkuecker.util.HCloneable;
 
-class ForEachState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT , ELEMENT>
+class ForEachState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT , ELEMENT>
 extends ComplexStepState<
-    ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
-    ForEach<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
-    RESULT ,
+    ForEachState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
+    ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    private final ForEach<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> forEach;
+    private final ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> forEach;
 
     // TODO getter
     boolean runInInitializer = true;
@@ -25,22 +25,22 @@ extends ComplexStepState<
     boolean runInConditionAndUpdate;
 
     // TODO getter
-    ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
 
     Iterator<ELEMENT> iterator;
 
     private ELEMENT variableValue;
 
-    //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
+    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
      */
     public ForEachState(
-            final ForEach<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> forEach ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> forEach ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.forEach = forEach;
@@ -51,15 +51,15 @@ extends ComplexStepState<
                 Objects.requireNonNull(
                         parent );
 
-        new DeclareVariable<RESULT, RESUME_ARGUMENT, ELEMENT>(
+        new DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT, ELEMENT>(
                 forEach.variableName ,
                 forEach.elementType ).execute(
                         this );
     }
 
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInInitializer )
@@ -115,7 +115,7 @@ extends ComplexStepState<
 
             if ( runInBody )
             {
-                final ComplexStep<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
+                final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
                         forEach.bodyComplexStep;
 
                 if ( this.bodyComplexState == null )
@@ -130,7 +130,7 @@ extends ComplexStepState<
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
-                final CoroIterStepResult<RESULT> bodyExecuteResult =
+                final CoroIterStepResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
                                 //parent
                                 //this
@@ -205,7 +205,7 @@ extends ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public ForEach<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> getStep()
+    public ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> getStep()
     {
         return forEach;
     }
@@ -214,9 +214,9 @@ extends ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT, ELEMENT> createClone()
+    public ForEachState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT, ELEMENT> createClone()
     {
-        final ForEachState<RESULT/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> clone =
+        final ForEachState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> clone =
                 new ForEachState<>(
                         forEach ,
                         //this.rootParent

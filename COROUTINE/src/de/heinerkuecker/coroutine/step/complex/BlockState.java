@@ -6,31 +6,31 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
-class BlockState<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
+class BlockState<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 extends ComplexStepState<
-    BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT>,
-    Block<RESULT /*, PARENT*/, RESUME_ARGUMENT>,
-    RESULT ,
+    BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
     /*, PARENT*/
     RESUME_ARGUMENT
     >
 {
-    private final Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> sequence;
+    private final Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence;
 
     // TODO getter to ensure unmodifiable from other class
     int currentStepIndex;
-    ComplexStepState<?, ?, RESULT /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
 
-    //private final CoroutineIterator<RESULT> rootParent;
-    //private final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
+    //private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      *
      */
     public BlockState(
-            final Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> sequence ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.sequence = sequence;
@@ -44,8 +44,8 @@ extends ComplexStepState<
             // for toString
         {
             @SuppressWarnings("unchecked")
-            final ComplexStep<?, ?, RESULT, RESUME_ARGUMENT> firstComplexStmt =
-                    (ComplexStep<? , ? , RESULT , RESUME_ARGUMENT>) sequence.getStep( 0 );
+            final ComplexStep<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> firstComplexStmt =
+                    (ComplexStep<? , ? , COROUTINE_RETURN , RESUME_ARGUMENT>) sequence.getStep( 0 );
 
             this.currentComplexState =
                     firstComplexStmt.newState( this );
@@ -53,21 +53,21 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         while ( currentStepIndex < sequence.length() )
         {
-            final CoroIterStep<? extends RESULT /*, ? super PARENT*/> currentStep =
+            final CoroIterStep<? extends COROUTINE_RETURN /*, ? super PARENT*/> currentStep =
                     sequence.getStep( this.currentStepIndex );
 
-            final CoroIterStepResult<RESULT> executeResult;
+            final CoroIterStepResult<COROUTINE_RETURN> executeResult;
             if ( currentStep instanceof SimpleStep )
             {
                 @SuppressWarnings("unchecked")
-                final SimpleStep<RESULT /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStep =
-                        (SimpleStep<RESULT /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStep;
+                final SimpleStep<COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStep =
+                        (SimpleStep<COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStep;
 
                 parent.saveLastStepState();
 
@@ -81,8 +81,8 @@ extends ComplexStepState<
             else
             {
                 @SuppressWarnings("unchecked")
-                final ComplexStep<?, ?, RESULT /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStep =
-                        (ComplexStep<?, ?, RESULT /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStep;
+                final ComplexStep<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStep =
+                        (ComplexStep<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStep;
 
                 if ( this.currentComplexState == null )
                     // no existing state from previous execute call
@@ -115,7 +115,7 @@ extends ComplexStepState<
                      sequence.getStep( this.currentStepIndex ) instanceof ComplexStep )
             {
                 this.currentComplexState =
-                        ( (ComplexStep<?, ?, RESULT, RESUME_ARGUMENT>) sequence.getStep(
+                        ( (ComplexStep<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT>) sequence.getStep(
                                 this.currentStepIndex ) ).newState(
                                         //this.rootParent
                                         //this.parent
@@ -144,7 +144,7 @@ extends ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public Block<RESULT /*, PARENT*/, RESUME_ARGUMENT> getStep()
+    public Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> getStep()
     {
         return this.sequence;
     }
@@ -153,9 +153,9 @@ extends ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT> createClone()
+    public BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> createClone()
     {
-        final BlockState<RESULT /*, PARENT*/, RESUME_ARGUMENT> clone =
+        final BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> clone =
                 new BlockState<>(
                         sequence ,
                         //this.rootParent

@@ -7,11 +7,11 @@ import de.heinerkuecker.coroutine.expression.CoroExpression;
 import de.heinerkuecker.coroutine.expression.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
-public class While<RESULT /*, PARENT extends CoroutineIterator<RESULT>*/, RESUME_ARGUMENT>
+public class While<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 extends WhileOrDoWhile<
-    While<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
-    WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
-    RESULT ,
+    While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
@@ -25,7 +25,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final ConditionOrBooleanExpression/*Condition*/ condition ,
-            final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 //label
@@ -43,7 +43,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final CoroExpression<Boolean> condition ,
-            final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 //label
@@ -62,7 +62,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final boolean condition ,
-            final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 //label
@@ -84,7 +84,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final ConditionOrBooleanExpression/*Condition*/ condition ,
-            final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 label ,
@@ -103,7 +103,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final CoroExpression<Boolean> condition ,
-            final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 label ,
@@ -123,7 +123,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final boolean condition ,
-            final CoroIterStep<? extends RESULT/*, PARENT*/>... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 label ,
@@ -137,8 +137,8 @@ extends WhileOrDoWhile<
      * @see ComplexStep#newState()
      */
     @Override
-    public WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new WhileState<>(
                 this ,

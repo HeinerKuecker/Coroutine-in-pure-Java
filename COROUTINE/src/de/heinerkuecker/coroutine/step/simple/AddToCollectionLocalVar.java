@@ -14,8 +14,8 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.coroutine.step.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.step.simple.exc.WrongStmtVariableClassException;
 
-public final class AddToCollectionLocalVar<RESULT , RESUME_ARGUMENT, ELEMENT_TO_ADD>
-extends SimpleStepWithoutArguments<RESULT, RESUME_ARGUMENT>
+public final class AddToCollectionLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT, ELEMENT_TO_ADD>
+extends SimpleStepWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -53,8 +53,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue =
                 parent.localVars().get(
@@ -96,7 +96,7 @@ implements HasVariableName
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

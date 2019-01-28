@@ -4,14 +4,14 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.util.HCloneable;
 
 class WhileState<
-    RESULT ,
-    //PARENT extends CoroutineIterator<RESULT>
+    COROUTINE_RETURN ,
+    //PARENT extends CoroutineIterator<COROUTINE_RETURN>
     RESUME_ARGUMENT
     >
 extends WhileOrDoWhileState<
-    While<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
-    WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT>,
-    RESULT ,
+    While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
@@ -21,9 +21,9 @@ extends WhileOrDoWhileState<
      * @param _while
      */
     protected WhileState(
-            final While<RESULT/*, PARENT*/, RESUME_ARGUMENT> _while ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> _while ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super(
                 _while ,
@@ -37,18 +37,18 @@ extends WhileOrDoWhileState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public While<RESULT/*, PARENT*/, RESUME_ARGUMENT> getStep()
+    public While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> getStep()
     {
-        return (While<RESULT/*, PARENT*/, RESUME_ARGUMENT>) this.whileOrDoWhile;
+        return (While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>) this.whileOrDoWhile;
     }
 
     /**
      * @see HCloneable#createClone()
      */
     @Override
-    public WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT> createClone()
+    public WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> createClone()
     {
-        final WhileState<RESULT/*, PARENT*/, RESUME_ARGUMENT> clone =
+        final WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> clone =
                 new WhileState<>(
                         getStep() ,
                         //super.rootParent

@@ -15,23 +15,23 @@ import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.LabelAlreadyInUseException;
 
 abstract public class WhileOrDoWhile<
-    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
-    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT>,
-    RESULT ,
-    //PARENT extends CoroutineIterator<RESULT>
+    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
+    //PARENT extends CoroutineIterator<COROUTINE_RETURN>
     RESUME_ARGUMENT
     >
 extends ComplexStep<
-    /*WhileOrDoWhile<RESULT, PARENT>*/WHILE_OR_DO_WHILE,
-    /*WhileOrDoWhileState<WhileOrDoWhile<RESULT, PARENT>, RESULT, PARENT>*/WHILE_OR_DO_WHILE_STATE,
-    RESULT ,
+    /*WhileOrDoWhile<COROUTINE_RETURN, PARENT>*/WHILE_OR_DO_WHILE,
+    /*WhileOrDoWhileState<WhileOrDoWhile<COROUTINE_RETURN, PARENT>, COROUTINE_RETURN, PARENT>*/WHILE_OR_DO_WHILE_STATE,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
     public final String label;
     final ConditionOrBooleanExpression condition;
-    final ComplexStep<?, ?, RESULT /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStep;
+    final ComplexStep<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStep;
 
     /**
      * Constructor.
@@ -40,7 +40,7 @@ extends ComplexStep<
     WhileOrDoWhile(
             final String label ,
             final ConditionOrBooleanExpression condition ,
-            final CoroIterStep<? extends RESULT /*, PARENT/*CoroutineIterator<RESULT>*/> ... steps )
+            final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... steps )
     {
         super(
                 //creationStackOffset
@@ -63,7 +63,7 @@ extends ComplexStep<
     @Override
     final public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
@@ -106,7 +106,7 @@ extends ComplexStep<
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         this.bodyComplexStep.setResultType( resultType );
     }
@@ -117,7 +117,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         if ( label != null )
@@ -169,18 +169,18 @@ extends ComplexStep<
      */
     @Override
     final public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
+            final ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
     {
-        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+        final WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastWhileExecuteState =
+                (WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
 
-        final WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+        final WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextWhileExecuteState =
+                (WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
         if ( lastWhileExecuteState != null )
         {
             lastBodyState = lastWhileExecuteState.bodyComplexState;
@@ -190,7 +190,7 @@ extends ComplexStep<
             lastBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
         if ( nextWhileExecuteState != null )
         {
             nextBodyState = nextWhileExecuteState.bodyComplexState;

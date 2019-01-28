@@ -9,24 +9,24 @@ import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-class ProcedureCallState<RESULT , RESUME_ARGUMENT>
+class ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT>
 extends ComplexStepState<
-    ProcedureCallState<RESULT , RESUME_ARGUMENT>,
-    ProcedureCall<RESULT , RESUME_ARGUMENT>,
-    RESULT ,
-    //ProcedureCall<RESULT>
+    ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT>,
+    ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
+    //ProcedureCall<COROUTINE_RETURN>
     RESUME_ARGUMENT
     >
 {
-    private final ProcedureCall<RESULT/*, PARENT*/ , RESUME_ARGUMENT> procedureCall;
+    private final ProcedureCall<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> procedureCall;
 
     boolean runInProcedure = true;
 
     // TODO getter
-    ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
 
-    //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
+    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     //final Map<String, Object> procedureArgumentValues;
     final Arguments arguments;
@@ -38,11 +38,11 @@ extends ComplexStepState<
      */
     protected ProcedureCallState(
             final boolean isInitializationCheck ,
-            final ProcedureCall<RESULT , RESUME_ARGUMENT> procedureCall ,
-            final Class<? extends RESULT> resultType ,
+            final ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT> procedureCall ,
+            final Class<? extends COROUTINE_RETURN> resultType ,
             //final Map<String, Object> procedureArgumentValues
             final Arguments arguments ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.procedureCall =
@@ -58,7 +58,7 @@ extends ComplexStepState<
                 Objects.requireNonNull(
                         parent );
 
-        final Procedure<RESULT , RESUME_ARGUMENT> procedure =
+        final Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> procedure =
                 this.parent/*.getRootParent()*/.getProcedure(
                         procedureCall.procedureName );
 
@@ -81,13 +81,13 @@ extends ComplexStepState<
      * @see ComplexStepState#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInProcedure )
         {
-            final ComplexStep<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
+            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
                     //procedureCall.procedure.bodyComplexStep;
                     this.parent/*.getRootParent()*/.getProcedure( procedureCall.procedureName ).bodyComplexStep;
 
@@ -102,7 +102,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            final CoroIterStepResult<RESULT> bodyExecuteResult =
+            final CoroIterStepResult<COROUTINE_RETURN> bodyExecuteResult =
                     this.bodyComplexState.execute(
                             //parent
                             //this
@@ -145,7 +145,7 @@ extends ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public ProcedureCall<RESULT , RESUME_ARGUMENT> getStep()
+    public ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT> getStep()
     {
         return this.procedureCall;
     }
@@ -154,9 +154,9 @@ extends ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public ProcedureCallState<RESULT , RESUME_ARGUMENT> createClone()
+    public ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> createClone()
     {
-        final ProcedureCallState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final ProcedureCallState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new ProcedureCallState<>(
                         // isInitializationCheck TODO wrong using of argument
                         true ,
@@ -220,13 +220,13 @@ extends ComplexStepState<
     //}
 
     //@Override
-    //public CoroutineIterator<RESULT> getRootParent()
+    //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
     //{
     //    return this.parent.getRootParent();
     //}
 
     //@Override
-    //public Procedure<RESULT> getProcedure(
+    //public Procedure<COROUTINE_RETURN> getProcedure(
     //        final String procedureName )
     //{
     //    return this.getRootParent().getProcedure( procedureName );

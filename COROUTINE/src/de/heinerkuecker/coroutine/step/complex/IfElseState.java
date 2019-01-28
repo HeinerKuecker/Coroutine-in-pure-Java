@@ -6,16 +6,16 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.HCloneable;
 
-class IfElseState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+class IfElseState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 extends ComplexStepState<
-    IfElseState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    IfElse<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    RESULT ,
+    IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    private final IfElse<RESULT/*, PARENT*/ , RESUME_ARGUMENT> ifElse;
+    private final IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ifElse;
 
     // TODO getter
     boolean runInCondition = true;
@@ -23,19 +23,19 @@ extends ComplexStepState<
     private boolean runInElseBody;
 
     // TODO getter
-    ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> thenBodyComplexState;
-    ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> elseBodyComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyComplexState;
 
-    //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
+    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
      */
     public IfElseState(
-            final IfElse<RESULT/*, PARENT*/ , RESUME_ARGUMENT> ifElse ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ifElse ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.ifElse = ifElse;
@@ -48,8 +48,8 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInCondition )
@@ -76,7 +76,7 @@ extends ComplexStepState<
 
         if ( runInThenBody )
         {
-            final ComplexStep<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStep =
+            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStep =
                     ifElse.thenBodyComplexStep;
 
             if ( this.thenBodyComplexState == null )
@@ -91,7 +91,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            final CoroIterStepResult<RESULT> executeResult =
+            final CoroIterStepResult<COROUTINE_RETURN> executeResult =
                     this.thenBodyComplexState.execute(
                             //parent
                             //this
@@ -112,7 +112,7 @@ extends ComplexStepState<
         }
         else if ( runInElseBody )
         {
-            final ComplexStep<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> elseBodyStep =
+            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyStep =
                     ifElse.elseBodyComplexStep;
 
             if ( this.elseBodyComplexState == null )
@@ -127,7 +127,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            final CoroIterStepResult<RESULT> executeResult =
+            final CoroIterStepResult<COROUTINE_RETURN> executeResult =
                     this.elseBodyComplexState.execute(
                             //parent
                             //this
@@ -173,7 +173,7 @@ extends ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public IfElse<RESULT/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
     {
         return this.ifElse;
     }
@@ -182,9 +182,9 @@ extends ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public IfElseState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> createClone()
+    public IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final IfElseState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new IfElseState<>(
                         ifElse ,
                         //this.rootParent

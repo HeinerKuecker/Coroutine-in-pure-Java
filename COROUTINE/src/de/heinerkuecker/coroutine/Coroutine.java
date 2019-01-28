@@ -21,8 +21,8 @@ import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
 
-public class Coroutine<RESULT, RESUME_ARGUMENT>
-implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
+public class Coroutine<COROUTINE_RETURN, RESUME_ARGUMENT>
+implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
 {
     /**
      * Es muss ein ComplexStep sein,
@@ -32,18 +32,18 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStep<?, ?, RESULT /*, /*PARENT* / CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> complexStep;
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> nextComplexStepState;
+    private final ComplexStep<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> complexStep;
+    private ComplexStepState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> nextComplexStepState;
 
     // for debug
-    private ComplexStepState<?, ?, RESULT /*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> lastComplexStepState;
+    private ComplexStepState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> lastComplexStepState;
 
     private boolean finallyReturnRaised;
 
     /**
-     * Reifier for type param {@link #RESULT} to solve unchecked casts.
+     * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    private final Class<? extends RESULT> resultType;
+    private final Class<? extends COROUTINE_RETURN> resultType;
 
     /**
      * GlobalVariables.
@@ -51,7 +51,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
     //public final HashMap<String, Object> vars = new HashMap<>();
     private final GlobalVariables globalVariables = new GlobalVariables();
 
-    private final Map<String, Procedure<RESULT , RESUME_ARGUMENT>> procedures = new HashMap<>();
+    private final Map<String, Procedure<COROUTINE_RETURN , RESUME_ARGUMENT>> procedures = new HashMap<>();
 
     public final Map<String, Parameter> params;
 
@@ -66,8 +66,8 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
      */
     @SafeVarargs
     public Coroutine(
-            final Class<? extends RESULT> resultType ,
-            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+            final Class<? extends COROUTINE_RETURN> resultType ,
+            final CoroIterStep<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
     {
         this.resultType =
                 Objects.requireNonNull(
@@ -97,13 +97,13 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
      */
     @SafeVarargs
     public Coroutine(
-            final Class<? extends RESULT> resultType ,
-            final Iterable<Procedure<RESULT , RESUME_ARGUMENT>> procedures ,
+            final Class<? extends COROUTINE_RETURN> resultType ,
+            final Iterable<Procedure<COROUTINE_RETURN , RESUME_ARGUMENT>> procedures ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<?>[] args ,
-            final DeclareVariable<RESULT, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
-            final CoroIterStep<RESULT /*, /*PARENT * / CoroutineIterator<RESULT>*/>... steps )
+            final DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
+            final CoroIterStep<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
     {
         //this( steps );
 
@@ -119,7 +119,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
 
         if ( procedures != null )
         {
-            for ( final Procedure<RESULT , RESUME_ARGUMENT> procedure : procedures )
+            for ( final Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> procedure : procedures )
             {
                 if ( this.procedures.containsKey( procedure.name ) )
                 {
@@ -151,7 +151,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
 
         if ( globalVariableDeclarations != null )
         {
-            for ( DeclareVariable<RESULT, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
+            for ( DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
             {
                 globalVariableDeclaration.execute( this );
             }
@@ -196,7 +196,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
         }
     }
 
-    public RESULT resume(
+    public COROUTINE_RETURN resume(
             final RESUME_ARGUMENT resumeArgument )
     {
         //throw new RuntimeException( "not implemented" );
@@ -219,12 +219,12 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
             return null;
         }
 
-        final CoroIterStepResult<RESULT> executeResult =
+        final CoroIterStepResult<COROUTINE_RETURN> executeResult =
                 this.nextComplexStepState.execute(
                         //this
                         );
 
-        RESULT result;
+        COROUTINE_RETURN result;
         if ( executeResult == null ||
                 executeResult instanceof CoroIterStepResult.ContinueCoroutine )
             // end of sub complex state without result
@@ -235,8 +235,8 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
         }
         else if ( executeResult instanceof CoroIterStepResult.YieldReturnWithResult )
         {
-            final CoroIterStepResult.YieldReturnWithResult<RESULT> yieldReturnWithResult =
-                    (CoroIterStepResult.YieldReturnWithResult<RESULT>) executeResult;
+            final CoroIterStepResult.YieldReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroIterStepResult.YieldReturnWithResult<COROUTINE_RETURN>) executeResult;
 
             result =
                     resultType.cast(
@@ -244,8 +244,8 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
         }
         else if ( executeResult instanceof CoroIterStepResult.FinallyReturnWithResult )
         {
-            final CoroIterStepResult.FinallyReturnWithResult<RESULT> yieldReturnWithResult =
-                    (CoroIterStepResult.FinallyReturnWithResult<RESULT>) executeResult;
+            final CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN>) executeResult;
 
             result =
                     resultType.cast(
@@ -278,7 +278,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
     }
 
     @Override
-    public Procedure<RESULT , RESUME_ARGUMENT> getProcedure(
+    public Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> getProcedure(
             final String procedureName )
     {
         return this.procedures.get( procedureName );
@@ -375,7 +375,7 @@ implements CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>
     }
 
     //@Override
-    //public CoroutineIterator<RESULT> getRootParent()
+    //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
     //{
     //    return this;
     //}

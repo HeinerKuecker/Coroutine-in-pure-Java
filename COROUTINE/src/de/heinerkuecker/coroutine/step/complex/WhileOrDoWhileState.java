@@ -4,37 +4,37 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 abstract class WhileOrDoWhileState<
-    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/, RESUME_ARGUMENT>,
-    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT/*, PARENT*/, RESUME_ARGUMENT>,
-    RESULT ,
-    //PARENT extends CoroutineIterator<RESULT>
+    WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    WHILE_OR_DO_WHILE_STATE extends WhileOrDoWhileState<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
+    //PARENT extends CoroutineIterator<COROUTINE_RETURN>
     RESUME_ARGUMENT
     >
 extends ComplexStepState<
     WHILE_OR_DO_WHILE_STATE,
     WHILE_OR_DO_WHILE,
-    RESULT ,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    protected final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT> whileOrDoWhile;
+    protected final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> whileOrDoWhile;
 
     // TODO getter
     protected boolean runInCondition;
     protected boolean runInBody;
-    protected ComplexStepState<?, ?, RESULT /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
+    protected ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
 
-    //protected final CoroutineIterator<RESULT> rootParent;
-    //protected final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //protected final CoroutineIterator<COROUTINE_RETURN> rootParent;
+    //protected final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
      */
     protected WhileOrDoWhileState(
-            final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, RESULT /*, PARENT*/, RESUME_ARGUMENT> whileOrDoWhile ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> whileOrDoWhile ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.whileOrDoWhile = whileOrDoWhile;
@@ -45,9 +45,9 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<RESULT> execute(
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
             //final PARENT parent
-            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         while ( true )
@@ -77,7 +77,7 @@ extends ComplexStepState<
 
             if ( runInBody )
             {
-                final ComplexStep<?, ?, RESULT /*, PARENT*/, RESUME_ARGUMENT> bodyStep =
+                final ComplexStep<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyStep =
                         whileOrDoWhile.bodyComplexStep;
 
                 if ( this.bodyComplexState == null )
@@ -92,7 +92,7 @@ extends ComplexStepState<
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
-                final CoroIterStepResult<RESULT> bodyExecuteResult =
+                final CoroIterStepResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
                                 //parent
                                 //this

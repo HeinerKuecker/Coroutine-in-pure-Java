@@ -7,25 +7,25 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
 import de.heinerkuecker.util.HCloneable;
 
-class TryCatchState<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+class TryCatchState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 extends ComplexStepState<
-    TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    TryCatch<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    RESULT ,
+    TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    private final TryCatch<RESULT/*, PARENT*/ , RESUME_ARGUMENT> tryCatch;
+    private final TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch;
 
     // TODO getter
     boolean runInTry = true;
     boolean runInCatch;
-    ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> tryBodyComplexState;
-    ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> catchBodyComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyComplexState;
+    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyComplexState;
 
-    //private final CoroutineIterator<RESULT> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent;
+    //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
+    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     private Throwable catchedThr;
 
@@ -33,9 +33,9 @@ extends ComplexStepState<
      * Constructor.
      */
     protected TryCatchState(
-            final TryCatch<RESULT/*, PARENT*/ , RESUME_ARGUMENT> tryCatch ,
-            //final CoroutineIterator<RESULT> rootParent
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch ,
+            //final CoroutineIterator<COROUTINE_RETURN> rootParent
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
 
@@ -49,13 +49,13 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            //final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInTry )
         {
-            final ComplexStep<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStep =
+            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStep =
                     tryCatch.tryBodyComplexStep;
 
             if ( this.tryBodyComplexState == null )
@@ -70,7 +70,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            CoroIterStepResult<RESULT> executeResult = null;
+            CoroIterStepResult<COROUTINE_RETURN> executeResult = null;
             try
             {
                 executeResult =
@@ -108,7 +108,7 @@ extends ComplexStepState<
 
         if ( runInCatch )
         {
-            final ComplexStep<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStep =
+            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStep =
                     tryCatch.catchBodyComplexStep;
 
             if ( this.catchBodyComplexState == null )
@@ -131,7 +131,7 @@ extends ComplexStepState<
                     // value
                     this.tryCatch.catchExceptionClass.cast( catchedThr ) );
 
-            final CoroIterStepResult<RESULT> executeResult =
+            final CoroIterStepResult<COROUTINE_RETURN> executeResult =
                     this.catchBodyComplexState.execute(
                             //parent
                             //this
@@ -178,7 +178,7 @@ extends ComplexStepState<
      * @see ComplexStepState#getStep()
      */
     @Override
-    public TryCatch<RESULT/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
     {
         return this.tryCatch;
     }
@@ -187,9 +187,9 @@ extends ComplexStepState<
      * @see HCloneable#createClone()
      */
     @Override
-    public TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> createClone()
+    public TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new TryCatchState<>(
                         tryCatch ,
                         //this.rootParent

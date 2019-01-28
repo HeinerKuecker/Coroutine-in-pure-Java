@@ -14,8 +14,8 @@ import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 
 // TODO give expression instead local var name
-abstract public class AbstrLocalVarUseWithExpressionStmt<RESULT , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
-extends SimpleStep<RESULT , RESUME_ARGUMENT>
+abstract public class AbstrLocalVarUseWithExpressionStmt<COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
+extends SimpleStep<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -39,7 +39,7 @@ implements HasVariableName
      * @param expressionValue
      */
     abstract protected void execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final VARIABLE varvalue ,
             final EXPRESSION expressionValue );
 
@@ -72,8 +72,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final VARIABLE varValue =
                 (VARIABLE) parent.localVars().get(
@@ -97,7 +97,7 @@ implements HasVariableName
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

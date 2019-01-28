@@ -1,6 +1,7 @@
 package de.heinerkuecker.coroutine.step;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
+import de.heinerkuecker.coroutine.Coroutine;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
@@ -8,11 +9,11 @@ import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
  * Abstract super class for one step
  * in {@link CoroutineIterator}.
  *
- * @param <RESULT> result type of method {@link CoroutineIterator#next()}
+ * @param <COROUTINE_RETURN> result type of method {@link Coroutine#resume} or {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-abstract public class CoroIterStep<RESULT/*, PARENT*/>
+abstract public class CoroIterStep<COROUTINE_RETURN/*, PARENT*/>
 extends HasCreationStackTraceElement
 implements CoroCheckable
 {
@@ -22,7 +23,7 @@ implements CoroCheckable
     // * @param parent
     // * @return object to return a value and to control the flow
     // */
-    //CoroIterStepResult<RESULT> execute(
+    //CoroIterStepResult<COROUTINE_RETURN> execute(
     //        final PARENT parent );
 
     /**
@@ -37,8 +38,8 @@ implements CoroCheckable
     //abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
 
     /**
-     * Set reifier for type param {@link #RESULT} to solve unchecked casts.
+     * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
     abstract public void setResultType(
-            final Class<? extends RESULT> resultType );
+            final Class<? extends COROUTINE_RETURN> resultType );
 }

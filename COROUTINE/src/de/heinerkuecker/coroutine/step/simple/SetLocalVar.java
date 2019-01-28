@@ -22,10 +22,10 @@ import de.heinerkuecker.coroutine.step.CoroIterStepResult;
  * expression.
  *
  * @author Heiner K&uuml;cker
- * @param <RESULT> result type of coroutine, here unused
+ * @param <COROUTINE_RETURN> result type of coroutine, here unused
  */
-public /*final*/ class SetLocalVar<RESULT, RESUME_ARGUMENT , VARIABLE>
-extends SimpleStep<RESULT/*, CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+public /*final*/ class SetLocalVar<COROUTINE_RETURN, RESUME_ARGUMENT , VARIABLE>
+extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 implements CoroExpression<VARIABLE> , HasVariableName
 {
     /**
@@ -79,8 +79,8 @@ implements CoroExpression<VARIABLE> , HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<RESULT> execute(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public CoroIterStepResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue = varValueExpression.evaluate( parent );
 
@@ -96,7 +96,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
             final HasArgumentsAndVariables<?> parent )
     // for using in expressions
     {
-        execute( (CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT>) parent );
+        execute( (CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
         return (VARIABLE) parent.localVars().get(
                 this ,
@@ -125,7 +125,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         // do nothing
     }

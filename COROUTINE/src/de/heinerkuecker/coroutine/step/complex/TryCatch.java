@@ -13,31 +13,31 @@ import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 
-public class TryCatch<RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT>
+public class TryCatch<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 extends ComplexStep<
-    TryCatch<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>,
-    RESULT ,
+    TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
     // TODO variable to enable access to exception
 
-    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> tryBodyComplexStep;
+    final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> tryBodyComplexStep;
     final Class<? extends Throwable> catchExceptionClass;
     final String catchedExceptionVariableName;
-    final ComplexStep<?, ?, RESULT/*, PARENT/*CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> catchBodyComplexStep;
+    final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> catchBodyComplexStep;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public TryCatch(
-            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
+            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
             final String catchedExceptionVariableName ,
-            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
+            final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... catchBodySteps )
     {
         super(
                 //creationStackOffset
@@ -68,11 +68,11 @@ extends ComplexStep<
      * Factroy method.
      */
     @SafeVarargs
-    public static <RESULT/*, PARENT extends CoroutineIterator<RESULT>*/ , RESUME_ARGUMENT> TryCatch<RESULT/*, PARENT*/, RESUME_ARGUMENT> newTryCatch(
-            final CoroIterStep<RESULT/*, PARENT /*CoroutineIterator<RESULT>*/> tryStep ,
+    public static <COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> TryCatch<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> newTryCatch(
+            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> tryStep ,
             final Class<? extends Throwable> catchExceptionClass ,
             final String catchedExceptionVariableName ,
-            final CoroIterStep<RESULT/*, ? super PARENT/*CoroutineIterator<RESULT>*/> ... catchBodySteps )
+            final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... catchBodySteps )
     {
         return new TryCatch<>(
                 tryStep ,
@@ -82,8 +82,8 @@ extends ComplexStep<
     }
 
     @Override
-    public TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+    public TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> newState(
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new TryCatchState<>(
                 this ,
@@ -93,20 +93,20 @@ extends ComplexStep<
     @Override
     public List<BreakOrContinue<? , ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
         if ( tryBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep<?, ?, RESULT , RESUME_ARGUMENT>) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
+            result.addAll( ((ComplexStep<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT>) tryBodyComplexStep).getUnresolvedBreaksOrContinues(
                     alreadyCheckedProcedureNames ,
                     parent ) );
         }
 
         if ( catchBodyComplexStep instanceof ComplexStep )
         {
-            result.addAll( ((ComplexStep<?, ?, RESULT , RESUME_ARGUMENT>) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
+            result.addAll( ((ComplexStep<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT>) catchBodyComplexStep).getUnresolvedBreaksOrContinues(
                     alreadyCheckedProcedureNames ,
                     parent ) );
         }
@@ -136,7 +136,7 @@ extends ComplexStep<
      */
     @Override
     public void setResultType(
-            final Class<? extends RESULT> resultType )
+            final Class<? extends COROUTINE_RETURN> resultType )
     {
         this.tryBodyComplexStep.setResultType( resultType );
         this.catchBodyComplexStep.setResultType( resultType );
@@ -145,7 +145,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         this.tryBodyComplexStep.checkLabelAlreadyInUse(
@@ -200,20 +200,20 @@ extends ComplexStep<
 
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstep<RESULT, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             String indent ,
-            ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
+            ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastTryCatchExecuteState =
-                (TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+        final TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastTryCatchExecuteState =
+                (TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
 
         @SuppressWarnings("unchecked")
-        final TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextTryCatchExecuteState =
-                (TryCatchState<RESULT/*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+        final TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextTryCatchExecuteState =
+                (TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastTryBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastTryBodyState;
         if ( lastTryCatchExecuteState != null )
         {
             lastTryBodyState = lastTryCatchExecuteState.tryBodyComplexState;
@@ -223,7 +223,7 @@ extends ComplexStep<
             lastTryBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextTryBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextTryBodyState;
         if ( nextTryCatchExecuteState != null )
         {
             nextTryBodyState = nextTryCatchExecuteState.tryBodyComplexState;
@@ -233,7 +233,7 @@ extends ComplexStep<
             nextTryBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> lastCatchBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastCatchBodyState;
         if ( lastTryCatchExecuteState != null )
         {
             lastCatchBodyState = lastTryCatchExecuteState.catchBodyComplexState;
@@ -243,7 +243,7 @@ extends ComplexStep<
             lastCatchBodyState = null;
         }
 
-        final ComplexStepState<?, ?, RESULT/*, PARENT*/ , RESUME_ARGUMENT> nextCatchBodyState;
+        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextCatchBodyState;
         if ( nextTryCatchExecuteState != null )
         {
             nextCatchBodyState = nextTryCatchExecuteState.catchBodyComplexState;
