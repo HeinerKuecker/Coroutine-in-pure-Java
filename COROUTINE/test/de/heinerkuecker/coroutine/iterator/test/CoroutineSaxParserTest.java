@@ -35,15 +35,15 @@ import de.heinerkuecker.coroutine.exprs.NewIllegalStateException;
 import de.heinerkuecker.coroutine.exprs.NullValue;
 import de.heinerkuecker.coroutine.exprs.StrConcat;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.complex.IfElse;
-import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
-import de.heinerkuecker.coroutine.step.complex.While;
-import de.heinerkuecker.coroutine.step.flow.Throw;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.AbstrLocalVarUseWithExpressionStmt;
-import de.heinerkuecker.coroutine.step.simple.AddToCollectionLocalVar;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.complex.IfElse;
+import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
+import de.heinerkuecker.coroutine.stmt.complex.While;
+import de.heinerkuecker.coroutine.stmt.flow.Throw;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.simple.AbstrLocalVarUseWithExpressionStmt;
+import de.heinerkuecker.coroutine.stmt.simple.AddToCollectionLocalVar;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
 import de.heinerkuecker.util.StringUtil;
 
 /**

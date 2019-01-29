@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 public abstract class AbstrLhsRhsExpression<T>
 implements CoroExpression<T>

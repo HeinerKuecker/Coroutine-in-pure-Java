@@ -1,8 +1,8 @@
 package de.heinerkuecker.coroutine;
 
-import de.heinerkuecker.coroutine.step.complex.ComplexStep;
-import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
-import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStep;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStepState;
+import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
 
 /**
  * Common interface for

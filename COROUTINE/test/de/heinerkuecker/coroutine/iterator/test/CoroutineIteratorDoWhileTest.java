@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.step.complex.DoWhile;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.complex.DoWhile;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

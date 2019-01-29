@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.arg.Parameter;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.complex.Block;
-import de.heinerkuecker.coroutine.step.complex.ComplexStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.complex.Block;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStep;
 
 public class Procedure<COROUTINE_RETURN, RESUME_ARGUMENT>
 extends HasCreationStackTraceElement

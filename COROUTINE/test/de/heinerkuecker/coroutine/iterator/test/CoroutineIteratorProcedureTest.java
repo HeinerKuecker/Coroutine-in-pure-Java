@@ -17,15 +17,15 @@ import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.IntAdd;
 import de.heinerkuecker.coroutine.exprs.LongAdd;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.step.complex.If;
-import de.heinerkuecker.coroutine.step.complex.ProcedureCall;
-import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
-import de.heinerkuecker.coroutine.step.ret.FinallyReturnWithoutResult;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-import de.heinerkuecker.coroutine.step.simple.IncrementGlobalVar;
-import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
-import de.heinerkuecker.coroutine.step.simple.NoOperation;
+import de.heinerkuecker.coroutine.stmt.complex.If;
+import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
+import de.heinerkuecker.coroutine.stmt.ret.FinallyReturn;
+import de.heinerkuecker.coroutine.stmt.ret.FinallyReturnWithoutResult;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.simple.IncrementGlobalVar;
+import de.heinerkuecker.coroutine.stmt.simple.IncrementLocalVar;
+import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

@@ -8,13 +8,13 @@ import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.LesserOrEqual;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.IntAdd;
-import de.heinerkuecker.coroutine.step.complex.For;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
-import de.heinerkuecker.coroutine.step.simple.NegateLocalVar;
-import de.heinerkuecker.coroutine.step.simple.NoOperation;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.stmt.complex.For;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.simple.IncrementLocalVar;
+import de.heinerkuecker.coroutine.stmt.simple.NegateLocalVar;
+import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
+import de.heinerkuecker.coroutine.stmt.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

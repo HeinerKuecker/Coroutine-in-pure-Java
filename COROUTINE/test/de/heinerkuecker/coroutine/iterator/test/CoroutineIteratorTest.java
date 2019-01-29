@@ -9,11 +9,11 @@ import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.exprs.GetGlobalArgument;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.step.ret.FinallyReturn;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-import de.heinerkuecker.coroutine.step.simple.DecrementLocalVar;
-import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
+import de.heinerkuecker.coroutine.stmt.ret.FinallyReturn;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.simple.DecrementLocalVar;
+import de.heinerkuecker.coroutine.stmt.simple.IncrementLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

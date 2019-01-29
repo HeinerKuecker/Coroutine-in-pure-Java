@@ -8,7 +8,7 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
  * Is <code>true</code> {@link Condition}

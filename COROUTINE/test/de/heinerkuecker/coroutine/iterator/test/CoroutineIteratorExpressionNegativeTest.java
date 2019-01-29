@@ -7,11 +7,11 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.IsNull;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.exc.UseGetProcedureArgumentOutsideOfProcedureException;
-import de.heinerkuecker.coroutine.step.complex.BlockLocalVariables;
-import de.heinerkuecker.coroutine.step.complex.If;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-import de.heinerkuecker.coroutine.step.simple.NoOperation;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.stmt.complex.BlockLocalVariables;
+import de.heinerkuecker.coroutine.stmt.complex.If;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
+import de.heinerkuecker.coroutine.stmt.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 public class StrConcat

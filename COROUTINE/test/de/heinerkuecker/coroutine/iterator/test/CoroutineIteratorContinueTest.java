@@ -9,15 +9,15 @@ import de.heinerkuecker.coroutine.GlobalVariables;
 import de.heinerkuecker.coroutine.condition.Lesser;
 import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.step.complex.For;
-import de.heinerkuecker.coroutine.step.complex.While;
-import de.heinerkuecker.coroutine.step.flow.Continue;
-import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
-import de.heinerkuecker.coroutine.step.simple.IncrementLocalVar;
-import de.heinerkuecker.coroutine.step.simple.NoOperation;
-import de.heinerkuecker.coroutine.step.simple.SetLocalVar;
+import de.heinerkuecker.coroutine.stmt.complex.For;
+import de.heinerkuecker.coroutine.stmt.complex.While;
+import de.heinerkuecker.coroutine.stmt.flow.Continue;
+import de.heinerkuecker.coroutine.stmt.flow.exc.UnresolvedBreakOrContinueException;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.simple.IncrementLocalVar;
+import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
+import de.heinerkuecker.coroutine.stmt.simple.SetLocalVar;
 
 /**
  * JUnit4 test case for {@link CoroutineIterator}.

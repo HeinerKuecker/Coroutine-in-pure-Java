@@ -14,8 +14,8 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.NewArray;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.step.complex.ForEach;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.complex.ForEach;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**

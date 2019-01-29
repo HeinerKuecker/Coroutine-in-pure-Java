@@ -12,14 +12,14 @@ import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.exc.UseGetProcedureArgumentOutsideOfProcedureException;
-import de.heinerkuecker.coroutine.step.CoroIterStep;
-import de.heinerkuecker.coroutine.step.CoroIterStepResult;
-import de.heinerkuecker.coroutine.step.complex.Block;
-import de.heinerkuecker.coroutine.step.complex.ComplexStep;
-import de.heinerkuecker.coroutine.step.complex.ComplexStepState;
-import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
-import de.heinerkuecker.coroutine.step.flow.exc.UnresolvedBreakOrContinueException;
-import de.heinerkuecker.coroutine.step.simple.DeclareVariable;
+import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.complex.Block;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStep;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStepState;
+import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.stmt.flow.exc.UnresolvedBreakOrContinueException;
+import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
 
 public class Coroutine<COROUTINE_RETURN, RESUME_ARGUMENT>
 implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>

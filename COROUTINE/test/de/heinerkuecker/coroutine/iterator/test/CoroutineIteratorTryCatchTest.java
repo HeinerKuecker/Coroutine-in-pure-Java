@@ -6,10 +6,10 @@ import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.NullValue;
-import de.heinerkuecker.coroutine.step.complex.Block;
-import de.heinerkuecker.coroutine.step.complex.TryCatch;
-import de.heinerkuecker.coroutine.step.flow.Throw;
-import de.heinerkuecker.coroutine.step.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.complex.Block;
+import de.heinerkuecker.coroutine.stmt.complex.TryCatch;
+import de.heinerkuecker.coroutine.stmt.flow.Throw;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 
 
 /**
