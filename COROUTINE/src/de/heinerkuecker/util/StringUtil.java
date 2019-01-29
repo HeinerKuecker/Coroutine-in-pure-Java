@@ -44,6 +44,10 @@ public class StringUtil
                 buff.append( "\\t" );
                 break;
 
+            case '\"':
+                buff.append( "\\\"" );
+                break;
+
                 // TODO more escape chars
 
             default:
