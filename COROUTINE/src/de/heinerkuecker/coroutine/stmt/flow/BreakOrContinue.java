@@ -57,7 +57,6 @@ extends SimpleStep<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , 
 
     @Override
     public void checkUseVariables(
-            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -68,7 +67,8 @@ extends SimpleStep<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , 
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         // nothing to do
     }

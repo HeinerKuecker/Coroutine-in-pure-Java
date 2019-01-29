@@ -212,8 +212,6 @@ implements
                     this );
 
             this.complexStep.checkUseVariables(
-                    //isCoroutineRoot
-                    //true ,
                     // alreadyCheckedProcedureNames
                     new HashSet<>() ,
                     // parent
@@ -429,12 +427,6 @@ implements
     //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
     //{
     //    return this;
-    //}
-
-    //@Override
-    //public boolean isCoroutineRoot()
-    //{
-    //    return true;
     //}
 
     @Override

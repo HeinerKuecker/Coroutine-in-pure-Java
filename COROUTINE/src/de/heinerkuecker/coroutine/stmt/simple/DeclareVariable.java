@@ -217,7 +217,6 @@ implements CoroExpression<T>
 
     @Override
     public void checkUseVariables(
-            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -232,17 +231,9 @@ implements CoroExpression<T>
                 this.varName ,
                 this.type );
 
-        //if ( parent.isCoroutineRoot() )
-        //{
-        //    globalVariableTypes.put(
-        //            this.varName ,
-        //            this.type );
-        //}
-
         if ( initialVarValueExpression != null )
         {
             this.initialVarValueExpression.checkUseVariables(
-                    //isCoroutineRoot ,
                     alreadyCheckedProcedureNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );

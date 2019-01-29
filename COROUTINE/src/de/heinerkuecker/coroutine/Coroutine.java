@@ -183,8 +183,6 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
                     this );
 
             this.complexStep.checkUseVariables(
-                    //isCoroutineRoot
-                    //true ,
                     // alreadyCheckedProcedureNames
                     new HashSet<>() ,
                     // parent
@@ -378,12 +376,6 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
     //{
     //    return this;
-    //}
-
-    //@Override
-    //public boolean isCoroutineRoot()
-    //{
-    //    return true;
     //}
 
     @Override

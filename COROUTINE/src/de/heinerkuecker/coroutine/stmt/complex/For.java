@@ -433,36 +433,32 @@ extends ComplexStep<
 
     @Override
     public void checkUseVariables(
-            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         final Map<String, Class<?>> thisLocalVariableTypes = new HashMap<>( localVariableTypes );
 
         this.initialStep.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 thisLocalVariableTypes );
 
         this.condition.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 thisLocalVariableTypes );
 
         this.bodyComplexStep.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
                 thisLocalVariableTypes );
 
         this.updateStep.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes ,
@@ -471,7 +467,8 @@ extends ComplexStep<
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.initialStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );

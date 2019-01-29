@@ -25,11 +25,8 @@ extends HasArgumentsAndVariables<RESUME_ARGUMENT>
      */
     abstract public void saveLastStepState();
 
-    // TODO wird dies noch gebraucht
+    // TODO is this needed?
     //abstract CoroutineIterator<COROUTINE_RETURN> getRootParent();
-
-    // TODO remove, was intented for glabal variables
-    //abstract boolean isCoroutineRoot();
 
     abstract public Procedure<COROUTINE_RETURN, RESUME_ARGUMENT> getProcedure(
             final String procedureName );

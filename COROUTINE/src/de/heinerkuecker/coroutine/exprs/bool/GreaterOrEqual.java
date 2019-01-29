@@ -172,7 +172,8 @@ extends CoroBooleanExpression
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
-            final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         this.lhs.checkUseVariables(
                 alreadyCheckedProcedureNames ,
@@ -187,10 +188,11 @@ extends CoroBooleanExpression
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.lhs.checkUseArguments( alreadyCheckedProcedureNames , parent );
+        this.rhs.checkUseArguments( alreadyCheckedProcedureNames , parent );
     }
 
     /**

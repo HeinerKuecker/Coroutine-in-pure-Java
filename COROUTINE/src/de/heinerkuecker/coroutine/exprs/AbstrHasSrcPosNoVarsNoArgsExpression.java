@@ -33,17 +33,18 @@ implements CoroExpression<T>
 
     @Override
     public final void checkUseVariables(
-            HashSet<String> alreadyCheckedProcedureNames ,
-            CoroutineOrProcedureOrComplexstep<?, ?> parent ,
-            Map<String, Class<?>> globalVariableTypes ,
-            Map<String, Class<?>> localVariableTypes )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final Map<String, Class<?>> globalVariableTypes ,
+            final Map<String, Class<?>> localVariableTypes )
     {
         // nothing to do
     }
 
     @Override
-    public final void checkUseArguments(HashSet<String> alreadyCheckedProcedureNames,
-            CoroutineOrProcedureOrComplexstep<?, ?> parent)
+    public final void checkUseArguments(
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         // nothing to do
     }

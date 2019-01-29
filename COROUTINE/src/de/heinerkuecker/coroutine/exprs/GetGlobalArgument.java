@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroCheckable;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
@@ -80,7 +79,6 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
@@ -88,9 +86,6 @@ implements CoroExpression<T> , HasArgumentName
         // nothing to do
     }
 
-    /**
-     * @see CoroCheckable#checkUseArguments(HashSet, CoroutineOrProcedureOrComplexstep)
-     */
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,

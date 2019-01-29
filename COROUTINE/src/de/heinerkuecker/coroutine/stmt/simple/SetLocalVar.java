@@ -132,7 +132,6 @@ implements CoroExpression<VARIABLE> , HasVariableName
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -144,7 +143,6 @@ implements CoroExpression<VARIABLE> , HasVariableName
         }
 
         this.varValueExpression.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -152,7 +150,8 @@ implements CoroExpression<VARIABLE> , HasVariableName
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.varValueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

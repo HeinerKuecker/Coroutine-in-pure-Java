@@ -181,7 +181,6 @@ extends ComplexStep<
             else
             {
                 step.checkUseVariables(
-                        //isCoroutineRoot ,
                         alreadyCheckedProcedureNames ,
                         parent ,
                         //thisGlobalVariableTypes
@@ -193,7 +192,8 @@ extends ComplexStep<
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         for ( final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/> step : this.steps )
         {

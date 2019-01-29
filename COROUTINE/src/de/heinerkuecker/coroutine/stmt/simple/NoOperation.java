@@ -50,7 +50,6 @@ extends SimpleStepWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,

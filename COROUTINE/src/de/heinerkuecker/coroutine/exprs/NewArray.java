@@ -78,7 +78,6 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -87,7 +86,6 @@ implements CoroExpression<ELEMENT[]>
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseVariables(
-                    //isCoroutineRoot ,
                     alreadyCheckedProcedureNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );
@@ -96,7 +94,8 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
@@ -109,6 +108,7 @@ implements CoroExpression<ELEMENT[]>
     //{
     //    return elementClass[].class;
     //}
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends ELEMENT[]>[] type()
     {

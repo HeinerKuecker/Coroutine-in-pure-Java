@@ -232,12 +232,6 @@ extends ComplexStepState<
     //    return this.getRootParent().getProcedure( procedureName );
     //}
 
-    //@Override
-    //public boolean isCoroutineRoot()
-    //{
-    //    return false;
-    //}
-
     /**
      * Overidden to access parameter of this procedure
      */

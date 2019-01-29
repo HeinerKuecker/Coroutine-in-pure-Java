@@ -84,12 +84,6 @@ implements
     //    return parent.getRootParent();
     //}
 
-    //@Override
-    //public boolean isCoroutineRoot()
-    //{
-    //    return parent.isCoroutineRoot();
-    //}
-
     @Override
     public Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> getProcedure(
             final String procedureName )

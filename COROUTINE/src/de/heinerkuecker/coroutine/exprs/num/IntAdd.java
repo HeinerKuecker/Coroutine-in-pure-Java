@@ -101,20 +101,17 @@ extends AbstrLhsRhsExpression<Integer>
 
     //@Override
     //public void checkUseVariables(
-    //        //final boolean isCoroutineRoot ,
     //        final HashSet<String> alreadyCheckedProcedureNames ,
     //        final CoroutineOrProcedureOrComplexstep<?, ?> parent,
     //        final Map<String, Class<?>> globalVariableTypes ,
     //        final Map<String, Class<?>> localVariableTypes)
     //{
     //    this.lhs.checkUseVariables(
-    //            //isCoroutineRoot ,
     //            alreadyCheckedProcedureNames ,
     //            parent ,
     //            globalVariableTypes, localVariableTypes );
     //
     //    this.rhs.checkUseVariables(
-    //            //isCoroutineRoot ,
     //            alreadyCheckedProcedureNames ,
     //            parent ,
     //            globalVariableTypes, localVariableTypes );
