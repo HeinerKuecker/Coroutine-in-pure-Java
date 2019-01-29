@@ -6,9 +6,9 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.GlobalVariables;
-import de.heinerkuecker.coroutine.condition.Lesser;
-import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.bool.Lesser;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.flow.Continue;
@@ -43,7 +43,7 @@ public class CoroutineIteratorContinueTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // updateStep
                                 new NoOperation<>() ,
                                 // steps
@@ -105,7 +105,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -131,7 +131,7 @@ public class CoroutineIteratorContinueTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -140,7 +140,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new Continue<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -161,7 +161,7 @@ public class CoroutineIteratorContinueTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -170,7 +170,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new Continue<>( "any" ) ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -191,7 +191,7 @@ public class CoroutineIteratorContinueTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -200,7 +200,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new Continue<>() ,
                                         // steps
@@ -221,7 +221,7 @@ public class CoroutineIteratorContinueTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -230,7 +230,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new Continue<>( "any" ) ,
                                         // steps
@@ -276,7 +276,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -325,7 +325,7 @@ public class CoroutineIteratorContinueTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -353,7 +353,7 @@ public class CoroutineIteratorContinueTest
                                 0 ) ,
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
                                 new YieldReturn<>( 1 ) ,
@@ -408,7 +408,7 @@ public class CoroutineIteratorContinueTest
                                 // steps
                                 new While<Integer , Void>(
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // steps
                                         new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
@@ -451,7 +451,7 @@ public class CoroutineIteratorContinueTest
                                 // steps
                                 new While<Integer , Void>(
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // steps
                                         new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(
@@ -493,7 +493,7 @@ public class CoroutineIteratorContinueTest
                                 // steps
                                 new While<Integer , Void>(
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // steps
                                         new IncrementLocalVar<>( "number" ) ,
                                         new Continue<>(

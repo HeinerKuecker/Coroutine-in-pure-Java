@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.IsNull;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.bool.IsNull;
 import de.heinerkuecker.coroutine.exprs.exc.UseGetProcedureArgumentOutsideOfProcedureException;
 import de.heinerkuecker.coroutine.stmt.complex.BlockLocalVariables;
 import de.heinerkuecker.coroutine.stmt.complex.If;

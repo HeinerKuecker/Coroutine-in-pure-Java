@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.Equals;
-import de.heinerkuecker.coroutine.condition.Not;
-import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.bool.Equals;
+import de.heinerkuecker.coroutine.exprs.bool.Not;
 import de.heinerkuecker.coroutine.stmt.complex.If;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.ret.FinallyReturn;
@@ -181,7 +181,7 @@ public class CoroutineIteratorIfTest
                                 0 ) ,
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new If<Integer , Void>(
                                         // condition

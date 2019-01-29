@@ -1,8 +1,6 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
-import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
@@ -24,7 +22,8 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public DoWhile(
-            final ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
+            //final ConditionOrBooleanExpression/*Condition*/ condition
+            final CoroExpression<Boolean> condition ,
             final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... steps )
     {
         super(
@@ -34,24 +33,24 @@ extends WhileOrDoWhile<
                 steps );
     }
 
-    /**
-     * Constructor.
-     *
-     * @param condition
-     * @param steps
-     */
-    @SafeVarargs
-    public DoWhile(
-            final CoroExpression<Boolean> condition ,
-            final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... steps )
-    {
-        super(
-                //label
-                null ,
-                new IsTrue(
-                        condition ) ,
-                steps );
-    }
+    ///**
+    // * Constructor.
+    // *
+    // * @param condition
+    // * @param steps
+    // */
+    //@SafeVarargs
+    //public DoWhile(
+    //        final CoroExpression<Boolean> condition ,
+    //        final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... steps )
+    //{
+    //    super(
+    //            //label
+    //            null ,
+    //            new IsTrue(
+    //                    condition ) ,
+    //            steps );
+    //}
 
     /**
      * Constructor.
@@ -67,9 +66,9 @@ extends WhileOrDoWhile<
         super(
                 //label
                 null ,
-                new IsTrue(
+                //new IsTrue(
                         Value.booleanValue(
-                                condition ) ) ,
+                                condition ) ,
                 steps );
     }
 
@@ -83,7 +82,8 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             final String label ,
-            final ConditionOrBooleanExpression/*Condition/*<? super PARENT>*/ condition ,
+            //final ConditionOrBooleanExpression/*Condition*/ condition
+            final CoroExpression<Boolean> condition ,
             final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... steps )
     {
         super(
@@ -92,25 +92,25 @@ extends WhileOrDoWhile<
                 steps );
     }
 
-    /**
-     * Constructor.
-     *
-     * @param label
-     * @param condition
-     * @param steps
-     */
-    @SafeVarargs
-    public DoWhile(
-            final String label ,
-            final CoroExpression<Boolean> condition ,
-            final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... steps )
-    {
-        super(
-                label ,
-                new IsTrue(
-                        condition ) ,
-                steps );
-    }
+    ///**
+    // * Constructor.
+    // *
+    // * @param label
+    // * @param condition
+    // * @param steps
+    // */
+    //@SafeVarargs
+    //public DoWhile(
+    //        final String label ,
+    //        final CoroExpression<Boolean> condition ,
+    //        final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... steps )
+    //{
+    //    super(
+    //            label ,
+    //            new IsTrue(
+    //                    condition ) ,
+    //            steps );
+    //}
 
     /**
      * Constructor.
@@ -127,15 +127,12 @@ extends WhileOrDoWhile<
     {
         super(
                 label ,
-                new IsTrue(
+                //new IsTrue(
                         Value.booleanValue(
-                                condition ) ) ,
+                                condition ) ,
                 steps );
     }
 
-    /**
-     * @see ComplexStep#newState()
-     */
     @Override
     public DoWhileState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> newState(
             final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN , RESUME_ARGUMENT> parent )

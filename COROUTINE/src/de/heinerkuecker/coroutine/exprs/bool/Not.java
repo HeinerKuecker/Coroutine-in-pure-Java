@@ -1,8 +1,9 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
@@ -11,43 +12,54 @@ import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 public class Not
-implements Condition/*<CoroutineIterator<?>>*/
+//implements Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
     /**
      * Expression to negate.
      */
-    public final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
+    //public final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
+    public final CoroExpression<Boolean> conditionToNegate;
 
     /**
      * Constructor.
      */
     public Not(
-            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate )
-    {
-        this.conditionToNegate = conditionToNegate;
-    }
-
-    /**
-     * Constructor.
-     */
-    public Not(
+            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate
             final CoroExpression<Boolean> conditionToNegate )
     {
-        this.conditionToNegate =
-                new IsTrue(
-                        conditionToNegate );
+        this.conditionToNegate = Objects.requireNonNull( conditionToNegate );
     }
 
+    ///**
+    // * Constructor.
+    // */
+    //public Not(
+    //        final CoroExpression<Boolean> conditionToNegate )
+    //{
+    //    this.conditionToNegate =
+    //            new IsTrue(
+    //                    conditionToNegate );
+    //}
+
+    ///**
+    // * Negates the specified condition.
+    // */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    return ! conditionToNegate.execute( parent );
+    //}
+
     /**
-     * Negates the specified {@link Condition}.
-     *
-     * @see Condition#execute
+     * Negates the specified condition.
      */
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        return ! conditionToNegate.execute( parent );
+        return ! conditionToNegate.evaluate( parent );
     }
 
     /**
@@ -61,13 +73,11 @@ implements Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.conditionToNegate.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -75,9 +85,10 @@ implements Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        this.conditionToNegate.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.conditionToNegate.checkUseArguments( alreadyCheckedProcedureNames , parent );
     }
 
     /**
@@ -87,7 +98,7 @@ implements Condition/*<CoroutineIterator<?>>*/
     public String toString()
     {
         //return "Not [conditionToNegate=" + this.conditionToNegate + "]";
-        return "! ( " + this.conditionToNegate + " )";
+        return "( ! " + this.conditionToNegate + " )";
     }
 
 }

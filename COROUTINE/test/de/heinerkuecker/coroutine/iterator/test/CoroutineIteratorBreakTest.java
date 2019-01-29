@@ -4,10 +4,9 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.Lesser;
-import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.bool.Lesser;
 import de.heinerkuecker.coroutine.stmt.complex.Block;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.complex.While;
@@ -43,7 +42,7 @@ public class CoroutineIteratorBreakTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // updateStep
                                 new NoOperation<>() ,
                                 // steps
@@ -84,7 +83,7 @@ public class CoroutineIteratorBreakTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // updateStep
                                 new NoOperation<>() ,
                                 // steps
@@ -92,7 +91,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -123,7 +122,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -132,7 +131,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new Break<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -153,7 +152,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -166,7 +165,7 @@ public class CoroutineIteratorBreakTest
                                                 // steps
                                                 new Break<>() ) ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -187,7 +186,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer, Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -196,7 +195,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new Break<>( "wrong" ) ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -217,7 +216,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -226,7 +225,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new Break<>() ,
                                         // steps
@@ -247,7 +246,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -256,7 +255,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new Block<>(
                                                 // creationStackOffset
@@ -281,7 +280,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -290,7 +289,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new Break<>( "any" ) ,
                                         // steps
@@ -311,7 +310,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -322,7 +321,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -343,7 +342,7 @@ public class CoroutineIteratorBreakTest
                         // steps
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new SetLocalVar<>(
                                         "number" ,
@@ -354,7 +353,7 @@ public class CoroutineIteratorBreakTest
                                         // initialStep
                                         new NoOperation<>() ,
                                         // condition
-                                        new True() ,
+                                        Value.trueValue() ,
                                         // updateStep
                                         new NoOperation<>() ,
                                         // steps
@@ -378,7 +377,7 @@ public class CoroutineIteratorBreakTest
                                 0 ) ,
                         new While<Integer , Void>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 //steps
                                 new YieldReturn<>( 0 ) ,
                                 new YieldReturn<>( 1 ) ,

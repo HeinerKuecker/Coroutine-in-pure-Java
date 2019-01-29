@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +14,7 @@ import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * Compare {@link ConditionOrBooleanExpression}
+ * Compare condition
  * to check lesserness or equality of result
  * of the left
  * expression {@link CoroExpression}
@@ -24,7 +24,8 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStep;
  * @author Heiner K&uuml;cker
  */
 public class LesserOrEqual<T extends Comparable<T>>
-implements ConditionOrBooleanExpression
+//implements ConditionOrBooleanExpression
+extends CoroBooleanExpression
 {
     public final CoroExpression<? extends T> lhs;
     public final CoroExpression<? extends T> rhs;
@@ -100,12 +101,36 @@ implements ConditionOrBooleanExpression
                         rhsValue );
     }
 
-    /**
-     * @see ConditionOrBooleanExpression#execute
-     */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    final T lhsResult = lhs.evaluate( parent );
+    //    final T rhsResult = rhs.evaluate( parent );
+    //
+    //    if ( lhsResult == null && rhsResult == null )
+    //    {
+    //        return true;
+    //    }
+    //
+    //    if ( lhsResult == null )
+    //        // null is lesser
+    //    {
+    //        return true;
+    //    }
+    //
+    //    if ( rhsResult == null )
+    //        // null is lesser
+    //    {
+    //        return false;
+    //    }
+    //
+    //    return lhsResult.compareTo( rhsResult ) <= 0;
+    //}
+
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
         final T lhsResult = lhs.evaluate( parent );
         final T rhsResult = rhs.evaluate( parent );
@@ -149,19 +174,16 @@ implements ConditionOrBooleanExpression
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.lhs.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.rhs.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -169,10 +191,11 @@ implements ConditionOrBooleanExpression
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.lhs.checkUseArguments( alreadyCheckedProcedureNames , parent );
+        this.rhs.checkUseArguments( alreadyCheckedProcedureNames , parent );
     }
 
     /**
@@ -181,7 +204,7 @@ implements ConditionOrBooleanExpression
     @Override
     public String toString()
     {
-        return lhs + " <= " + rhs;
+        return "( " + lhs + " <= " + rhs + " )";
     }
 
 }

@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,10 +11,9 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * Equals {@link Condition}
+ * Equals condition
  * to check equality of
  * the results of two given
  * {@link CoroExpression}.
@@ -23,7 +22,8 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStep;
  * @author Heiner K&uuml;cker
  */
 public class Equals<T>
-implements ConditionOrBooleanExpression
+//implements ConditionOrBooleanExpression
+extends CoroBooleanExpression
 {
     public final CoroExpression<? extends T> lhs;
     public final CoroExpression<? extends T> rhs;
@@ -98,9 +98,29 @@ implements ConditionOrBooleanExpression
                         rhsValue );
     }
 
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    final T lhsResult = lhs.evaluate( parent );
+    //    final T rhsResult = rhs.evaluate( parent );
+    //
+    //    if ( lhsResult == null && rhsResult == null )
+    //    {
+    //        return true;
+    //    }
+    //
+    //    if ( lhsResult == null )
+    //    {
+    //        return false;
+    //    }
+    //
+    //    return lhsResult.equals( rhsResult );
+    //}
+
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
         final T lhsResult = lhs.evaluate( parent );
         final T rhsResult = rhs.evaluate( parent );
@@ -118,9 +138,6 @@ implements ConditionOrBooleanExpression
         return lhsResult.equals( rhsResult );
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -137,19 +154,16 @@ implements ConditionOrBooleanExpression
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.lhs.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.rhs.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -157,7 +171,8 @@ implements ConditionOrBooleanExpression
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
@@ -169,7 +184,7 @@ implements ConditionOrBooleanExpression
     @Override
     public String toString()
     {
-        return lhs + " == " + rhs;
+        return "( " + lhs + " == " + rhs + " )";
     }
 
 }

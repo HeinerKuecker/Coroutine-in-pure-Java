@@ -150,7 +150,7 @@ extends ComplexStepState<
                 parent.saveLastStepState();
 
                 final boolean conditionResult =
-                        _for.condition.execute(
+                        _for.condition.evaluate(
                                 //parent
                                 this );
 

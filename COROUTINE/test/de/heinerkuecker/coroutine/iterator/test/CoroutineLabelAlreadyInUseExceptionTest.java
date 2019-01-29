@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.Lesser;
-import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.bool.Lesser;
 import de.heinerkuecker.coroutine.stmt.complex.DoWhile;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.complex.While;
@@ -45,7 +45,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 // label
                                 "label_already_in_use" ,
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new IncrementLocalVar<>( "number" ) ,
                                 new Continue<>(
@@ -81,7 +81,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 // label
                                 "label_already_in_use" ,
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new IncrementLocalVar<>( "number" ) ,
                                 new Continue<>(
@@ -123,7 +123,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 // initialStep
                                 new NoOperation<>() ,
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // updateStep
                                 new NoOperation<>() ,
                                 // steps

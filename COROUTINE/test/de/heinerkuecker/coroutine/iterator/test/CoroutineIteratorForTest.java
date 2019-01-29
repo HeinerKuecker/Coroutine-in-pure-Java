@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.Lesser;
-import de.heinerkuecker.coroutine.condition.LesserOrEqual;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.IntAdd;
+import de.heinerkuecker.coroutine.exprs.bool.Lesser;
+import de.heinerkuecker.coroutine.exprs.bool.LesserOrEqual;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;

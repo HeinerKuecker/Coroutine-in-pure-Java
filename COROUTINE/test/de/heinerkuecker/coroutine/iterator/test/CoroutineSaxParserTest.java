@@ -20,21 +20,21 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Parameter;
-import de.heinerkuecker.coroutine.condition.And;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
-import de.heinerkuecker.coroutine.condition.Equals;
-import de.heinerkuecker.coroutine.condition.Not;
 import de.heinerkuecker.coroutine.exprs.AbstrExprsUseExprs;
 import de.heinerkuecker.coroutine.exprs.AbstrNoVarsNoArgsExpression;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.GetResumeArgument;
-import de.heinerkuecker.coroutine.exprs.InstanceOf;
 import de.heinerkuecker.coroutine.exprs.NewIllegalStateException;
 import de.heinerkuecker.coroutine.exprs.NullValue;
 import de.heinerkuecker.coroutine.exprs.StrConcat;
 import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.bool.And;
+import de.heinerkuecker.coroutine.exprs.bool.CoroBooleanExpression;
+import de.heinerkuecker.coroutine.exprs.bool.Equals;
+import de.heinerkuecker.coroutine.exprs.bool.InstanceOf;
+import de.heinerkuecker.coroutine.exprs.bool.Not;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 import de.heinerkuecker.coroutine.stmt.complex.IfElse;
 import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
@@ -498,7 +498,7 @@ public class CoroutineSaxParserTest
             }
         };
 
-        final ConditionOrBooleanExpression isStartElementClass =
+        final CoroBooleanExpression isStartElementClass =
                 new And(
                         new InstanceOf(
                                 // valueExpression

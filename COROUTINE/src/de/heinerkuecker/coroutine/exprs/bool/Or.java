@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,41 +7,53 @@ import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * Or {@link Condition}.
+ * Or condition.
  *
  * @author Heiner K&uuml;cker
  */
 public class Or
-implements Condition/*<CoroutineIterator<?>>*/
+//implements Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
-    private final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/[] conditionsToOr;
+    //private final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/[] conditionsToOr;
+    private final CoroExpression<Boolean>[] conditionsToOr;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public Or(
-            final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/... conditionsToAnd )
+            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/... conditionsToOr
+            final CoroExpression<Boolean>... conditionsToOr )
     {
-        this.conditionsToOr = conditionsToAnd;
+        this.conditionsToOr = conditionsToOr;
     }
 
-    /**
-     * Negates the specified {@link Condition}.
-     *
-     * @see Condition#execute
-     */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+    //    {
+    //        if ( condition.execute( parent ) )
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        for ( final CoroExpression<Boolean> condition : conditionsToOr )
         {
-            if ( condition.execute( parent ) )
+            if ( condition.evaluate( parent ) )
             {
                 return true;
             }
@@ -49,15 +61,13 @@ implements Condition/*<CoroutineIterator<?>>*/
         return false;
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
         final List<GetProcedureArgument<?>> result = new ArrayList<>();
 
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        for ( final CoroExpression<?> condition : conditionsToOr )
         {
             result.addAll(
                     condition.getProcedureArgumentGetsNotInProcedure() );
@@ -74,7 +84,8 @@ implements Condition/*<CoroutineIterator<?>>*/
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        for ( final CoroExpression<?> condition : conditionsToOr )
         {
             condition.checkUseVariables(
                     //isCoroutineRoot ,
@@ -88,7 +99,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     public void checkUseArguments(
             HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        for ( final CoroExpression<?> condition : conditionsToOr )
         {
             condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
         }
@@ -102,7 +114,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     {
         final StringBuilder buff = new StringBuilder();
 
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToOr )
+        for ( final CoroExpression<?> condition : conditionsToOr )
         {
             if ( buff.length() > 0 )
             {

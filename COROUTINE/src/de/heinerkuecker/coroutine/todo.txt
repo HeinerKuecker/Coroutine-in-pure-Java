@@ -16,8 +16,6 @@ Fibonacci generator
 
 Boolean parameter condition (@see If)
 
-remove: IsTrue, IsFalse
-
 varargs: Add, StrConcat
 
 rename: step to statement
@@ -27,7 +25,5 @@ make nested exception classes to top level classes
 sysout for simplestep and simpleexpression
 
 HasCreationStackTraceElement for all simplestep and simpleexpression
-
-remove condition, use CoroExpression<Boolean>
 
 function

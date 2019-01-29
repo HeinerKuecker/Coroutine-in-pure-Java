@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,10 +9,9 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * {@link Iterator#hasNext} {@link Condition}
+ * {@link Iterator#hasNext} condition
  * to check has next element
  * of the specified {@link Iterator}
  * expression {@link CoroExpression}.
@@ -20,7 +19,8 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStep;
  * @author Heiner K&uuml;cker
  */
 public class IteratorHasNext
-implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+//implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
     /**
      * Expression to check.
@@ -36,25 +36,27 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
         this.iteratorExpression = iteratorExpression;
     }
 
-    /**
-     * Equals variable to <code>null</code>.
-     *
-     * @see Condition#execute
-     */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    //final Object varValue = parent.localVars().get( varName );
+    //    final Iterator<?> iterator = iteratorExpression.evaluate( parent );
+    //
+    //    // TODO null handling
+    //    return iterator.hasNext();
+    //}
+
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        //final Object varValue = parent.localVars().get( varName );
         final Iterator<?> iterator = iteratorExpression.evaluate( parent );
 
         // TODO null handling
         return iterator.hasNext();
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -63,13 +65,11 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.iteratorExpression.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -77,9 +77,12 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        this.iteratorExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.iteratorExpression.checkUseArguments(
+                alreadyCheckedProcedureNames ,
+                parent );
     }
 
     /**

@@ -4,19 +4,17 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.condition.Equals;
-import de.heinerkuecker.coroutine.condition.False;
-import de.heinerkuecker.coroutine.condition.Greater;
-import de.heinerkuecker.coroutine.condition.GreaterOrEqual;
-import de.heinerkuecker.coroutine.condition.Lesser;
-import de.heinerkuecker.coroutine.condition.Not;
-import de.heinerkuecker.coroutine.condition.Or;
-import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.Add;
 import de.heinerkuecker.coroutine.exprs.CastToInt;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.Multiply;
 import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.bool.Equals;
+import de.heinerkuecker.coroutine.exprs.bool.Greater;
+import de.heinerkuecker.coroutine.exprs.bool.GreaterOrEqual;
+import de.heinerkuecker.coroutine.exprs.bool.Lesser;
+import de.heinerkuecker.coroutine.exprs.bool.Not;
+import de.heinerkuecker.coroutine.exprs.bool.Or;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 import de.heinerkuecker.coroutine.stmt.complex.IfElse;
 import de.heinerkuecker.coroutine.stmt.complex.While;
@@ -386,7 +384,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new While<>(
                                 //condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
                                 new FinallyReturn<>( 1 ) ) );
@@ -435,7 +433,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new While<>(
                                 //condition
-                                new False()
+                                Value.falseValue()
                                 // steps
                                 ) );
 
@@ -455,7 +453,7 @@ public class CoroutineIteratorWhileTest
                         // steps
                         new While<>(
                                 //condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new YieldReturn<>( 0 ) ,
                                 new YieldReturn<>( 1 ) ,
@@ -583,7 +581,7 @@ public class CoroutineIteratorWhileTest
                                 true ) ,
                         new While<>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new IfElse<>(
                                         //condition
@@ -634,7 +632,7 @@ public class CoroutineIteratorWhileTest
                                 true ) ,
                         new While<>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new IfElse<>(
                                         //condition
@@ -692,7 +690,7 @@ public class CoroutineIteratorWhileTest
                                 true ) ,
                         new While<>(
                                 // condition
-                                new True() ,
+                                Value.trueValue() ,
                                 // steps
                                 new IfElse<>(
                                         //condition

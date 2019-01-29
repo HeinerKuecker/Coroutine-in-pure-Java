@@ -1,9 +1,10 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
@@ -27,7 +28,8 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStep;
  * @author Heiner K&uuml;cker
  */
 public class IsEmpty
-implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+//implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
     /**
      * Expression to check.
@@ -40,8 +42,91 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
     public IsEmpty(
             final CoroExpression<?> expression )
     {
-        this.expression = expression;
+        this.expression = Objects.requireNonNull( expression );
     }
+
+    ///**
+    // * Checks variable is
+    // * <code>null</code>,
+    // * empty array,
+    // * empty {@link String},
+    // * empty {@link Map} or
+    // * empty {@link Collection}.
+    // */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    //final Object varValue = parent.localVars().get( varName );
+    //    final Object varValue = expression.evaluate( parent );
+    //
+    //    if ( varValue == null )
+    //    {
+    //        return true;
+    //    }
+    //
+    //    if ( varValue instanceof String )
+    //    {
+    //        return ( (String) varValue ).isEmpty();
+    //    }
+    //
+    //    if ( varValue instanceof Collection )
+    //    {
+    //        return ( (Collection<?>) varValue ).isEmpty();
+    //    }
+    //
+    //    if ( varValue instanceof Map )
+    //    {
+    //        return ( (Map<?, ?>) varValue ).isEmpty();
+    //    }
+    //
+    //    if ( varValue instanceof Object[] )
+    //    {
+    //        return ( (Object[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof boolean[] )
+    //    {
+    //        return ( (boolean[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof byte[] )
+    //    {
+    //        return ( (byte[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof short[] )
+    //    {
+    //        return ( (short[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof char[] )
+    //    {
+    //        return ( (char[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof int[] )
+    //    {
+    //        return ( (int[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof long[] )
+    //    {
+    //        return ( (long[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof float[] )
+    //    {
+    //        return ( (float[]) varValue ).length == 0;
+    //    }
+    //
+    //    if ( varValue instanceof double[] )
+    //    {
+    //        return ( (double[]) varValue ).length == 0;
+    //    }
+    //
+    //    return false;
+    //}
 
     /**
      * Checks variable is
@@ -50,14 +135,11 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
      * empty {@link String},
      * empty {@link Map} or
      * empty {@link Collection}.
-     *
-     * @see Condition#execute
      */
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        //final Object varValue = parent.localVars().get( varName );
         final Object varValue = expression.evaluate( parent );
 
         if ( varValue == null )

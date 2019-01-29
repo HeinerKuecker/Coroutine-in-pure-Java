@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.HashSet;
 import java.util.List;
@@ -8,57 +8,58 @@ import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * Is <code>true</code> {@link Condition}
- * to check trueness of the result
+ * Is <code>null</code> condition
+ * to check nullness of the result
  * of the specified
  * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
- *
- * TODO rename to VarIsTrue
  */
-public class IsTrue
-implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+public class IsNull
+//implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
     /**
      * Expression to check.
      */
-    public final CoroExpression<Boolean> expression;
+    public final CoroExpression<?> expression;
 
     /**
      * Constructor.
      */
-    public IsTrue(
-            final CoroExpression<Boolean> expression )
+    public IsNull(
+            final CoroExpression<?> expression )
     {
         this.expression = expression;
     }
 
+    ///**
+    // * Equals variable to <code>null</code>.
+    // */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    //final Object varValue = parent.localVars().get( varName );
+    //    final Object varValue = expression.evaluate( parent );
+    //
+    //    return varValue == null;
+    //}
+
     /**
-     * Equals variable to <code>true</code>.
-     *
-     * @see Condition#execute
+     * Equals variable to <code>null</code>.
      */
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        //final Object varValue = parent.localVars().get( varName );
         final Object varValue = expression.evaluate( parent );
 
-        if ( varValue instanceof Boolean )
-        {
-            return (boolean) varValue;
-        }
-        return false;
+        return varValue == null;
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -67,13 +68,11 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseVariables(
-            //final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         this.expression.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -81,9 +80,12 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        this.expression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.expression.checkUseArguments(
+                alreadyCheckedProcedureNames ,
+                parent );
     }
 
     /**
@@ -92,7 +94,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
     @Override
     public String toString()
     {
-        return expression + " == true";
+        return "( " + expression + " == null )";
     }
 
 }

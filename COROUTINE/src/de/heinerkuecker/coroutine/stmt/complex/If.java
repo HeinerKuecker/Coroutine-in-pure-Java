@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
-import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
@@ -24,7 +22,8 @@ extends ComplexStep<
     RESUME_ARGUMENT
     >
 {
-    final ConditionOrBooleanExpression condition;
+    //final ConditionOrBooleanExpression/*Condition*/ condition
+    final CoroExpression<Boolean> condition;
     final ComplexStep<?, ?, COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStep;
 
     /**
@@ -32,7 +31,8 @@ extends ComplexStep<
      */
     @SafeVarargs
     public If(
-            final ConditionOrBooleanExpression condition ,
+            //final ConditionOrBooleanExpression/*Condition*/ condition
+            final CoroExpression<Boolean> condition ,
             final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... steps )
     {
         super(
@@ -48,28 +48,28 @@ extends ComplexStep<
                         steps );
     }
 
-    /**
-     * Constructor.
-     */
-    @SafeVarargs
-    public If(
-            final CoroExpression<Boolean> condition ,
-            final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... steps )
-    {
-        super(
-                //creationStackOffset
-                3 );
-
-        this.condition =
-                new IsTrue(
-                        condition );
-
-        this.thenBodyComplexStep =
-                Block.convertStepsToComplexStep(
-                        // creationStackOffset
-                        4 ,
-                        steps );
-    }
+    ///**
+    // * Constructor.
+    // */
+    //@SafeVarargs
+    //public If(
+    //        final CoroExpression<Boolean> condition ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... steps )
+    //{
+    //    super(
+    //            //creationStackOffset
+    //            3 );
+    //
+    //    this.condition =
+    //            new IsTrue(
+    //                    condition );
+    //
+    //    this.thenBodyComplexStep =
+    //            Block.convertStepsToComplexStep(
+    //                    // creationStackOffset
+    //                    4 ,
+    //                    steps );
+    //}
 
     /**
      * Constructor.
@@ -84,9 +84,9 @@ extends ComplexStep<
                 3 );
 
         this.condition =
-                new IsTrue(
+                //new IsTrue(
                         Value.booleanValue(
-                                condition ) );
+                                condition );
 
         this.thenBodyComplexStep =
                 Block.convertStepsToComplexStep(

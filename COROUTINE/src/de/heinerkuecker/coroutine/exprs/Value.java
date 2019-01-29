@@ -115,6 +115,32 @@ extends AbstrNoVarsNoArgsExpression<T>
     /**
      * Factory method.
      *
+     * @return value expression
+     */
+    public static Value<Boolean> falseValue()
+    {
+        return
+                new Value<Boolean>(
+                        Boolean.class ,
+                        false );
+    }
+
+    /**
+     * Factory method.
+     *
+     * @return value expression
+     */
+    public static Value<Boolean> trueValue()
+    {
+        return
+                new Value<Boolean>(
+                        Boolean.class ,
+                        true );
+    }
+
+    /**
+     * Factory method.
+     *
      * @param value the value to return
      * @return value expression
      */

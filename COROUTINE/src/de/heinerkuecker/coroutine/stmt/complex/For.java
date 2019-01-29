@@ -9,11 +9,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
-import de.heinerkuecker.coroutine.condition.IsTrue;
-import de.heinerkuecker.coroutine.condition.True;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
@@ -34,7 +32,8 @@ extends ComplexStep<
     // TODO nur SimpleStep oder ProcedureCall erlauben
     final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep;
 
-    final ConditionOrBooleanExpression condition;
+    //final ConditionOrBooleanExpression condition;
+    final CoroExpression<Boolean> condition;
 
     // TODO nur SimpleStep oder ProcedureCall erlauben
     final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep;
@@ -47,75 +46,7 @@ extends ComplexStep<
     @SafeVarargs
     public For(
             final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
-            final ConditionOrBooleanExpression condition ,
-            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
-            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
-    {
-        super(
-                //creationStackOffset
-                3 );
-
-        this.label = null;
-
-        if ( initialStep == null )
-        {
-            // C style default
-            this.initialStep = new NoOperation<>();
-        }
-        else if ( initialStep instanceof BreakOrContinue )
-        {
-            throw new IllegalArgumentException(
-                    "break or continue in initial step: " +
-                    initialStep );
-        }
-        else
-        {
-            this.initialStep =
-                    Objects.requireNonNull(
-                            initialStep );
-        }
-
-        if ( condition == null )
-        {
-            // C style default
-            this.condition = new True();
-        }
-        else
-        {
-            this.condition = condition;
-        }
-
-        if ( updateStep == null )
-        {
-            // C style default
-            this.updateStep = new NoOperation<>();
-        }
-        else if ( updateStep instanceof BreakOrContinue )
-        {
-            throw new IllegalArgumentException(
-                    "break or continue in update step: " +
-                            updateStep );
-        }
-        else
-        {
-            this.updateStep =
-                    Objects.requireNonNull(
-                            updateStep );
-        }
-
-        this.bodyComplexStep =
-                Block.convertStepsToComplexStep(
-                        // creationStackOffset
-                        4 ,
-                        steps );
-    }
-
-    /**
-     * Constructor.
-     */
-    @SafeVarargs
-    public For(
-            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
+            //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
             final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
             final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
@@ -147,13 +78,13 @@ extends ComplexStep<
         if ( condition == null )
         {
             // C style default
-            this.condition = new True();
+            this.condition =
+                    //new True()
+                    new Value<Boolean>( true );
         }
         else
         {
-            this.condition =
-                    new IsTrue(
-                            condition );
+            this.condition = condition;
         }
 
         if ( updateStep == null )
@@ -181,6 +112,77 @@ extends ComplexStep<
                         steps );
     }
 
+    ///**
+    // * Constructor.
+    // */
+    //@SafeVarargs
+    //public For(
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
+    //        final CoroExpression<Boolean> condition ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+    //{
+    //    super(
+    //            //creationStackOffset
+    //            3 );
+    //
+    //    this.label = null;
+    //
+    //    if ( initialStep == null )
+    //    {
+    //        // C style default
+    //        this.initialStep = new NoOperation<>();
+    //    }
+    //    else if ( initialStep instanceof BreakOrContinue )
+    //    {
+    //        throw new IllegalArgumentException(
+    //                "break or continue in initial step: " +
+    //                initialStep );
+    //    }
+    //    else
+    //    {
+    //        this.initialStep =
+    //                Objects.requireNonNull(
+    //                        initialStep );
+    //    }
+    //
+    //    if ( condition == null )
+    //    {
+    //        // C style default
+    //        this.condition = new True();
+    //    }
+    //    else
+    //    {
+    //        this.condition =
+    //                new IsTrue(
+    //                        condition );
+    //    }
+    //
+    //    if ( updateStep == null )
+    //    {
+    //        // C style default
+    //        this.updateStep = new NoOperation<>();
+    //    }
+    //    else if ( updateStep instanceof BreakOrContinue )
+    //    {
+    //        throw new IllegalArgumentException(
+    //                "break or continue in update step: " +
+    //                        updateStep );
+    //    }
+    //    else
+    //    {
+    //        this.updateStep =
+    //                Objects.requireNonNull(
+    //                        updateStep );
+    //    }
+    //
+    //    this.bodyComplexStep =
+    //            Block.convertStepsToComplexStep(
+    //                    // creationStackOffset
+    //                    4 ,
+    //                    steps );
+    //}
+
     /**
      * Constructor.
      */
@@ -188,64 +190,7 @@ extends ComplexStep<
     public For(
             final String label ,
             final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
-            final ConditionOrBooleanExpression condition ,
-            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
-            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
-    {
-        super(
-                //creationStackOffset
-                3 );
-
-        this.label = label;
-
-        if ( initialStep == null )
-        {
-            // C style default
-            this.initialStep = new NoOperation<>();
-        }
-        else
-        {
-            this.initialStep =
-                    Objects.requireNonNull(
-                            initialStep );
-        }
-
-        if ( condition == null )
-        {
-            // C style default
-            this.condition = new True();
-        }
-        else
-        {
-            this.condition = condition;
-        }
-
-        if ( updateStep == null )
-        {
-            // C style default
-            this.updateStep = new NoOperation<>();
-        }
-        else
-        {
-            this.updateStep =
-                    Objects.requireNonNull(
-                            updateStep );
-        }
-
-        this.bodyComplexStep =
-                Block.convertStepsToComplexStep(
-                        // creationStackOffset
-                        4 ,
-                        steps );
-    }
-
-    /**
-     * Constructor.
-     */
-    @SafeVarargs
-    public For(
-            final String label ,
-            final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
+            //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
             final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
             final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
@@ -271,13 +216,13 @@ extends ComplexStep<
         if ( condition == null )
         {
             // C style default
-            this.condition = new True();
+            this.condition =
+                    //new True()
+                    new Value<Boolean>( true );
         }
         else
         {
-            this.condition =
-                    new IsTrue(
-                            condition );
+            this.condition = condition;
         }
 
         if ( updateStep == null )
@@ -299,16 +244,72 @@ extends ComplexStep<
                         steps );
     }
 
-    /**
-     * @see ComplexStep#newState
-     */
+    ///**
+    // * Constructor.
+    // */
+    //@SafeVarargs
+    //public For(
+    //        final String label ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
+    //        final CoroExpression<Boolean> condition ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+    //{
+    //    super(
+    //            //creationStackOffset
+    //            3 );
+    //
+    //    this.label = label;
+    //
+    //    if ( initialStep == null )
+    //    {
+    //        // C style default
+    //        this.initialStep = new NoOperation<>();
+    //    }
+    //    else
+    //    {
+    //        this.initialStep =
+    //                Objects.requireNonNull(
+    //                        initialStep );
+    //    }
+    //
+    //    if ( condition == null )
+    //    {
+    //        // C style default
+    //        this.condition = new True();
+    //    }
+    //    else
+    //    {
+    //        this.condition =
+    //                new IsTrue(
+    //                        condition );
+    //    }
+    //
+    //    if ( updateStep == null )
+    //    {
+    //        // C style default
+    //        this.updateStep = new NoOperation<>();
+    //    }
+    //    else
+    //    {
+    //        this.updateStep =
+    //                Objects.requireNonNull(
+    //                        updateStep );
+    //    }
+    //
+    //    this.bodyComplexStep =
+    //            Block.convertStepsToComplexStep(
+    //                    // creationStackOffset
+    //                    4 ,
+    //                    steps );
+    //}
+
     @Override
     public ForState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> newState(
             final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new ForState<>(
                 this ,
-                //parent.getRootParent()
                 parent );
     }
 
@@ -382,9 +383,6 @@ extends ComplexStep<
         return result;
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -405,9 +403,6 @@ extends ComplexStep<
         return result;
     }
 
-    /**
-     * @see CoroIterStep#setResultType(Class)
-     */
     @Override
     public void setResultType(
             final Class<? extends COROUTINE_RETURN> resultType )

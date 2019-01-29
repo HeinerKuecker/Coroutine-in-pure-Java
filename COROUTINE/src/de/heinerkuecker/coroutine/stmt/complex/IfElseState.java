@@ -58,7 +58,7 @@ extends ComplexStepState<
             parent.saveLastStepState();
 
             final boolean conditionResult =
-                    ifElse.condition.execute(
+                    ifElse.condition.evaluate(
                             //parent
                             this );
 

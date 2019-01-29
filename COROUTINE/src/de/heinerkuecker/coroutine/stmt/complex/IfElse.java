@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
-import de.heinerkuecker.coroutine.condition.IsTrue;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
@@ -24,7 +22,8 @@ extends ComplexStep<
     RESUME_ARGUMENT
     >
 {
-    final ConditionOrBooleanExpression condition;
+    //final ConditionOrBooleanExpression/*Condition*/ condition
+    final CoroExpression<Boolean> condition;
     final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStep;
     final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStep;
 
@@ -32,7 +31,8 @@ extends ComplexStep<
      * Constructor.
      */
     public IfElse(
-            final ConditionOrBooleanExpression condition ,
+            //final ConditionOrBooleanExpression/*Condition*/ condition
+            final CoroExpression<Boolean> condition ,
             final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
             final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
     {
@@ -74,53 +74,53 @@ extends ComplexStep<
 
     }
 
-    /**
-     * Constructor.
-     */
-    public IfElse(
-            final CoroExpression<Boolean> condition ,
-            final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
-            final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
-    {
-        super(
-                //creationStackOffset
-                3 );
-
-        this.condition =
-                new IsTrue(
-                        condition );
-
-        if ( thenSteps.length == 1 &&
-                thenSteps[ 0 ] instanceof ComplexStep )
-        {
-            this.thenBodyComplexStep =
-                    (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenSteps[ 0 ];
-        }
-        else
-        {
-            this.thenBodyComplexStep =
-                    new Block<>(
-                            // creationStackOffset
-                            3 ,
-                            thenSteps );
-        }
-
-        if ( elseSteps.length == 1 &&
-                elseSteps[ 0 ] instanceof ComplexStep )
-        {
-            this.elseBodyComplexStep =
-                    (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
-        }
-        else
-        {
-            this.elseBodyComplexStep =
-                    new Block<>(
-                            // creationStackOffset
-                            3 ,
-                            elseSteps );
-        }
-
-    }
+    ///**
+    // * Constructor.
+    // */
+    //public IfElse(
+    //        final CoroExpression<Boolean> condition ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
+    //        final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
+    //{
+    //    super(
+    //            //creationStackOffset
+    //            3 );
+    //
+    //    this.condition =
+    //            new IsTrue(
+    //                    condition );
+    //
+    //    if ( thenSteps.length == 1 &&
+    //            thenSteps[ 0 ] instanceof ComplexStep )
+    //    {
+    //        this.thenBodyComplexStep =
+    //                (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenSteps[ 0 ];
+    //    }
+    //    else
+    //    {
+    //        this.thenBodyComplexStep =
+    //                new Block<>(
+    //                        // creationStackOffset
+    //                        3 ,
+    //                        thenSteps );
+    //    }
+    //
+    //    if ( elseSteps.length == 1 &&
+    //            elseSteps[ 0 ] instanceof ComplexStep )
+    //    {
+    //        this.elseBodyComplexStep =
+    //                (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
+    //    }
+    //    else
+    //    {
+    //        this.elseBodyComplexStep =
+    //                new Block<>(
+    //                        // creationStackOffset
+    //                        3 ,
+    //                        elseSteps );
+    //    }
+    //
+    //}
 
     /**
      * Constructor.
@@ -135,9 +135,9 @@ extends ComplexStep<
                 3 );
 
         this.condition =
-                new IsTrue(
+                //new IsTrue(
                         Value.booleanValue(
-                                condition ) );
+                                condition );
 
         if ( thenSteps.length == 1 &&
                 thenSteps[ 0 ] instanceof ComplexStep )

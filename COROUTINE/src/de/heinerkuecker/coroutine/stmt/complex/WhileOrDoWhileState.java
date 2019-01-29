@@ -58,7 +58,7 @@ extends ComplexStepState<
                 parent.saveLastStepState();
 
                 final boolean conditionResult =
-                        whileOrDoWhile.condition.execute(
+                        whileOrDoWhile.condition.evaluate(
                                 //parent
                                 this );
 

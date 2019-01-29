@@ -1,52 +1,65 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * Xor {@link Condition}.
+ * Xor condition.
  *
  * @author Heiner K&uuml;cker
  */
 public class Xor
-implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+//implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
-    private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs;
-    private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs;
+    //private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs;
+    private final CoroExpression<Boolean> lhs;
+    //private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs;
+    private final CoroExpression<Boolean> rhs;
 
     /**
      * Constructor.
      */
     public Xor(
-            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs ,
-            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs )
+            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs ,
+            final CoroExpression<Boolean> lhs ,
+            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs
+            final CoroExpression<Boolean> rhs )
     {
-        this.lhs = lhs;
-        this.rhs = rhs;
+        this.lhs = Objects.requireNonNull( lhs );
+        this.rhs = Objects.requireNonNull( rhs );
     }
 
+    ///**
+    // * Xors the specified {@link Condition}s.
+    // *
+    // * @see Condition#execute
+    // */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    return lhs.execute( parent ) != rhs.execute( parent );
+    //}
+
     /**
-     * Xors the specified {@link Condition}s.
-     *
-     * @see Condition#execute
+     * Xors the specified conditions.
      */
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        return lhs.execute( parent ) != rhs.execute( parent );
+        return lhs.evaluate( parent ) != rhs.evaluate( parent );
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
@@ -96,7 +109,7 @@ implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
     @Override
     public String toString()
     {
-        return lhs + " != " + rhs;
+        return "( " + lhs + " xor " + rhs + " )";
     }
 
 }

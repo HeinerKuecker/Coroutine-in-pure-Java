@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
@@ -30,7 +30,8 @@ extends ComplexStep<
     >
 {
     public final String label;
-    final ConditionOrBooleanExpression condition;
+    //final ConditionOrBooleanExpression condition;
+    final CoroExpression<Boolean> condition;
     final ComplexStep<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStep;
 
     /**
@@ -39,7 +40,8 @@ extends ComplexStep<
     @SafeVarargs
     WhileOrDoWhile(
             final String label ,
-            final ConditionOrBooleanExpression condition ,
+            //final ConditionOrBooleanExpression condition
+            final CoroExpression<Boolean> condition ,
             final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... steps )
     {
         super(
@@ -57,9 +59,6 @@ extends ComplexStep<
                         steps );
     }
 
-    /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
-     */
     @Override
     final public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,

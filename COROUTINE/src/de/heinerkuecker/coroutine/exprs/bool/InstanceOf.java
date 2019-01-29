@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.exprs;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,6 +8,9 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
  * Check instanceof TODO
@@ -19,7 +22,8 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  * @author Heiner K&uuml;cker
  */
 public class InstanceOf
-implements CoroBooleanExpression
+//implements CoroBooleanExpression
+extends CoroBooleanExpression
 {
     /**
      * Left hand side expression, value.
@@ -65,9 +69,19 @@ implements CoroBooleanExpression
                                 type  ) );
     }
 
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    final Object value = valueExpression.evaluate( parent );
+    //    final Class<?> type = typeExpression.evaluate( parent );
+    //
+    //    return type.isInstance( value );
+    //}
+
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
         final Object value = valueExpression.evaluate( parent );
         final Class<?> type = typeExpression.evaluate( parent );
@@ -91,19 +105,16 @@ implements CoroBooleanExpression
 
     @Override
     public void checkUseVariables(
-            ////final boolean isCoroutineRoot ,
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstep<?, ?> parent,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes)
     {
         this.valueExpression.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.typeExpression.checkUseVariables(
-                //isCoroutineRoot ,
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -111,19 +122,12 @@ implements CoroBooleanExpression
 
     @Override
     public void checkUseArguments(
-            HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final HashSet<String> alreadyCheckedProcedureNames ,
+            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
         this.valueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.typeExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
-
-    //@SuppressWarnings("unchecked")
-    //@Override
-    //public Class<? extends T>[] type()
-    //{
-    //    //return (Class<? extends T>) Number.class;
-    //    return new Class[] { Number.class };
-    //}
 
     /**
      * @see Object#toString()
@@ -131,7 +135,7 @@ implements CoroBooleanExpression
     @Override
     public String toString()
     {
-        return valueExpression + " instanceof " + typeExpression;
+        return "( " + valueExpression + " instanceof " + typeExpression + " )";
     }
 
 }

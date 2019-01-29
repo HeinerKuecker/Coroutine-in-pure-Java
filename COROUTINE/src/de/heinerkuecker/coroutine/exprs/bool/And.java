@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.condition;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,39 +7,54 @@ import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
 
 /**
- * And {@link Condition}.
+ * And condition.
  *
  * @author Heiner K&uuml;cker
  */
 public class And
-implements Condition/*<CoroutineIterator<?>>*/
+//implements Condition/*<CoroutineIterator<?>>*/
+extends CoroBooleanExpression
 {
-    private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/[] conditionsToAnd;
+    //private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/[] conditionsToAnd;
+    private final CoroExpression<Boolean>[] conditionsToAnd;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public And(
-            final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/... conditionsToAnd )
+            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/... conditionsToAnd
+            final CoroExpression<Boolean>... conditionsToAnd )
     {
         this.conditionsToAnd = conditionsToAnd;
     }
 
-    /**
-     * Negates the specified {@link Condition}.
-     */
+    //@Override
+    //public boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //{
+    //    //for ( final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+    //    for ( final CoroExpression<Boolean> condition : conditionsToAnd )
+    //    {
+    //        if ( ! condition.execute( parent ) )
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
+
     @Override
-    public boolean execute(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    public Boolean evaluate(
+            final HasArgumentsAndVariables<?> parent )
     {
-        for ( final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        for ( final CoroExpression<Boolean> condition : conditionsToAnd )
         {
-            if ( ! condition.execute( parent ) )
+            if ( ! condition.evaluate( parent ) )
             {
                 return false;
             }
@@ -47,15 +62,13 @@ implements Condition/*<CoroutineIterator<?>>*/
         return true;
     }
 
-    /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
-     */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
     {
         final List<GetProcedureArgument<?>> result = new ArrayList<>();
 
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        for ( final CoroExpression<?> condition : conditionsToAnd )
         {
             result.addAll(
                     condition.getProcedureArgumentGetsNotInProcedure() );
@@ -71,7 +84,8 @@ implements Condition/*<CoroutineIterator<?>>*/
             final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        for ( final CoroExpression<?> condition : conditionsToAnd )
         {
             condition.checkUseVariables(
                     //isCoroutineRoot ,
@@ -85,7 +99,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     public void checkUseArguments(
             HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
     {
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        for ( final CoroExpression<?> condition : conditionsToAnd )
         {
             condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
         }
@@ -99,7 +114,8 @@ implements Condition/*<CoroutineIterator<?>>*/
     {
         final StringBuilder buff = new StringBuilder();
 
-        for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
+        for ( final CoroExpression<?> condition : conditionsToAnd )
         {
             if ( buff.length() > 0 )
             {
