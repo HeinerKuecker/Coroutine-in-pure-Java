@@ -9,9 +9,9 @@ import java.util.Set;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
-import de.heinerkuecker.coroutine.expression.CoroExpression;
-import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
-import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.flow.BreakOrContinue;
 

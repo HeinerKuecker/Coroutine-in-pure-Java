@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.expression.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 
 abstract public class SimpleStepWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStep<COROUTINE_RETURN , RESUME_ARGUMENT>

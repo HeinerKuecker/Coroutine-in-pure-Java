@@ -2,7 +2,7 @@ package de.heinerkuecker.coroutine.condition;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.expression.AbstrNoVarsNoArgsExpression;
+import de.heinerkuecker.coroutine.exprs.AbstrNoVarsNoArgsExpression;
 
 /**
  * Constant false {@link Condition}

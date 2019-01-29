@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.expression.GetGlobalVar;
+import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 import de.heinerkuecker.coroutine.step.CoroIterStepResult;
 

@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.NullValue;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.NullValue;
 import de.heinerkuecker.coroutine.step.complex.Block;
 import de.heinerkuecker.coroutine.step.complex.TryCatch;
 import de.heinerkuecker.coroutine.step.flow.Throw;

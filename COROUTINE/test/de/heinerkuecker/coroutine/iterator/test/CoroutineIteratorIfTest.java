@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.condition.Equals;
 import de.heinerkuecker.coroutine.condition.Not;
 import de.heinerkuecker.coroutine.condition.True;
-import de.heinerkuecker.coroutine.expression.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.step.complex.If;
 import de.heinerkuecker.coroutine.step.complex.While;
 import de.heinerkuecker.coroutine.step.ret.FinallyReturn;

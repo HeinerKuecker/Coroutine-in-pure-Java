@@ -3,8 +3,8 @@ package de.heinerkuecker.coroutine.step.complex;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
 import de.heinerkuecker.coroutine.condition.IsTrue;
-import de.heinerkuecker.coroutine.expression.CoroExpression;
-import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.step.CoroIterStep;
 
 public class DoWhile<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>

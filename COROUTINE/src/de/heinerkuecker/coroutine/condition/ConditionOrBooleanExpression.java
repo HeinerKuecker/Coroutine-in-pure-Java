@@ -2,7 +2,7 @@ package de.heinerkuecker.coroutine.condition;
 
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.expression.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import javafx.beans.binding.BooleanExpression;
 
 /**

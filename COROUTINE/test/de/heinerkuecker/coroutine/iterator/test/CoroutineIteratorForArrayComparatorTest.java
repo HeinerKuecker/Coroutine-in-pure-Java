@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.iterator.test;
 
-import static de.heinerkuecker.coroutine.expression.NullValue.nullValue;
+import static de.heinerkuecker.coroutine.exprs.NullValue.nullValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,9 +11,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.NewArray;
-import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.NewArray;
+import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.step.complex.ForEach;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 import de.heinerkuecker.util.ArrayDeepToString;

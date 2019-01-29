@@ -1,0 +1,19 @@
+package de.heinerkuecker.coroutine.exprs;
+
+import de.heinerkuecker.coroutine.condition.ConditionOrBooleanExpression;
+
+public interface CoroBooleanExpression
+extends
+    CoroExpression<Boolean> ,
+    ConditionOrBooleanExpression
+{
+    ///**
+    // * Execute the condition and return the result.
+    // *
+    // * @param parent the {@link CoroutineOrProcedureOrComplexstep} instance
+    // * @return condition result
+    // */
+    //@Override
+    //boolean execute(
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent );
+}

@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.expression.GetLocalVar;
-import de.heinerkuecker.coroutine.expression.Value;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.step.complex.ForEach;
 import de.heinerkuecker.coroutine.step.ret.YieldReturn;
 
