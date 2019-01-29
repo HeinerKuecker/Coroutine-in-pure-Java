@@ -12,7 +12,7 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 
 /**
- * Is empty {@link Condition}
+ * Is empty condition
  * to check emptiness of the result
  * of the specified
  * expression {@link CoroExpression}.
