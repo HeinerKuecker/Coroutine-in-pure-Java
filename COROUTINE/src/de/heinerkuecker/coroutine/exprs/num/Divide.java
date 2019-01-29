@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.exprs;
+package de.heinerkuecker.coroutine.exprs.num;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -6,17 +6,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.AbstrLhsRhsExpression;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 
 /**
- * Subtract
- * result of the right
+ * Divide
+ * result of the left
  * expression {@link CoroExpression}
- * from the result of the left
+ * by the result of the right
  * expression {@link CoroExpression}.
  *
  * @author Heiner K&uuml;cker
  */
-public class Subtract<T extends Number>
+public class Divide<T extends Number>
 //implements CoroExpression<T>
 extends AbstrLhsRhsExpression<T>
 {
@@ -26,7 +28,7 @@ extends AbstrLhsRhsExpression<T>
     //public final CoroExpression<? extends T> lhs;
 
     /**
-     * Right hand side expression to subtract.
+     * Right hand side expression to divide by.
      */
     //public final CoroExpression<? extends T> rhs;
 
@@ -36,7 +38,7 @@ extends AbstrLhsRhsExpression<T>
      * @param lhs
      * @param rhs
      */
-    public Subtract(
+    public Divide(
             final CoroExpression<? extends T> lhs ,
             final CoroExpression<? extends T> rhs )
     {
@@ -82,24 +84,24 @@ extends AbstrLhsRhsExpression<T>
                     rhsResult instanceof Long ||
                     rhsResult instanceof AtomicLong )
             {
-                return (T) (Long) ( ( (long) lhsLong ) - rhsResult.longValue() );
+                return (T) (Long) ( ( (long) lhsLong ) / rhsResult.longValue() );
             }
             else if ( rhsResult instanceof Float ||
                     rhsResult instanceof Double )
             {
-                return (T) (Double) ( ( (double) lhsLong ) - rhsResult.doubleValue() );
+                return (T) (Double) ( ( (double) lhsLong ) / rhsResult.doubleValue() );
             }
             else if ( rhsResult instanceof BigInteger )
             {
-                return (T) BigInteger.valueOf( lhsLong ).subtract( ( (BigInteger) rhsResult ) );
+                return (T) BigInteger.valueOf( lhsLong ).divide( ( (BigInteger) rhsResult ) );
             }
             else if ( rhsResult instanceof BigDecimal )
             {
-                return (T) BigDecimal.valueOf( lhsLong ).subtract( ( (BigDecimal) rhsResult ) );
+                return (T) BigDecimal.valueOf( lhsLong ).divide( ( (BigDecimal) rhsResult ) );
             }
         }
 
-        return (T) (Double) ( lhsResult.doubleValue() - rhsResult.doubleValue() );
+        return (T) (Double) ( lhsResult.doubleValue() / rhsResult.doubleValue() );
     }
 
     //@Override
@@ -121,8 +123,7 @@ extends AbstrLhsRhsExpression<T>
     //        //final boolean isCoroutineRoot ,
     //        final HashSet<String> alreadyCheckedProcedureNames ,
     //        final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
-    //        final Map<String, Class<?>> globalVariableTypes ,
-    //        final Map<String, Class<?>> localVariableTypes )
+    //        final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     //{
     //    this.lhs.checkUseVariables(
     //            //isCoroutineRoot ,
@@ -159,7 +160,7 @@ extends AbstrLhsRhsExpression<T>
     @Override
     public String toString()
     {
-        return lhs + " - " + rhs;
+        return lhs + " / " + rhs;
     }
 
 }

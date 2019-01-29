@@ -1,6 +1,8 @@
-package de.heinerkuecker.coroutine.exprs;
+package de.heinerkuecker.coroutine.exprs.num;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.AbstrOneExprExpression;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 
 /**
  * Cast result of the specified

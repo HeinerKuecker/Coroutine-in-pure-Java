@@ -1,9 +1,16 @@
-package de.heinerkuecker.coroutine.exprs;
+package de.heinerkuecker.coroutine.exprs.num;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
+import de.heinerkuecker.coroutine.exprs.AbstrLhsRhsExpression;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
 
 /**
- * {@link Integer} add
+ * Add
  * result of the right
  * expression {@link CoroExpression}
  * to the result of the left
@@ -11,19 +18,19 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  *
  * @author Heiner K&uuml;cker
  */
-public class IntAdd
-//implements CoroExpression<Integer>
-extends AbstrLhsRhsExpression<Integer>
+public class Add<T extends Number>
+//implements CoroExpression<T>
+extends AbstrLhsRhsExpression<T>
 {
     /**
      * Left hand side expression.
      */
-    //public final CoroExpression<Integer> lhs;
+    //public final CoroExpression<? extends T> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    //public final CoroExpression<Integer> rhs;
+    //public final CoroExpression<? extends T> rhs;
 
     /**
      * Constructor.
@@ -31,9 +38,9 @@ extends AbstrLhsRhsExpression<Integer>
      * @param lhs
      * @param rhs
      */
-    public IntAdd(
-            final CoroExpression<Integer> lhs ,
-            final CoroExpression<Integer> rhs )
+    public Add(
+            final CoroExpression<? extends T> lhs ,
+            final CoroExpression<? extends T> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -43,31 +50,14 @@ extends AbstrLhsRhsExpression<Integer>
     }
 
     /**
-     * Convenience constructor.
-     *
-     * @param lhs
-     * @param rhs
-     */
-    public IntAdd(
-            final CoroExpression<Integer> lhs ,
-            final Integer rhs )
-    {
-        //this.lhs = Objects.requireNonNull( lhs );
-        //this.rhs = new Value<Integer>( rhs );
-        super(
-                lhs ,
-                new Value<Integer>( rhs ) );
-    }
-
-    /**
      * Add.
      */
     @Override
-    public Integer evaluate(
+    public T evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
     {
-        final Integer lhsResult = lhs.evaluate( parent );
-        final Integer rhsResult = rhs.evaluate( parent );
+        final T lhsResult = lhs.evaluate( parent );
+        final T rhsResult = rhs.evaluate( parent );
 
         if ( lhsResult == null )
         {
@@ -79,7 +69,39 @@ extends AbstrLhsRhsExpression<Integer>
             throw new NullPointerException( "rhs: " + rhs );
         }
 
-        return lhsResult + rhsResult;
+        if ( lhsResult instanceof Byte ||
+                lhsResult instanceof Short ||
+                lhsResult instanceof Integer ||
+                lhsResult instanceof AtomicInteger ||
+                lhsResult instanceof Long )
+        {
+            final long lhsLong = lhsResult.longValue();
+
+            if ( rhsResult instanceof Byte ||
+                    rhsResult instanceof Short ||
+                    rhsResult instanceof Integer ||
+                    rhsResult instanceof AtomicInteger ||
+                    rhsResult instanceof Long ||
+                    rhsResult instanceof AtomicLong )
+            {
+                return (T) (Long) ( ( (long) lhsLong ) + rhsResult.longValue() );
+            }
+            else if ( rhsResult instanceof Float ||
+                    rhsResult instanceof Double )
+            {
+                return (T) (Double) ( ( (double) lhsLong ) + rhsResult.doubleValue() );
+            }
+            else if ( rhsResult instanceof BigInteger )
+            {
+                return (T) BigInteger.valueOf( lhsLong ).add( ( (BigInteger) rhsResult ) );
+            }
+            else if ( rhsResult instanceof BigDecimal )
+            {
+                return (T) BigDecimal.valueOf( lhsLong ).add( ( (BigDecimal) rhsResult ) );
+            }
+        }
+
+        return (T) (Double) ( lhsResult.doubleValue() + rhsResult.doubleValue() );
     }
 
     //@Override
@@ -98,11 +120,10 @@ extends AbstrLhsRhsExpression<Integer>
 
     //@Override
     //public void checkUseVariables(
-    //        //final boolean isCoroutineRoot ,
+    //        ////final boolean isCoroutineRoot ,
     //        final HashSet<String> alreadyCheckedProcedureNames ,
     //        final CoroutineOrProcedureOrComplexstep<?, ?> parent,
-    //        final Map<String, Class<?>> globalVariableTypes ,
-    //        final Map<String, Class<?>> localVariableTypes)
+    //        final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes)
     //{
     //    this.lhs.checkUseVariables(
     //            //isCoroutineRoot ,
@@ -127,10 +148,10 @@ extends AbstrLhsRhsExpression<Integer>
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<Integer>[] type()
+    public Class<? extends T>[] type()
     {
         //return (Class<? extends T>) Number.class;
-        return new Class[] { Integer.class };
+        return new Class[] { Number.class };
     }
 
     /**
