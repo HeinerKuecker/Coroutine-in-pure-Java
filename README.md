@@ -37,7 +37,7 @@ The toString method returns debug information such as the last step, next step, 
 
 In the toString method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
 
-The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code (steps).
+The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code.
 
 This repository contains an eclipse project COROUTINE to import in your IDE.
 
