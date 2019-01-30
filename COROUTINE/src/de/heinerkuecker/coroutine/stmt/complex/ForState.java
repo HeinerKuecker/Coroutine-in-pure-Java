@@ -35,9 +35,9 @@ extends ComplexStepState<
 
     /**
      * Local variables for
-     * condition,
-     * body and
-     * update step.
+     * condition {@link For#condition},
+     * body {@link For#bodyComplexStep} and
+     * update step {@link For#updateStep}.
      *
      * The super {@link ComplexStepState#blockLocalVariables}
      * is used for
@@ -45,7 +45,7 @@ extends ComplexStepState<
      * and as parent for this
      * {@link #subBlockLocalVariables}.
      */
-    private final BlockLocalVariables subBlockLocalVariables;
+    private BlockLocalVariables conditionAndBodyAndUpdateLocalVariables;
 
     /**
      * Constructor.
@@ -63,10 +63,6 @@ extends ComplexStepState<
         this.parent =
                 Objects.requireNonNull(
                         parent );
-
-        this.subBlockLocalVariables =
-                new BlockLocalVariables(
-                        super.localVars() );
     }
 
     @Override
@@ -147,6 +143,10 @@ extends ComplexStepState<
         {
             if ( runInCondition )
             {
+                this.conditionAndBodyAndUpdateLocalVariables =
+                        new BlockLocalVariables(
+                                super.localVars() );
+
                 parent.saveLastStepState();
 
                 final boolean conditionResult =
@@ -328,6 +328,18 @@ extends ComplexStepState<
                 ( ! runInCondition ) &&
                 ( ! runInBody ) &&
                 ( ! runInUpdate );
+    }
+
+    @Override
+    public BlockLocalVariables localVars()
+    {
+        if ( this.conditionAndBodyAndUpdateLocalVariables == null )
+            // run in initializer
+        {
+            return super.localVars();
+        }
+        // run in condition, body or update
+        return this.conditionAndBodyAndUpdateLocalVariables;
     }
 
     /**

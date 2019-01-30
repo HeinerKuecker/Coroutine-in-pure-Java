@@ -196,7 +196,7 @@ public class CoroutineSaxParserTest
          * @param qName
          * @param attributes
          */
-        protected StartElement(
+        StartElement(
                 String qName,
                 Attributes attributes)
         {
@@ -235,7 +235,7 @@ public class CoroutineSaxParserTest
          *
          * @param qName
          */
-        protected EndElement(
+        EndElement(
                 String qName )
         {
             super( qName );

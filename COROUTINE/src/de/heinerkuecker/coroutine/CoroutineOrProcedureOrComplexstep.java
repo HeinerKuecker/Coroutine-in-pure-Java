@@ -6,6 +6,7 @@ import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
 
 /**
  * Common interface for
+ * {@link Coroutine},
  * {@link CoroutineIterator} and
  * {@link ProcedureCall}
  * to satisfy Java generics.

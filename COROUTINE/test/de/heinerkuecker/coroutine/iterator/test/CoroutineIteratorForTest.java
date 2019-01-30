@@ -126,7 +126,6 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_01()
     {
-        // TODO wip
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
@@ -134,6 +133,12 @@ public class CoroutineIteratorForTest
                 new GetLocalVar<>(
                         // varName
                         "number" ,
+                        Integer.class );
+
+        final GetLocalVar<Integer> number1 =
+                new GetLocalVar<>(
+                        // varName
+                        "number1" ,
                         Integer.class );
 
         final CoroutineIterator<Integer> coroIter =
@@ -157,13 +162,13 @@ public class CoroutineIteratorForTest
                                 //new IncrementLocalVar<>( "number" ) ,
                                 new SetLocalVar<>(
                                         //localVarName
-                                        "number",
+                                        "number" ,
                                         //varValueExpression
                                         new IntAdd(
                                                 number ,
                                                 1 ) ) ,
                                 // steps
-                                new YieldReturn<>( number ) ) );
+                                new YieldReturn<>( number1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -184,7 +189,6 @@ public class CoroutineIteratorForTest
     @Test
     public void test_For_02()
     {
-        // TODO wip
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
@@ -221,13 +225,72 @@ public class CoroutineIteratorForTest
                                 // updateStep
                                 new SetLocalVar<>(
                                         //localVarName
-                                        "number ",
+                                        "number" ,
                                         //varValueExpression
                                         new IntAdd(
                                                 number1 ,
                                                 1 ) ) ,
                                 // steps
-                                new YieldReturn<>( number ) ) );
+                                new YieldReturn<>( number1 ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                2 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+    }
+
+    @Test
+    public void test_For_03()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        // extract get local variable expression
+        final GetLocalVar<Integer> number =
+                new GetLocalVar<>(
+                        // varName
+                        "number" ,
+                        Integer.class );
+
+        // extract get local variable expression
+        final GetLocalVar<Integer> number1 =
+                new GetLocalVar<>(
+                        // varName
+                        "number1" ,
+                        Integer.class );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // steps
+                        new For<>(
+                                // initialStep
+                                new DeclareVariable<>(
+                                        "number" ,
+                                        0 ) ,
+                                // condition
+                                new Lesser<>(
+                                        new DeclareVariable<>(
+                                                "number1" ,
+                                                Integer.class ,
+                                                number ) ,
+                                        3 ) ,
+                                // updateStep
+                                new IncrementLocalVar<>(
+                                        //localVarName
+                                        "number" ) ,
+                                // steps
+                                new YieldReturn<>( number1 ) ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
