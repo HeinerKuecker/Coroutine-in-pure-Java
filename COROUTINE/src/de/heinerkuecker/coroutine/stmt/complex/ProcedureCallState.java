@@ -3,14 +3,14 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.arg.Arguments;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.HCloneable;
 
 class ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT>
-extends ComplexStepState<
+extends ComplexStmtState<
     ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT>,
     ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
@@ -23,10 +23,10 @@ extends ComplexStepState<
     boolean runInProcedure = true;
 
     // TODO getter
-    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
+    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     //final Map<String, Object> procedureArgumentValues;
     final Arguments arguments;
@@ -42,7 +42,7 @@ extends ComplexStepState<
             final Class<? extends COROUTINE_RETURN> resultType ,
             //final Map<String, Object> procedureArgumentValues
             final Arguments arguments ,
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.procedureCall =
@@ -78,16 +78,16 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#execute
+     * @see ComplexStmtState#execute
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInProcedure )
         {
-            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
                     //procedureCall.procedure.bodyComplexStep;
                     this.parent/*.getRootParent()*/.getProcedure( procedureCall.procedureName ).bodyComplexStep;
 
@@ -102,7 +102,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            final CoroIterStepResult<COROUTINE_RETURN> bodyExecuteResult =
+            final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                     this.bodyComplexState.execute(
                             //parent
                             //this
@@ -114,7 +114,7 @@ extends ComplexStepState<
             }
 
             if ( ! ( bodyExecuteResult == null ||
-                    bodyExecuteResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                    bodyExecuteResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
             {
                 return bodyExecuteResult;
             }
@@ -123,7 +123,7 @@ extends ComplexStepState<
             return bodyExecuteResult;
         }
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     private void finish()
@@ -133,7 +133,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#isFinished()
+     * @see ComplexStmtState#isFinished()
      */
     @Override
     public boolean isFinished()
@@ -142,7 +142,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#getStep()
+     * @see ComplexStmtState#getStep()
      */
     @Override
     public ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT> getStep()

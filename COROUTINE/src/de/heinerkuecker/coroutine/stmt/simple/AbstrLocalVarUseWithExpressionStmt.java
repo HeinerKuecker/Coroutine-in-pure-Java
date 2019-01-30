@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 // TODO give expression instead local var name
 abstract public class AbstrLocalVarUseWithExpressionStmt<COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
@@ -20,7 +20,7 @@ implements HasVariableName
 {
     /**
      * Name of variable to use in
-     * {@link CoroutineOrProcedureOrComplexstep#localVars()}
+     * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
      */
     public final String localVarName;
 
@@ -39,7 +39,7 @@ implements HasVariableName
      * @param expressionValue
      */
     abstract protected void execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final VARIABLE varvalue ,
             final EXPRESSION expressionValue );
 
@@ -72,8 +72,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final VARIABLE varValue =
                 (VARIABLE) parent.localVars().get(
@@ -89,11 +89,11 @@ implements HasVariableName
                 varValue ,
                 expressionValue );
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -112,7 +112,7 @@ implements HasVariableName
     @Override
     final public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         // nothing to do
     }
@@ -120,7 +120,7 @@ implements HasVariableName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {

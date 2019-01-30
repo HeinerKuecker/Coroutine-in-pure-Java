@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
 public final class NegateLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
@@ -18,7 +18,7 @@ implements HasVariableName
 {
     /**
      * Name of variable to negate in
-     * {@link CoroutineOrProcedureOrComplexstep#localVars()}
+     * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
      */
     public final String localVarName;
 
@@ -46,8 +46,8 @@ implements HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue =
                 parent.localVars().get(
@@ -67,7 +67,7 @@ implements HasVariableName
                     localVarName ,
                     true );
         }
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     //@Override
@@ -77,7 +77,7 @@ implements HasVariableName
     //}
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -89,7 +89,7 @@ implements HasVariableName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {

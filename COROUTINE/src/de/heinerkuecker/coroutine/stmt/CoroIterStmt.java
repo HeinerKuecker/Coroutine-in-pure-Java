@@ -6,14 +6,14 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
 /**
- * Abstract super class for one step
+ * Abstract super class for one statement
  * in {@link CoroutineIterator}.
  *
  * @param <COROUTINE_RETURN> result type of method {@link Coroutine#resume} or {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-abstract public class CoroIterStep<COROUTINE_RETURN/*, PARENT*/>
+abstract public class CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
 extends HasCreationStackTraceElement
 implements CoroCheckable
 {
@@ -29,7 +29,7 @@ implements CoroCheckable
     /**
      * Constructor with safe creation line number optional.
      */
-    protected CoroIterStep(
+    protected CoroIterStmt(
             final int creationStackOffset )
     {
         super( creationStackOffset + 1 );

@@ -2,13 +2,13 @@ package de.heinerkuecker.coroutine.stmt.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
 import de.heinerkuecker.util.HCloneable;
 
 class TryCatchState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-extends ComplexStepState<
+extends ComplexStmtState<
     TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
     TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
@@ -21,11 +21,11 @@ extends ComplexStepState<
     // TODO getter
     boolean runInTry = true;
     boolean runInCatch;
-    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyComplexState;
-    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyComplexState;
+    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyComplexState;
+    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     private Throwable catchedThr;
 
@@ -35,7 +35,7 @@ extends ComplexStepState<
     protected TryCatchState(
             final TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
 
@@ -49,13 +49,13 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInTry )
         {
-            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStep =
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStep =
                     tryCatch.tryBodyComplexStep;
 
             if ( this.tryBodyComplexState == null )
@@ -70,7 +70,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            CoroIterStepResult<COROUTINE_RETURN> executeResult = null;
+            CoroIterStmtResult<COROUTINE_RETURN> executeResult = null;
             try
             {
                 executeResult =
@@ -85,7 +85,7 @@ extends ComplexStepState<
                 }
 
                 if ( ! ( executeResult == null ||
-                        executeResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                        executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
                 {
                     return executeResult;
                 }
@@ -108,7 +108,7 @@ extends ComplexStepState<
 
         if ( runInCatch )
         {
-            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStep =
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStep =
                     tryCatch.catchBodyComplexStep;
 
             if ( this.catchBodyComplexState == null )
@@ -131,7 +131,7 @@ extends ComplexStepState<
                     // value
                     this.tryCatch.catchExceptionClass.cast( catchedThr ) );
 
-            final CoroIterStepResult<COROUTINE_RETURN> executeResult =
+            final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
                     this.catchBodyComplexState.execute(
                             //parent
                             //this
@@ -144,7 +144,7 @@ extends ComplexStepState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
@@ -152,7 +152,7 @@ extends ComplexStepState<
             finish();
         }
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     private void finish()
@@ -164,7 +164,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#isFinished()
+     * @see ComplexStmtState#isFinished()
      */
     @Override
     public boolean isFinished()
@@ -175,7 +175,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#getStep()
+     * @see ComplexStmtState#getStep()
      */
     @Override
     public TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()

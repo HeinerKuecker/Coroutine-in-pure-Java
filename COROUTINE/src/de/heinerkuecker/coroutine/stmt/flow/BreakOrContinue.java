@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
 
 /**
@@ -46,7 +46,7 @@ extends SimpleStep<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , 
     }
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -58,7 +58,7 @@ extends SimpleStep<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , 
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -68,7 +68,7 @@ extends SimpleStep<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , 
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         // nothing to do
     }

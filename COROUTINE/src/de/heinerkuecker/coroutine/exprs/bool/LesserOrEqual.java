@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 
 /**
  * Compare condition
@@ -156,7 +156,7 @@ extends CoroBooleanExpression
     }
 
     /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
      */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
@@ -175,7 +175,7 @@ extends CoroBooleanExpression
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -193,7 +193,7 @@ extends CoroBooleanExpression
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.lhs.checkUseArguments( alreadyCheckedProcedureNames , parent );
         this.rhs.checkUseArguments( alreadyCheckedProcedureNames , parent );

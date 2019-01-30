@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
 
 /**
- * Step {@link CoroIterStep}
+ * Step {@link CoroIterStmt}
  * to stop stepping without
  * return a value.
  *
@@ -38,10 +38,10 @@ extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , R
      * Decrement variable.
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        return new CoroIterStepResult.FinallyReturnWithoutResult<>();
+        return new CoroIterStmtResult.FinallyReturnWithoutResult<>();
     }
 
     @Override
@@ -51,7 +51,7 @@ extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , R
     }
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -63,7 +63,7 @@ extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , R
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -73,7 +73,7 @@ extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , R
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         // nothing to do
     }

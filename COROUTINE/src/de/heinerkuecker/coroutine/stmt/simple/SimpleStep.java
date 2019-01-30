@@ -1,9 +1,9 @@
 package de.heinerkuecker.coroutine.stmt.simple;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 /**
  * Interface for one step
@@ -15,7 +15,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
  */
 //public interface SimpleStep<COROUTINE_RETURN, PARENT>
 abstract public class SimpleStep<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
-extends CoroIterStep<COROUTINE_RETURN /*,PARENT*/>
+extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
 {
     /**
      * Constructor.
@@ -44,7 +44,7 @@ extends CoroIterStep<COROUTINE_RETURN /*,PARENT*/>
      * @param parent
      * @return object to return a value and to control the flow
      */
-    abstract public CoroIterStepResult<COROUTINE_RETURN> execute(
+    abstract public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final PARENT parent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
 }

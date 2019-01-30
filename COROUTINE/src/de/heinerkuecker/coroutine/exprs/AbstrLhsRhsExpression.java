@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 
 public abstract class AbstrLhsRhsExpression<T>
 implements CoroExpression<T>
@@ -37,7 +37,7 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
      */
     @Override
     final public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
@@ -56,7 +56,7 @@ implements CoroExpression<T>
     @Override
     final public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes)
     {
@@ -74,7 +74,7 @@ implements CoroExpression<T>
     @Override
     final public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
         this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );

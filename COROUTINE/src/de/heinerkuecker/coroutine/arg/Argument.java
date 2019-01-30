@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
@@ -58,7 +58,7 @@ implements CoroCheckable
     }
 
     public T getValue(
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         @SuppressWarnings("unchecked")
         final Class<T> parameterType = (Class<T>) parent.procedureParameterTypes().get( name );
@@ -77,7 +77,7 @@ implements CoroCheckable
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -90,7 +90,7 @@ implements CoroCheckable
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         final Class<?> parameterType = parent.procedureParameterTypes().get( name );
 
@@ -143,10 +143,10 @@ implements CoroCheckable
         /**
          * Constructor.
          *
-         * @param stepOrExpression step or expression with access to not declared global variable
+         * @param stmtOrExpression statement or expression with access to not declared global variable
          */
         //public <T extends HasCreationStackTraceElement & HasVariableName> ArgumentNotDeclaredException(
-        //        final T stepOrExpression )
+        //        final T stmtOrExpression )
         public ArgumentNotDeclaredException(
                 final Argument<?> argument )
         {

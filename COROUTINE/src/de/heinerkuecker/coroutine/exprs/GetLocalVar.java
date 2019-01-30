@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.HasVariableName;
@@ -89,7 +89,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -121,7 +121,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         // nothing to do
     }
@@ -169,14 +169,14 @@ implements CoroExpression<VARIABLE> , HasVariableName
         /**
          * Constructor.
          *
-         * @param stepOrExpression step or expression with access to not declared local variable
+         * @param stmtOrExpression statement or expression with access to not declared local variable
          */
         public <T extends HasCreationStackTraceElement & HasVariableName> LocalVariableNotDeclaredException(
-                final T stepOrExpression )
+                final T stmtOrExpression )
         {
             super(
                     "local variable not declared: " +
-                    stepOrExpression );
+                    stmtOrExpression );
         }
 
     }

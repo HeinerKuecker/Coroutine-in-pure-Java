@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 abstract class WhileOrDoWhileState<
     WHILE_OR_DO_WHILE extends WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
@@ -10,7 +10,7 @@ abstract class WhileOrDoWhileState<
     //PARENT extends CoroutineIterator<COROUTINE_RETURN>
     RESUME_ARGUMENT
     >
-extends ComplexStepState<
+extends ComplexStmtState<
     WHILE_OR_DO_WHILE_STATE,
     WHILE_OR_DO_WHILE,
     COROUTINE_RETURN ,
@@ -23,7 +23,7 @@ extends ComplexStepState<
     // TODO getter
     protected boolean runInCondition;
     protected boolean runInBody;
-    protected ComplexStepState<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
+    protected ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
 
     //protected final CoroutineIterator<COROUTINE_RETURN> rootParent;
     //protected final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
@@ -34,7 +34,7 @@ extends ComplexStepState<
     protected WhileOrDoWhileState(
             final WhileOrDoWhile<WHILE_OR_DO_WHILE, WHILE_OR_DO_WHILE_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> whileOrDoWhile ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.whileOrDoWhile = whileOrDoWhile;
@@ -45,7 +45,7 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final PARENT parent
             //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
@@ -71,13 +71,13 @@ extends ComplexStepState<
                 else
                 {
                     finish();
-                    return CoroIterStepResult.continueCoroutine();
+                    return CoroIterStmtResult.continueCoroutine();
                 }
             }
 
             if ( runInBody )
             {
-                final ComplexStep<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyStep =
+                final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyStep =
                         whileOrDoWhile.bodyComplexStep;
 
                 if ( this.bodyComplexState == null )
@@ -92,7 +92,7 @@ extends ComplexStepState<
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
-                final CoroIterStepResult<COROUTINE_RETURN> bodyExecuteResult =
+                final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
                                 //parent
                                 //this
@@ -105,21 +105,21 @@ extends ComplexStepState<
                     this.bodyComplexState = null;
                 }
 
-                if ( bodyExecuteResult instanceof CoroIterStepResult.Break )
+                if ( bodyExecuteResult instanceof CoroIterStmtResult.Break )
                 {
                     finish();
-                    final String label = ( (CoroIterStepResult.Break<?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroIterStmtResult.Break<?>) bodyExecuteResult ).label;
                     if ( label == null ||
                             label.equals( whileOrDoWhile.label ) )
                     {
-                        return CoroIterStepResult.continueCoroutine();
+                        return CoroIterStmtResult.continueCoroutine();
                     }
                     // break outer loop
                     return bodyExecuteResult;
                 }
-                else if ( bodyExecuteResult instanceof CoroIterStepResult.ContinueLoop )
+                else if ( bodyExecuteResult instanceof CoroIterStmtResult.ContinueLoop )
                 {
-                    final String label = ( (CoroIterStepResult.ContinueLoop<?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroIterStmtResult.ContinueLoop<?>) bodyExecuteResult ).label;
                     if ( label != null &&
                             ! label.equals( whileOrDoWhile.label ) )
                         // continue outer loop
@@ -130,7 +130,7 @@ extends ComplexStepState<
                     // default behaviour
                 }
                 else if ( ! ( bodyExecuteResult == null ||
-                        bodyExecuteResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                        bodyExecuteResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
                 {
                     return bodyExecuteResult;
                 }
@@ -151,7 +151,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#isFinished()
+     * @see ComplexStmtState#isFinished()
      */
     @Override
     public boolean isFinished()

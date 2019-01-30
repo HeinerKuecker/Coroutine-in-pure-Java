@@ -1,9 +1,9 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 
 public class While<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 extends WhileOrDoWhile<
@@ -24,7 +24,7 @@ extends WhileOrDoWhile<
     public While(
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
+            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 //label
@@ -61,7 +61,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final boolean condition ,
-            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
+            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 //label
@@ -84,7 +84,7 @@ extends WhileOrDoWhile<
             final String label ,
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
+            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 label ,
@@ -123,7 +123,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final boolean condition ,
-            final CoroIterStep<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
+            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... steps )
     {
         super(
                 label ,
@@ -135,7 +135,7 @@ extends WhileOrDoWhile<
 
     @Override
     public WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new WhileState<>(
                 this ,

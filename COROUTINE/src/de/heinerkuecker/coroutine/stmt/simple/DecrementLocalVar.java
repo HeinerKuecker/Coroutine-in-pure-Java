@@ -5,18 +5,18 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
 /**
- * Step {@link CoroIterStep} to
+ * Step {@link CoroIterStmt} to
  * decrement an {@link Number}
  * variable in variables
- * {@link CoroutineOrProcedureOrComplexstep#localVars()}
+ * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
@@ -28,7 +28,7 @@ implements HasVariableName
 {
     /**
      * Name of variable to decrement in
-     * {@link CoroutineOrProcedureOrComplexstep#localVars()}
+     * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
      */
     public final String localVarName;
 
@@ -49,8 +49,8 @@ implements HasVariableName
      * Decrement {@link Number} variable.
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
         final int var =
@@ -62,7 +62,7 @@ implements HasVariableName
                 localVarName ,
                 var - 1 );
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     //@Override
@@ -72,7 +72,7 @@ implements HasVariableName
     //}
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -84,7 +84,7 @@ implements HasVariableName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {

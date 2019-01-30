@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.NullValue;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.ArrayTypeName;
 
 /**
@@ -145,8 +145,8 @@ implements CoroExpression<T>
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         System.out.println( "execute " + this );
 
@@ -169,7 +169,7 @@ implements CoroExpression<T>
                     varValue );
         }
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     @Override
@@ -178,7 +178,7 @@ implements CoroExpression<T>
     // for using in expressions
     {
         execute(
-                (CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
+                (CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
         return (T) parent.localVars().get(
                 this ,
@@ -193,7 +193,7 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
      */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
@@ -206,7 +206,7 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -218,7 +218,7 @@ implements CoroExpression<T>
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -243,7 +243,7 @@ implements CoroExpression<T>
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         if ( initialVarValueExpression != null )
         {

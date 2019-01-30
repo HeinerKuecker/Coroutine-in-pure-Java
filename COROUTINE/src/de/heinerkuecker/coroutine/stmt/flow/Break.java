@@ -1,9 +1,9 @@
 package de.heinerkuecker.coroutine.stmt.flow;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.complex.DoWhile;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.complex.ForEach;
@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
 
 /**
- * Step {@link CoroIterStep}
+ * Step {@link CoroIterStmt}
  * to break current loop like
  * {@link For},
  * {@link ForEach},
@@ -56,10 +56,10 @@ extends BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        return new CoroIterStepResult.Break<COROUTINE_RETURN>( this.label );
+        return new CoroIterStmtResult.Break<COROUTINE_RETURN>( this.label );
     }
 
     /**

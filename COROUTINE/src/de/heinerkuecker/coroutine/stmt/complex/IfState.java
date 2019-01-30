@@ -2,12 +2,12 @@ package de.heinerkuecker.coroutine.stmt.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.HCloneable;
 
 class IfState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-extends ComplexStepState<
+extends ComplexStmtState<
     IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
     If<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
@@ -22,10 +22,10 @@ extends ComplexStepState<
     private boolean runInThenBody;
 
     // TODO getter
-    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyComplexState;
+    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
@@ -33,7 +33,7 @@ extends ComplexStepState<
     public IfState(
             final If<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> _if ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this._if = _if;
@@ -46,7 +46,7 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
@@ -69,13 +69,13 @@ extends ComplexStepState<
             else
             {
                 finish();
-                return CoroIterStepResult.continueCoroutine();
+                return CoroIterStmtResult.continueCoroutine();
             }
         }
 
         if ( runInThenBody )
         {
-            final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStep =
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStep =
                     _if.thenBodyComplexStep;
 
             if ( this.thenBodyComplexState == null )
@@ -90,7 +90,7 @@ extends ComplexStepState<
 
             // TODO only before executing simple step: parent.saveLastStepState();
 
-            final CoroIterStepResult<COROUTINE_RETURN> executeResult =
+            final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
                     this.thenBodyComplexState.execute(
                             //parent
                             //this
@@ -102,7 +102,7 @@ extends ComplexStepState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
@@ -110,7 +110,7 @@ extends ComplexStepState<
             finish();
         }
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     private void finish()
@@ -121,7 +121,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#isFinished()
+     * @see ComplexStmtState#isFinished()
      */
     @Override
     public boolean isFinished()
@@ -132,7 +132,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#getStep()
+     * @see ComplexStmtState#getStep()
      */
     @Override
     public If<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()

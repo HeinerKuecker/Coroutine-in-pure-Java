@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
@@ -18,7 +18,7 @@ implements CoroExpression<T> , HasArgumentName
 {
     /**
      * Name of procedure argument in
-     * {@link CoroutineOrProcedureOrComplexstep#globalArgumentValues()}
+     * {@link CoroutineOrProcedureOrComplexstmt#globalArgumentValues()}
      * to return.
      */
     public final String globalArgumentName;
@@ -80,7 +80,7 @@ implements CoroExpression<T> , HasArgumentName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         // nothing to do
@@ -89,7 +89,7 @@ implements CoroExpression<T> , HasArgumentName
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         if ( ! parent.globalParameterTypes().containsKey( this.globalArgumentName ) )
         {
@@ -159,14 +159,14 @@ implements CoroExpression<T> , HasArgumentName
         /**
          * Constructor.
          *
-         * @param stepOrExpression step or expression with access to not declared global argument (argument of coroutine)
+         * @param stmtOrExpression statement or expression with access to not declared global argument (argument of coroutine)
          */
         public <T extends HasCreationStackTraceElement & HasArgumentName> LocalVariableNotDeclaredException(
-                final T stepOrExpression )
+                final T stmtOrExpression )
         {
             super(
                     "global argument not declared: " +
-                    stepOrExpression );
+                    stmtOrExpression );
         }
 
     }

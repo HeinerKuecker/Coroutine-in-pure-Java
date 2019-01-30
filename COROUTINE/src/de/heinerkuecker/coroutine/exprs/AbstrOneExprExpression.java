@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 
 /**
  * Like map from expression
@@ -47,7 +47,7 @@ implements CoroExpression<RETURN>
     @Override
     final public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes)
     {
@@ -60,7 +60,7 @@ implements CoroExpression<RETURN>
     @Override
     final public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.expr.checkUseArguments(
                 alreadyCheckedProcedureNames ,

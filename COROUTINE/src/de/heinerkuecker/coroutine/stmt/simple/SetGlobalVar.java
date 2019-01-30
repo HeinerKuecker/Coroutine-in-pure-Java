@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 
 /**
@@ -31,7 +31,7 @@ implements CoroExpression<T> , HasVariableName
 {
     /**
      * Name of variable to set in
-     * {@link CoroutineOrProcedureOrComplexstep#globalVars()}
+     * {@link CoroutineOrProcedureOrComplexstmt#globalVars()}
      */
     public final String globalVarName;
 
@@ -80,8 +80,8 @@ implements CoroExpression<T> , HasVariableName
      * @see SimpleStep#execute
      */
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue = varValueExpression.evaluate( parent );
 
@@ -89,7 +89,7 @@ implements CoroExpression<T> , HasVariableName
                 globalVarName ,
                 varValue );
 
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     @Override
@@ -97,7 +97,7 @@ implements CoroExpression<T> , HasVariableName
             final HasArgumentsAndVariables<?> parent )
     // for using in expressions
     {
-        execute( (CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
+        execute( (CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
         return (T) parent.globalVars().get(
                 this ,
@@ -113,7 +113,7 @@ implements CoroExpression<T> , HasVariableName
     }
 
     /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
      */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
@@ -122,7 +122,7 @@ implements CoroExpression<T> , HasVariableName
     }
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -134,7 +134,7 @@ implements CoroExpression<T> , HasVariableName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -152,7 +152,7 @@ implements CoroExpression<T> , HasVariableName
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.varValueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }

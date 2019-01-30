@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.stmt.simple.exc;
 
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 
 /**
  * Exception
@@ -17,7 +17,7 @@ extends RuntimeException
      * Constructor.
      */
     public WrongStmtVariableClassException(
-            final CoroIterStep<?> wrongStmt ,
+            final CoroIterStmt<?> wrongStmt ,
             final Class<?> wrongClass ,
             final Class<?> expectedClass )
     {

@@ -12,17 +12,17 @@ import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.exc.UseGetProcedureArgumentOutsideOfProcedureException;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.complex.Block;
-import de.heinerkuecker.coroutine.stmt.complex.ComplexStep;
-import de.heinerkuecker.coroutine.stmt.complex.ComplexStepState;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStmt;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStmtState;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.UnresolvedBreakOrContinueException;
 import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
 
 public class Coroutine<COROUTINE_RETURN, RESUME_ARGUMENT>
-implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
+implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
 {
     /**
      * Es muss ein ComplexStep sein,
@@ -32,11 +32,11 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStep<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> complexStep;
-    private ComplexStepState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> nextComplexStepState;
+    private final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> complexStep;
+    private ComplexStmtState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> nextComplexStepState;
 
     // for debug
-    private ComplexStepState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> lastComplexStepState;
+    private ComplexStmtState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> lastComplexStepState;
 
     private boolean finallyReturnRaised;
 
@@ -67,7 +67,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     @SafeVarargs
     public Coroutine(
             final Class<? extends COROUTINE_RETURN> resultType ,
-            final CoroIterStep<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
     {
         this.resultType =
                 Objects.requireNonNull(
@@ -103,7 +103,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
             final Parameter[] params ,
             final Argument<?>[] args ,
             final DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
-            final CoroIterStep<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
     {
         //this( steps );
 
@@ -217,33 +217,33 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
             return null;
         }
 
-        final CoroIterStepResult<COROUTINE_RETURN> executeResult =
+        final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
                 this.nextComplexStepState.execute(
                         //this
                         );
 
         COROUTINE_RETURN result;
         if ( executeResult == null ||
-                executeResult instanceof CoroIterStepResult.ContinueCoroutine )
+                executeResult instanceof CoroIterStmtResult.ContinueCoroutine )
             // end of sub complex state without result
         {
             // Iterator ends
             result = null;
             // Keep for debug and for isFinished: this.nextComplexStepState = null;
         }
-        else if ( executeResult instanceof CoroIterStepResult.YieldReturnWithResult )
+        else if ( executeResult instanceof CoroIterStmtResult.YieldReturnWithResult )
         {
-            final CoroIterStepResult.YieldReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
-                    (CoroIterStepResult.YieldReturnWithResult<COROUTINE_RETURN>) executeResult;
+            final CoroIterStmtResult.YieldReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroIterStmtResult.YieldReturnWithResult<COROUTINE_RETURN>) executeResult;
 
             result =
                     resultType.cast(
                             yieldReturnWithResult.result );
         }
-        else if ( executeResult instanceof CoroIterStepResult.FinallyReturnWithResult )
+        else if ( executeResult instanceof CoroIterStmtResult.FinallyReturnWithResult )
         {
-            final CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
-                    (CoroIterStepResult.FinallyReturnWithResult<COROUTINE_RETURN>) executeResult;
+            final CoroIterStmtResult.FinallyReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroIterStmtResult.FinallyReturnWithResult<COROUTINE_RETURN>) executeResult;
 
             result =
                     resultType.cast(
@@ -252,7 +252,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
             finallyReturnRaised = true;
             // Keep for debug and for isFinished: this.nextComplexStepState = null;
         }
-        else if ( executeResult instanceof CoroIterStepResult.FinallyReturnWithoutResult )
+        else if ( executeResult instanceof CoroIterStmtResult.FinallyReturnWithoutResult )
         {
             // Iterator ends
             result = null;
@@ -317,7 +317,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstep#saveLastStepState()
+     * @see CoroutineOrProcedureOrComplexstmt#saveLastStepState()
      */
     @Override
     public void saveLastStepState()
@@ -329,7 +329,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstep#localVars()
+     * @see CoroutineOrProcedureOrComplexstmt#localVars()
      */
     @Override
     //public Map<String, Object> localVars()
@@ -343,7 +343,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstep#globalVars()
+     * @see CoroutineOrProcedureOrComplexstmt#globalVars()
      */
     @Override
     //public Map<String, Object> globalVars()
@@ -353,7 +353,7 @@ implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstep#procedureArgumentValues()
+     * @see CoroutineOrProcedureOrComplexstmt#procedureArgumentValues()
      */
     @Override
     public Arguments procedureArgumentValues()

@@ -1,13 +1,13 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
 import de.heinerkuecker.util.HCloneable;
 
 class BlockState<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
-extends ComplexStepState<
+extends ComplexStmtState<
     BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
     Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
@@ -19,7 +19,7 @@ extends ComplexStepState<
 
     // TODO getter to ensure unmodifiable from other class
     int currentStepIndex;
-    ComplexStepState<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
+    ComplexStmtState<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
     //private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
@@ -30,7 +30,7 @@ extends ComplexStepState<
     public BlockState(
             final Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.sequence = sequence;
@@ -40,12 +40,12 @@ extends ComplexStepState<
         //this.parent = Objects.requireNonNull( parent );
 
         if ( sequence.length() > 0 &&
-                sequence.getStep( 0 ) instanceof ComplexStep )
+                sequence.getStep( 0 ) instanceof ComplexStmt )
             // for toString
         {
             @SuppressWarnings("unchecked")
-            final ComplexStep<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> firstComplexStmt =
-                    (ComplexStep<? , ? , COROUTINE_RETURN , RESUME_ARGUMENT>) sequence.getStep( 0 );
+            final ComplexStmt<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> firstComplexStmt =
+                    (ComplexStmt<? , ? , COROUTINE_RETURN , RESUME_ARGUMENT>) sequence.getStep( 0 );
 
             this.currentComplexState =
                     firstComplexStmt.newState( this );
@@ -53,16 +53,16 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         while ( currentStepIndex < sequence.length() )
         {
-            final CoroIterStep<? extends COROUTINE_RETURN /*, ? super PARENT*/> currentStep =
+            final CoroIterStmt<? extends COROUTINE_RETURN /*, ? super PARENT*/> currentStep =
                     sequence.getStep( this.currentStepIndex );
 
-            final CoroIterStepResult<COROUTINE_RETURN> executeResult;
+            final CoroIterStmtResult<COROUTINE_RETURN> executeResult;
             if ( currentStep instanceof SimpleStep )
             {
                 @SuppressWarnings("unchecked")
@@ -81,8 +81,8 @@ extends ComplexStepState<
             else
             {
                 @SuppressWarnings("unchecked")
-                final ComplexStep<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStep =
-                        (ComplexStep<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStep;
+                final ComplexStmt<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStep =
+                        (ComplexStmt<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStep;
 
                 if ( this.currentComplexState == null )
                     // no existing state from previous execute call
@@ -112,10 +112,10 @@ extends ComplexStepState<
             // TODO only for toString
             if ( ! this.isFinished() &&
                     this.currentComplexState == null &&
-                     sequence.getStep( this.currentStepIndex ) instanceof ComplexStep )
+                     sequence.getStep( this.currentStepIndex ) instanceof ComplexStmt )
             {
                 this.currentComplexState =
-                        ( (ComplexStep<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT>) sequence.getStep(
+                        ( (ComplexStmt<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT>) sequence.getStep(
                                 this.currentStepIndex ) ).newState(
                                         //this.rootParent
                                         //this.parent
@@ -123,16 +123,16 @@ extends ComplexStepState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
         }
-        return CoroIterStepResult.continueCoroutine();
+        return CoroIterStmtResult.continueCoroutine();
     }
 
     /**
-     * @see ComplexStepState#isFinished()
+     * @see ComplexStmtState#isFinished()
      */
     @Override
     public boolean isFinished()
@@ -141,7 +141,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#getStep()
+     * @see ComplexStmtState#getStep()
      */
     @Override
     public Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> getStep()

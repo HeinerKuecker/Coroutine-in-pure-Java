@@ -3,13 +3,13 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import java.util.Iterator;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
 import de.heinerkuecker.util.HCloneable;
 
 class ForEachState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT , ELEMENT>
-extends ComplexStepState<
+extends ComplexStmtState<
     ForEachState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
     ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT>,
     COROUTINE_RETURN ,
@@ -25,14 +25,14 @@ extends ComplexStepState<
     boolean runInConditionAndUpdate;
 
     // TODO getter
-    ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
+    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
 
     Iterator<ELEMENT> iterator;
 
     private ELEMENT variableValue;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
@@ -40,7 +40,7 @@ extends ComplexStepState<
     public ForEachState(
             final ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> forEach ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.forEach = forEach;
@@ -58,7 +58,7 @@ extends ComplexStepState<
     }
 
     @Override
-    public CoroIterStepResult<COROUTINE_RETURN> execute(
+    public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
@@ -72,7 +72,7 @@ extends ComplexStepState<
             if ( ! iterator.hasNext() )
             {
                 finish();
-                return CoroIterStepResult.continueCoroutine();
+                return CoroIterStmtResult.continueCoroutine();
             }
 
             this.variableValue = iterator.next();
@@ -100,7 +100,7 @@ extends ComplexStepState<
                 if ( ! iterator.hasNext() )
                 {
                     finish();
-                    return CoroIterStepResult.continueCoroutine();
+                    return CoroIterStmtResult.continueCoroutine();
                 }
 
                 this.variableValue = iterator.next();
@@ -115,7 +115,7 @@ extends ComplexStepState<
 
             if ( runInBody )
             {
-                final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
+                final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
                         forEach.bodyComplexStep;
 
                 if ( this.bodyComplexState == null )
@@ -130,7 +130,7 @@ extends ComplexStepState<
 
                 // TODO only before executing simple step: parent.saveLastStepState();
 
-                final CoroIterStepResult<COROUTINE_RETURN> bodyExecuteResult =
+                final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
                                 //parent
                                 //this
@@ -143,21 +143,21 @@ extends ComplexStepState<
                     this.bodyComplexState = null;
                 }
 
-                if ( bodyExecuteResult instanceof CoroIterStepResult.Break )
+                if ( bodyExecuteResult instanceof CoroIterStmtResult.Break )
                 {
                     finish();
-                    final String label = ( (CoroIterStepResult.Break<?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroIterStmtResult.Break<?>) bodyExecuteResult ).label;
                     if ( label == null ||
                             label.equals( forEach.label ) )
                     {
-                        return CoroIterStepResult.continueCoroutine();
+                        return CoroIterStmtResult.continueCoroutine();
                     }
                     // break outer loop
                     return bodyExecuteResult;
                 }
-                else if ( bodyExecuteResult instanceof CoroIterStepResult.ContinueLoop )
+                else if ( bodyExecuteResult instanceof CoroIterStmtResult.ContinueLoop )
                 {
-                    final String label = ( (CoroIterStepResult.ContinueLoop<?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroIterStmtResult.ContinueLoop<?>) bodyExecuteResult ).label;
                     if ( label != null &&
                             ! label.equals( forEach.label ) )
                         // continue outer loop
@@ -168,7 +168,7 @@ extends ComplexStepState<
                     // default behaviour
                 }
                 else if ( ! ( bodyExecuteResult == null ||
-                        bodyExecuteResult instanceof CoroIterStepResult.ContinueCoroutine ) )
+                        bodyExecuteResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
                 {
                     return bodyExecuteResult;
                 }
@@ -190,7 +190,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#isFinished()
+     * @see ComplexStmtState#isFinished()
      */
     @Override
     public boolean isFinished()
@@ -202,7 +202,7 @@ extends ComplexStepState<
     }
 
     /**
-     * @see ComplexStepState#getStep()
+     * @see ComplexStmtState#getStep()
      */
     @Override
     public ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> getStep()

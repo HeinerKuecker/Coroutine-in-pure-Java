@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
@@ -20,7 +20,7 @@ implements CoroExpression<T> , HasArgumentName
 {
     /**
      * Name of procedure argument in
-     * {@link CoroutineOrProcedureOrComplexstep#procedureArgumentValues()}
+     * {@link CoroutineOrProcedureOrComplexstmt#procedureArgumentValues()}
      * to return.
      */
     public final String procedureArgumentName;
@@ -88,7 +88,7 @@ implements CoroExpression<T> , HasArgumentName
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -96,12 +96,12 @@ implements CoroExpression<T> , HasArgumentName
     }
 
     /**
-     * @see CoroCheckable#checkUseArguments(HashSet, CoroutineOrProcedureOrComplexstep)
+     * @see CoroCheckable#checkUseArguments(HashSet, CoroutineOrProcedureOrComplexstmt)
      */
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         if ( ! parent.procedureParameterTypes().containsKey( this.procedureArgumentName ) )
         {
@@ -171,14 +171,14 @@ implements CoroExpression<T> , HasArgumentName
         /**
          * Constructor.
          *
-         * @param stepOrExpression step or expression with access to not declared procedure argument
+         * @param stmtOrExpression statement or expression with access to not declared procedure argument
          */
         public <T extends HasCreationStackTraceElement & HasArgumentName> ProcedureArgumentNotDeclaredException(
-                final T stepOrExpression )
+                final T stmtOrExpression )
         {
             super(
                     "procedure argument not declared: " +
-                    stepOrExpression );
+                    stmtOrExpression );
         }
 
     }

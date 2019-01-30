@@ -7,13 +7,13 @@ import de.heinerkuecker.coroutine.stmt.complex.ForEach;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 
 /**
- * Interface for result of one step
+ * Interface for result of one statement
  * in {@link CoroutineIterator}.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public interface CoroIterStepResult<COROUTINE_RETURN>
+public interface CoroIterStmtResult<COROUTINE_RETURN>
 {
     /**
      * This method returns a instance to enforce continue stepping.
@@ -33,7 +33,7 @@ public interface CoroIterStepResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     public class ContinueCoroutine<COROUTINE_RETURN>
-    implements CoroIterStepResult<COROUTINE_RETURN>
+    implements CoroIterStmtResult<COROUTINE_RETURN>
     {
         @SuppressWarnings("rawtypes")
         private static ContinueCoroutine INSTANCE = new ContinueCoroutine<>();
@@ -59,7 +59,7 @@ public interface CoroIterStepResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     public class YieldReturnWithResult<COROUTINE_RETURN>
-    implements CoroIterStepResult<COROUTINE_RETURN>
+    implements CoroIterStmtResult<COROUTINE_RETURN>
     {
         public final COROUTINE_RETURN result;
 
@@ -85,7 +85,7 @@ public interface CoroIterStepResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     public class FinallyReturnWithResult<COROUTINE_RETURN>
-    implements CoroIterStepResult<COROUTINE_RETURN>
+    implements CoroIterStmtResult<COROUTINE_RETURN>
     {
         public final COROUTINE_RETURN result;
 
@@ -111,7 +111,7 @@ public interface CoroIterStepResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     public class FinallyReturnWithoutResult<COROUTINE_RETURN>
-    implements CoroIterStepResult<COROUTINE_RETURN>
+    implements CoroIterStmtResult<COROUTINE_RETURN>
     {
         /**
          * @see Object#toString()
@@ -133,7 +133,7 @@ public interface CoroIterStepResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     public class Break<COROUTINE_RETURN>
-    implements CoroIterStepResult<COROUTINE_RETURN>
+    implements CoroIterStmtResult<COROUTINE_RETURN>
     {
         /**
          * Label of loop to break.
@@ -171,7 +171,7 @@ public interface CoroIterStepResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     public class ContinueLoop<COROUTINE_RETURN>
-    implements CoroIterStepResult<COROUTINE_RETURN>
+    implements CoroIterStmtResult<COROUTINE_RETURN>
     {
         /**
          * Label of loop to continue.

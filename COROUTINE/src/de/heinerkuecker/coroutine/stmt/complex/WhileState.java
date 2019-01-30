@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.util.HCloneable;
 
 class WhileState<
@@ -23,7 +23,7 @@ extends WhileOrDoWhileState<
     protected WhileState(
             final While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> _while ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super(
                 _while ,
@@ -34,7 +34,7 @@ extends WhileOrDoWhileState<
     }
 
     /**
-     * @see ComplexStepState#getStep()
+     * @see ComplexStmtState#getStep()
      */
     @Override
     public While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> getStep()

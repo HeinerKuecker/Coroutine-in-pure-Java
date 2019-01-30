@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 
 public class IfElse<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-extends ComplexStep<
+extends ComplexStmt<
     IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
     IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
@@ -24,8 +24,8 @@ extends ComplexStep<
 {
     //final ConditionOrBooleanExpression/*Condition*/ condition
     final CoroExpression<Boolean> condition;
-    final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStep;
-    final ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStep;
+    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStep;
+    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStep;
 
     /**
      * Constructor.
@@ -33,8 +33,8 @@ extends ComplexStep<
     public IfElse(
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
-            final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
     {
         super(
                 //creationStackOffset
@@ -43,10 +43,10 @@ extends ComplexStep<
         this.condition = condition;
 
         if ( thenSteps.length == 1 &&
-                thenSteps[ 0 ] instanceof ComplexStep )
+                thenSteps[ 0 ] instanceof ComplexStmt )
         {
             this.thenBodyComplexStep =
-                    (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>) thenSteps[ 0 ];
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>) thenSteps[ 0 ];
         }
         else
         {
@@ -58,10 +58,10 @@ extends ComplexStep<
         }
 
         if ( elseSteps.length == 1 &&
-                elseSteps[ 0 ] instanceof ComplexStep )
+                elseSteps[ 0 ] instanceof ComplexStmt )
         {
             this.elseBodyComplexStep =
-                    (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
         }
         else
         {
@@ -127,8 +127,8 @@ extends ComplexStep<
      */
     public IfElse(
             final boolean condition ,
-            final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
-            final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
     {
         super(
                 //creationStackOffset
@@ -140,10 +140,10 @@ extends ComplexStep<
                                 condition );
 
         if ( thenSteps.length == 1 &&
-                thenSteps[ 0 ] instanceof ComplexStep )
+                thenSteps[ 0 ] instanceof ComplexStmt )
         {
             this.thenBodyComplexStep =
-                    (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenSteps[ 0 ];
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenSteps[ 0 ];
         }
         else
         {
@@ -155,10 +155,10 @@ extends ComplexStep<
         }
 
         if ( elseSteps.length == 1 &&
-                elseSteps[ 0 ] instanceof ComplexStep )
+                elseSteps[ 0 ] instanceof ComplexStmt )
         {
             this.elseBodyComplexStep =
-                    (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
         }
         else
         {
@@ -172,11 +172,11 @@ extends ComplexStep<
     }
 
     /**
-     * @see ComplexStep#newState()
+     * @see ComplexStmt#newState()
      */
     @Override
     public IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new IfElseState<>(
                 this ,
@@ -184,12 +184,12 @@ extends ComplexStep<
     }
 
     /**
-     * @see ComplexStep#getUnresolvedBreaksOrContinues()
+     * @see ComplexStmt#getUnresolvedBreaksOrContinues()
      */
     @Override
     public List<BreakOrContinue<? , ?>> getUnresolvedBreaksOrContinues(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
@@ -207,7 +207,7 @@ extends ComplexStep<
     }
 
     /**
-     * @see CoroIterStep#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
      */
     @Override
     public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
@@ -227,7 +227,7 @@ extends ComplexStep<
     }
 
     /**
-     * @see CoroIterStep#setResultType(Class)
+     * @see CoroIterStmt#setResultType(Class)
      */
     @Override
     public void setResultType(
@@ -240,7 +240,7 @@ extends ComplexStep<
     @Override
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         this.thenBodyComplexStep.checkLabelAlreadyInUse(
@@ -257,7 +257,7 @@ extends ComplexStep<
     @Override
     public void checkUseVariables(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -280,7 +280,7 @@ extends ComplexStep<
     @Override
     public void checkUseArguments(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.condition.checkUseArguments( alreadyCheckedProcedureNames , parent );
         this.thenBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames , parent );
@@ -288,14 +288,14 @@ extends ComplexStep<
     }
 
     /**
-     * @see ComplexStep#toString
+     * @see ComplexStmt#toString
      */
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStepState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStepState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStmtState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
+            final ComplexStmtState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
     {
         @SuppressWarnings("unchecked")
         final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastIfElseExecuteState =
@@ -305,7 +305,7 @@ extends ComplexStep<
         final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextIfElseExecuteState =
                 (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
 
-        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastThenBodyState;
+        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastThenBodyState;
         if ( lastIfElseExecuteState != null )
         {
             lastThenBodyState = lastIfElseExecuteState.thenBodyComplexState;
@@ -315,7 +315,7 @@ extends ComplexStep<
             lastThenBodyState = null;
         }
 
-        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextThenBodyState;
+        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextThenBodyState;
         if ( nextIfElseExecuteState != null )
         {
             nextThenBodyState = nextIfElseExecuteState.thenBodyComplexState;
@@ -325,7 +325,7 @@ extends ComplexStep<
             nextThenBodyState = null;
         }
 
-        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastElseBodyState;
+        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastElseBodyState;
         if ( lastIfElseExecuteState != null )
         {
             lastElseBodyState = lastIfElseExecuteState.elseBodyComplexState;
@@ -335,7 +335,7 @@ extends ComplexStep<
             lastElseBodyState = null;
         }
 
-        final ComplexStepState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextElseBodyState;
+        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextElseBodyState;
         if ( nextIfElseExecuteState != null )
         {
             nextElseBodyState = nextIfElseExecuteState.elseBodyComplexState;

@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.arg.Parameter;
-import de.heinerkuecker.coroutine.stmt.CoroIterStep;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.complex.Block;
-import de.heinerkuecker.coroutine.stmt.complex.ComplexStep;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStmt;
 
 public class Procedure<COROUTINE_RETURN, RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
@@ -24,7 +24,7 @@ extends HasCreationStackTraceElement
      * ist und dessen State in dieser
      * Klasse verwaltet werden muesste.
      */
-    public final ComplexStep<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStep;
+    public final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStep;
 
     public final Map<String, Parameter> params;
 
@@ -38,7 +38,7 @@ extends HasCreationStackTraceElement
     public Procedure(
             final String name ,
             final Parameter[] params ,
-            final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodySteps )
+            final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodySteps )
     {
         super(
                 //creationStackOffset
@@ -98,7 +98,7 @@ extends HasCreationStackTraceElement
      */
     public void checkLabelAlreadyInUse(
             final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         this.bodyComplexStep.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,

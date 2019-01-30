@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine;
 
-import de.heinerkuecker.coroutine.stmt.complex.ComplexStep;
-import de.heinerkuecker.coroutine.stmt.complex.ComplexStepState;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStmt;
+import de.heinerkuecker.coroutine.stmt.complex.ComplexStmtState;
 import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
 
 /**
@@ -15,12 +15,12 @@ import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, /*PARENT*/ THIS>>
-public interface CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
+//public interface CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, /*PARENT*/ THIS>>
+public interface CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
 extends HasArgumentsAndVariables<RESUME_ARGUMENT>
 {
     /**
-     * Save last step state for {@link ComplexStep#toString(String, ComplexStepState, ComplexStepState)}.
+     * Save last step state for {@link ComplexStmt#toString(String, ComplexStmtState, ComplexStmtState)}.
      *
      * Call it before execute expressions or simple statements
      */

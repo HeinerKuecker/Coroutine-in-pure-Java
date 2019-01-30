@@ -3,16 +3,16 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstep;
+import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.Procedure;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
 import de.heinerkuecker.coroutine.arg.Arguments;
-import de.heinerkuecker.coroutine.stmt.CoroIterStepResult;
+import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.HCloneable;
 
 /**
  * Extern instruction pointer and stack
- * for {@link ComplexStep}.
+ * for {@link ComplexStmt}.
  *
  * @param <STEP>
  * @param <COROUTINE_RETURN>
@@ -21,27 +21,27 @@ import de.heinerkuecker.util.HCloneable;
  *
  * TODO rename to ComplexStepExecuteState
  */
-abstract public /*interface*/class ComplexStepState<
-    STEP_STATE extends ComplexStepState<STEP_STATE, STEP, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
-    STEP extends ComplexStep<STEP, STEP_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+abstract public /*interface*/class ComplexStmtState<
+    STEP_STATE extends ComplexStmtState<STEP_STATE, STEP, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    STEP extends ComplexStmt<STEP, STEP_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
     //PARENT extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
     RESUME_ARGUMENT
 >
 implements
-    CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> ,
+    CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> ,
     HCloneable<STEP_STATE>
 {
-    protected final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    protected final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     private final BlockLocalVariables blockLocalVariables;
 
     /**
      * Constructor.
      */
-    protected ComplexStepState(
+    protected ComplexStmtState(
             //final BlockLocalVariables blockLocalVariables
-            final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         this.parent = Objects.requireNonNull( parent );
 
@@ -57,7 +57,7 @@ implements
      * @param parent
      * @return object to return a value and to control the flow
      */
-    abstract public CoroIterStepResult<COROUTINE_RETURN> execute(
+    abstract public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //PARENT parent
             //CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             );
