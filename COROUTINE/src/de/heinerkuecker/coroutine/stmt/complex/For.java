@@ -14,6 +14,7 @@ import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.stmt.flow.Continue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
@@ -27,6 +28,9 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 {
+    /**
+     * Label to use with {@link Break} or {@link Continue}, optional.
+     */
     public final String label;
 
     // TODO nur SimpleStmt oder ProcedureCall erlauben

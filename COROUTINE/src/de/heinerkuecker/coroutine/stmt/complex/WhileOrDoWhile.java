@@ -12,6 +12,7 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.stmt.flow.Continue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
 
 abstract public class WhileOrDoWhile<
@@ -29,7 +30,11 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 {
+    /**
+     * Label to use with {@link Break} or {@link Continue}, optional.
+     */
     public final String label;
+
     //final ConditionOrBooleanExpression condition;
     final CoroExpression<Boolean> condition;
     final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStmt;

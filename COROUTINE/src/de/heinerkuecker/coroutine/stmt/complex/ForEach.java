@@ -13,6 +13,7 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
+import de.heinerkuecker.coroutine.stmt.flow.Continue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
 
 public class ForEach<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT , ELEMENT>
@@ -24,6 +25,9 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 {
+    /**
+     * Label to use with {@link Break} or {@link Continue}, optional.
+     */
     public final String label;
 
     public final String variableName;
