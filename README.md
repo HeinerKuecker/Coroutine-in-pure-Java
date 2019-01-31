@@ -31,17 +31,17 @@ In the coroutine procedures can be used, which can call themselves or each other
 
 The programming of functions is not possible.
 
-Instead of formulating functions in the steps of the coroutine, custom functions should be implemented as derivatives of CoroExpression in Java.
+Instead of formulating functions in the statements of the coroutine, custom functions should be implemented as derivatives of CoroExpression in Java.
 
-The toString method returns debug information such as the last step, next step, global variables, local variables and procedure parameters.
+The toString method returns debug information such as the last statement, next statement, global variables, local variables and procedure parameters.
 
-In the toString method, the steps of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
+In the toString method, the statements of currently running procedures are output, which makes the display different from the usual debuggers, but does not need to be navigated within the stack.
 
 The stack is visible through the issued procedures with their parameters and local variables as part of the coroutine code.
 
 This repository contains an eclipse project COROUTINE to import in your IDE.
 
-To extend this library for your own tasks, you can extend the Java classes SimpleStep and CoroExpression using the existing code.
+To extend this library for your own tasks, you can extend the Java classes SimpleStmt and CoroExpression using the existing code.
 
 Local and global variables are stored in HashMaps.
 
