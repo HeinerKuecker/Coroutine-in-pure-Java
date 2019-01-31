@@ -67,7 +67,7 @@ extends AbstrLhsRhsExpression<Integer>
      */
     @Override
     public Integer evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     {
         final Integer lhsResult = lhs.evaluate( parent );
         final Integer rhsResult = rhs.evaluate( parent );
@@ -102,7 +102,7 @@ extends AbstrLhsRhsExpression<Integer>
     //@Override
     //public void checkUseVariables(
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent,
+    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent,
     //        final Map<String, Class<?>> globalVariableTypes ,
     //        final Map<String, Class<?>> localVariableTypes)
     //{
@@ -119,7 +119,7 @@ extends AbstrLhsRhsExpression<Integer>
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     //{
     //    this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
     //    this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );

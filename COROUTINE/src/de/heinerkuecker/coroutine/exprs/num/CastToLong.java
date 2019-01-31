@@ -38,7 +38,7 @@ extends AbstrOneExprExpression<Long , Number>
      */
     @Override
     public Long evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     {
         final Number numberExpressionResult = /*numberExpression*/expr.evaluate( parent );
 
@@ -60,7 +60,7 @@ extends AbstrOneExprExpression<Long , Number>
     //@Override
     //public void checkUseVariables(
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
     //        final Map<String, Class<?>> globalVariableTypes ,
     //        final Map<String, Class<?>> localVariableTypes )
     //{
@@ -72,7 +72,7 @@ extends AbstrOneExprExpression<Long , Number>
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     //{
     //    this.numberExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     //}

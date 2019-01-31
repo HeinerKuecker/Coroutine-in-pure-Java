@@ -31,11 +31,11 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new If< Integer , Void >(
                                 // condition
                                 true ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ,
                                 new FinallyReturn<>( 1 ) ) );
 
@@ -68,7 +68,7 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName
                                 "condition_var" ,
@@ -77,12 +77,12 @@ public class CoroutineIteratorIfTest
                         new If<Integer , Void>(
                                 // condition
                                 condition_var ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ,
                                 new If<Integer , Void>(
                                         // condition
                                         new Not( condition_var ) ,
-                                        // steps
+                                        // stmts
                                         new FinallyReturn<>( 1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -110,7 +110,7 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName
                                 "condition_var" ,
@@ -119,12 +119,12 @@ public class CoroutineIteratorIfTest
                         new If<Integer , Void>(
                                 // condition
                                 condition_var ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ,
                                 new If<Integer , Void>(
                                         // condition
                                         condition_var ,
-                                        // steps
+                                        // stmts
                                         new FinallyReturn<>( 1 ) ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -148,11 +148,11 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new If<Integer , Void>(
                                 // condition
                                 true
-                                // steps
+                                // stmts
                                 ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
@@ -175,27 +175,27 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
                         new While<Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new If<Integer , Void>(
                                         // condition
                                         new Equals<>(
                                                 number ,
                                                 0 ) ,
-                                        // steps
+                                        // stmts
                                         new YieldReturn<>( 0 ) ) ,
                                 new If<Integer , Void>(
                                         // condition
                                         new Equals<>(
                                                 number ,
                                                 1 ) ,
-                                        // steps
+                                        // stmts
                                         new FinallyReturn<>( 1 ) ) ,
                                 new IncrementLocalVar<>( "number" ) ) );
 
@@ -227,7 +227,7 @@ public class CoroutineIteratorIfTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new While<Integer , Void>(
                                 // condition
                                 new Equals<>(
@@ -236,7 +236,7 @@ public class CoroutineIteratorIfTest
                                                 "number" ,
                                                 0 ) ,
                                         0 ) ,
-                                // steps
+                                // stmts
                                 new FinallyReturn<>( number ) ) );
 
         CoroutineIteratorTest.assertNext(

@@ -16,7 +16,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
 import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 public class For<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 extends ComplexStmt<
@@ -49,7 +49,7 @@ extends ComplexStmt<
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
             final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
-            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
                 //creationStackOffset
@@ -65,7 +65,7 @@ extends ComplexStmt<
         else if ( initialStep instanceof BreakOrContinue )
         {
             throw new IllegalArgumentException(
-                    "break or continue in initial step: " +
+                    "break or continue in initial stmt: " +
                     initialStep );
         }
         else
@@ -95,7 +95,7 @@ extends ComplexStmt<
         else if ( updateStep instanceof BreakOrContinue )
         {
             throw new IllegalArgumentException(
-                    "break or continue in update step: " +
+                    "break or continue in update stmt: " +
                             updateStep );
         }
         else
@@ -109,7 +109,7 @@ extends ComplexStmt<
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
-                        steps );
+                        stmts );
     }
 
     ///**
@@ -120,7 +120,7 @@ extends ComplexStmt<
     //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
     //        final CoroExpression<Boolean> condition ,
     //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
-    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     //{
     //    super(
     //            //creationStackOffset
@@ -136,7 +136,7 @@ extends ComplexStmt<
     //    else if ( initialStep instanceof BreakOrContinue )
     //    {
     //        throw new IllegalArgumentException(
-    //                "break or continue in initial step: " +
+    //                "break or continue in initial stmt: " +
     //                initialStep );
     //    }
     //    else
@@ -166,7 +166,7 @@ extends ComplexStmt<
     //    else if ( updateStep instanceof BreakOrContinue )
     //    {
     //        throw new IllegalArgumentException(
-    //                "break or continue in update step: " +
+    //                "break or continue in update stmt: " +
     //                        updateStep );
     //    }
     //    else
@@ -180,7 +180,7 @@ extends ComplexStmt<
     //            Block.convertStepsToComplexStep(
     //                    // creationStackOffset
     //                    4 ,
-    //                    steps );
+    //                    stmts );
     //}
 
     /**
@@ -193,7 +193,7 @@ extends ComplexStmt<
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
             final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
-            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
                 //creationStackOffset
@@ -241,7 +241,7 @@ extends ComplexStmt<
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
-                        steps );
+                        stmts );
     }
 
     ///**
@@ -253,7 +253,7 @@ extends ComplexStmt<
     //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStep ,
     //        final CoroExpression<Boolean> condition ,
     //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStep ,
-    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+    //        final CoroIterStep<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     //{
     //    super(
     //            //creationStackOffset
@@ -301,7 +301,7 @@ extends ComplexStmt<
     //            Block.convertStepsToComplexStep(
     //                    // creationStackOffset
     //                    4 ,
-    //                    steps );
+    //                    stmts );
     //}
 
     @Override
@@ -328,7 +328,7 @@ extends ComplexStmt<
             if ( ! unresolvedBreaksOrContinues.isEmpty() )
             {
                 throw new IllegalArgumentException(
-                        "unpermitted breaks or continues in initial step" +
+                        "unpermitted breaks or continues in initial stmt" +
                         unresolvedBreaksOrContinues );
             }
         }
@@ -343,7 +343,7 @@ extends ComplexStmt<
             if ( ! unresolvedBreaksOrContinues.isEmpty() )
             {
                 throw new IllegalArgumentException(
-                        "unpermitted breaks or continues in update step" +
+                        "unpermitted breaks or continues in update stmt" +
                         unresolvedBreaksOrContinues );
             }
         }
@@ -520,7 +520,7 @@ extends ComplexStmt<
             // TODO
             initialStepStr = "???";
         }
-        else if ( initialStep instanceof SimpleStep )
+        else if ( initialStep instanceof SimpleStmt )
         {
                 final String tmpIndent;
                 if ( lastForExecuteState != null &&
@@ -577,7 +577,7 @@ extends ComplexStmt<
             // TODO
             updateStepStr = "???";
         }
-        else if ( updateStep instanceof SimpleStep )
+        else if ( updateStep instanceof SimpleStmt )
         {
                 final String tmpIndent;
                 if ( lastForExecuteState != null &&

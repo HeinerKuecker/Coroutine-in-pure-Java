@@ -16,7 +16,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 /**
- * {@link SimpleStep} to set
+ * {@link SimpleStmt} to set
  * local variable with specified
  * value or result of specified
  * expression.
@@ -25,7 +25,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
  * @param <COROUTINE_RETURN> result type of coroutine, here unused
  */
 public /*final*/ class SetLocalVar<COROUTINE_RETURN, RESUME_ARGUMENT , VARIABLE>
-extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 implements CoroExpression<VARIABLE> , HasVariableName
 {
     /**
@@ -76,7 +76,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
     /**
      * Set variable.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

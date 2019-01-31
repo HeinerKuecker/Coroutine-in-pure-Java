@@ -50,7 +50,7 @@ extends ComplexStmtState<
 
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInTry )
@@ -68,7 +68,7 @@ extends ComplexStmtState<
                                 this );
             }
 
-            // TODO only before executing simple step: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStepState();
 
             CoroIterStmtResult<COROUTINE_RETURN> executeResult = null;
             try

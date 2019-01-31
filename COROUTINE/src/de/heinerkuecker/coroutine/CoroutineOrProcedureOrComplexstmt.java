@@ -15,12 +15,12 @@ import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, /*PARENT*/ THIS>>
+//public interface CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, /*PARENT*/ THIS extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, /*PARENT*/ THIS>>
 public interface CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
 extends HasArgumentsAndVariables<RESUME_ARGUMENT>
 {
     /**
-     * Save last step state for {@link ComplexStmt#toString(String, ComplexStmtState, ComplexStmtState)}.
+     * Save last statement state for {@link ComplexStmt#toString(CoroutineOrProcedureOrComplexstmt, String, ComplexStmtState, ComplexStmtState)}.
      *
      * Call it before execute expressions or simple statements
      */

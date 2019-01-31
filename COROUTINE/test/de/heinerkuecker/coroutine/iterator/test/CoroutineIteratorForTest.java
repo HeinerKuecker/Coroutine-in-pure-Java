@@ -39,7 +39,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -51,7 +51,7 @@ public class CoroutineIteratorForTest
                                         3 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -86,7 +86,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
@@ -100,7 +100,7 @@ public class CoroutineIteratorForTest
                                         3 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -145,7 +145,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -167,7 +167,7 @@ public class CoroutineIteratorForTest
                                         new IntAdd(
                                                 number ,
                                                 1 ) ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number1 ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -209,7 +209,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -230,7 +230,7 @@ public class CoroutineIteratorForTest
                                         new IntAdd(
                                                 number1 ,
                                                 1 ) ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number1 ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -272,7 +272,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -289,7 +289,7 @@ public class CoroutineIteratorForTest
                                 new IncrementLocalVar<>(
                                         //localVarName
                                         "number" ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number1 ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -324,7 +324,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -336,7 +336,7 @@ public class CoroutineIteratorForTest
                                         3 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -375,7 +375,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -387,7 +387,7 @@ public class CoroutineIteratorForTest
                                         6 ) ,
                                 // updateStep
                                 new IncrementLocalVar<>( "number" ) ,
-                                // steps
+                                // stmts
                                 new IncrementLocalVar<>( "number" ) ,
                                 new YieldReturn<>( number ) ) );
 
@@ -420,7 +420,7 @@ public class CoroutineIteratorForTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new For<>(
                                 // initialStep
                                 new DeclareVariable<>(
@@ -436,7 +436,7 @@ public class CoroutineIteratorForTest
                                         Boolean.class ) ,
                                 // updateStep
                                 new NegateLocalVar<>( "first_round" ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ) );
 
         CoroutineIteratorTest.assertNext(

@@ -3,7 +3,7 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 import de.heinerkuecker.util.HCloneable;
 
 class BlockState<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
@@ -22,7 +22,7 @@ extends ComplexStmtState<
     ComplexStmtState<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    //private final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    //private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      *
@@ -54,7 +54,7 @@ extends ComplexStmtState<
 
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         while ( currentStepIndex < sequence.length() )
@@ -63,11 +63,11 @@ extends ComplexStmtState<
                     sequence.getStep( this.currentStepIndex );
 
             final CoroIterStmtResult<COROUTINE_RETURN> executeResult;
-            if ( currentStep instanceof SimpleStep )
+            if ( currentStep instanceof SimpleStmt )
             {
                 @SuppressWarnings("unchecked")
-                final SimpleStep<COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStep =
-                        (SimpleStep<COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStep;
+                final SimpleStmt<COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStep =
+                        (SimpleStmt<COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStep;
 
                 parent.saveLastStepState();
 
@@ -94,7 +94,7 @@ extends ComplexStmtState<
                                     this );
                 }
 
-                // TODO only before executing simple step: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStepState();
 
                 executeResult =
                         this.currentComplexState.execute(

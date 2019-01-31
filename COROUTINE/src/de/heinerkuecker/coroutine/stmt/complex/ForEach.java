@@ -42,7 +42,7 @@ extends ComplexStmt<
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
             final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression ,
-            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
                 //creationStackOffset
@@ -66,7 +66,7 @@ extends ComplexStmt<
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
-                        steps );
+                        stmts );
     }
 
     /**
@@ -78,7 +78,7 @@ extends ComplexStmt<
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
             final CoroExpression<Iterable<ELEMENT>> iterableExpression ,
-            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
                 //creationStackOffset
@@ -102,7 +102,7 @@ extends ComplexStmt<
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         4 ,
-                        steps );
+                        stmts );
     }
 
     /**

@@ -26,7 +26,7 @@ public class CoroutineDebugSwitches
     /**
      * Global switch to save source position
      * (file name, line number, class, method)
-     * on step creation as debug info.
+     * on statement creation as debug info.
      *
      * For better performance of well tested
      * coroutines switch this off.
@@ -35,8 +35,8 @@ public class CoroutineDebugSwitches
 
     /**
      * Global switch to save informations
-     * to show last executed step and
-     * next step to execute in
+     * to show last executed statement and
+     * next statement to execute in
      * {@link Coroutine#toString()} and
      * {@link CoroutineIterator#toString()}.
      */

@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
  * Common interface of
@@ -21,7 +21,7 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
  */
 //public interface BreakOrContinue<COROUTINE_RETURN>
 abstract public class BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
-extends SimpleStep<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     /**
      * Constructor.

@@ -28,7 +28,7 @@ public class CoroutineIteratorForeachTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new ForEach<Integer, Void , Integer>(
                                 // variableName
                                 "for_variable" ,
@@ -38,7 +38,7 @@ public class CoroutineIteratorForeachTest
                                 new Value<List<Integer>>(
                                         (Class<? extends List<Integer>>) List.class ,
                                         Arrays.asList( 1 , 2 , 3 ) ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 "for_variable" ,

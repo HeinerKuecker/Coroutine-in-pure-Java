@@ -23,7 +23,7 @@ import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassExceptio
  */
 public final class DecrementLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
 //extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
-extends SimpleStepWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStmtWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -113,7 +113,7 @@ implements HasVariableName
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     //{
     //    // nothing to do
     //}

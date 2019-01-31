@@ -17,7 +17,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.ArrayTypeName;
 
 /**
- * {@link SimpleStep} to declare
+ * {@link SimpleStmt} to declare
  * variable with specified
  * type (class).
  *
@@ -35,7 +35,7 @@ import de.heinerkuecker.util.ArrayTypeName;
  * @author Heiner K&uuml;cker
  */
 public final class DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT, T>
-extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 implements CoroExpression<T>
 {
     /**
@@ -142,7 +142,7 @@ implements CoroExpression<T>
     /**
      * Set variable.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

@@ -16,7 +16,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.util.ArrayDeepToString;
 
-public class ProcedureCall<COROUTINE_RETURN/*, PARENT extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, PARENT>*/ , RESUME_ARGUMENT>
+public class ProcedureCall<COROUTINE_RETURN/*, PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, PARENT>*/ , RESUME_ARGUMENT>
 extends ComplexStmt<
     ProcedureCall<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
     ProcedureCallState<COROUTINE_RETURN , RESUME_ARGUMENT> ,
@@ -24,7 +24,7 @@ extends ComplexStmt<
     //PARENT
     RESUME_ARGUMENT
     >
-//implements CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+//implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 {
     ///**
     // * Es muss ein ComplexStep sein,

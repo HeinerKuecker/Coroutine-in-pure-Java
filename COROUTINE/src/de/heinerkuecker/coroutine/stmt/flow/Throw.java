@@ -12,11 +12,11 @@ import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 import de.heinerkuecker.util.ExceptionUnchecker;
 
 public class Throw<COROUTINE_RETURN , RESUME_ARGUMENT>
-extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     private final CoroExpression<? extends Throwable> exceptionExpression;
 
@@ -49,7 +49,7 @@ extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , R
     }
 
     /**
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

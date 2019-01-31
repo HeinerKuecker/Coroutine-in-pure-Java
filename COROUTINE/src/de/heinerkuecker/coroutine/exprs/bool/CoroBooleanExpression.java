@@ -12,12 +12,12 @@ implements
     ///**
     // * Execute the condition and return the result.
     // *
-    // * @param parent the {@link CoroutineOrProcedureOrComplexstep} instance
+    // * @param parent the {@link CoroutineOrProcedureOrComplexstmt} instance
     // * @return condition result
     // */
     //@Override
     //boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent );
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent );
 
     @SuppressWarnings("unchecked")
     @Override

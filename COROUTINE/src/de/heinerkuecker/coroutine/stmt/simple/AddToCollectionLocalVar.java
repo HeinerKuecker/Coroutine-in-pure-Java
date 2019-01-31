@@ -15,7 +15,7 @@ import de.heinerkuecker.coroutine.stmt.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
 public final class AddToCollectionLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT, ELEMENT_TO_ADD>
-extends SimpleStepWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
+extends SimpleStmtWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -50,7 +50,7 @@ implements HasVariableName
     /**
      * Add element to {@link Collection} variable.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

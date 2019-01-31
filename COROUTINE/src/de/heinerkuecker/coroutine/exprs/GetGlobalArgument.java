@@ -53,7 +53,7 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     {
         final Object procArgValue = parent.globalArgumentValues().get( globalArgumentName );
 

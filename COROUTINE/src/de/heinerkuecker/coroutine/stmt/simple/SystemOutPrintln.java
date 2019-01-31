@@ -15,18 +15,18 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
- * Step {@link CoroIterStmt} to
+ * Statement {@link CoroIterStmt} to
  * print with newline to
  * {@link System#out}.
  *
  * Use this class as template
- * for your own log step.
+ * for your own log statement.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
 public final class SystemOutPrintln<COROUTINE_RETURN , RESUME_ARGUMENT>
-extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     /**
      * Expression to deliver value to print.

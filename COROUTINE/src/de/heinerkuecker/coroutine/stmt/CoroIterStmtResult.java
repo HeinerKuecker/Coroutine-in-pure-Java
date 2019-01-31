@@ -16,9 +16,9 @@ import de.heinerkuecker.coroutine.stmt.complex.While;
 public interface CoroIterStmtResult<COROUTINE_RETURN>
 {
     /**
-     * This method returns a instance to enforce continue stepping.
+     * This method returns a instance to enforce continue run.
      *
-     * @return Continue stepping
+     * @return Continue run
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     @SuppressWarnings("unchecked")
@@ -28,7 +28,7 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
     }
 
     /**
-     * Class to enforce continue stepping.
+     * Class to enforce continue run.
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
@@ -54,7 +54,7 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
     }
 
     /**
-     * Class to enforce suspend stepping and set result.
+     * Class to enforce suspend run and set result.
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
@@ -80,7 +80,7 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
     }
 
     /**
-     * Class to enforce stop stepping and set result.
+     * Class to enforce stop run and set result.
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
@@ -106,7 +106,7 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
     }
 
     /**
-     * Class to enforce stop stepping without result.
+     * Class to enforce stop run without result.
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */

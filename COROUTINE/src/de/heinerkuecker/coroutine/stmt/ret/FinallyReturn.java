@@ -13,18 +13,18 @@ import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
- * Step {@link CoroIterStmt} to
+ * Statement {@link CoroIterStmt} to
  * return a specified value
- * and stop stepping.
+ * and stop run.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
 public class FinallyReturn<COROUTINE_RETURN , RESUME_ARGUMENT>
-extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
     public final CoroExpression<? extends COROUTINE_RETURN> expression;
 

@@ -64,7 +64,7 @@ extends ComplexStmtState<
 
         if ( ! isInitializationCheck )
         {
-            // for showing next step in toString
+            // for showing next stmt in toString
             this.bodyComplexState =
                     procedure.bodyComplexStep.newState(
                             this );
@@ -82,7 +82,7 @@ extends ComplexStmtState<
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInProcedure )
@@ -100,7 +100,7 @@ extends ComplexStmtState<
                                 this );
             }
 
-            // TODO only before executing simple step: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStepState();
 
             final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                     this.bodyComplexState.execute(

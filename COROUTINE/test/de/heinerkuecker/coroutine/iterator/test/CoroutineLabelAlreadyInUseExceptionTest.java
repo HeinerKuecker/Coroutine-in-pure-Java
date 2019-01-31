@@ -27,7 +27,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         new CoroutineIterator<Integer>(
                 // type
                 Integer.class ,
-                // steps
+                // stmts
                 new SetLocalVar<>(
                         "number" ,
                         0 ) ,
@@ -40,18 +40,18 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         "number" ,
                                         Integer.class ) ,
                                 1 ) ,
-                        // steps
+                        // stmts
                         new While<Integer , Void>(
                                 // label
                                 "label_already_in_use" ,
                                 // condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new IncrementLocalVar<>( "number" ) ,
                                 new Continue<>(
                                         //label
                                         "label_already_in_use" ) ,
-                                // this step is never executed
+                                // this statement is never executed
                                 new NoOperation<>() ) ) );
     }
 
@@ -63,7 +63,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         new CoroutineIterator<Integer>(
                 // type
                 Integer.class ,
-                // steps
+                // stmts
                 new SetLocalVar<>(
                         "number" ,
                         0 ) ,
@@ -76,18 +76,18 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         "number" ,
                                         Integer.class ) ,
                                 1 ) ,
-                        // steps
+                        // stmts
                         new DoWhile<Integer , Void>(
                                 // label
                                 "label_already_in_use" ,
                                 // condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new IncrementLocalVar<>( "number" ) ,
                                 new Continue<>(
                                         //label
                                         "label_already_in_use" ) ,
-                                // this step is never executed
+                                // this statement is never executed
                                 new NoOperation<>() ) ) );
     }
 
@@ -99,7 +99,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
         new CoroutineIterator<Integer>(
                 // type
                 Integer.class ,
-                // steps
+                // stmts
                 new SetLocalVar<>(
                         "number" ,
                         0 ) ,
@@ -116,7 +116,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 1 ) ,
                         // updateStep
                         new IncrementLocalVar<>( "number" ) ,
-                        // steps
+                        // stmts
                         new For<>(
                                 //label
                                 "label_already_in_use" ,
@@ -126,7 +126,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                 Value.trueValue() ,
                                 // updateStep
                                 new NoOperation<>() ,
-                                // steps
+                                // stmts
                                 new Continue<>(
                                         //label
                                         "label_already_in_use" ) ,

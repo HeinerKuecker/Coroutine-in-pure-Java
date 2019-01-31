@@ -50,7 +50,7 @@ implements CoroExpression<T> , HasVariableName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     {
         final Object globalVarValue =
                 parent.globalVars().get(
@@ -166,14 +166,14 @@ implements CoroExpression<T> , HasVariableName
         /**
          * Constructor.
          *
-         * @param stepOrExpression step or expression with access to not declared global variable
+         * @param stmtOrExpression statement or expression with access to not declared global variable
          */
         public <T extends HasCreationStackTraceElement & HasVariableName> GlobalVariableNotDeclaredException(
-                final T stepOrExpression )
+                final T stmtOrExpression )
         {
             super(
                     "global variable not declared: " +
-                    stepOrExpression );
+                    stmtOrExpression );
         }
 
     }

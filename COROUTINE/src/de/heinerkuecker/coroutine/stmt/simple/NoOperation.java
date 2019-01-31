@@ -17,13 +17,13 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
  */
 public final class NoOperation<COROUTINE_RETURN, RESUME_ARGUMENT>
 //extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
-extends SimpleStepWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
+extends SimpleStmtWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
 {
 
     /**
      * Do nothing.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(
@@ -61,7 +61,7 @@ extends SimpleStepWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
     //@Override
     //public void checkUseArguments(
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     //{
     //    // nothing to do
     //}

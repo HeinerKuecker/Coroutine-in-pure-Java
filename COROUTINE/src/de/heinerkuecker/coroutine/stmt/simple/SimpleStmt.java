@@ -6,15 +6,14 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 /**
- * Interface for one step
+ * Interface for one statement
  * in {@link CoroutineIterator}.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface SimpleStep<COROUTINE_RETURN, PARENT>
-abstract public class SimpleStep<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
+abstract public class SimpleStmt<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
 extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
 {
     /**
@@ -22,7 +21,7 @@ extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
      *
      * @param creationStackOffset
      */
-    protected SimpleStep(
+    protected SimpleStmt(
             final int creationStackOffset )
     {
         super( creationStackOffset );
@@ -31,7 +30,7 @@ extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
     /**
      * Constructor.
      */
-    protected SimpleStep()
+    protected SimpleStmt()
     {
         super(
                 //creationStackOffset
@@ -39,7 +38,7 @@ extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
     }
 
     /**
-     * Execute one step.
+     * Execute one statement.
      *
      * @param parent
      * @return object to return a value and to control the flow

@@ -56,7 +56,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "empty_procedure" ) );
 
@@ -87,7 +87,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ) );
 
@@ -118,7 +118,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ) );
 
@@ -140,7 +140,7 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         // params
                         null ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName
                                 "counter" ,
@@ -165,7 +165,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ) );
 
@@ -187,7 +187,7 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         // params
                         null ,
-                        // steps
+                        // stmts
                         new IncrementGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
@@ -214,7 +214,7 @@ public class CoroutineIteratorProcedureTest
                                         // varValue
                                         0 )
                         } ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ) );
 
@@ -236,7 +236,7 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         // params
                         null ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName
                                 "counter" ,
@@ -262,7 +262,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ) );
 
@@ -286,7 +286,7 @@ public class CoroutineIteratorProcedureTest
                         "procedure" ,
                         // params
                         null ,
-                        // steps
+                        // stmts
                         new IncrementGlobalVar<>( "counter" ) ,
                         new YieldReturn<>(
                                 new GetGlobalVar<>(
@@ -312,7 +312,7 @@ public class CoroutineIteratorProcedureTest
                                     // varValue
                                     0 )
                         } ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ) ,
                         new ProcedureCall<>(
@@ -348,7 +348,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -365,7 +365,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -400,7 +400,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -417,7 +417,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -452,7 +452,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -469,7 +469,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -511,7 +511,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -528,7 +528,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -570,7 +570,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -587,7 +587,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -621,7 +621,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -646,7 +646,7 @@ public class CoroutineIteratorProcedureTest
                                         // varValue
                                         0 ) ,
                         } ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -684,7 +684,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetProcedureArgument<>(
                                         "argument" ,
@@ -703,7 +703,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Long.class )
                         } ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure0" ,
                                 new Argument<>(
@@ -736,7 +736,7 @@ public class CoroutineIteratorProcedureTest
                                         // varValue
                                         0 ) ,
                         } ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure1" ,
                                 new Argument<>(
@@ -780,7 +780,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Long.class )
                         } ,
-                        // steps
+                        // stmts
                         new If<>(
                                 new Lesser<>(
                                         argument ,
@@ -808,7 +808,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -862,7 +862,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Long.class )
                         } ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName
                                 "variable" ,
@@ -900,7 +900,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(
@@ -961,7 +961,7 @@ public class CoroutineIteratorProcedureTest
                                         // type
                                         Integer.class )
                         } ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName
                                 "variable" ,
@@ -997,7 +997,7 @@ public class CoroutineIteratorProcedureTest
                         null ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new ProcedureCall<>(
                                 "procedure" ,
                                 new Argument<>(

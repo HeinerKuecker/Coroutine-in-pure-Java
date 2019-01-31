@@ -28,7 +28,7 @@ public class CoroutineIteratorExpressionNegativeTest
         new CoroutineIterator<Object>(
                 // type
                 Object.class ,
-                // steps
+                // stmts
                 new If<>(
                         new IsNull(
                                 new GetProcedureArgument<>(
@@ -47,7 +47,7 @@ public class CoroutineIteratorExpressionNegativeTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 // varName ,
                                 "int_number" ,

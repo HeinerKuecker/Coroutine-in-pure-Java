@@ -24,7 +24,7 @@ public class CoroutineTest
                 new Coroutine<>(
                         // resultType
                         Void.class
-                        // steps
+                        // stmts
                         );
 
         Assert.assertFalse(

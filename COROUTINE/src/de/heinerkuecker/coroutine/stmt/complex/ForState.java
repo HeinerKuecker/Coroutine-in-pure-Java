@@ -5,7 +5,7 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 import de.heinerkuecker.util.HCloneable;
 
 class ForState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
@@ -37,11 +37,11 @@ extends ComplexStmtState<
      * Local variables for
      * condition {@link For#condition},
      * body {@link For#bodyComplexStep} and
-     * update step {@link For#updateStep}.
+     * update stmt {@link For#updateStep}.
      *
      * The super {@link ComplexStmtState#blockLocalVariables}
      * is used for
-     * initial step
+     * initial stmt
      * and as parent for this
      * {@link #subBlockLocalVariables}.
      */
@@ -67,7 +67,7 @@ extends ComplexStmtState<
 
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInInitializer )
@@ -76,10 +76,10 @@ extends ComplexStmtState<
                     _for.initialStep;
 
             final CoroIterStmtResult<COROUTINE_RETURN> initializerExecuteResult;
-            if ( initializerStep instanceof SimpleStep )
+            if ( initializerStep instanceof SimpleStmt )
             {
-                final SimpleStep<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> initializerSimpleStep =
-                        (SimpleStep<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) initializerStep;
+                final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> initializerSimpleStep =
+                        (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) initializerStep;
 
                 parent.saveLastStepState();
 
@@ -106,7 +106,7 @@ extends ComplexStmtState<
                                     this );
                 }
 
-                // TODO only before executing simple step: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStepState();
 
                 initializerExecuteResult =
                         this.initializerComplexStepState.execute(
@@ -187,7 +187,7 @@ extends ComplexStmtState<
                                     this );
                 }
 
-                // TODO only before executing simple step: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStepState();
 
                 final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
@@ -243,10 +243,10 @@ extends ComplexStmtState<
                         _for.updateStep;
 
                 CoroIterStmtResult<COROUTINE_RETURN> updateExecuteResult;
-                if ( updateStep instanceof SimpleStep )
+                if ( updateStep instanceof SimpleStmt )
                 {
-                    final SimpleStep<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> updateSimpleStep =
-                            (SimpleStep<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) updateStep;
+                    final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> updateSimpleStep =
+                            (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) updateStep;
 
                     parent.saveLastStepState();
 
@@ -273,7 +273,7 @@ extends ComplexStmtState<
                                         this );
                     }
 
-                    // TODO only before executing simple step: parent.saveLastStepState();
+                    // TODO only before executing simple stmt: parent.saveLastStepState();
 
                     updateExecuteResult =
                             this.updateComplexStepState.execute(

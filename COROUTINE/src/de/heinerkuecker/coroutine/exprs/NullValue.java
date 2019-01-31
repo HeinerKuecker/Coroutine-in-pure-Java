@@ -45,7 +45,7 @@ extends AbstrNoVarsNoArgsExpression<T>
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     {
         return null;
     }
@@ -59,7 +59,7 @@ extends AbstrNoVarsNoArgsExpression<T>
     //@Override
     //public void checkUseVariables(
     //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstep<?, ?> parent ,
+    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
     //        final Map<String, Class<?>> globalVariableTypes ,
     //        final Map<String, Class<?>> localVariableTypes )
     //{
@@ -68,7 +68,7 @@ extends AbstrNoVarsNoArgsExpression<T>
 
     //@Override
     //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstep<?, ?> parent )
+    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     //{
     //    // nothing to do
     //}

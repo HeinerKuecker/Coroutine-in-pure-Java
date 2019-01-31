@@ -31,7 +31,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         Object.class
-                        // steps
+                        // stmts
                         );
 
         assertHasNextFalse(
@@ -72,7 +72,7 @@ public class CoroutineIteratorTest
                         args ,
                         // globalVariables
                         null ,
-                        // steps
+                        // stmts
                         new YieldReturn<>(
                                 new GetGlobalArgument<>(
                                         "param" ,
@@ -95,7 +95,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         String.class ,
-                        // steps
+                        // stmts
                         new YieldReturn<>( "a" ) );
 
         assertNext(
@@ -115,7 +115,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         String.class ,
-                        // steps
+                        // stmts
                         new FinallyReturn<>( "a" ) );
 
         assertNext(
@@ -135,9 +135,9 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         String.class ,
-                        // steps
+                        // stmts
                         new FinallyReturn<>( "a" ) ,
-                        // the second step is never executed
+                        // the second statement is never executed
                         new YieldReturn<>( "b" ) );
 
         assertNext(
@@ -157,7 +157,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<String>(
                         // type
                         String.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "str" ,
                                 String.class ,
@@ -191,7 +191,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 Integer.class ,
@@ -224,7 +224,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 Integer.class ,
@@ -256,7 +256,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 Integer.class ,

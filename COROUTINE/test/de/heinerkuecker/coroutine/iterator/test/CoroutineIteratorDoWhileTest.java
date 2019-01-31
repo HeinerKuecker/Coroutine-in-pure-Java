@@ -23,11 +23,11 @@ public class CoroutineIteratorDoWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DoWhile<>(
                                 // condition
                                 false ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ) ,
                         new YieldReturn<>( 1 ) );
 
@@ -52,11 +52,11 @@ public class CoroutineIteratorDoWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DoWhile<>(
                                 // condition
                                 false
-                                // no steps
+                                // no statements
                                 ) ,
                         new YieldReturn<>( 1 ) );
 

@@ -17,7 +17,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 
 /**
- * {@link SimpleStep} to set
+ * {@link SimpleStmt} to set
  * global variable with specified
  * value or result of specified
  * expression.
@@ -26,7 +26,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
  * @param <COROUTINE_RETURN> result type of coroutine, here unused
  */
 public final class SetGlobalVar<COROUTINE_RETURN, RESUME_ARGUMENT , T>
-extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 implements CoroExpression<T> , HasVariableName
 {
     /**
@@ -77,7 +77,7 @@ implements CoroExpression<T> , HasVariableName
     /**
      * Set variable.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

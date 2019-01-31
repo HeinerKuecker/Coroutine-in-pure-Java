@@ -26,7 +26,7 @@ extends ComplexStmtState<
     protected ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
 
     //protected final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    //protected final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    //protected final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
@@ -47,7 +47,7 @@ extends ComplexStmtState<
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //final PARENT parent
-            //final CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         while ( true )
@@ -90,7 +90,7 @@ extends ComplexStmtState<
                                     this );
                 }
 
-                // TODO only before executing simple step: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStepState();
 
                 final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(

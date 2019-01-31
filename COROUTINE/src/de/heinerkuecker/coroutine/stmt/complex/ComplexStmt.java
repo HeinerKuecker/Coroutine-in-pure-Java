@@ -14,8 +14,8 @@ import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
  * to non simple statements like
  * {@link While}.
  *
- * @param <STEP>       type of the complex step, resursivly defined
- * @param <STEP_STATE> type of the complex step execute state, resursivly defined
+ * @param <STEP>       type of the complex stmt, resursivly defined
+ * @param <STEP_STATE> type of the complex stmt execute state, resursivly defined
  * @param <COROUTINE_RETURN>     result type of method {@link CoroutineIterator#next()}
  * @param <PARENT>     type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
@@ -25,7 +25,7 @@ abstract public class ComplexStmt<
     STEP extends ComplexStmt<STEP, STEP_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
     STEP_STATE extends ComplexStmtState<STEP_STATE, STEP, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
-    //PARENT extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN/*, PARENT*/>
+    //PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN/*, PARENT*/>
     RESUME_ARGUMENT
     >
 extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
@@ -58,8 +58,8 @@ extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
      * for debug purposes.
      *
      * @param indent indentation {@link String}
-     * @param lastStepExecuteState stack and instruction pointer when this step is current executed
-     * @param nextStepExecuteState stack and instruction pointer when this step is current executed
+     * @param lastStepExecuteState stack and instruction pointer when this stmt is current executed
+     * @param nextStepExecuteState stack and instruction pointer when this stmt is current executed
      * @return formatted {@link String}
      */
     abstract public String toString(

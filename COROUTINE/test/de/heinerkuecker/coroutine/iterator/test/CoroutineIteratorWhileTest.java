@@ -50,7 +50,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
@@ -59,7 +59,7 @@ public class CoroutineIteratorWhileTest
                                 new Equals<Integer>(
                                         number ,
                                         0 ) ,
-                                // steps
+                                // stmts
                                 new IncrementLocalVar<>( "number" ) ) ,
                         new YieldReturn<>( number ) );
 
@@ -87,7 +87,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
@@ -96,7 +96,7 @@ public class CoroutineIteratorWhileTest
                                 new Lesser<>(
                                         number ,
                                         3 ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number ) ,
                                 new IncrementLocalVar<>( "number" ) ) );
 
@@ -132,7 +132,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
@@ -141,7 +141,7 @@ public class CoroutineIteratorWhileTest
                                 new Equals<>(
                                         number ,
                                         0 ) ,
-                                // steps
+                                // stmts
                                 new IncrementLocalVar<>( "number" ) ,
                                 new IncrementLocalVar<>( "number" ) ) ,
                         new YieldReturn<>( number ) );
@@ -170,7 +170,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 3 ) ,
@@ -180,7 +180,7 @@ public class CoroutineIteratorWhileTest
                                         new Equals<>(
                                                 number ,
                                                 0 ) ) ,
-                                // steps
+                                // stmts
                                 new DecrementLocalVar<>( "number" ) ) ,
                         new YieldReturn<>( number ) );
 
@@ -201,7 +201,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number0" ,
                                 Integer.class ) ,
@@ -218,7 +218,7 @@ public class CoroutineIteratorWhileTest
                                                 "number0" ,
                                                 Integer.class ) ,
                                         0 ) ,
-                                // steps
+                                // stmts
                                 new SetLocalVar<>(
                                         "number1" ,
                                         3 ) ,
@@ -229,7 +229,7 @@ public class CoroutineIteratorWhileTest
                                                         "number1" ,
                                                         Integer.class ) ,
                                                 0 ) ,
-                                        // steps
+                                        // stmts
                                         new YieldReturn<>(
                                                 new CastToInt<>(
                                                         new Add<Integer>(
@@ -264,7 +264,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number0" ,
                                 3 ) ,
@@ -275,7 +275,7 @@ public class CoroutineIteratorWhileTest
                                                 "number0" ,
                                                 Integer.class ) ,
                                         0 ) ,
-                                // steps
+                                // stmts
                                 new DeclareVariable<>(
                                         "number1" ,
                                         3 ) ,
@@ -286,7 +286,7 @@ public class CoroutineIteratorWhileTest
                                                         "number1" ,
                                                         Integer.class ) ,
                                                 0 ) ,
-                                        // steps
+                                        // stmts
                                         new YieldReturn<>(
                                                 new CastToInt<>(
                                                         new Add<Integer>(
@@ -321,7 +321,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number0" ,
                                 3 ) ,
@@ -335,7 +335,7 @@ public class CoroutineIteratorWhileTest
                                                         "number0" ,
                                                         Integer.class ) ) ,
                                         0 ) ,
-                                // steps
+                                // stmts
                                 new DeclareVariable<>(
                                         "number1" ,
                                         3 ) ,
@@ -346,7 +346,7 @@ public class CoroutineIteratorWhileTest
                                                         "number1" ,
                                                         Integer.class ) ,
                                                 0 ) ,
-                                        // steps
+                                        // stmts
                                         new YieldReturn<>(
                                                 new CastToInt<>(
                                                         new Add<Integer>(
@@ -381,11 +381,11 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new While<>(
                                 //condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ,
                                 new FinallyReturn<>( 1 ) ) );
 
@@ -410,11 +410,11 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new While<>(
                                 //condition
                                 true
-                                // steps
+                                // stmts
                                 ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
@@ -430,11 +430,11 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new While<>(
                                 //condition
                                 Value.falseValue()
-                                // steps
+                                // stmts
                                 ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
@@ -450,11 +450,11 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new While<>(
                                 //condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( 0 ) ,
                                 new YieldReturn<>( 1 ) ,
                                 new FinallyReturnWithoutResult<>() ) );
@@ -487,7 +487,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
@@ -496,7 +496,7 @@ public class CoroutineIteratorWhileTest
                                 new Lesser<>(
                                         number ,
                                         3 ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number  ) ,
                                 new IncrementLocalVar<>( "number" ) ) );
 
@@ -532,7 +532,7 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "number" ,
                                 2 ) ,
@@ -545,7 +545,7 @@ public class CoroutineIteratorWhileTest
                                         new Equals<>(
                                                 number ,
                                                 0 ) ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( number ) ,
                                 new DecrementLocalVar<>( "number" ) ) );
 
@@ -575,14 +575,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "first" ,
                                 true ) ,
                         new While<>(
                                 // condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new IfElse<>(
                                         //condition
                                         new GetLocalVar<>(
@@ -626,14 +626,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Boolean>(
                         // type
                         Boolean.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "first" ,
                                 true ) ,
                         new While<>(
                                 // condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new IfElse<>(
                                         //condition
                                         new DeclareVariable<>(
@@ -684,14 +684,14 @@ public class CoroutineIteratorWhileTest
                 new CoroutineIterator<Boolean>(
                         // type
                         Boolean.class ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "first" ,
                                 true ) ,
                         new While<>(
                                 // condition
                                 Value.trueValue() ,
-                                // steps
+                                // stmts
                                 new IfElse<>(
                                         //condition
                                         new DeclareVariable<>(

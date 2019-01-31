@@ -45,7 +45,7 @@ extends CoroBooleanExpression
     // */
     //@Override
     //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     //{
     //    return lhs.execute( parent ) != rhs.execute( parent );
     //}

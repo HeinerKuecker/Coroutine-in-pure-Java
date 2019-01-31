@@ -528,7 +528,7 @@ public class CoroutineSaxParserTest
                                                 SaxEvent.class ) ,
                                         // type
                                         Characters.class ) ,
-                                // steps
+                                // stmts
                                 new YieldReturn<>( NullValue.nullValue() ) ) );
 
         // procedure to consume end xml element
@@ -714,14 +714,14 @@ public class CoroutineSaxParserTest
                         null ,
                         // globalVariableDeclarations
                         null ,
-                        // steps
+                        // stmts
                         new DeclareVariable<>(
                                 "students" ,
                                 students ) ,
                         new While<>(
                                 // condition
                                 isStartElementClass ,
-                                // steps
+                                // stmts
                                 // consume start xml element class
                                 new YieldReturn<>( NullValue.nullValue() ) ,
                                 new ProcedureCall<>(
@@ -737,7 +737,7 @@ public class CoroutineSaxParserTest
                                                                 SaxEvent.class ) ,
                                                         // type
                                                         EndElement.class ) ) ,
-                                        // steps
+                                        // stmts
                                         new DeclareVariable<>(
                                                 // varName
                                                 "student" ,

@@ -42,7 +42,7 @@ extends ComplexStmt<
             final String label ,
             //final ConditionOrBooleanExpression condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... steps )
+            final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... stmts )
     {
         super(
                 //creationStackOffset
@@ -56,7 +56,7 @@ extends ComplexStmt<
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         5 ,
-                        steps );
+                        stmts );
     }
 
     @Override

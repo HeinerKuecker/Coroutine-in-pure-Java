@@ -25,7 +25,7 @@ abstract public /*interface*/class ComplexStmtState<
     STEP_STATE extends ComplexStmtState<STEP_STATE, STEP, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
     STEP extends ComplexStmt<STEP, STEP_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
-    //PARENT extends CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT>
+    //PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     RESUME_ARGUMENT
 >
 implements
@@ -52,20 +52,20 @@ implements
     }
 
     /**
-     * Execute one complex step.
+     * Execute one complex stmt.
      *
      * @param parent
      * @return object to return a value and to control the flow
      */
     abstract public CoroIterStmtResult<COROUTINE_RETURN> execute(
             //PARENT parent
-            //CoroutineOrProcedureOrComplexstep<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             );
 
     /**
-     * This method returns if all sub steps have been executed.
+     * This method returns if all sub statements have been executed.
      *
-     * @return all sub steps have been executed or not
+     * @return all sub statements have been executed or not
      */
     abstract public boolean isFinished();
 

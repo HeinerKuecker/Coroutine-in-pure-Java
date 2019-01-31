@@ -93,7 +93,7 @@ implements
      *
      * @param procedures can be <code>null</code>
      * @param initialVariableValues key value pairs to put initial in globalVariables {@link #vars}, can be <code>null</code>
-     * @param steps steps for coroutine processor
+     * @param stmts statements for coroutine processor
      */
     @SafeVarargs
     public CoroutineIterator(
@@ -103,9 +103,9 @@ implements
             final Parameter[] params ,
             final Argument<?>[] args ,
             final DeclareVariable<COROUTINE_RETURN, Void, ?>[] globalVariableDeclarations ,
-            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
-        //this( steps );
+        //this( stmts );
 
         this.resultType =
                 Objects.requireNonNull(
@@ -115,7 +115,7 @@ implements
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         5 ,
-                        steps );
+                        stmts );
 
         if ( procedures != null )
         {
@@ -165,12 +165,12 @@ implements
     /**
      * Constructor.
      *
-     * @param steps steps for coroutine processor
+     * @param stmts statements for coroutine processor
      */
     @SafeVarargs
     public CoroutineIterator(
             final Class<? extends COROUTINE_RETURN> resultType ,
-            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... steps )
+            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         this.resultType =
                 Objects.requireNonNull(
@@ -180,7 +180,7 @@ implements
                 Block.convertStepsToComplexStep(
                         // creationStackOffset
                         5 ,
-                        steps );
+                        stmts );
 
         this.complexStep.setResultType( resultType );
 

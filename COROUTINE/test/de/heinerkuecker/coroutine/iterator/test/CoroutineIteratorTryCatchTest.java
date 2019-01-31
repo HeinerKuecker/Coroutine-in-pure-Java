@@ -91,7 +91,7 @@ public class CoroutineIteratorTryCatchTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // steps
+                        // stmts
                         TryCatch.newTryCatch(
                                 // tryStep
                                 new Block<Integer , Void>(
@@ -128,7 +128,7 @@ public class CoroutineIteratorTryCatchTest
                 new CoroutineIterator<TestException>(
                         // type
                         TestException.class ,
-                        // steps
+                        // stmts
                         TryCatch.<TestException , Void>newTryCatch(
                                 // tryStep
                                 new Block<TestException , Void>(

@@ -8,7 +8,7 @@ import de.heinerkuecker.coroutine.stmt.complex.DoWhile;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.complex.ForEach;
 import de.heinerkuecker.coroutine.stmt.complex.While;
-import de.heinerkuecker.coroutine.stmt.simple.SimpleStep;
+import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
  * Step {@link CoroIterStmt}
@@ -53,7 +53,7 @@ extends BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
     /**
      * Decrement variable.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

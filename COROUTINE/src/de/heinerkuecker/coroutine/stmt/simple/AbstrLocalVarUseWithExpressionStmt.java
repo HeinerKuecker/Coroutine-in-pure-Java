@@ -15,7 +15,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 // TODO give expression instead local var name
 abstract public class AbstrLocalVarUseWithExpressionStmt<COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
-extends SimpleStep<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStmt<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
@@ -69,7 +69,7 @@ implements HasVariableName
     /**
      * Set variable.
      *
-     * @see SimpleStep#execute
+     * @see SimpleStmt#execute
      */
     @Override
     public CoroIterStmtResult<COROUTINE_RETURN> execute(

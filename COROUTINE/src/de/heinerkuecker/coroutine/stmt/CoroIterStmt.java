@@ -18,7 +18,7 @@ extends HasCreationStackTraceElement
 implements CoroCheckable
 {
     ///**
-    // * Execute one step.
+    // * Execute one statement.
     // *
     // * @param parent
     // * @return object to return a value and to control the flow

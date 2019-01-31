@@ -101,7 +101,7 @@ extends CoroBooleanExpression
 
     //@Override
     //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstep<?, ?>*/ parent )
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
     //{
     //    final T lhsResult = lhs.evaluate( parent );
     //    final T rhsResult = rhs.evaluate( parent );
