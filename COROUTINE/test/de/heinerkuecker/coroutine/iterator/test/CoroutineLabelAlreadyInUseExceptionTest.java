@@ -106,7 +106,7 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                 new For<Integer , Void>(
                         //label
                         "label_already_in_use" ,
-                        // initialStep
+                        // initialStmt
                         new NoOperation<>() ,
                         // condition
                         new Lesser<>(
@@ -114,17 +114,17 @@ public class CoroutineLabelAlreadyInUseExceptionTest
                                         "number" ,
                                         Integer.class ) ,
                                 1 ) ,
-                        // updateStep
+                        // updateStmt
                         new IncrementLocalVar<>( "number" ) ,
                         // stmts
                         new For<>(
                                 //label
                                 "label_already_in_use" ,
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 Value.trueValue() ,
-                                // updateStep
+                                // updateStmt
                                 new NoOperation<>() ,
                                 // stmts
                                 new Continue<>(

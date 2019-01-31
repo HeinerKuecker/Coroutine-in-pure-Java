@@ -34,10 +34,10 @@ extends WhileOrDoWhileState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
     {
         return (DoWhile<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) this.whileOrDoWhile;
     }
@@ -50,7 +50,7 @@ extends WhileOrDoWhileState<
     {
         final DoWhileState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new DoWhileState<>(
-                        getStep() ,
+                        getStmt() ,
                         //super.rootParent
                         super.parent );
 

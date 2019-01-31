@@ -32,7 +32,7 @@ extends ComplexStmt<
     public final String label;
     //final ConditionOrBooleanExpression condition;
     final CoroExpression<Boolean> condition;
-    final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStep;
+    final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStmt;
 
     /**
      * Constructor.
@@ -52,8 +52,8 @@ extends ComplexStmt<
 
         this.condition = Objects.requireNonNull( condition );
 
-        this.bodyComplexStep =
-                Block.convertStepsToComplexStep(
+        this.bodyComplexStmt =
+                Block.convertStmtsToComplexStmt(
                         // creationStackOffset
                         5 ,
                         stmts );
@@ -66,7 +66,7 @@ extends ComplexStmt<
     {
         final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
-        for ( BreakOrContinue<? , ?> unresolvedBreakOrContinue : bodyComplexStep.getUnresolvedBreaksOrContinues(
+        for ( BreakOrContinue<? , ?> unresolvedBreakOrContinue : bodyComplexStmt.getUnresolvedBreaksOrContinues(
                 alreadyCheckedProcedureNames ,
                 parent ) )
         {
@@ -95,7 +95,7 @@ extends ComplexStmt<
                 condition.getProcedureArgumentGetsNotInProcedure() );
 
         result.addAll(
-                bodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
+                bodyComplexStmt.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
     }
@@ -107,7 +107,7 @@ extends ComplexStmt<
     public void setResultType(
             final Class<? extends COROUTINE_RETURN> resultType )
     {
-        this.bodyComplexStep.setResultType( resultType );
+        this.bodyComplexStmt.setResultType( resultType );
     }
 
     @Override
@@ -126,7 +126,7 @@ extends ComplexStmt<
             labels.add( label );
         }
 
-        this.bodyComplexStep.checkLabelAlreadyInUse(
+        this.bodyComplexStmt.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
@@ -144,7 +144,7 @@ extends ComplexStmt<
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
-        this.bodyComplexStep.checkUseVariables(
+        this.bodyComplexStmt.checkUseVariables(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -156,7 +156,7 @@ extends ComplexStmt<
             final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.bodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.bodyComplexStmt.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     /**
@@ -166,14 +166,14 @@ extends ComplexStmt<
     final public String toString(
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            final ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         final WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+                (WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         final WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextWhileExecuteState =
-                (WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+                (WhileOrDoWhileState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
         final ComplexStmtState<?, ?, COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
         if ( lastWhileExecuteState != null )
@@ -242,7 +242,7 @@ extends ComplexStmt<
                 "\n" +
                 conditionStr + " )\n" +
                 variablesStr +
-                this.bodyComplexStep.toString(
+                this.bodyComplexStmt.toString(
                         parent ,
                         indent + " " ,
                         lastBodyState ,

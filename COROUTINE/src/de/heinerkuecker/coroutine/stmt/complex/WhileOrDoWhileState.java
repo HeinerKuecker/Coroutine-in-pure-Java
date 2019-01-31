@@ -55,7 +55,7 @@ extends ComplexStmtState<
             if ( runInCondition )
             {
                 // for debug toString
-                parent.saveLastStepState();
+                parent.saveLastStmtState();
 
                 final boolean conditionResult =
                         whileOrDoWhile.condition.evaluate(
@@ -77,20 +77,20 @@ extends ComplexStmtState<
 
             if ( runInBody )
             {
-                final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyStep =
-                        whileOrDoWhile.bodyComplexStep;
+                final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyStmt =
+                        whileOrDoWhile.bodyComplexStmt;
 
                 if ( this.bodyComplexState == null )
                     // no existing state from previous execute call
                 {
                     this.bodyComplexState =
-                            bodyStep.newState(
+                            bodyStmt.newState(
                                     //this.rootParent
                                     //this.parent
                                     this );
                 }
 
-                // TODO only before executing simple stmt: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStmtState();
 
                 final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(

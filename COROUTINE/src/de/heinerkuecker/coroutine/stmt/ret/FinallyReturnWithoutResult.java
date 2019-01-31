@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
- * Step {@link CoroIterStmt}
+ * Stmt {@link CoroIterStmt}
  * to stop run without
  * return a value.
  *

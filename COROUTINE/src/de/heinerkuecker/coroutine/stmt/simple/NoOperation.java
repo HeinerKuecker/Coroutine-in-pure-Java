@@ -9,14 +9,14 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
 import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 
 /**
- * Step {@link CoroIterStmt} to
+ * Stmt {@link CoroIterStmt} to
  * do nothing.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
 public final class NoOperation<COROUTINE_RETURN, RESUME_ARGUMENT>
-//extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+//extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 extends SimpleStmtWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
 {
 

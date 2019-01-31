@@ -567,12 +567,12 @@ public class CoroutineSaxParserTest
                                                         "name" ,
                                                         // type
                                                         String.class ) ) ) ,
-                                // thenSteps
+                                // thenStmts
                                 new CoroIterStmt[] {
                                         // consume end xml element
                                         new YieldReturn<>( NullValue.nullValue() )
                                 } ,
-                                // elseSteps
+                                // elseStmts
                                 new CoroIterStmt[] {
                                         new Throw<Void , SaxEvent>(
                                                 new Value<>(
@@ -605,13 +605,13 @@ public class CoroutineSaxParserTest
                                         new Equals<>(
                                                 getXmlElementNameFromResumeArgument ,
                                                 "student" ) ) ,
-                                // thenSteps
+                                // thenStmts
                                 new CoroIterStmt[] {
                                         new SetStudentRollno() ,
                                         // consume start xml element
                                         new YieldReturn<>( NullValue.nullValue() )
                                 } ,
-                                // elseSteps
+                                // elseStmts
                                 new CoroIterStmt[] {
                                         new Throw<Void , SaxEvent>(
                                                 new NewIllegalStateException(
@@ -655,12 +655,12 @@ public class CoroutineSaxParserTest
                                                         "name" ,
                                                         // type
                                                         String.class ) ) ) ,
-                                // thenSteps
+                                // thenStmts
                                 new CoroIterStmt[] {
                                         // consume start xml element
                                         new YieldReturn<>( NullValue.nullValue() )
                                 } ,
-                                // elseSteps
+                                // elseStmts
                                 new CoroIterStmt[] {
                                         new Throw<Void , SaxEvent>(
                                                 new NewIllegalStateException(

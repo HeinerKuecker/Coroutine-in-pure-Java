@@ -9,18 +9,18 @@ extends Iterable<Entry<String, Object>>
 {
 
     Object get(
-            final HasCreationStackTraceElement accessStepOrExpression ,
+            final HasCreationStackTraceElement accessStmtOrExpression ,
             final String variableName );
 
     void declare(
             //final DeclareVariable<?, ?> declareLocalVar ,
-            final HasCreationStackTraceElement declareStepOrExpression ,
+            final HasCreationStackTraceElement declareStmtOrExpression ,
             final String variableName ,
             final Class<?> type );
 
     <T> void declare(
             //final DeclareVariable<?, ?> declareLocalVar ,
-            final HasCreationStackTraceElement declareStepOrExpression ,
+            final HasCreationStackTraceElement declareStmtOrExpression ,
             final String variableName ,
             final Class<? extends T> type ,
             final T value );

@@ -39,11 +39,11 @@ public class CoroutineIteratorBreakTest
                                 "number" ,
                                 0 ) ,
                         new For<>(
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 Value.trueValue() ,
-                                // updateStep
+                                // updateStmt
                                 new NoOperation<>() ,
                                 // stmts
                                 new YieldReturn<>( 0 ) ,
@@ -80,19 +80,19 @@ public class CoroutineIteratorBreakTest
                         new For<Integer, Void>(
                                 // label
                                 "outer_for" ,
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 Value.trueValue() ,
-                                // updateStep
+                                // updateStmt
                                 new NoOperation<>() ,
                                 // stmts
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new Break<>( "outer_for" ) ,
@@ -128,11 +128,11 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new Break<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -158,7 +158,7 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         0 ) ,
                                 new For<Integer , Void>(
-                                        // initialStep
+                                        // initialStmt
                                         new Block<>(
                                                 // creationStackOffset
                                                 1 ,
@@ -166,7 +166,7 @@ public class CoroutineIteratorBreakTest
                                                 new Break<>() ) ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -192,11 +192,11 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new Break<>( "wrong" ) ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -222,11 +222,11 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new Break<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -252,11 +252,11 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         0 ) ,
                                 new For<Integer , Void>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new Block<>(
                                                 // creationStackOffset
                                                 1 ,
@@ -286,11 +286,11 @@ public class CoroutineIteratorBreakTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new Break<>( "any" ) ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -318,11 +318,11 @@ public class CoroutineIteratorBreakTest
                                 new For<Integer , Void>(
                                         // label
                                         "for" ,
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new Break<>( "wrong" ) ) ) );
@@ -350,11 +350,11 @@ public class CoroutineIteratorBreakTest
                                 new For<>(
                                         // label
                                         "for" ,
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new Break<>( "wrong" ) ) ) );

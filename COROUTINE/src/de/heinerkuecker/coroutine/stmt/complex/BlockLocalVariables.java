@@ -46,7 +46,7 @@ implements VariablesOrLocalVariables
      */
     @Override
     public Object get(
-            final HasCreationStackTraceElement accessStepOrExpression ,
+            final HasCreationStackTraceElement accessStmtOrExpression ,
             final String variableName )
     {
         // TODO throw exception, when variableName is unknown
@@ -57,21 +57,21 @@ implements VariablesOrLocalVariables
                             variableName ) );
         }
         return parentVariables.get(
-                accessStepOrExpression ,
+                accessStmtOrExpression ,
                 variableName );
     }
 
     @Override
     public void declare(
             //final DeclareVariable<?, ?> declareLocalVar ,
-            final HasCreationStackTraceElement declareStepOrExpression ,
+            final HasCreationStackTraceElement declareStmtOrExpression ,
             final String variableName ,
             final Class<?> type )
     {
         if ( types.containsKey( variableName ) )
         {
             throw new BlockLocalVariables.VariableAlreadyDeclaredException(
-                    declareStepOrExpression ,
+                    declareStmtOrExpression ,
                     variableName );
         }
 
@@ -92,13 +92,13 @@ implements VariablesOrLocalVariables
     @Override
     public <T> void declare(
             //final DeclareVariable<?, ?> declareLocalVar ,
-            final HasCreationStackTraceElement declareStepOrExpression ,
+            final HasCreationStackTraceElement declareStmtOrExpression ,
             final String variableName ,
             final Class<? extends T> type ,
             final T value )
     {
         declare(
-                declareStepOrExpression ,
+                declareStmtOrExpression ,
                 variableName ,
                 type );
 
@@ -226,7 +226,7 @@ implements VariablesOrLocalVariables
          */
         public VariableAlreadyDeclaredException(
                 //final DeclareVariable<?, ?> declareLocalVar
-                final HasCreationStackTraceElement declareStepOrExpression ,
+                final HasCreationStackTraceElement declareStmtOrExpression ,
                 final String variableName )
         {
             //super( "variable already declared: " + variableName );
@@ -234,9 +234,9 @@ implements VariablesOrLocalVariables
                     "variable already declared: " +
                     variableName +
                     " " +
-                    declareStepOrExpression.getClass().getSimpleName() +
-                    ( declareStepOrExpression.creationStackTraceElement != null
-                        ? " " + declareStepOrExpression.creationStackTraceElement
+                    declareStmtOrExpression.getClass().getSimpleName() +
+                    ( declareStmtOrExpression.creationStackTraceElement != null
+                        ? " " + declareStmtOrExpression.creationStackTraceElement
                         : "" ) );
         }
     }

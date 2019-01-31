@@ -24,7 +24,7 @@ extends HasArgumentsAndVariables<RESUME_ARGUMENT>
      *
      * Call it before execute expressions or simple statements
      */
-    abstract public void saveLastStepState();
+    abstract public void saveLastStmtState();
 
     // TODO is this needed?
     //abstract CoroutineIterator<COROUTINE_RETURN> getRootParent();

@@ -132,7 +132,7 @@ implements HasVariableName
         //if ( ! List.class.equals( localVariableTypes.get( localVarName ) ) )
         //{
         //    throw new WrongStmtVariableClassException(
-        //            //wrongStep
+        //            //wrongStmt
         //            this ,
         //            //wrongClass
         //            localVariableTypes.get( localVarName ) ,

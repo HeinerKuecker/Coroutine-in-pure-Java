@@ -25,10 +25,10 @@ extends ComplexStmtState<
     boolean runInBody;
     boolean runInUpdate;
 
-    private ComplexStmtState<? ,?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStepState;
+    private ComplexStmtState<? ,?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStmtState;
     // TODO getter
     ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
-    private ComplexStmtState<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStepState;
+    private ComplexStmtState<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStmtState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
     private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
@@ -36,8 +36,8 @@ extends ComplexStmtState<
     /**
      * Local variables for
      * condition {@link For#condition},
-     * body {@link For#bodyComplexStep} and
-     * update stmt {@link For#updateStep}.
+     * body {@link For#bodyComplexStmt} and
+     * update stmt {@link For#updateStmt}.
      *
      * The super {@link ComplexStmtState#blockLocalVariables}
      * is used for
@@ -72,19 +72,19 @@ extends ComplexStmtState<
     {
         if ( runInInitializer )
         {
-            final CoroIterStmt<COROUTINE_RETURN /*, ? super PARENT*/> initializerStep =
-                    _for.initialStep;
+            final CoroIterStmt<COROUTINE_RETURN /*, ? super PARENT*/> initializerStmt =
+                    _for.initialStmt;
 
             final CoroIterStmtResult<COROUTINE_RETURN> initializerExecuteResult;
-            if ( initializerStep instanceof SimpleStmt )
+            if ( initializerStmt instanceof SimpleStmt )
             {
-                final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> initializerSimpleStep =
-                        (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) initializerStep;
+                final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> initializerSimpleStmt =
+                        (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) initializerStmt;
 
-                parent.saveLastStepState();
+                parent.saveLastStmtState();
 
                 initializerExecuteResult =
-                        initializerSimpleStep.execute(
+                        initializerSimpleStmt.execute(
                                 //parent
                                 this );
 
@@ -93,32 +93,32 @@ extends ComplexStmtState<
             }
             else
             {
-                final ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStep =
-                        (ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) initializerStep;
+                final ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStmt =
+                        (ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) initializerStmt;
 
-                if ( this.initializerComplexStepState == null )
+                if ( this.initializerComplexStmtState == null )
                     // no existing state from previous execute call
                 {
-                    this.initializerComplexStepState =
-                            initializerComplexStep.newState(
+                    this.initializerComplexStmtState =
+                            initializerComplexStmt.newState(
                                     //this.rootParent
                                     //this.parent
                                     this );
                 }
 
-                // TODO only before executing simple stmt: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStmtState();
 
                 initializerExecuteResult =
-                        this.initializerComplexStepState.execute(
+                        this.initializerComplexStmtState.execute(
                                 //parent
                                 //this
                                 );
 
-                if ( this.initializerComplexStepState.isFinished() )
+                if ( this.initializerComplexStmtState.isFinished() )
                 {
                     runInInitializer = false;
                     runInCondition = true;
-                    this.initializerComplexStepState = null;
+                    this.initializerComplexStmtState = null;
                 }
             }
 
@@ -136,7 +136,7 @@ extends ComplexStmtState<
 
             runInInitializer = false;
             runInCondition = true;
-            this.initializerComplexStepState = null;
+            this.initializerComplexStmtState = null;
         }
 
         while ( true )
@@ -147,7 +147,7 @@ extends ComplexStmtState<
                         new BlockLocalVariables(
                                 super.localVars() );
 
-                parent.saveLastStepState();
+                parent.saveLastStmtState();
 
                 final boolean conditionResult =
                         _for.condition.evaluate(
@@ -160,7 +160,7 @@ extends ComplexStmtState<
                     this.runInBody = true;
                     // for toString
                     this.bodyComplexState =
-                            _for.bodyComplexStep.newState(
+                            _for.bodyComplexStmt.newState(
                                     //this.rootParent
                                     //this.parent
                                     this );
@@ -174,20 +174,20 @@ extends ComplexStmtState<
 
             if ( runInBody )
             {
-                final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
-                        _for.bodyComplexStep;
+                final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStmt =
+                        _for.bodyComplexStmt;
 
                 if ( this.bodyComplexState == null )
                     // no existing state from previous execute call
                 {
                     this.bodyComplexState =
-                            bodyComplexStep.newState(
+                            bodyComplexStmt.newState(
                                     //this.rootParent
                                     //this.parent
                                     this );
                 }
 
-                // TODO only before executing simple stmt: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStmtState();
 
                 final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
@@ -239,19 +239,19 @@ extends ComplexStmtState<
 
             if ( runInUpdate )
             {
-                final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT*/> updateStep =
-                        _for.updateStep;
+                final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT*/> updateStmt =
+                        _for.updateStmt;
 
                 CoroIterStmtResult<COROUTINE_RETURN> updateExecuteResult;
-                if ( updateStep instanceof SimpleStmt )
+                if ( updateStmt instanceof SimpleStmt )
                 {
-                    final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> updateSimpleStep =
-                            (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) updateStep;
+                    final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> updateSimpleStmt =
+                            (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) updateStmt;
 
-                    parent.saveLastStepState();
+                    parent.saveLastStmtState();
 
                     updateExecuteResult =
-                            updateSimpleStep.execute(
+                            updateSimpleStmt.execute(
                                     //parent
                                     this );
 
@@ -260,32 +260,32 @@ extends ComplexStmtState<
                 }
                 else
                 {
-                    final ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStep =
-                            (ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) updateStep;
+                    final ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStmt =
+                            (ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) updateStmt;
 
-                    if ( this.updateComplexStepState == null )
+                    if ( this.updateComplexStmtState == null )
                         // no existing state from previous execute call
                     {
-                        this.updateComplexStepState =
-                                updateComplexStep.newState(
+                        this.updateComplexStmtState =
+                                updateComplexStmt.newState(
                                         //this.rootParent
                                         //this.parent
                                         this );
                     }
 
-                    // TODO only before executing simple stmt: parent.saveLastStepState();
+                    // TODO only before executing simple stmt: parent.saveLastStmtState();
 
                     updateExecuteResult =
-                            this.updateComplexStepState.execute(
+                            this.updateComplexStmtState.execute(
                                     //parent
                                     //this
                                     );
 
-                    if ( this.updateComplexStepState.isFinished() )
+                    if ( this.updateComplexStmtState.isFinished() )
                     {
                         this.runInUpdate = false;
                         this.runInCondition = true;
-                        this.updateComplexStepState = null;
+                        this.updateComplexStmtState = null;
                     }
                 }
 
@@ -303,7 +303,7 @@ extends ComplexStmtState<
 
                 this.runInUpdate = false;
                 this.runInCondition = true;
-                this.updateComplexStepState = null;
+                this.updateComplexStmtState = null;
             }
         }
     }
@@ -343,10 +343,10 @@ extends ComplexStmtState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public For<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> getStep()
+    public For<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> getStmt()
     {
         return _for;
     }
@@ -368,9 +368,9 @@ extends ComplexStmtState<
         clone.runInBody = runInBody;
         clone.runInUpdate = runInUpdate;
 
-        clone.initializerComplexStepState = ( initializerComplexStepState != null ? initializerComplexStepState.createClone() : null );
+        clone.initializerComplexStmtState = ( initializerComplexStmtState != null ? initializerComplexStmtState.createClone() : null );
         clone.bodyComplexState = ( bodyComplexState != null ? bodyComplexState.createClone() : null );
-        clone.updateComplexStepState = ( updateComplexStepState != null ? updateComplexStepState.createClone() : null );
+        clone.updateComplexStmtState = ( updateComplexStmtState != null ? updateComplexStmtState.createClone() : null );
 
         return clone;
     }

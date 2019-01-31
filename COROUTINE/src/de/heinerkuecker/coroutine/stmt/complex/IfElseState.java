@@ -55,7 +55,7 @@ extends ComplexStmtState<
         if ( runInCondition )
         {
             // TODO ist dies notwendig?
-            parent.saveLastStepState();
+            parent.saveLastStmtState();
 
             final boolean conditionResult =
                     ifElse.condition.evaluate(
@@ -76,20 +76,20 @@ extends ComplexStmtState<
 
         if ( runInThenBody )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStep =
-                    ifElse.thenBodyComplexStep;
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStmt =
+                    ifElse.thenBodyComplexStmt;
 
             if ( this.thenBodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.thenBodyComplexState =
-                        thenBodyStep.newState(
+                        thenBodyStmt.newState(
                                 //this.rootParent
                                 //this.parent
                                 this );
             }
 
-            // TODO only before executing simple stmt: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStmtState();
 
             final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
                     this.thenBodyComplexState.execute(
@@ -112,20 +112,20 @@ extends ComplexStmtState<
         }
         else if ( runInElseBody )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyStep =
-                    ifElse.elseBodyComplexStep;
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyStmt =
+                    ifElse.elseBodyComplexStmt;
 
             if ( this.elseBodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.elseBodyComplexState =
-                        elseBodyStep.newState(
+                        elseBodyStmt.newState(
                                 //this.rootParent
                                 //this.parent
                                 this );
             }
 
-            // TODO only before executing simple stmt: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStmtState();
 
             final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
                     this.elseBodyComplexState.execute(
@@ -170,10 +170,10 @@ extends ComplexStmtState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
     {
         return this.ifElse;
     }

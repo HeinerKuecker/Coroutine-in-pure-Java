@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
 /**
- * Step {@link CoroIterStmt} to
+ * Stmt {@link CoroIterStmt} to
  * decrement an {@link Number}
  * variable in variables
  * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassExceptio
  * @author Heiner K&uuml;cker
  */
 public final class DecrementLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
-//extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+//extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 extends SimpleStmtWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
@@ -96,7 +96,7 @@ implements HasVariableName
         if ( ! Integer.class.equals( localVariableTypes.get( localVarName ) ) )
         {
             throw new WrongStmtVariableClassException(
-                    //wrongStep
+                    //wrongStmt
                     this ,
                     //wrongClass
                     localVariableTypes.get( localVarName ) ,

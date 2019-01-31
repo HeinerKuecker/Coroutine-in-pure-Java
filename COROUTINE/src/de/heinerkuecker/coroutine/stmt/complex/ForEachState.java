@@ -64,7 +64,7 @@ extends ComplexStmtState<
     {
         if ( runInInitializer )
         {
-            parent.saveLastStepState();
+            parent.saveLastStmtState();
 
             final Iterable<ELEMENT> iterable = forEach.iterableExpression.evaluate( parent );
             this.iterator = iterable.iterator();
@@ -83,7 +83,7 @@ extends ComplexStmtState<
 
             // for toString
             this.bodyComplexState =
-                    forEach.bodyComplexStep.newState(
+                    forEach.bodyComplexStmt.newState(
                             //this.parent
                             this );
 
@@ -95,7 +95,7 @@ extends ComplexStmtState<
         {
             if ( runInConditionAndUpdate )
             {
-                parent.saveLastStepState();
+                parent.saveLastStmtState();
 
                 if ( ! iterator.hasNext() )
                 {
@@ -115,20 +115,20 @@ extends ComplexStmtState<
 
             if ( runInBody )
             {
-                final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
-                        forEach.bodyComplexStep;
+                final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStmt =
+                        forEach.bodyComplexStmt;
 
                 if ( this.bodyComplexState == null )
                     // no existing state from previous execute call
                 {
                     this.bodyComplexState =
-                            bodyComplexStep.newState(
+                            bodyComplexStmt.newState(
                                     //this.rootParent
                                     //this.parent
                                     this );
                 }
 
-                // TODO only before executing simple stmt: parent.saveLastStepState();
+                // TODO only before executing simple stmt: parent.saveLastStmtState();
 
                 final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
@@ -202,10 +202,10 @@ extends ComplexStmtState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> getStep()
+    public ForEach<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT , ELEMENT> getStmt()
     {
         return forEach;
     }

@@ -53,7 +53,7 @@ extends ComplexStmtState<
         if ( this.runInCondition )
         {
             // TODO ist dies notwendig?
-            parent.saveLastStepState();
+            parent.saveLastStmtState();
 
             final boolean conditionResult =
                     _if.condition.evaluate(
@@ -75,20 +75,20 @@ extends ComplexStmtState<
 
         if ( runInThenBody )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStep =
-                    _if.thenBodyComplexStep;
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStmt =
+                    _if.thenBodyComplexStmt;
 
             if ( this.thenBodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.thenBodyComplexState =
-                        thenBodyStep.newState(
+                        thenBodyStmt.newState(
                                 //this.rootParent
                                 //this.parent
                                 this );
             }
 
-            // TODO only before executing simple stmt: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStmtState();
 
             final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
                     this.thenBodyComplexState.execute(
@@ -132,10 +132,10 @@ extends ComplexStmtState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public If<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public If<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
     {
         return _if;
     }

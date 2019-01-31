@@ -12,7 +12,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
 public final class NegateGlobalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
-//extends SimpleStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+//extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 extends SimpleStmtWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
@@ -107,7 +107,7 @@ implements HasVariableName
         if ( ! Boolean.class.equals( globalVariableTypes.get( globalVarName ) ) )
         {
             throw new WrongStmtVariableClassException(
-                    //wrongStep
+                    //wrongStmt
                     this ,
                     //wrongClass
                     globalVariableTypes.get( globalVarName ) ,

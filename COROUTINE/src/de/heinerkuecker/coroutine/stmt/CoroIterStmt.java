@@ -23,7 +23,7 @@ implements CoroCheckable
     // * @param parent
     // * @return object to return a value and to control the flow
     // */
-    //CoroIterStepResult<COROUTINE_RETURN> execute(
+    //CoroIterStmtResult<COROUTINE_RETURN> execute(
     //        final PARENT parent );
 
     /**

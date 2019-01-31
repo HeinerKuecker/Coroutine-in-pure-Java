@@ -59,7 +59,7 @@ extends ComplexStmt<
         return stmts.length;
     }
 
-    CoroIterStmt<? extends COROUTINE_RETURN /*, ? super PARENT*/> getStep(
+    CoroIterStmt<? extends COROUTINE_RETURN /*, ? super PARENT*/> getStmt(
             final int index )
     {
         return stmts[ index ];
@@ -210,16 +210,16 @@ extends ComplexStmt<
     public String toString(
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         @SuppressWarnings("unchecked")
         final BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> lastSequenceExecuteState =
-                (BlockState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+                (BlockState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         @SuppressWarnings("unchecked")
         final BlockState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextSequenceExecuteState =
-                (BlockState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+                (BlockState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
         final StringBuilder buff = new StringBuilder();
 
@@ -234,26 +234,26 @@ extends ComplexStmt<
 
             if ( stmt instanceof ComplexStmt )
             {
-                final ComplexStmtState<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT> lastSubStepExecuteState;
+                final ComplexStmtState<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT> lastSubStmtExecuteState;
                 if ( lastSequenceExecuteState != null &&
-                        lastSequenceExecuteState.currentStepIndex == i )
+                        lastSequenceExecuteState.currentStmtIndex == i )
                 {
-                    lastSubStepExecuteState = lastSequenceExecuteState.currentComplexState;
+                    lastSubStmtExecuteState = lastSequenceExecuteState.currentComplexState;
                 }
                 else
                 {
-                    lastSubStepExecuteState = null;
+                    lastSubStmtExecuteState = null;
                 }
 
-                final ComplexStmtState<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT> nextSubStepExecuteState;
+                final ComplexStmtState<?, ?, COROUTINE_RETURN , RESUME_ARGUMENT> nextSubStmtExecuteState;
                 if ( nextSequenceExecuteState != null &&
-                        nextSequenceExecuteState.currentStepIndex == i )
+                        nextSequenceExecuteState.currentStmtIndex == i )
                 {
-                    nextSubStepExecuteState = nextSequenceExecuteState.currentComplexState;
+                    nextSubStmtExecuteState = nextSequenceExecuteState.currentComplexState;
                 }
                 else
                 {
-                    nextSubStepExecuteState = null;
+                    nextSubStmtExecuteState = null;
                 }
 
                 buff.append(
@@ -261,20 +261,20 @@ extends ComplexStmt<
                                 parent ,
                                 //indent
                                 indent /*+ " "*/ ,
-                                lastSubStepExecuteState ,
-                                nextSubStepExecuteState ) );
+                                lastSubStmtExecuteState ,
+                                nextSubStmtExecuteState ) );
             }
             else
             {
                 if ( indent.length() > "next".length() )
                 {
                     if ( nextSequenceExecuteState != null &&
-                            nextSequenceExecuteState.currentStepIndex == i )
+                            nextSequenceExecuteState.currentStmtIndex == i )
                     {
                         buff.append( "next:" );
                     }
                     else if ( lastSequenceExecuteState != null &&
-                            lastSequenceExecuteState.currentStepIndex == i )
+                            lastSequenceExecuteState.currentStmtIndex == i )
                     {
                         buff.append( "last:" );
                     }
@@ -299,26 +299,26 @@ extends ComplexStmt<
 
     @SuppressWarnings("unchecked")
     @SafeVarargs
-    public static <COROUTINE_RETURN , RESUME_ARGUMENT> ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT> convertStepsToComplexStep(
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT> convertStmtsToComplexStmt(
             final int creationStackOffset ,
             final CoroIterStmt<? extends COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
-        final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT> complexStep;
+        final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT> complexStmt;
         if ( stmts.length == 1 &&
                 stmts[ 0 ] instanceof ComplexStmt )
         {
-            complexStep =
+            complexStmt =
                     (ComplexStmt<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) stmts[ 0 ];
         }
         else
         {
-            complexStep =
+            complexStmt =
                     new Block<>(
                             creationStackOffset ,
                             stmts );
         }
 
-        return complexStep;
+        return complexStmt;
     }
 
 }

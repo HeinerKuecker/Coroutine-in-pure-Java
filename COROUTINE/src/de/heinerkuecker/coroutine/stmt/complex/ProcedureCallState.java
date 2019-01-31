@@ -66,14 +66,14 @@ extends ComplexStmtState<
         {
             // for showing next stmt in toString
             this.bodyComplexState =
-                    procedure.bodyComplexStep.newState(
+                    procedure.bodyComplexStmt.newState(
                             this );
         }
 
         if ( resultType != null )
         {
             // TODO execute only once
-            procedure.bodyComplexStep.setResultType( resultType );
+            procedure.bodyComplexStmt.setResultType( resultType );
         }
     }
 
@@ -87,20 +87,20 @@ extends ComplexStmtState<
     {
         if ( runInProcedure )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStep =
-                    //procedureCall.procedure.bodyComplexStep;
-                    this.parent/*.getRootParent()*/.getProcedure( procedureCall.procedureName ).bodyComplexStep;
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStmt =
+                    //procedureCall.procedure.bodyComplexStmt;
+                    this.parent/*.getRootParent()*/.getProcedure( procedureCall.procedureName ).bodyComplexStmt;
 
             if ( this.bodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.bodyComplexState =
-                        bodyComplexStep.newState(
+                        bodyComplexStmt.newState(
                                 //this.rootParent
                                 this );
             }
 
-            // TODO only before executing simple stmt: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStmtState();
 
             final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
                     this.bodyComplexState.execute(
@@ -142,10 +142,10 @@ extends ComplexStmtState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT> getStep()
+    public ProcedureCall<COROUTINE_RETURN , RESUME_ARGUMENT> getStmt()
     {
         return this.procedureCall;
     }
@@ -182,9 +182,9 @@ extends ComplexStmtState<
     }
 
     //@Override
-    //public void saveLastStepState()
+    //public void saveLastStmtState()
     //{
-    //    this.parent.getRootParent().saveLastStepState();
+    //    this.parent.getRootParent().saveLastStmtState();
     //}
 
     //@Override

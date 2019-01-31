@@ -140,7 +140,7 @@ public class CoroutineIteratorIfTest
     }
 
     @Test
-    public void test_If_True_No_Steps()
+    public void test_If_True_No_Stmts()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 

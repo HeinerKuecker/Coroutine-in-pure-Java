@@ -17,14 +17,14 @@ extends HasCreationStackTraceElement
     public final String name;
 
     /**
-     * Es muss ein ComplexStep sein,
-     * weil dieser mit ComplexStepState
+     * Es muss ein ComplexStmt sein,
+     * weil dieser mit ComplexStmtState
      * einen State hat, welcher bei
-     * einem SimpleStep nicht vorhanden
+     * einem SimpleStmt nicht vorhanden
      * ist und dessen State in dieser
      * Klasse verwaltet werden muesste.
      */
-    public final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStep;
+    public final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStmt;
 
     public final Map<String, Parameter> params;
 
@@ -38,7 +38,7 @@ extends HasCreationStackTraceElement
     public Procedure(
             final String name ,
             final Parameter[] params ,
-            final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodySteps )
+            final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodyStmts )
     {
         super(
                 //creationStackOffset
@@ -50,16 +50,16 @@ extends HasCreationStackTraceElement
                 initParams(
                         params );
 
-        if ( bodySteps.length == 0 )
+        if ( bodyStmts.length == 0 )
         {
             throw new IllegalArgumentException( "procedure body is empty" );
         }
 
-        this.bodyComplexStep =
-                Block.convertStepsToComplexStep(
+        this.bodyComplexStmt =
+                Block.convertStmtsToComplexStmt(
                         //creationStackOffset
                         4 ,
-                        bodySteps );
+                        bodyStmts );
     }
 
     /**
@@ -100,7 +100,7 @@ extends HasCreationStackTraceElement
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        this.bodyComplexStep.checkLabelAlreadyInUse(
+        this.bodyComplexStmt.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 new HashSet<>() );

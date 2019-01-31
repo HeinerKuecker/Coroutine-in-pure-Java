@@ -55,20 +55,20 @@ extends ComplexStmtState<
     {
         if ( runInTry )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStep =
-                    tryCatch.tryBodyComplexStep;
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStmt =
+                    tryCatch.tryBodyComplexStmt;
 
             if ( this.tryBodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.tryBodyComplexState =
-                        tryBodyStep.newState(
+                        tryBodyStmt.newState(
                                 //this.rootParent
                                 //this.parent
                                 this );
             }
 
-            // TODO only before executing simple stmt: parent.saveLastStepState();
+            // TODO only before executing simple stmt: parent.saveLastStmtState();
 
             CoroIterStmtResult<COROUTINE_RETURN> executeResult = null;
             try
@@ -108,21 +108,21 @@ extends ComplexStmtState<
 
         if ( runInCatch )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStep =
-                    tryCatch.catchBodyComplexStep;
+            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStmt =
+                    tryCatch.catchBodyComplexStmt;
 
             if ( this.catchBodyComplexState == null )
                 // no existing state from previous execute call
             {
                 this.catchBodyComplexState =
-                        catchBodyStep.newState(
+                        catchBodyStmt.newState(
                                 //this.rootParent
                                 //this.parent
                                 this );
             }
 
             this.catchBodyComplexState.localVars().declare(
-                    //declareStepOrExpression
+                    //declareStmtOrExpression
                     this.tryCatch ,
                     //variableName
                     this.tryCatch.catchedExceptionVariableName ,
@@ -175,10 +175,10 @@ extends ComplexStmtState<
     }
 
     /**
-     * @see ComplexStmtState#getStep()
+     * @see ComplexStmtState#getStmt()
      */
     @Override
-    public TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStep()
+    public TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
     {
         return this.tryCatch;
     }

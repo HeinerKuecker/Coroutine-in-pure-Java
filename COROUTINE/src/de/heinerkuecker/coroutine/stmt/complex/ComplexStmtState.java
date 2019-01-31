@@ -14,23 +14,23 @@ import de.heinerkuecker.util.HCloneable;
  * Extern instruction pointer and stack
  * for {@link ComplexStmt}.
  *
- * @param <STEP>
+ * @param <STMT>
  * @param <COROUTINE_RETURN>
  * @param <PARENT>
  * @author Heiner K&uuml;cker
  *
- * TODO rename to ComplexStepExecuteState
+ * TODO rename to ComplexStmtExecuteState
  */
 abstract public /*interface*/class ComplexStmtState<
-    STEP_STATE extends ComplexStmtState<STEP_STATE, STEP, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
-    STEP extends ComplexStmt<STEP, STEP_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    STMT_STATE extends ComplexStmtState<STMT_STATE, STMT, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    STMT extends ComplexStmt<STMT, STMT_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
     //PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     RESUME_ARGUMENT
 >
 implements
     CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> ,
-    HCloneable<STEP_STATE>
+    HCloneable<STMT_STATE>
 {
     protected final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
@@ -69,13 +69,13 @@ implements
      */
     abstract public boolean isFinished();
 
-    abstract public STEP getStep();
+    abstract public STMT getStmt();
 
     @Override
-    public void saveLastStepState()
+    public void saveLastStmtState()
     {
-        //getRootParent().saveLastStepState();
-        this.parent.saveLastStepState();
+        //getRootParent().saveLastStmtState();
+        this.parent.saveLastStmtState();
     }
 
     //@Override

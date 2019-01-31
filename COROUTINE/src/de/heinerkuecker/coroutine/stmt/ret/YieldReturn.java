@@ -16,7 +16,7 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
- * Step {@link CoroIterStmt} to
+ * Stmt {@link CoroIterStmt} to
  * return a specified value
  * and suspend run.
  *

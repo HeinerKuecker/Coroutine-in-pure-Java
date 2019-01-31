@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
- * Step {@link CoroIterStmt}
+ * Stmt {@link CoroIterStmt}
  * to continue current loop like
  * {@link For},
  * {@link ForEach},
@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
  * @author Heiner K&uuml;cker
  */
 public class Continue<COROUTINE_RETURN , RESUME_ARGUMENT>
-//implements SimpleStep<COROUTINE_RETURN, CoroutineIterator<COROUTINE_RETURN>>
+//implements SimpleStmt<COROUTINE_RETURN, CoroutineIterator<COROUTINE_RETURN>>
 extends BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**

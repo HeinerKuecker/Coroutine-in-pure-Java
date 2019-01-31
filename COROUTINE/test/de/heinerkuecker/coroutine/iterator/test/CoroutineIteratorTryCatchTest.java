@@ -93,7 +93,7 @@ public class CoroutineIteratorTryCatchTest
                         Integer.class ,
                         // stmts
                         TryCatch.newTryCatch(
-                                // tryStep
+                                // tryStmt
                                 new Block<Integer , Void>(
                                         // creationStackOffset
                                         0 ,
@@ -107,7 +107,7 @@ public class CoroutineIteratorTryCatchTest
                                 TestException.class ,
                                 // catchedExceptionVariableName
                                 "e" ,
-                                // catchBodySteps
+                                // catchBodyStmts
                                 new YieldReturn<>( 1 ) ) );
 
         CoroutineIteratorTest.assertNext(
@@ -130,7 +130,7 @@ public class CoroutineIteratorTryCatchTest
                         TestException.class ,
                         // stmts
                         TryCatch.<TestException , Void>newTryCatch(
-                                // tryStep
+                                // tryStmt
                                 new Block<TestException , Void>(
                                         // creationStackOffset
                                         0 ,
@@ -144,7 +144,7 @@ public class CoroutineIteratorTryCatchTest
                                 TestException.class ,
                                 // catchedExceptionVariableName
                                 "e" ,
-                                // catchBodySteps
+                                // catchBodyStmts
                                 new YieldReturn<>(
                                         new GetLocalVar<>(
                                                 //localVarName

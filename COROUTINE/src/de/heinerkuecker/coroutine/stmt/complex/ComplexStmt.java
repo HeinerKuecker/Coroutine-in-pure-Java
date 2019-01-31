@@ -11,19 +11,18 @@ import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 
 /**
  * Interface for {@link CoroIterStmt}
- * to non simple statements like
+ * to complex statements like
  * {@link While}.
  *
- * @param <STEP>       type of the complex stmt, resursivly defined
- * @param <STEP_STATE> type of the complex stmt execute state, resursivly defined
+ * @param <STMT>       type of the complex statement, resursivly defined
+ * @param <STMT_STATE> type of the complex statement execute state, resursivly defined
  * @param <COROUTINE_RETURN>     result type of method {@link CoroutineIterator#next()}
  * @param <PARENT>     type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-//public interface ComplexStep<STEP extends ComplexStep<STEP, COROUTINE_RETURN, PARENT>, COROUTINE_RETURN, PARENT extends CoroutineIterator<COROUTINE_RETURN>>
 abstract public class ComplexStmt<
-    STEP extends ComplexStmt<STEP, STEP_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
-    STEP_STATE extends ComplexStmtState<STEP_STATE, STEP, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    STMT extends ComplexStmt<STMT, STMT_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    STMT_STATE extends ComplexStmtState<STMT_STATE, STMT, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
     COROUTINE_RETURN ,
     //PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN/*, PARENT*/>
     RESUME_ARGUMENT
@@ -31,6 +30,8 @@ abstract public class ComplexStmt<
 extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
 {
     /**
+     * Constructor.
+     *
      * @param creationStackOffset
      */
     protected ComplexStmt(
@@ -40,8 +41,8 @@ extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
     }
 
     // TODO rename to newExecuteState
-    //abstract public ComplexStepState<ComplexStepState<?, STEP, COROUTINE_RETURN, PARENT>, STEP, COROUTINE_RETURN, PARENT> newState();
-    abstract public STEP_STATE newState(
+    //abstract public ComplexStmtState<ComplexStmtState<?, STMT, COROUTINE_RETURN, PARENT>, STMT, COROUTINE_RETURN, PARENT> newState();
+    abstract public STMT_STATE newState(
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
 
     abstract public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
@@ -58,17 +59,17 @@ extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
      * for debug purposes.
      *
      * @param indent indentation {@link String}
-     * @param lastStepExecuteState stack and instruction pointer when this stmt is current executed
-     * @param nextStepExecuteState stack and instruction pointer when this stmt is current executed
+     * @param lastStmtExecuteState stack and instruction pointer when this stmt is current executed
+     * @param nextStmtExecuteState stack and instruction pointer when this stmt is current executed
      * @return formatted {@link String}
      */
     abstract public String toString(
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            //final STEP_STATE lastStepExecuteState ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState
-            //final STEP_STATE nextStepExecuteState
+            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            //final STMT_STATE lastStmtExecuteState ,
+            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState
+            //final STMT_STATE nextStmtExecuteState
             );
 
     /**
@@ -82,9 +83,9 @@ extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
                 null ,
                 //indent
                 "" ,
-                //lastStepExecuteState
+                //lastStmtExecuteState
                 null ,
-                //nextStepExecuteState
+                //nextStmtExecuteState
                 null );
     }
 

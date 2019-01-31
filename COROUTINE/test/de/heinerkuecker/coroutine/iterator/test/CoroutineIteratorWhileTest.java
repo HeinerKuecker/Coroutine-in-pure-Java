@@ -402,7 +402,7 @@ public class CoroutineIteratorWhileTest
     }
 
     // endless loop: @Test
-    public void test_While_No_Steps_Endless_Loop()
+    public void test_While_No_Stmts_Endless_Loop()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
@@ -422,7 +422,7 @@ public class CoroutineIteratorWhileTest
     }
 
     @Test
-    public void test_While_No_Steps()
+    public void test_While_No_Stmts()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
@@ -588,11 +588,11 @@ public class CoroutineIteratorWhileTest
                                         new GetLocalVar<>(
                                                 "first" ,
                                                 Boolean.class ) ,
-                                        // thenSteps
+                                        // thenStmts
                                         (CoroIterStmt<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStmt[] {
                                                 new YieldReturn<>( 0 ) ,
                                         } ,
-                                        // elseSteps
+                                        // elseStmts
                                         (CoroIterStmt<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStmt[] {
                                                 new FinallyReturn<>( 1 ) ,
                                         } ) ,
@@ -640,11 +640,11 @@ public class CoroutineIteratorWhileTest
                                                 "copyOfFirst" ,
                                                 Boolean.class ,
                                                 first ) ,
-                                        // thenSteps
+                                        // thenStmts
                                         (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
                                                 new YieldReturn<>( first ) ,
                                         } ,
-                                        // elseSteps
+                                        // elseStmts
                                         (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
                                                 new FinallyReturn<>( first ) ,
                                         } ) ,
@@ -698,11 +698,11 @@ public class CoroutineIteratorWhileTest
                                                 "copyOfFirst" ,
                                                 Boolean.class ,
                                                 first ) ,
-                                        // thenSteps
+                                        // thenStmts
                                         (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
                                                 new YieldReturn<>( copyOfFirst ) ,
                                         } ,
-                                        // elseSteps
+                                        // elseStmts
                                         (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
                                                 new FinallyReturn<>( copyOfFirst ) ,
                                         } ) ,

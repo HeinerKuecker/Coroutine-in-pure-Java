@@ -81,7 +81,7 @@ implements HasVariableName
         else
         {
             throw new WrongStmtVariableClassException(
-                    //wrongStep
+                    //wrongStmt
                     this ,
                     //wrongClass
                     varValue.getClass() ,
@@ -116,7 +116,7 @@ implements HasVariableName
         if ( ! Collection.class.isAssignableFrom( localVariableTypes.get( collectionLocalVarName ) ) )
         {
             throw new WrongStmtVariableClassException(
-                    //wrongStep
+                    //wrongStmt
                     this ,
                     //wrongClass
                     localVariableTypes.get( collectionLocalVarName ) ,

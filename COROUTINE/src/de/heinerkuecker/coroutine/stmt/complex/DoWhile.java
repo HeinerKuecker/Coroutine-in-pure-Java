@@ -42,7 +42,7 @@ extends WhileOrDoWhile<
     //@SafeVarargs
     //public DoWhile(
     //        final CoroExpression<Boolean> condition ,
-    //        final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+    //        final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     //{
     //    super(
     //            //label
@@ -103,7 +103,7 @@ extends WhileOrDoWhile<
     //public DoWhile(
     //        final String label ,
     //        final CoroExpression<Boolean> condition ,
-    //        final CoroIterStep<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+    //        final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     //{
     //    super(
     //            label ,

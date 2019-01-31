@@ -24,7 +24,7 @@ extends ComplexStmt<
 {
     //final ConditionOrBooleanExpression/*Condition*/ condition
     final CoroExpression<Boolean> condition;
-    final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStep;
+    final ComplexStmt<?, ?, COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStmt;
 
     /**
      * Constructor.
@@ -41,8 +41,8 @@ extends ComplexStmt<
 
         this.condition = condition;
 
-        this.thenBodyComplexStep =
-                Block.convertStepsToComplexStep(
+        this.thenBodyComplexStmt =
+                Block.convertStmtsToComplexStmt(
                         // creationStackOffset
                         4 ,
                         stmts );
@@ -54,7 +54,7 @@ extends ComplexStmt<
     //@SafeVarargs
     //public If(
     //        final CoroExpression<Boolean> condition ,
-    //        final CoroIterStep<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... stmts )
+    //        final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... stmts )
     //{
     //    super(
     //            //creationStackOffset
@@ -64,8 +64,8 @@ extends ComplexStmt<
     //            new IsTrue(
     //                    condition );
     //
-    //    this.thenBodyComplexStep =
-    //            Block.convertStepsToComplexStep(
+    //    this.thenBodyComplexStmt =
+    //            Block.convertStmtsToComplexStmt(
     //                    // creationStackOffset
     //                    4 ,
     //                    stmts );
@@ -88,8 +88,8 @@ extends ComplexStmt<
                         Value.booleanValue(
                                 condition );
 
-        this.thenBodyComplexStep =
-                Block.convertStepsToComplexStep(
+        this.thenBodyComplexStmt =
+                Block.convertStmtsToComplexStmt(
                         // creationStackOffset
                         4 ,
                         stmts );
@@ -109,7 +109,7 @@ extends ComplexStmt<
             final HashSet<String> alreadyCheckedProcedureNames ,
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        return thenBodyComplexStep.getUnresolvedBreaksOrContinues(
+        return thenBodyComplexStmt.getUnresolvedBreaksOrContinues(
                 alreadyCheckedProcedureNames ,
                 parent );
     }
@@ -126,7 +126,7 @@ extends ComplexStmt<
                 condition.getProcedureArgumentGetsNotInProcedure() );
 
         result.addAll(
-                thenBodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
+                thenBodyComplexStmt.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
     }
@@ -138,7 +138,7 @@ extends ComplexStmt<
     public void setResultType(
             final Class<? extends COROUTINE_RETURN> resultType )
     {
-        this.thenBodyComplexStep.setResultType( resultType );
+        this.thenBodyComplexStmt.setResultType( resultType );
     }
 
     @Override
@@ -147,7 +147,7 @@ extends ComplexStmt<
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
-        this.thenBodyComplexStep.checkLabelAlreadyInUse(
+        this.thenBodyComplexStmt.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
@@ -165,7 +165,7 @@ extends ComplexStmt<
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
-        this.thenBodyComplexStep.checkUseVariables(
+        this.thenBodyComplexStmt.checkUseVariables(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -177,7 +177,7 @@ extends ComplexStmt<
             final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.thenBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.thenBodyComplexStmt.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     /**
@@ -187,16 +187,16 @@ extends ComplexStmt<
     public String toString(
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStmtState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStmtState<?, /*STMT*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            final ComplexStmtState<?, /*STMT*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         @SuppressWarnings("unchecked")
         final IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastIfExecuteState =
-                (IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+                (IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         @SuppressWarnings("unchecked")
         final IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextIfExecuteState =
-                (IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+                (IfState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
         final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastThenBodyState;
         if ( lastIfExecuteState != null )
@@ -264,7 +264,7 @@ extends ComplexStmt<
                 "\n" +
                 conditionStr + " )\n" +
                 variablesStr +
-                this.thenBodyComplexStep.toString(
+                this.thenBodyComplexStmt.toString(
                         parent ,
                         indent + " " ,
                         lastThenBodyState ,

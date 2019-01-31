@@ -24,8 +24,8 @@ extends ComplexStmt<
 {
     //final ConditionOrBooleanExpression/*Condition*/ condition
     final CoroExpression<Boolean> condition;
-    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStep;
-    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStep;
+    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStmt;
+    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStmt;
 
     /**
      * Constructor.
@@ -33,8 +33,8 @@ extends ComplexStmt<
     public IfElse(
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
     {
         super(
                 //creationStackOffset
@@ -42,34 +42,34 @@ extends ComplexStmt<
 
         this.condition = condition;
 
-        if ( thenSteps.length == 1 &&
-                thenSteps[ 0 ] instanceof ComplexStmt )
+        if ( thenStmts.length == 1 &&
+                thenStmts[ 0 ] instanceof ComplexStmt )
         {
-            this.thenBodyComplexStep =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>) thenSteps[ 0 ];
+            this.thenBodyComplexStmt =
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>) thenStmts[ 0 ];
         }
         else
         {
-            this.thenBodyComplexStep =
+            this.thenBodyComplexStmt =
                     new Block<>(
                             // creationStackOffset
                             3 ,
-                            thenSteps );
+                            thenStmts );
         }
 
-        if ( elseSteps.length == 1 &&
-                elseSteps[ 0 ] instanceof ComplexStmt )
+        if ( elseStmts.length == 1 &&
+                elseStmts[ 0 ] instanceof ComplexStmt )
         {
-            this.elseBodyComplexStep =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
+            this.elseBodyComplexStmt =
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
         }
         else
         {
-            this.elseBodyComplexStep =
+            this.elseBodyComplexStmt =
                     new Block<>(
                             // creationStackOffset
                             3 ,
-                            elseSteps );
+                            elseStmts );
         }
 
     }
@@ -79,8 +79,8 @@ extends ComplexStmt<
     // */
     //public IfElse(
     //        final CoroExpression<Boolean> condition ,
-    //        final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
-    //        final CoroIterStep<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
+    //        final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
+    //        final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
     //{
     //    super(
     //            //creationStackOffset
@@ -90,34 +90,34 @@ extends ComplexStmt<
     //            new IsTrue(
     //                    condition );
     //
-    //    if ( thenSteps.length == 1 &&
-    //            thenSteps[ 0 ] instanceof ComplexStep )
+    //    if ( thenStmts.length == 1 &&
+    //            thenStmts[ 0 ] instanceof ComplexStmt )
     //    {
-    //        this.thenBodyComplexStep =
-    //                (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenSteps[ 0 ];
+    //        this.thenBodyComplexStmt =
+    //                (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenStmts[ 0 ];
     //    }
     //    else
     //    {
-    //        this.thenBodyComplexStep =
+    //        this.thenBodyComplexStmt =
     //                new Block<>(
     //                        // creationStackOffset
     //                        3 ,
-    //                        thenSteps );
+    //                        thenStmts );
     //    }
     //
-    //    if ( elseSteps.length == 1 &&
-    //            elseSteps[ 0 ] instanceof ComplexStep )
+    //    if ( elseStmts.length == 1 &&
+    //            elseStmts[ 0 ] instanceof ComplexStmt )
     //    {
-    //        this.elseBodyComplexStep =
-    //                (ComplexStep<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
+    //        this.elseBodyComplexStmt =
+    //                (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
     //    }
     //    else
     //    {
-    //        this.elseBodyComplexStep =
+    //        this.elseBodyComplexStmt =
     //                new Block<>(
     //                        // creationStackOffset
     //                        3 ,
-    //                        elseSteps );
+    //                        elseStmts );
     //    }
     //
     //}
@@ -127,8 +127,8 @@ extends ComplexStmt<
      */
     public IfElse(
             final boolean condition ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenSteps ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseSteps )
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
+            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
     {
         super(
                 //creationStackOffset
@@ -139,34 +139,34 @@ extends ComplexStmt<
                         Value.booleanValue(
                                 condition );
 
-        if ( thenSteps.length == 1 &&
-                thenSteps[ 0 ] instanceof ComplexStmt )
+        if ( thenStmts.length == 1 &&
+                thenStmts[ 0 ] instanceof ComplexStmt )
         {
-            this.thenBodyComplexStep =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenSteps[ 0 ];
+            this.thenBodyComplexStmt =
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenStmts[ 0 ];
         }
         else
         {
-            this.thenBodyComplexStep =
+            this.thenBodyComplexStmt =
                     new Block<>(
                             // creationStackOffset
                             3 ,
-                            thenSteps );
+                            thenStmts );
         }
 
-        if ( elseSteps.length == 1 &&
-                elseSteps[ 0 ] instanceof ComplexStmt )
+        if ( elseStmts.length == 1 &&
+                elseStmts[ 0 ] instanceof ComplexStmt )
         {
-            this.elseBodyComplexStep =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseSteps[ 0 ];
+            this.elseBodyComplexStmt =
+                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
         }
         else
         {
-            this.elseBodyComplexStep =
+            this.elseBodyComplexStmt =
                     new Block<>(
                             // creationStackOffset
                             3 ,
-                            elseSteps );
+                            elseStmts );
         }
 
     }
@@ -194,12 +194,12 @@ extends ComplexStmt<
         final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
 
         result.addAll(
-                thenBodyComplexStep.getUnresolvedBreaksOrContinues(
+                thenBodyComplexStmt.getUnresolvedBreaksOrContinues(
                         alreadyCheckedProcedureNames ,
                         parent ) );
 
         result.addAll(
-                elseBodyComplexStep.getUnresolvedBreaksOrContinues(
+                elseBodyComplexStmt.getUnresolvedBreaksOrContinues(
                         alreadyCheckedProcedureNames ,
                         parent ) );
 
@@ -218,10 +218,10 @@ extends ComplexStmt<
                 condition.getProcedureArgumentGetsNotInProcedure() );
 
         result.addAll(
-                thenBodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
+                thenBodyComplexStmt.getProcedureArgumentGetsNotInProcedure() );
 
         result.addAll(
-                elseBodyComplexStep.getProcedureArgumentGetsNotInProcedure() );
+                elseBodyComplexStmt.getProcedureArgumentGetsNotInProcedure() );
 
         return result;
     }
@@ -233,8 +233,8 @@ extends ComplexStmt<
     public void setResultType(
             final Class<? extends COROUTINE_RETURN> resultType )
     {
-        this.thenBodyComplexStep.setResultType( resultType );
-        this.elseBodyComplexStep.setResultType( resultType );
+        this.thenBodyComplexStmt.setResultType( resultType );
+        this.elseBodyComplexStmt.setResultType( resultType );
     }
 
     @Override
@@ -243,12 +243,12 @@ extends ComplexStmt<
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
-        this.thenBodyComplexStep.checkLabelAlreadyInUse(
+        this.thenBodyComplexStmt.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
 
-        this.elseBodyComplexStep.checkLabelAlreadyInUse(
+        this.elseBodyComplexStmt.checkLabelAlreadyInUse(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 labels );
@@ -266,12 +266,12 @@ extends ComplexStmt<
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
-        this.thenBodyComplexStep.checkUseVariables(
+        this.thenBodyComplexStmt.checkUseVariables(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
-        this.elseBodyComplexStep.checkUseVariables(
+        this.elseBodyComplexStmt.checkUseVariables(
                 alreadyCheckedProcedureNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
@@ -283,8 +283,8 @@ extends ComplexStmt<
             final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
     {
         this.condition.checkUseArguments( alreadyCheckedProcedureNames , parent );
-        this.thenBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames , parent );
-        this.elseBodyComplexStep.checkUseArguments( alreadyCheckedProcedureNames , parent );
+        this.thenBodyComplexStmt.checkUseArguments( alreadyCheckedProcedureNames , parent );
+        this.elseBodyComplexStmt.checkUseArguments( alreadyCheckedProcedureNames , parent );
     }
 
     /**
@@ -294,16 +294,16 @@ extends ComplexStmt<
     public String toString(
             final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStepExecuteState ,
-            final ComplexStmtState<?, /*STEP*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStepExecuteState )
+            final ComplexStmtState<?, /*STMT*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            final ComplexStmtState<?, /*STMT*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         @SuppressWarnings("unchecked")
         final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastIfElseExecuteState =
-                (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStepExecuteState;
+                (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         @SuppressWarnings("unchecked")
         final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextIfElseExecuteState =
-                (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStepExecuteState;
+                (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
         final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastThenBodyState;
         if ( lastIfElseExecuteState != null )
@@ -391,13 +391,13 @@ extends ComplexStmt<
                 "\n" +
                 conditionStr + " )\n" +
                 variablesStr +
-                this.thenBodyComplexStep.toString(
+                this.thenBodyComplexStmt.toString(
                         parent ,
                         indent + " " ,
                         lastThenBodyState ,
                         nextThenBodyState ) +
                 indent + "else\n" +
-                this.elseBodyComplexStep.toString(
+                this.elseBodyComplexStmt.toString(
                         parent ,
                         indent + " " ,
                         lastElseBodyState ,

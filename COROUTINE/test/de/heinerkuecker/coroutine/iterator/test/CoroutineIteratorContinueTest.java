@@ -40,11 +40,11 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 0 ) ,
                         new For<>(
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 Value.trueValue() ,
-                                // updateStep
+                                // updateStmt
                                 new NoOperation<>() ,
                                 // stmts
                                 new YieldReturn<>( 0 ) ,
@@ -92,21 +92,21 @@ public class CoroutineIteratorContinueTest
                         new For<Integer , Void>(
                                 // label
                                 "outer_for" ,
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 new Lesser<>(
                                         number ,
                                         1 ) ,
-                                // updateStep
+                                // updateStmt
                                 new IncrementLocalVar<>( "number" ) ,
                                 // stmts
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new Continue<>(
@@ -137,11 +137,11 @@ public class CoroutineIteratorContinueTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new Continue<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -167,11 +167,11 @@ public class CoroutineIteratorContinueTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new Continue<>( "any" ) ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -197,11 +197,11 @@ public class CoroutineIteratorContinueTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new Continue<>() ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -227,11 +227,11 @@ public class CoroutineIteratorContinueTest
                                         "number" ,
                                         0 ) ,
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new Continue<>( "any" ) ,
                                         // stmts
                                         new NoOperation<>() ) ) );
@@ -263,21 +263,21 @@ public class CoroutineIteratorContinueTest
                         new For<Integer , Void>(
                                 // label
                                 "outer_for" ,
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 new Lesser<>(
                                         number ,
                                         1 ) ,
-                                // updateStep
+                                // updateStmt
                                 new IncrementLocalVar<>( "number" ) ,
                                 // stmts
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new Continue<>(
@@ -312,21 +312,21 @@ public class CoroutineIteratorContinueTest
                         new For<Integer , Void>(
                                 // label
                                 "outer_for" ,
-                                // initialStep
+                                // initialStmt
                                 new NoOperation<>() ,
                                 // condition
                                 new Lesser<>(
                                         number ,
                                         1 ) ,
-                                // updateStep
+                                // updateStmt
                                 new IncrementLocalVar<>( "number" ) ,
                                 // stmts
                                 new For<>(
-                                        // initialStep
+                                        // initialStmt
                                         new NoOperation<>() ,
                                         // condition
                                         Value.trueValue() ,
-                                        // updateStep
+                                        // updateStmt
                                         new NoOperation<>() ,
                                         // stmts
                                         new Continue<>(
