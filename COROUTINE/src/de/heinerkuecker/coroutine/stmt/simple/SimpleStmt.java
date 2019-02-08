@@ -1,9 +1,9 @@
 package de.heinerkuecker.coroutine.stmt.simple;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
 /**
  * Interface for one statement
@@ -13,8 +13,8 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-abstract public class SimpleStmt<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
-extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
+abstract public class SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
+extends CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN /*,PARENT*/>
 {
     /**
      * Constructor.
@@ -43,7 +43,7 @@ extends CoroIterStmt<COROUTINE_RETURN /*,PARENT*/>
      * @param parent
      * @return object to return a value and to control the flow
      */
-    abstract public CoroIterStmtResult<COROUTINE_RETURN> execute(
+    abstract public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
             //final PARENT parent
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent );
 }

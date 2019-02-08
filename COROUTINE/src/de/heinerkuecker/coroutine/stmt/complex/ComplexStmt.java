@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 
 /**
- * Interface for {@link CoroIterStmt}
+ * Interface for {@link CoroStmt}
  * to complex statements like
  * {@link While}.
  *
@@ -21,13 +21,14 @@ import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
  * @author Heiner K&uuml;cker
  */
 abstract public class ComplexStmt<
-    STMT extends ComplexStmt<STMT, STMT_STATE, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
-    STMT_STATE extends ComplexStmtState<STMT_STATE, STMT, COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    STMT extends ComplexStmt<STMT, STMT_STATE, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    STMT_STATE extends ComplexStmtState<STMT_STATE, STMT, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
-    //PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN/*, PARENT*/>
+    //PARENT extends CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN/*, PARENT*/>
     RESUME_ARGUMENT
     >
-extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
+extends CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/>
 {
     /**
      * Constructor.
@@ -43,15 +44,15 @@ extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
     // TODO rename to newExecuteState
     //abstract public ComplexStmtState<ComplexStmtState<?, STMT, COROUTINE_RETURN, PARENT>, STMT, COROUTINE_RETURN, PARENT> newState();
     abstract public STMT_STATE newState(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent );
 
-    abstract public List<BreakOrContinue<?, ?>> getUnresolvedBreaksOrContinues(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent );
+    abstract public List<BreakOrContinue<?, ?, ?>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<? , COROUTINE_RETURN, RESUME_ARGUMENT> parent );
 
     abstract public void checkLabelAlreadyInUse(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<? , COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels );
 
     /**
@@ -64,11 +65,11 @@ extends CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
      * @return formatted {@link String}
      */
     abstract public String toString(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final CoroutineOrFunctioncallOrComplexstmt</*FUNCTION_RETURN*/? , COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            final ComplexStmtState<?, ?, /*FUNCTION_RETURN*/ ? , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
             //final STMT_STATE lastStmtExecuteState ,
-            final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState
+            final ComplexStmtState<?, ?, /*FUNCTION_RETURN*/ ? , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState
             //final STMT_STATE nextStmtExecuteState
             );
 

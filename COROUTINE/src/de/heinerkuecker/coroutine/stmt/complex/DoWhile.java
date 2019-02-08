@@ -1,14 +1,19 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
-public class DoWhile<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+public class DoWhile<
+    FUNCTION_RETURN ,
+    COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ ,
+    RESUME_ARGUMENT
+    >
 extends WhileOrDoWhile<
-    DoWhile<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>,
-    DoWhileState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>,
+    DoWhile<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> ,
+    DoWhileState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> ,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
@@ -24,7 +29,7 @@ extends WhileOrDoWhile<
     public DoWhile(
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     {
         super(
                 //label
@@ -61,7 +66,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             final boolean condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     {
         super(
                 //label
@@ -84,7 +89,7 @@ extends WhileOrDoWhile<
             final String label ,
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     {
         super(
                 label ,
@@ -123,7 +128,7 @@ extends WhileOrDoWhile<
     public DoWhile(
             final String label ,
             final Boolean condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     {
         super(
                 label ,
@@ -134,8 +139,8 @@ extends WhileOrDoWhile<
     }
 
     @Override
-    public DoWhileState<COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN , RESUME_ARGUMENT> parent )
+    public DoWhileState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> newState(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> parent )
     {
         return new DoWhileState<>(
                 this ,

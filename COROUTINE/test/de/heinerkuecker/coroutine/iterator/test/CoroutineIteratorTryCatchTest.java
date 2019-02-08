@@ -94,7 +94,7 @@ public class CoroutineIteratorTryCatchTest
                         // stmts
                         TryCatch.newTryCatch(
                                 // tryStmt
-                                new Block<Integer , Void>(
+                                new Block<Void, Integer , Void>(
                                         // creationStackOffset
                                         0 ,
                                         new Throw<>(
@@ -129,9 +129,9 @@ public class CoroutineIteratorTryCatchTest
                         // type
                         TestException.class ,
                         // stmts
-                        TryCatch.<TestException , Void>newTryCatch(
+                        TryCatch.<Void, TestException , Void>newTryCatch(
                                 // tryStmt
-                                new Block<TestException , Void>(
+                                new Block<Void, TestException , Void>(
                                         // creationStackOffset
                                         0 ,
                                         new Throw<>(

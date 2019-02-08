@@ -1,36 +1,37 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 import de.heinerkuecker.util.HCloneable;
 
-class BlockState<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
+class BlockState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 extends ComplexStmtState<
-    BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
-    Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    BlockState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    Block<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     /*, PARENT*/
     RESUME_ARGUMENT
     >
 {
-    private final Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence;
+    private final Block<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence;
 
     // TODO getter to ensure unmodifiable from other class
     int currentStmtIndex;
-    ComplexStmtState<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
+    ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    //private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    //private final CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      *
      */
     public BlockState(
-            final Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence ,
+            final Block<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> sequence ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.sequence = sequence;
@@ -44,8 +45,8 @@ extends ComplexStmtState<
             // for toString
         {
             @SuppressWarnings("unchecked")
-            final ComplexStmt<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> firstComplexStmt =
-                    (ComplexStmt<? , ? , COROUTINE_RETURN , RESUME_ARGUMENT>) sequence.getStmt( 0 );
+            final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> firstComplexStmt =
+                    (ComplexStmt<? , ? , FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>) sequence.getStmt( 0 );
 
             this.currentComplexState =
                     firstComplexStmt.newState( this );
@@ -53,21 +54,21 @@ extends ComplexStmtState<
     }
 
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            //final CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         while ( currentStmtIndex < sequence.length() )
         {
-            final CoroIterStmt<? extends COROUTINE_RETURN /*, ? super PARENT*/> currentStmt =
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, ? super PARENT*/> currentStmt =
                     sequence.getStmt( this.currentStmtIndex );
 
-            final CoroIterStmtResult<COROUTINE_RETURN> executeResult;
+            final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> executeResult;
             if ( currentStmt instanceof SimpleStmt )
             {
                 @SuppressWarnings("unchecked")
-                final SimpleStmt<COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStmt =
-                        (SimpleStmt<COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStmt;
+                final SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentSimpleStmt =
+                        (SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT>) currentStmt;
 
                 parent.saveLastStmtState();
 
@@ -81,8 +82,8 @@ extends ComplexStmtState<
             else
             {
                 @SuppressWarnings("unchecked")
-                final ComplexStmt<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStmt =
-                        (ComplexStmt<?, ?, COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStmt;
+                final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT> currentComplexStmt =
+                        (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/, RESUME_ARGUMENT>) currentStmt;
 
                 if ( this.currentComplexState == null )
                     // no existing state from previous execute call
@@ -115,7 +116,7 @@ extends ComplexStmtState<
                      sequence.getStmt( this.currentStmtIndex ) instanceof ComplexStmt )
             {
                 this.currentComplexState =
-                        ( (ComplexStmt<?, ?, COROUTINE_RETURN, RESUME_ARGUMENT>) sequence.getStmt(
+                        ( (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT>) sequence.getStmt(
                                 this.currentStmtIndex ) ).newState(
                                         //this.rootParent
                                         //this.parent
@@ -123,12 +124,12 @@ extends ComplexStmtState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
         }
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     /**
@@ -144,7 +145,7 @@ extends ComplexStmtState<
      * @see ComplexStmtState#getStmt()
      */
     @Override
-    public Block<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> getStmt()
+    public Block<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> getStmt()
     {
         return this.sequence;
     }
@@ -153,9 +154,9 @@ extends ComplexStmtState<
      * @see HCloneable#createClone()
      */
     @Override
-    public BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> createClone()
+    public BlockState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> createClone()
     {
-        final BlockState<COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> clone =
+        final BlockState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> clone =
                 new BlockState<>(
                         sequence ,
                         //this.rootParent

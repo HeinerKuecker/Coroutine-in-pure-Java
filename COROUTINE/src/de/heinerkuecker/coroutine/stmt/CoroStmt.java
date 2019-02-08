@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-abstract public class CoroIterStmt<COROUTINE_RETURN/*, PARENT*/>
+abstract public class CoroStmt<FUNCTION_RETURN, COROUTINE_RETURN/*, PARENT*/>
 extends HasCreationStackTraceElement
 implements CoroCheckable
 {
@@ -29,17 +29,17 @@ implements CoroCheckable
     /**
      * Constructor with safe creation line number optional.
      */
-    protected CoroIterStmt(
+    protected CoroStmt(
             final int creationStackOffset )
     {
         super( creationStackOffset + 1 );
     }
 
-    //abstract public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure();
+    //abstract public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction();
 
     /**
      * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    abstract public void setResultType(
-            final Class<? extends COROUTINE_RETURN> resultType );
+    abstract public void setCoroutineReturnType(
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType );
 }

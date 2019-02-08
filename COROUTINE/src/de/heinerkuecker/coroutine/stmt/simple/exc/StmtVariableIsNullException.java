@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.stmt.simple.exc;
 
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
 /**
  * Exception
@@ -17,7 +17,7 @@ extends RuntimeException
      * Constructor.
      */
     public StmtVariableIsNullException(
-            final CoroIterStmt<?> wrongStmt ,
+            final CoroStmt<?, ?> wrongStmt ,
             final Class<?> expectedClass )
     {
         super(

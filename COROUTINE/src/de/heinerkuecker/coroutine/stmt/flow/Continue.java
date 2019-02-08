@@ -1,9 +1,9 @@
 package de.heinerkuecker.coroutine.stmt.flow;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.complex.DoWhile;
 import de.heinerkuecker.coroutine.stmt.complex.For;
 import de.heinerkuecker.coroutine.stmt.complex.ForEach;
@@ -11,7 +11,7 @@ import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
- * Stmt {@link CoroIterStmt}
+ * Stmt {@link CoroStmt}
  * to continue current loop like
  * {@link For},
  * {@link ForEach},
@@ -21,9 +21,9 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class Continue<COROUTINE_RETURN , RESUME_ARGUMENT>
+public class Continue<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements SimpleStmt<COROUTINE_RETURN, CoroutineIterator<COROUTINE_RETURN>>
-extends BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends BreakOrContinue<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Label of the loop
@@ -58,10 +58,10 @@ extends BreakOrContinue<COROUTINE_RETURN , RESUME_ARGUMENT>
      * @see SimpleStmt#execute
      */
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        return new CoroIterStmtResult.ContinueLoop<COROUTINE_RETURN>( this.label );
+        return new CoroStmtResult.ContinueLoop<FUNCTION_RETURN , COROUTINE_RETURN>( this.label );
     }
 
     /**

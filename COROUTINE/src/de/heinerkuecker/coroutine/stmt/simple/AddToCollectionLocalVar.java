@@ -2,25 +2,27 @@ package de.heinerkuecker.coroutine.stmt.simple;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
-public final class AddToCollectionLocalVar<COROUTINE_RETURN , RESUME_ARGUMENT, ELEMENT_TO_ADD>
-extends SimpleStmtWithoutArguments<COROUTINE_RETURN, RESUME_ARGUMENT>
+public final class AddToCollectionLocalVar<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT, ELEMENT_TO_ADD>
+extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
      * Name of {@link Collection} variable to add in
-     * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
+     * {@link CoroutineOrFunctioncallOrComplexstmt#localVars()}
      */
     public final String collectionLocalVarName;
 
@@ -53,8 +55,8 @@ implements HasVariableName
      * @see SimpleStmt#execute
      */
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue =
                 parent.localVars().get(
@@ -88,23 +90,37 @@ implements HasVariableName
                     //expectedClass
                     Collection.class );
         }
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     /**
-     * @see CoroIterStmt#setResultType(Class)
+     * @see CoroStmt#setCoroutineReturnType(Class)
      */
     @Override
-    public void setResultType(
-            final Class<? extends COROUTINE_RETURN> resultType )
+    public void setCoroutineReturnType(
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing
     }
 
     @Override
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    {
+        return this.elementToAddExpression.getFunctionArgumentGetsNotInFunction();
+    }
+
+    @Override
+    public void checkUseArguments(
+            final HashSet<String> alreadyCheckedFunctionNames,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent)
+    {
+        this.elementToAddExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
+    }
+
+    @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {

@@ -18,31 +18,37 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 /**
  * Stmt {@link CoroStmt} to
  * return a specified value
- * and suspend run.
+ * from a {@link Function}
+ * and continue run.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public class YieldReturn<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
+public class FunctionReturn<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    public final CoroExpression<? extends COROUTINE_RETURN> expression;
-
     /**
-     * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
+     * Reifier for type param {@link #FUNCTION_RETURN} to solve unchecked casts.
      */
-    private Class<? extends COROUTINE_RETURN> coroutineReturnType;
+    private final Class<? extends FUNCTION_RETURN> functionReturnType;
+
+    public final CoroExpression<? extends FUNCTION_RETURN> expression;
 
     /**
      * Constructor.
      */
-    public YieldReturn(
-            final CoroExpression<? extends COROUTINE_RETURN> expression )
+    public FunctionReturn(
+            final Class<? extends FUNCTION_RETURN> functionReturnType ,
+            final CoroExpression<? extends FUNCTION_RETURN> expression )
     {
         super(
                 //creationStackOffset
                 //2
                 );
+
+        this.functionReturnType =
+                Objects.requireNonNull(
+                        functionReturnType );
 
         this.expression =
                 Objects.requireNonNull(
@@ -52,17 +58,22 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     /**
      * Constructor.
      */
-    public YieldReturn(
-            final COROUTINE_RETURN value )
+    public FunctionReturn(
+            final Class<? extends FUNCTION_RETURN> functionReturnType ,
+            final FUNCTION_RETURN value )
     {
         super(
                 //creationStackOffset
                 //2
                 );
 
+        this.functionReturnType =
+                Objects.requireNonNull(
+                        functionReturnType );
+
         this.expression =
-                new Value<COROUTINE_RETURN>(
-                        (Class<? extends COROUTINE_RETURN>) value.getClass() ,
+                new Value<FUNCTION_RETURN>(
+                        (Class<? extends FUNCTION_RETURN>) value.getClass() ,
                         value );
     }
 
@@ -73,26 +84,26 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
             final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        final COROUTINE_RETURN resultValue =
+        final FUNCTION_RETURN resultValue =
                 expression.evaluate(
                         parent );
 
         if ( resultValue != null &&
-                ! coroutineReturnType.isInstance( resultValue ) )
+                ! functionReturnType.isInstance( resultValue ) )
         {
             throw new WrongExpressionClassException(
                     //valueExpression
                     expression ,
                     //expectedClass
-                    coroutineReturnType ,
+                    functionReturnType ,
                     //wrongValue
                     resultValue );
         }
 
         System.out.println( "execute " + this );
 
-        return new CoroStmtResult.YieldReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>(
-                coroutineReturnType.cast(
+        return new CoroStmtResult.FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>(
+                functionReturnType.cast(
                         resultValue ) );
     }
 
@@ -112,7 +123,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     public void setCoroutineReturnType(
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        this.coroutineReturnType = coroutineReturnType;
+        // do nothing
     }
 
     @Override

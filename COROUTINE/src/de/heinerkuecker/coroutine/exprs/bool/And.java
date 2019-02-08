@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 
 /**
  * And condition.
@@ -35,7 +35,7 @@ extends CoroBooleanExpression
 
     //@Override
     //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     //{
     //    //for ( final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
     //    for ( final CoroExpression<Boolean> condition : conditionsToAnd )
@@ -63,15 +63,15 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<?>> result = new ArrayList<>();
 
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         for ( final CoroExpression<?> condition : conditionsToAnd )
         {
             result.addAll(
-                    condition.getProcedureArgumentGetsNotInProcedure() );
+                    condition.getFunctionArgumentGetsNotInFunction() );
         }
 
         return result;
@@ -79,8 +79,8 @@ extends CoroBooleanExpression
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -88,7 +88,7 @@ extends CoroBooleanExpression
         for ( final CoroExpression<?> condition : conditionsToAnd )
         {
             condition.checkUseVariables(
-                    alreadyCheckedProcedureNames ,
+                    alreadyCheckedFunctionNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );
         }
@@ -96,13 +96,13 @@ extends CoroBooleanExpression
 
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         for ( final CoroExpression<?> condition : conditionsToAnd )
         {
-            condition.checkUseArguments( alreadyCheckedProcedureNames, parent );
+            condition.checkUseArguments( alreadyCheckedFunctionNames, parent );
         }
     }
 

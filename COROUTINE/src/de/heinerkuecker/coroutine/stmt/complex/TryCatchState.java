@@ -2,30 +2,35 @@ package de.heinerkuecker.coroutine.stmt.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.util.ExceptionUnchecker;
 import de.heinerkuecker.util.HCloneable;
 
-class TryCatchState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+class TryCatchState<
+    FUNCTION_RETURN ,
+    COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ ,
+    RESUME_ARGUMENT
+    >
 extends ComplexStmtState<
-    TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
-    TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    TryCatchState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    TryCatch<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    private final TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch;
+    private final TryCatch<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch;
 
     // TODO getter
     boolean runInTry = true;
     boolean runInCatch;
-    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyComplexState;
-    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyComplexState;
+    ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyComplexState;
+    ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     private Throwable catchedThr;
 
@@ -33,9 +38,9 @@ extends ComplexStmtState<
      * Constructor.
      */
     protected TryCatchState(
-            final TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch ,
+            final TryCatch<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryCatch ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
 
@@ -49,13 +54,13 @@ extends ComplexStmtState<
     }
 
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            //final CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInTry )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStmt =
+            final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> tryBodyStmt =
                     tryCatch.tryBodyComplexStmt;
 
             if ( this.tryBodyComplexState == null )
@@ -70,7 +75,7 @@ extends ComplexStmtState<
 
             // TODO only before executing simple stmt: parent.saveLastStmtState();
 
-            CoroIterStmtResult<COROUTINE_RETURN> executeResult = null;
+            CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> executeResult = null;
             try
             {
                 executeResult =
@@ -85,7 +90,7 @@ extends ComplexStmtState<
                 }
 
                 if ( ! ( executeResult == null ||
-                        executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                        executeResult instanceof CoroStmtResult.ContinueCoroutine ) )
                 {
                     return executeResult;
                 }
@@ -108,7 +113,7 @@ extends ComplexStmtState<
 
         if ( runInCatch )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStmt =
+            final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> catchBodyStmt =
                     tryCatch.catchBodyComplexStmt;
 
             if ( this.catchBodyComplexState == null )
@@ -131,7 +136,7 @@ extends ComplexStmtState<
                     // value
                     this.tryCatch.catchExceptionClass.cast( catchedThr ) );
 
-            final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
+            final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> executeResult =
                     this.catchBodyComplexState.execute(
                             //parent
                             //this
@@ -144,7 +149,7 @@ extends ComplexStmtState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
@@ -152,7 +157,7 @@ extends ComplexStmtState<
             finish();
         }
 
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     private void finish()
@@ -178,7 +183,7 @@ extends ComplexStmtState<
      * @see ComplexStmtState#getStmt()
      */
     @Override
-    public TryCatch<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
+    public TryCatch<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
     {
         return this.tryCatch;
     }
@@ -187,9 +192,9 @@ extends ComplexStmtState<
      * @see HCloneable#createClone()
      */
     @Override
-    public TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
+    public TryCatchState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final TryCatchState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final TryCatchState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new TryCatchState<>(
                         tryCatch ,
                         //this.rootParent

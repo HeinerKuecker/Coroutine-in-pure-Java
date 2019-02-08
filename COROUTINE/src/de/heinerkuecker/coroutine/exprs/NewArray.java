@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.util.ArrayTypeName;
 
 public class NewArray<ELEMENT>
@@ -43,7 +43,7 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public ELEMENT[] evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         //final Class<? extends ELEMENT> componentClass = elementClass;
         final Class<?> componentClass = arrayClass.getComponentType();
@@ -60,17 +60,17 @@ implements CoroExpression<ELEMENT[]>
     }
 
     /**
-     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<?>> result = new ArrayList<>();
 
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
             result.addAll(
-                    arrayElementExpression.getProcedureArgumentGetsNotInProcedure() );
+                    arrayElementExpression.getFunctionArgumentGetsNotInFunction() );
         }
 
         return result;
@@ -78,15 +78,15 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseVariables(
-                    alreadyCheckedProcedureNames ,
+                    alreadyCheckedFunctionNames ,
                     parent ,
                     globalVariableTypes, localVariableTypes );
         }
@@ -94,12 +94,12 @@ implements CoroExpression<ELEMENT[]>
 
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
         {
-            arrayElementExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+            arrayElementExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
         }
     }
 

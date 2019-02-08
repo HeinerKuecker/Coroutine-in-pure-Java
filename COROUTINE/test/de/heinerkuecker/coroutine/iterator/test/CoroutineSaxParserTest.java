@@ -15,16 +15,16 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.heinerkuecker.coroutine.Coroutine;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.Function;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.exprs.AbstrExprsUseExprs;
 import de.heinerkuecker.coroutine.exprs.AbstrNoVarsNoArgsExpression;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.GetResumeArgument;
 import de.heinerkuecker.coroutine.exprs.NewIllegalStateException;
 import de.heinerkuecker.coroutine.exprs.NullValue;
@@ -35,9 +35,9 @@ import de.heinerkuecker.coroutine.exprs.bool.CoroBooleanExpression;
 import de.heinerkuecker.coroutine.exprs.bool.Equals;
 import de.heinerkuecker.coroutine.exprs.bool.InstanceOf;
 import de.heinerkuecker.coroutine.exprs.bool.Not;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.complex.IfElse;
-import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
+import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.flow.Throw;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
@@ -365,6 +365,7 @@ public class CoroutineSaxParserTest
 
     static class SetStudentField
     extends AbstrLocalVarUseWithExpressionStmt<
+    /*FUNCTION_RETURN*/Void ,
     /*COROUTINE_RETURN*/Void ,
     /*RESUME_ARGUMENT*/Characters ,
     /*VARIABLE*/Student ,
@@ -392,7 +393,7 @@ public class CoroutineSaxParserTest
 
         @Override
         protected void execute(
-                final CoroutineOrProcedureOrComplexstmt<Void, Characters> parent ,
+                final CoroutineOrFunctioncallOrComplexstmt<Void, Void, Characters> parent ,
                 final Student student ,
                 final Characters characters )
         {
@@ -434,6 +435,7 @@ public class CoroutineSaxParserTest
 
     static class SetStudentRollno
     extends AbstrLocalVarUseWithExpressionStmt<
+    /*FUNCTION_RETURN*/Void ,
     /*COROUTINE_RETURN*/Void ,
     /*RESUME_ARGUMENT*/StartElement ,
     /*VARIABLE*/Student ,
@@ -455,7 +457,7 @@ public class CoroutineSaxParserTest
 
         @Override
         protected void execute(
-                final CoroutineOrProcedureOrComplexstmt<Void, StartElement> parent ,
+                final CoroutineOrFunctioncallOrComplexstmt<Void, Void, StartElement> parent ,
                 final Student student ,
                 final StartElement startElement )
         {
@@ -511,9 +513,9 @@ public class CoroutineSaxParserTest
                                 getXmlElementNameFromResumeArgument ,
                                 "class" ) );
 
-        // procedure to consume white space between xml elements (actually consume all characters)
-        final Procedure<Void , SaxEvent> consumeWhitespaces =
-                new Procedure<>(
+        // function to consume white space between xml elements (actually consume all characters)
+        final Function<Void, Void , SaxEvent> consumeWhitespaces =
+                new Function<Void, Void , SaxEvent>(
                         // name
                         "consumeWhitespaces" ,
                         // params
@@ -531,9 +533,9 @@ public class CoroutineSaxParserTest
                                 // stmts
                                 new YieldReturn<>( NullValue.nullValue() ) ) );
 
-        // procedure to consume end xml element
-        final Procedure<Void , SaxEvent> consumeEndElement =
-                new Procedure<>(
+        // function to consume end xml element
+        final Function<Void, Void , SaxEvent> consumeEndElement =
+                new Function<Void, Void , SaxEvent>(
                         // name
                         "consumeEndElement" ,
                         // params
@@ -547,9 +549,11 @@ public class CoroutineSaxParserTest
                                         String.class )
                         } ,
                         //bodyStmts
-                        new ProcedureCall<>(
-                                // procedureName
-                                "consumeWhitespaces" ) ,
+                        new FunctionCall<>(
+                                // functionName
+                                "consumeWhitespaces" ,
+                                //functionReturnType
+                                Void.class ) ,
                         new IfElse<>(
                                 // condition
                                 new And(
@@ -562,31 +566,31 @@ public class CoroutineSaxParserTest
                                                 EndElement.class ) ,
                                         new Equals<>(
                                                 getXmlElementNameFromResumeArgument ,
-                                                new GetProcedureArgument<>(
-                                                        // procedureArgumentName
+                                                new GetFunctionArgument<>(
+                                                        // functionArgumentName
                                                         "name" ,
                                                         // type
                                                         String.class ) ) ) ,
                                 // thenStmts
-                                new CoroIterStmt[] {
+                                new CoroStmt[] {
                                         // consume end xml element
                                         new YieldReturn<>( NullValue.nullValue() )
                                 } ,
                                 // elseStmts
-                                new CoroIterStmt[] {
-                                        new Throw<Void , SaxEvent>(
+                                new CoroStmt[] {
+                                        new Throw<Void, Void , SaxEvent>(
                                                 new Value<>(
                                                         new IllegalStateException(
                                                                 "xml element end expected: " +
-                                                                        new GetProcedureArgument<>(
-                                                                                //procedureArgumentName
+                                                                        new GetFunctionArgument<>(
+                                                                                //functionArgumentName
                                                                                 "name" ,
                                                                                 //type
                                                                                 String.class ) ) ) )
                                 } ) );
 
-        final Procedure<Void , SaxEvent> readRollnoAttrFromStartXmlElement =
-                new Procedure<>(
+        final Function<Void, Void , SaxEvent> readRollnoAttrFromStartXmlElement =
+                new Function<>(
                         // name
                         "readRollnoAttrFromStartXmlElement" ,
                         // params
@@ -606,22 +610,22 @@ public class CoroutineSaxParserTest
                                                 getXmlElementNameFromResumeArgument ,
                                                 "student" ) ) ,
                                 // thenStmts
-                                new CoroIterStmt[] {
+                                new CoroStmt[] {
                                         new SetStudentRollno() ,
                                         // consume start xml element
                                         new YieldReturn<>( NullValue.nullValue() )
                                 } ,
                                 // elseStmts
-                                new CoroIterStmt[] {
-                                        new Throw<Void , SaxEvent>(
+                                new CoroStmt[] {
+                                        new Throw<Void , Void , SaxEvent>(
                                                 new NewIllegalStateException(
                                                         new Value<>( "xml element start expected student" ) ) )
                                 } ) );
 
 
-        // procedure to consume start xml element, text and end xml element with the specified element name
-        final Procedure<Void , SaxEvent> readXmlElement =
-                new Procedure<>(
+        // function to consume start xml element, text and end xml element with the specified element name
+        final Function<Void, Void , SaxEvent> readXmlElement =
+                new Function<>(
                         // name
                         "readXmlElement" ,
                         // params
@@ -635,9 +639,11 @@ public class CoroutineSaxParserTest
                                         String.class )
                         } ,
                         // bodyStmts
-                        new ProcedureCall<>(
-                                // procedureName
-                                "consumeWhitespaces" ) ,
+                        new FunctionCall<>(
+                                // functionName
+                                "consumeWhitespaces" ,
+                                // functionReturnType
+                                Void.class ) ,
                         new IfElse<>(
                                 // condition
                                 new And(
@@ -650,24 +656,24 @@ public class CoroutineSaxParserTest
                                                 StartElement.class ) ,
                                         new Equals<>(
                                                 getXmlElementNameFromResumeArgument ,
-                                                new GetProcedureArgument<>(
-                                                        // procedureArgumentName
+                                                new GetFunctionArgument<>(
+                                                        // functionArgumentName
                                                         "name" ,
                                                         // type
                                                         String.class ) ) ) ,
                                 // thenStmts
-                                new CoroIterStmt[] {
+                                new CoroStmt[] {
                                         // consume start xml element
                                         new YieldReturn<>( NullValue.nullValue() )
                                 } ,
                                 // elseStmts
-                                new CoroIterStmt[] {
-                                        new Throw<Void , SaxEvent>(
+                                new CoroStmt[] {
+                                        new Throw<Void , Void , SaxEvent>(
                                                 new NewIllegalStateException(
                                                         new StrConcat(
                                                                 "xml element start expected: " ,
-                                                                new GetProcedureArgument<>(
-                                                                        //procedureArgumentName
+                                                                new GetFunctionArgument<>(
+                                                                        //functionArgumentName
                                                                         "name" ,
                                                                         //type
                                                                         String.class ) ) ) )
@@ -675,23 +681,25 @@ public class CoroutineSaxParserTest
                         // set text
                         new SetStudentField(
                                 // fieldName
-                                new GetProcedureArgument<>(
-                                        // procedureArgumentName
+                                new GetFunctionArgument<>(
+                                        // functionArgumentName
                                         "name" ,
                                         // type
                                         String.class ) ) ,
                         // consume resume call
-                        new YieldReturn<Void , SaxEvent>( NullValue.nullValue() ) ,
-                        new ProcedureCall<>(
-                                // procedureName
+                        new YieldReturn<Void , Void , SaxEvent>( NullValue.nullValue() ) ,
+                        new FunctionCall<>(
+                                // functionName
                                 "consumeEndElement" ,
+                                // functionReturnType
+                                Void.class ,
                                 // args
                                 new Argument<String>(
                                         // name
                                         "name" ,
                                         // expression
-                                        new GetProcedureArgument<>(
-                                                // procedureArgumentName
+                                        new GetFunctionArgument<>(
+                                                // functionArgumentName
                                                 "name" ,
                                                 // type
                                                 String.class ) ) ) );
@@ -700,9 +708,9 @@ public class CoroutineSaxParserTest
 
         final Coroutine<Void, SaxEvent> coroutine =
                 new Coroutine<Void , SaxEvent>(
-                        // resultType
+                        // coroutineReturnType
                         Void.class ,
-                        // procedures
+                        // functions
                         Arrays.asList(
                                 consumeWhitespaces ,
                                 readRollnoAttrFromStartXmlElement ,
@@ -724,10 +732,12 @@ public class CoroutineSaxParserTest
                                 // stmts
                                 // consume start xml element class
                                 new YieldReturn<>( NullValue.nullValue() ) ,
-                                new ProcedureCall<>(
-                                        // procedureName
-                                        "consumeWhitespaces" ) ,
-                                new While<Void, SaxEvent>(
+                                new FunctionCall<>(
+                                        // functionName
+                                        "consumeWhitespaces" ,
+                                        // functionReturnType
+                                        Void.class ) ,
+                                new While<Void, Void, SaxEvent>(
                                         // condition: ! endElement student
                                         new Not(
                                                 new InstanceOf(
@@ -754,57 +764,71 @@ public class CoroutineSaxParserTest
                                                         "student" ,
                                                         // type
                                                         Student.class ) ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
-                                                "readRollnoAttrFromStartXmlElement" ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
+                                        new FunctionCall<>(
+                                                // functionName
+                                                "readRollnoAttrFromStartXmlElement" ,
+                                                // functionReturnType
+                                                Void.class ) ,
+                                        new FunctionCall<>(
+                                                // functionName
                                                 "readXmlElement" ,
+                                                // functionReturnType
+                                                Void.class ,
                                                 // args
                                                 new Argument<String>(
                                                         // name
                                                         "name" ,
                                                         // value
                                                         "firstname" ) ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
+                                        new FunctionCall<>(
+                                                // functionName
                                                 "readXmlElement" ,
+                                                // functionReturnType
+                                                Void.class ,
                                                 // args
                                                 new Argument<String>(
                                                         // name
                                                         "name" ,
                                                         // value
                                                         "lastname" ) ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
+                                        new FunctionCall<>(
+                                                // functionName
                                                 "readXmlElement" ,
+                                                // functionReturnType
+                                                Void.class ,
                                                 // args
                                                 new Argument<String>(
                                                         // name
                                                         "name" ,
                                                         // value
                                                         "nickname" ) ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
+                                        new FunctionCall<>(
+                                                // functionName
                                                 "readXmlElement" ,
+                                                // functionReturnType
+                                                Void.class ,
                                                 // args
                                                 new Argument<String>(
                                                         // name
                                                         "name" ,
                                                         // value
                                                         "marks" ) ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
+                                        new FunctionCall<>(
+                                                // functionName
                                                 "consumeEndElement" ,
+                                                // functionReturnType
+                                                Void.class ,
                                                 // args
                                                 new Argument<String>(
                                                         // name
                                                         "name" ,
                                                         // value
                                                         "student" ) ) ,
-                                        new ProcedureCall<>(
-                                                // procedureName
-                                                "consumeWhitespaces" ) ) ) );
+                                        new FunctionCall<>(
+                                                // functionName
+                                                "consumeWhitespaces" ,
+                                                // functionReturnType
+                                                Void.class ) ) ) );
 
         try
         {

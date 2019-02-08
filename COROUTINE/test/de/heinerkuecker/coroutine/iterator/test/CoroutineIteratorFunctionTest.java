@@ -2,23 +2,24 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.Function;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.arg.Parameter;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.exprs.bool.Lesser;
 import de.heinerkuecker.coroutine.exprs.num.IntAdd;
 import de.heinerkuecker.coroutine.exprs.num.LongAdd;
+import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
 import de.heinerkuecker.coroutine.stmt.complex.If;
-import de.heinerkuecker.coroutine.stmt.complex.ProcedureCall;
 import de.heinerkuecker.coroutine.stmt.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.stmt.ret.FinallyReturnWithoutResult;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
@@ -32,16 +33,16 @@ import de.heinerkuecker.coroutine.stmt.simple.NoOperation;
  *
  * @author Heiner K&uuml;cker
  */
-public class CoroutineIteratorProcedureTest
+public class CoroutineIteratorFunctionTest
 {
     @Test( expected = IllegalArgumentException.class )
     public void testConstructor_Empty()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> empty_procedure =
-                new Procedure<>(
-                        "empty_procedure" ,
+        final Function<Void, Integer , Void> empty_function =
+                new Function<>(
+                        "empty_function" ,
                         // params
                         null );
 
@@ -49,7 +50,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( empty_procedure ) ,
+                        Arrays.asList( empty_function ) ,
                         // params
                         null ,
                         // args
@@ -57,8 +58,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "empty_procedure" ) );
+                        new FunctionCall<Void, Integer, Void>(
+                                "empty_function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -69,9 +72,9 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         null ,
                         new FinallyReturnWithoutResult<>() );
@@ -80,7 +83,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -88,8 +91,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ) );
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
@@ -100,9 +105,9 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         null ,
                         new YieldReturn<>( 0 ) );
@@ -111,7 +116,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -119,8 +124,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ) );
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -135,9 +142,9 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         null ,
                         // stmts
@@ -158,7 +165,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -166,8 +173,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ) );
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -182,9 +191,9 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         null ,
                         // stmts
@@ -198,8 +207,8 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // procedures
-                        Arrays.asList( procedure ) ,
+                        // functions
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -215,8 +224,10 @@ public class CoroutineIteratorProcedureTest
                                         0 )
                         } ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ) );
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -231,9 +242,9 @@ public class CoroutineIteratorProcedureTest
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         null ,
                         // stmts
@@ -255,7 +266,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -263,8 +274,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ) );
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -281,9 +294,9 @@ public class CoroutineIteratorProcedureTest
         CoroutineDebugSwitches.initializationChecks = true;
         CoroutineDebugSwitches.saveToStringInfos = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         null ,
                         // stmts
@@ -297,7 +310,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -313,10 +326,14 @@ public class CoroutineIteratorProcedureTest
                                     0 )
                         } ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ) ,
-                        new ProcedureCall<>(
-                                "procedure" ) );
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ) );
 
         CoroutineIteratorTest.assertNext(
                 coroIter ,
@@ -331,13 +348,13 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_ValueProcedureArgument_0_1()
+    public void test_ValueFunctionArgument_0_1()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -350,7 +367,7 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
@@ -358,7 +375,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -366,8 +383,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "argument" ,
@@ -383,13 +402,13 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test( expected = Argument.ArgumentNotDeclaredException.class )
-    public void test_ValueProcedureArgument_negative_wrong_initializationChecks()
+    public void test_ValueFunctionArgument_negative_wrong_initializationChecks()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -402,7 +421,7 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
@@ -410,7 +429,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -418,8 +437,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "wrong_argument" ,
@@ -435,13 +456,13 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void test_ValueProcedureArgument_negative_wrong()
+    public void test_ValueFunctionArgument_negative_wrong()
     {
         CoroutineDebugSwitches.initializationChecks = false;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -454,7 +475,7 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
@@ -462,7 +483,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -470,8 +491,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "wrong_argument" ,
@@ -486,14 +509,14 @@ public class CoroutineIteratorProcedureTest
                 coroIter );
     }
 
-    @Test( expected = GetProcedureArgument.ProcedureArgumentNotDeclaredException.class )
-    public void test_ValueProcedureArgument_negative_not_declared()
+    @Test( expected = GetFunctionArgument.FunctionArgumentNotDeclaredException.class )
+    public void test_ValueFunctionArgument_negative_not_declared()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -513,7 +536,7 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
@@ -521,7 +544,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -529,8 +552,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "argument0" ,
@@ -546,13 +571,13 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test( expected = Arguments.MissedArgumentException.class )
-    public void test_ValueProcedureArgument_negative_missed()
+    public void test_ValueFunctionArgument_negative_missed()
     {
         CoroutineDebugSwitches.initializationChecks = false;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -572,7 +597,7 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
@@ -580,7 +605,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -588,8 +613,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "argument0" ,
@@ -605,13 +632,13 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_LocalVarProcedureArgument_0_0()
+    public void test_LocalVarFunctionArgument_0_0()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<>(
+                        "function" ,
                         new Parameter[] {
                                 new Parameter(
                                         // name
@@ -623,7 +650,7 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
@@ -631,7 +658,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -647,10 +674,12 @@ public class CoroutineIteratorProcedureTest
                                         0 ) ,
                         } ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
-                                        // procedureArgumentName
+                                        // functionArgumentName
                                         "argument" ,
                                         // expression
                                         new GetLocalVar<>(
@@ -667,13 +696,13 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_GlobalVarProcedureArgument_0_0()
+    public void test_GlobalVarFunctionArgument_0_0()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        final Procedure<Integer , Void> procedure0 =
-                new Procedure<>(
-                        "procedure0" ,
+        final Function<Void, Integer , Void> function0 =
+                new Function<>(
+                        "function0" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -686,13 +715,13 @@ public class CoroutineIteratorProcedureTest
                         } ,
                         // stmts
                         new YieldReturn<>(
-                                new GetProcedureArgument<>(
+                                new GetFunctionArgument<>(
                                         "argument" ,
                                         Integer.class ) ) );
 
-        final Procedure<Integer , Void> procedure1 =
-                new Procedure<>(
-                        "procedure1" ,
+        final Function<Void, Integer , Void> function1 =
+                new Function<>(
+                        "function1" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -704,10 +733,12 @@ public class CoroutineIteratorProcedureTest
                                         Long.class )
                         } ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure0" ,
+                        new FunctionCall<>(
+                                "function0" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
-                                        // procedureArgumentName
+                                        // functionArgumentName
                                         "argument" ,
                                         // expression
                                         new GetGlobalVar<>(
@@ -720,8 +751,8 @@ public class CoroutineIteratorProcedureTest
                         // type
                         Integer.class ,
                         Arrays.asList(
-                                procedure0 ,
-                                procedure1 ) ,
+                                function0 ,
+                                function1 ) ,
                         // params
                         null ,
                         // args
@@ -737,10 +768,12 @@ public class CoroutineIteratorProcedureTest
                                         0 ) ,
                         } ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure1" ,
+                        new FunctionCall<>(
+                                "function1" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
-                                        // procedureArgumentName
+                                        // functionArgumentName
                                         "argument" ,
                                         // expression
                                         Value.longValue( 0L ) ) ) );
@@ -756,20 +789,20 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_ValueProcedureArgument_Recursive()
+    public void test_ValueFunctionArgument_Recursive()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
-        // extract get procedure argument expression
-        final GetProcedureArgument<Long> argument =
-                new GetProcedureArgument<>(
-                        //procedureArgumentName
+        // extract get function argument expression
+        final GetFunctionArgument<Long> argument =
+                new GetFunctionArgument<>(
+                        //functionArgumentName
                         "argument" ,
                         Long.class );
 
-        final Procedure<Long , Void> procedure =
-                new Procedure<Long , Void>(
-                        "procedure" ,
+        final Function<Void, Long , Void> function =
+                new Function<Void, Long , Void>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -786,8 +819,10 @@ public class CoroutineIteratorProcedureTest
                                         argument ,
                                         3L ) ,
                                 new YieldReturn<>( argument ) ,
-                                new ProcedureCall<>(
-                                        "procedure" ,
+                                new FunctionCall<>(
+                                        "function" ,
+                                        //functionReturnType
+                                        Void.class ,
                                         new Argument<>(
                                                 // name
                                                 "argument" ,
@@ -801,7 +836,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Long>(
                         // type
                         Long.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -809,8 +844,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "argument" ,
@@ -838,7 +875,7 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_ValueProcedureArgument_LocalVariable_Recursive_Long()
+    public void test_ValueFunctionArgument_LocalVariable_Recursive_Long()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
@@ -849,9 +886,9 @@ public class CoroutineIteratorProcedureTest
                         "variable" ,
                         Long.class );
 
-        final Procedure<Long , Void> procedure =
-                new Procedure<Long , Void>(
-                        "procedure" ,
+        final Function<Void, Long , Void> function =
+                new Function<Void, Long , Void>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
@@ -869,8 +906,8 @@ public class CoroutineIteratorProcedureTest
                                 // type
                                 Long.class ,
                                 // varValueExpression
-                                new GetProcedureArgument<>(
-                                        // procedureArgumentName
+                                new GetFunctionArgument<>(
+                                        // functionArgumentName
                                         "argument" ,
                                         Long.class ) ) ,
                         new If<>(
@@ -878,8 +915,10 @@ public class CoroutineIteratorProcedureTest
                                         variable ,
                                         3L ) ,
                                 new YieldReturn<>( variable ) ,
-                                new ProcedureCall<>(
-                                        "procedure" ,
+                                new FunctionCall<>(
+                                        "function" ,
+                                        //functionReturnType
+                                        Void.class ,
                                         new Argument<>(
                                                 // name
                                                 "argument" ,
@@ -893,7 +932,7 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Long>(
                         // type
                         Long.class ,
-                        Arrays.asList( procedure ) ,
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -901,8 +940,10 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
                                         "argument" ,
@@ -930,7 +971,7 @@ public class CoroutineIteratorProcedureTest
     }
 
     @Test
-    public void test_ValueProcedureArgument_LocalVariable_Recursive_Int()
+    public void test_ValueFunctionArgument_LocalVariable_Recursive_Int()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
@@ -941,21 +982,21 @@ public class CoroutineIteratorProcedureTest
                         "variable" ,
                         Integer.class );
 
-        // extract get procedure argument expression
-        final GetProcedureArgument<Integer> procedureArgument =
-                new GetProcedureArgument<>(
-                        // procedureArgumentName
-                        "procedureArgument" ,
+        // extract get function argument expression
+        final GetFunctionArgument<Integer> functionArgument =
+                new GetFunctionArgument<>(
+                        // functionArgumentName
+                        "functionArgument" ,
                         Integer.class );
 
-        final Procedure<Integer , Void> procedure =
-                new Procedure<Integer , Void>(
-                        "procedure" ,
+        final Function<Void, Integer , Void> function =
+                new Function<Void, Integer , Void>(
+                        "function" ,
                         // params
                         new Parameter[] {
                                 new Parameter(
                                         // name
-                                        "procedureArgument" ,
+                                        "functionArgument" ,
                                         // isMandantory
                                         true ,
                                         // type
@@ -968,17 +1009,19 @@ public class CoroutineIteratorProcedureTest
                                 // type
                                 Integer.class ,
                                 // initialVarValueExpression
-                                procedureArgument ) ,
+                                functionArgument ) ,
                         new If<>(
                                 new Lesser<>(
                                         variable ,
                                         3 ) ,
                                 new YieldReturn<>( variable ) ,
-                                new ProcedureCall<>(
-                                        "procedure" ,
+                                new FunctionCall<>(
+                                        "function" ,
+                                        //functionReturnType
+                                        Void.class ,
                                         new Argument<>(
                                                 // name
-                                                "procedureArgument" ,
+                                                "functionArgument" ,
                                                 // expression
                                                 new IntAdd(
                                                         variable ,
@@ -989,8 +1032,8 @@ public class CoroutineIteratorProcedureTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        // procedures
-                        Arrays.asList( procedure ) ,
+                        // functions
+                        Arrays.asList( function ) ,
                         // params
                         null ,
                         // args
@@ -998,11 +1041,13 @@ public class CoroutineIteratorProcedureTest
                         // globalVariables
                         null ,
                         // stmts
-                        new ProcedureCall<>(
-                                "procedure" ,
+                        new FunctionCall<>(
+                                "function" ,
+                                //functionReturnType
+                                Void.class ,
                                 new Argument<>(
                                         // name
-                                        "procedureArgument" ,
+                                        "functionArgument" ,
                                         // value
                                         0 ) ) );
 
@@ -1026,6 +1071,13 @@ public class CoroutineIteratorProcedureTest
 
         CoroutineIteratorTest.assertHasNextFalse(
                 coroIter );
+    }
+
+
+    @Test
+    public void test_FunctionReturn()
+    {
+        Assert.fail( "TODO" );
     }
 
 }

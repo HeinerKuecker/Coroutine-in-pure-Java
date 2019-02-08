@@ -22,7 +22,7 @@ public class CoroutineTest
 
         final Coroutine<Void, Void> coro =
                 new Coroutine<>(
-                        // resultType
+                        // coroutineReturnType
                         Void.class
                         // stmts
                         );

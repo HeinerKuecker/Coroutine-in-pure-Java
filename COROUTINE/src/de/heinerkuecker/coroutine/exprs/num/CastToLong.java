@@ -38,7 +38,7 @@ extends AbstrOneExprExpression<Long , Number>
      */
     @Override
     public Long evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Number numberExpressionResult = /*numberExpression*/expr.evaluate( parent );
 
@@ -50,32 +50,6 @@ extends AbstrOneExprExpression<Long , Number>
 
         return numberExpressionResult.longValue();
     }
-
-    //@Override
-    //public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    //{
-    //    return numberExpression.getProcedureArgumentGetsNotInProcedure();
-    //}
-
-    //@Override
-    //public void checkUseVariables(
-    //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
-    //        final Map<String, Class<?>> globalVariableTypes ,
-    //        final Map<String, Class<?>> localVariableTypes )
-    //{
-    //    this.numberExpression.checkUseVariables(
-    //            alreadyCheckedProcedureNames ,
-    //            parent ,
-    //            globalVariableTypes, localVariableTypes );
-    //}
-
-    //@Override
-    //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
-    //{
-    //    this.numberExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
-    //}
 
     @SuppressWarnings("unchecked")
     @Override

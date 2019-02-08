@@ -3,11 +3,11 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.Procedure;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.Function;
 import de.heinerkuecker.coroutine.VariablesOrLocalVariables;
 import de.heinerkuecker.coroutine.arg.Arguments;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.util.HCloneable;
 
 /**
@@ -22,17 +22,18 @@ import de.heinerkuecker.util.HCloneable;
  * TODO rename to ComplexStmtExecuteState
  */
 abstract public /*interface*/class ComplexStmtState<
-    STMT_STATE extends ComplexStmtState<STMT_STATE, STMT, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
-    STMT extends ComplexStmt<STMT, STMT_STATE, COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    STMT_STATE extends ComplexStmtState<STMT_STATE , STMT , FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    STMT extends ComplexStmt<STMT, STMT_STATE, FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT>,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
-    //PARENT extends CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
+    //PARENT extends CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     RESUME_ARGUMENT
 >
 implements
-    CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> ,
+    CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> ,
     HCloneable<STMT_STATE>
 {
-    protected final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    protected final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> parent;
 
     private final BlockLocalVariables blockLocalVariables;
 
@@ -41,7 +42,7 @@ implements
      */
     protected ComplexStmtState(
             //final BlockLocalVariables blockLocalVariables
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         this.parent = Objects.requireNonNull( parent );
 
@@ -57,9 +58,9 @@ implements
      * @param parent
      * @return object to return a value and to control the flow
      */
-    abstract public CoroIterStmtResult<COROUTINE_RETURN> execute(
+    abstract public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
             //PARENT parent
-            //CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+            //CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             );
 
     /**
@@ -78,17 +79,11 @@ implements
         this.parent.saveLastStmtState();
     }
 
-    //@Override
-    //public CoroutineIterator<COROUTINE_RETURN> getRootParent()
-    //{
-    //    return parent.getRootParent();
-    //}
-
     @Override
-    public Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> getProcedure(
-            final String procedureName )
+    public Function<? , COROUTINE_RETURN , RESUME_ARGUMENT> getFunction(
+            final String functionName )
     {
-        return parent.getProcedure( procedureName );
+        return parent.getFunction( functionName );
     }
 
     @Override
@@ -105,15 +100,15 @@ implements
     }
 
     @Override
-    public Arguments procedureArgumentValues()
+    public Arguments functionArgumentValues()
     {
-        return parent.procedureArgumentValues();
+        return parent.functionArgumentValues();
     }
 
     @Override
-    public Map<String, Class<?>> procedureParameterTypes()
+    public Map<String, Class<?>> functionParameterTypes()
     {
-        return parent.procedureParameterTypes();
+        return parent.functionParameterTypes();
     }
 
     @Override

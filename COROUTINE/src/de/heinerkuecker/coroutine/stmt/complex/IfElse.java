@@ -6,17 +6,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 
-public class IfElse<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+public class IfElse<
+    FUNCTION_RETURN ,
+    COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ ,
+    RESUME_ARGUMENT
+    >
 extends ComplexStmt<
-    IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
-    IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    IfElse<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
@@ -24,8 +29,8 @@ extends ComplexStmt<
 {
     //final ConditionOrBooleanExpression/*Condition*/ condition
     final CoroExpression<Boolean> condition;
-    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStmt;
-    final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStmt;
+    final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStmt;
+    final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStmt;
 
     /**
      * Constructor.
@@ -33,8 +38,8 @@ extends ComplexStmt<
     public IfElse(
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
     {
         super(
                 //creationStackOffset
@@ -46,7 +51,7 @@ extends ComplexStmt<
                 thenStmts[ 0 ] instanceof ComplexStmt )
         {
             this.thenBodyComplexStmt =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>) thenStmts[ 0 ];
+                    (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>) thenStmts[ 0 ];
         }
         else
         {
@@ -61,7 +66,7 @@ extends ComplexStmt<
                 elseStmts[ 0 ] instanceof ComplexStmt )
         {
             this.elseBodyComplexStmt =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
+                    (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
         }
         else
         {
@@ -127,8 +132,8 @@ extends ComplexStmt<
      */
     public IfElse(
             final boolean condition ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
-            final CoroIterStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
     {
         super(
                 //creationStackOffset
@@ -143,7 +148,7 @@ extends ComplexStmt<
                 thenStmts[ 0 ] instanceof ComplexStmt )
         {
             this.thenBodyComplexStmt =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenStmts[ 0 ];
+                    (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) thenStmts[ 0 ];
         }
         else
         {
@@ -158,7 +163,7 @@ extends ComplexStmt<
                 elseStmts[ 0 ] instanceof ComplexStmt )
         {
             this.elseBodyComplexStmt =
-                    (ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
+                    (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*? super CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>) elseStmts[ 0 ];
         }
         else
         {
@@ -175,116 +180,113 @@ extends ComplexStmt<
      * @see ComplexStmt#newState()
      */
     @Override
-    public IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> newState(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new IfElseState<>(
                 this ,
                 parent );
     }
 
-    /**
-     * @see ComplexStmt#getUnresolvedBreaksOrContinues()
-     */
     @Override
-    public List<BreakOrContinue<? , ?>> getUnresolvedBreaksOrContinues(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public List<BreakOrContinue<? , ? , ?>> getUnresolvedBreaksOrContinues(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<? , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        final List<BreakOrContinue<? , ?>> result = new ArrayList<>();
+        final List<BreakOrContinue<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 thenBodyComplexStmt.getUnresolvedBreaksOrContinues(
-                        alreadyCheckedProcedureNames ,
+                        alreadyCheckedFunctionNames ,
                         parent ) );
 
         result.addAll(
                 elseBodyComplexStmt.getUnresolvedBreaksOrContinues(
-                        alreadyCheckedProcedureNames ,
+                        alreadyCheckedFunctionNames ,
                         parent ) );
 
         return result;
     }
 
     /**
-     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<?>> result = new ArrayList<>();
 
         result.addAll(
-                condition.getProcedureArgumentGetsNotInProcedure() );
+                condition.getFunctionArgumentGetsNotInFunction() );
 
         result.addAll(
-                thenBodyComplexStmt.getProcedureArgumentGetsNotInProcedure() );
+                thenBodyComplexStmt.getFunctionArgumentGetsNotInFunction() );
 
         result.addAll(
-                elseBodyComplexStmt.getProcedureArgumentGetsNotInProcedure() );
+                elseBodyComplexStmt.getFunctionArgumentGetsNotInFunction() );
 
         return result;
     }
 
     /**
-     * @see CoroIterStmt#setResultType(Class)
+     * @see CoroStmt#setCoroutineReturnType(Class)
      */
     @Override
-    public void setResultType(
-            final Class<? extends COROUTINE_RETURN> resultType )
+    public void setCoroutineReturnType(
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        this.thenBodyComplexStmt.setResultType( resultType );
-        this.elseBodyComplexStmt.setResultType( resultType );
+        this.thenBodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
+        this.elseBodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
     }
 
     @Override
     public void checkLabelAlreadyInUse(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<? , COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
         this.thenBodyComplexStmt.checkLabelAlreadyInUse(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 labels );
 
         this.elseBodyComplexStmt.checkLabelAlreadyInUse(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 labels );
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
         this.condition.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.thenBodyComplexStmt.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.elseBodyComplexStmt.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
     }
 
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent )
     {
-        this.condition.checkUseArguments( alreadyCheckedProcedureNames , parent );
-        this.thenBodyComplexStmt.checkUseArguments( alreadyCheckedProcedureNames , parent );
-        this.elseBodyComplexStmt.checkUseArguments( alreadyCheckedProcedureNames , parent );
+        this.condition.checkUseArguments( alreadyCheckedFunctionNames , parent );
+        this.thenBodyComplexStmt.checkUseArguments( alreadyCheckedFunctionNames , parent );
+        this.elseBodyComplexStmt.checkUseArguments( alreadyCheckedFunctionNames , parent );
     }
 
     /**
@@ -292,20 +294,20 @@ extends ComplexStmt<
      */
     @Override
     public String toString(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final CoroutineOrFunctioncallOrComplexstmt</*FUNCTION_RETURN*/? , COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final String indent ,
-            final ComplexStmtState<?, /*STMT*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
-            final ComplexStmtState<?, /*STMT*/?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState )
+            final ComplexStmtState<?, /*STMT*/?, /*FUNCTION_RETURN*/? , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastStmtExecuteState ,
+            final ComplexStmtState<?, /*STMT*/?, /*FUNCTION_RETURN*/? , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastIfElseExecuteState =
-                (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
+        final IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastIfElseExecuteState =
+                (IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         @SuppressWarnings("unchecked")
-        final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextIfElseExecuteState =
-                (IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
+        final IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextIfElseExecuteState =
+                (IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
-        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastThenBodyState;
+        final ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastThenBodyState;
         if ( lastIfElseExecuteState != null )
         {
             lastThenBodyState = lastIfElseExecuteState.thenBodyComplexState;
@@ -315,7 +317,7 @@ extends ComplexStmt<
             lastThenBodyState = null;
         }
 
-        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextThenBodyState;
+        final ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextThenBodyState;
         if ( nextIfElseExecuteState != null )
         {
             nextThenBodyState = nextIfElseExecuteState.thenBodyComplexState;
@@ -325,7 +327,7 @@ extends ComplexStmt<
             nextThenBodyState = null;
         }
 
-        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastElseBodyState;
+        final ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> lastElseBodyState;
         if ( lastIfElseExecuteState != null )
         {
             lastElseBodyState = lastIfElseExecuteState.elseBodyComplexState;
@@ -335,7 +337,7 @@ extends ComplexStmt<
             lastElseBodyState = null;
         }
 
-        final ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextElseBodyState;
+        final ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> nextElseBodyState;
         if ( nextIfElseExecuteState != null )
         {
             nextElseBodyState = nextIfElseExecuteState.elseBodyComplexState;

@@ -10,10 +10,10 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.arg.Parameter;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.exprs.exc.UseGetProcedureArgumentOutsideOfProcedureException;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.exc.UseGetFunctionArgumentOutsideOfFunctionException;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.complex.Block;
 import de.heinerkuecker.coroutine.stmt.complex.ComplexStmt;
 import de.heinerkuecker.coroutine.stmt.complex.ComplexStmtState;
@@ -22,7 +22,7 @@ import de.heinerkuecker.coroutine.stmt.flow.exc.UnresolvedBreakOrContinueExcepti
 import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
 
 public class Coroutine<COROUTINE_RETURN, RESUME_ARGUMENT>
-implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
+implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_ARGUMENT>
 {
     /**
      * Es muss ein ComplexStmt sein,
@@ -32,18 +32,18 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
      * ist und dessen State in dieser
      * Klasse verwaltet werden müsste.
      */
-    private final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> complexStmt;
-    private ComplexStmtState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> nextComplexStmtState;
+    private final ComplexStmt<?, ?, Void , COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> complexStmt;
+    private ComplexStmtState<?, ?, Void , COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> nextComplexStmtState;
 
     // for debug
-    private ComplexStmtState<?, ?, COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> lastComplexStmtState;
+    private ComplexStmtState<?, ?, Void , COROUTINE_RETURN /*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> lastComplexStmtState;
 
     private boolean finallyReturnRaised;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    private final Class<? extends COROUTINE_RETURN> resultType;
+    private final Class<? extends COROUTINE_RETURN> coroutineReturnType;
 
     /**
      * GlobalVariables.
@@ -51,7 +51,7 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     //public final HashMap<String, Object> vars = new HashMap<>();
     private final GlobalVariables globalVariables = new GlobalVariables();
 
-    private final Map<String, Procedure<COROUTINE_RETURN , RESUME_ARGUMENT>> procedures = new HashMap<>();
+    private final Map<String, Function<?, COROUTINE_RETURN , RESUME_ARGUMENT>> functions = new HashMap<>();
 
     public final Map<String, Parameter> params;
 
@@ -66,12 +66,12 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
      */
     @SafeVarargs
     public Coroutine(
-            final Class<? extends COROUTINE_RETURN> resultType ,
-            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
-        this.resultType =
+        this.coroutineReturnType =
                 Objects.requireNonNull(
-                        resultType );
+                        coroutineReturnType );
 
         this.complexStmt =
                 Block.convertStmtsToComplexStmt(
@@ -79,7 +79,7 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
                         5 ,
                         stmts );
 
-        this.complexStmt.setResultType( resultType );
+        this.complexStmt.setCoroutineReturnType( coroutineReturnType );
 
         this.params = Collections.emptyMap();
 
@@ -91,25 +91,25 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     /**
      * Constructor.
      *
-     * @param procedures can be <code>null</code>
+     * @param functions can be <code>null</code>
      * @param initialVariableValues key value pairs to put initial in globalVariables {@link #vars}, can be <code>null</code>
      * @param stmts statements for coroutine processor
      */
     @SafeVarargs
     public Coroutine(
-            final Class<? extends COROUTINE_RETURN> resultType ,
-            final Iterable<Procedure<COROUTINE_RETURN , RESUME_ARGUMENT>> procedures ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Iterable<Function<? , COROUTINE_RETURN , RESUME_ARGUMENT>> functions ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<?>[] args ,
-            final DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
-            final CoroIterStmt<COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final DeclareVariable<Void , COROUTINE_RETURN, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
+            final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         //this( stmts );
 
-        this.resultType =
+        this.coroutineReturnType =
                 Objects.requireNonNull(
-                        resultType );
+                        coroutineReturnType );
 
         this.complexStmt =
                 Block.convertStmtsToComplexStmt(
@@ -117,25 +117,25 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
                         5 ,
                         stmts );
 
-        if ( procedures != null )
+        if ( functions != null )
         {
-            for ( final Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> procedure : procedures )
+            for ( final Function<? , COROUTINE_RETURN , RESUME_ARGUMENT> function : functions )
             {
-                if ( this.procedures.containsKey( procedure.name ) )
+                if ( this.functions.containsKey( function.name ) )
                 {
                     throw new IllegalArgumentException(
-                            "procedure name already in use: " +
-                                    procedure.name );
+                            "function name already in use: " +
+                                    function.name );
                 }
 
-                this.procedures.put(
-                        procedure.name ,
-                        procedure );
+                this.functions.put(
+                        function.name ,
+                        function );
             }
         }
 
         this.params =
-                Procedure.initParams(
+                Function.initParams(
                         params );
 
         this.arguments =
@@ -151,13 +151,13 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
 
         if ( globalVariableDeclarations != null )
         {
-            for ( DeclareVariable<COROUTINE_RETURN, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
+            for ( DeclareVariable<Void , COROUTINE_RETURN, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
             {
                 globalVariableDeclaration.execute( this );
             }
         }
 
-        this.complexStmt.setResultType( resultType );
+        this.complexStmt.setCoroutineReturnType( coroutineReturnType );
 
         doMoreInitializations();
     }
@@ -168,22 +168,22 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
         {
             checkForUnresolvedBreaksAndContinues();
 
-            checkForUseGetProcedureArgumentOutsideOfProcedureException();
+            checkForUseGetFunctionArgumentOutsideOfFunctionException();
 
             this.complexStmt.checkLabelAlreadyInUse(
-                    // alreadyCheckedProcedureNames
+                    // alreadyCheckedFunctionNames
                     new HashSet<>() ,
                     this ,
                     // labels
                     new HashSet<>() );
 
             this.complexStmt.checkUseArguments(
-                    // alreadyCheckedProcedureNames
+                    // alreadyCheckedFunctionNames
                     new HashSet<>() ,
                     this );
 
             this.complexStmt.checkUseVariables(
-                    // alreadyCheckedProcedureNames
+                    // alreadyCheckedFunctionNames
                     new HashSet<>() ,
                     // parent
                     this ,
@@ -217,42 +217,42 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
             return null;
         }
 
-        final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
+        final CoroStmtResult<Void , COROUTINE_RETURN> executeResult =
                 this.nextComplexStmtState.execute(
                         //this
                         );
 
         COROUTINE_RETURN result;
         if ( executeResult == null ||
-                executeResult instanceof CoroIterStmtResult.ContinueCoroutine )
+                executeResult instanceof CoroStmtResult.ContinueCoroutine )
             // end of sub complex state without result
         {
             // Iterator ends
             result = null;
             // Keep for debug and for isFinished: this.nextComplexStmtState = null;
         }
-        else if ( executeResult instanceof CoroIterStmtResult.YieldReturnWithResult )
+        else if ( executeResult instanceof CoroStmtResult.YieldReturnWithResult )
         {
-            final CoroIterStmtResult.YieldReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
-                    (CoroIterStmtResult.YieldReturnWithResult<COROUTINE_RETURN>) executeResult;
+            final CoroStmtResult.YieldReturnWithResult<Void , COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroStmtResult.YieldReturnWithResult<Void , COROUTINE_RETURN>) executeResult;
 
             result =
-                    resultType.cast(
+                    coroutineReturnType.cast(
                             yieldReturnWithResult.result );
         }
-        else if ( executeResult instanceof CoroIterStmtResult.FinallyReturnWithResult )
+        else if ( executeResult instanceof CoroStmtResult.FinallyReturnWithResult )
         {
-            final CoroIterStmtResult.FinallyReturnWithResult<COROUTINE_RETURN> yieldReturnWithResult =
-                    (CoroIterStmtResult.FinallyReturnWithResult<COROUTINE_RETURN>) executeResult;
+            final CoroStmtResult.FinallyReturnWithResult<Void , COROUTINE_RETURN> yieldReturnWithResult =
+                    (CoroStmtResult.FinallyReturnWithResult<Void , COROUTINE_RETURN>) executeResult;
 
             result =
-                    resultType.cast(
+                    coroutineReturnType.cast(
                             yieldReturnWithResult.result );
 
             finallyReturnRaised = true;
             // Keep for debug and for isFinished: this.nextComplexStmtState = null;
         }
-        else if ( executeResult instanceof CoroIterStmtResult.FinallyReturnWithoutResult )
+        else if ( executeResult instanceof CoroStmtResult.FinallyReturnWithoutResult )
         {
             // Iterator ends
             result = null;
@@ -276,10 +276,10 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     @Override
-    public Procedure<COROUTINE_RETURN , RESUME_ARGUMENT> getProcedure(
-            final String procedureName )
+    public Function<? , COROUTINE_RETURN , RESUME_ARGUMENT> getFunction(
+            final String functionName )
     {
-        return this.procedures.get( procedureName );
+        return this.functions.get( functionName );
     }
 
     /**
@@ -287,7 +287,7 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
      */
     private void checkForUnresolvedBreaksAndContinues()
     {
-        final List<BreakOrContinue<?, ?>> unresolvedBreaksOrContinues =
+        final List<BreakOrContinue<?, ?, ?>> unresolvedBreaksOrContinues =
                 complexStmt.getUnresolvedBreaksOrContinues(
                         new HashSet<>() ,
                         this );
@@ -301,23 +301,23 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * Check for {@link GetProcedureArgument} outside of procedure.
+     * Check for {@link GetFunctionArgument} outside of function.
      */
-    private void checkForUseGetProcedureArgumentOutsideOfProcedureException()
+    private void checkForUseGetFunctionArgumentOutsideOfFunctionException()
     {
-        final List<GetProcedureArgument<?>> getProcedureArgumentsNotInProcedure =
-                complexStmt.getProcedureArgumentGetsNotInProcedure();
+        final List<GetFunctionArgument<?>> getFunctionArgumentsNotInFunction =
+                complexStmt.getFunctionArgumentGetsNotInFunction();
 
-        if ( ! getProcedureArgumentsNotInProcedure.isEmpty() )
+        if ( ! getFunctionArgumentsNotInFunction.isEmpty() )
         {
-            throw new UseGetProcedureArgumentOutsideOfProcedureException(
-                    "ProcedureArguments not in procedure: " +
-                            getProcedureArgumentsNotInProcedure );
+            throw new UseGetFunctionArgumentOutsideOfFunctionException(
+                    "FunctionArguments not in function: " +
+                            getFunctionArgumentsNotInFunction );
         }
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstmt#saveLastStmtState()
+     * @see CoroutineOrFunctioncallOrComplexstmt#saveLastStmtState()
      */
     @Override
     public void saveLastStmtState()
@@ -329,7 +329,7 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstmt#localVars()
+     * @see CoroutineOrFunctioncallOrComplexstmt#localVars()
      */
     @Override
     //public Map<String, Object> localVars()
@@ -343,7 +343,7 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstmt#globalVars()
+     * @see CoroutineOrFunctioncallOrComplexstmt#globalVars()
      */
     @Override
     //public Map<String, Object> globalVars()
@@ -353,14 +353,14 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     }
 
     /**
-     * @see CoroutineOrProcedureOrComplexstmt#procedureArgumentValues()
+     * @see CoroutineOrFunctioncallOrComplexstmt#functionArgumentValues()
      */
     @Override
-    public Arguments procedureArgumentValues()
+    public Arguments functionArgumentValues()
     {
         // TODO code smell ausgeschlagenes Erbe Refused bequest
         //return null;
-        throw new IllegalStateException( this.getClass().getSimpleName() + " has no procedure arguments" );
+        throw new IllegalStateException( this.getClass().getSimpleName() + " has no function arguments" );
     }
 
     /**
@@ -379,19 +379,19 @@ implements CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>
     //}
 
     @Override
-    public Map<String, Class<?>> procedureParameterTypes()
+    public Map<String, Class<?>> functionParameterTypes()
     {
         //throw new RuntimeException( "not implemented" );
-        //return this.arguments.procedureParameterTypes();
-        throw new IllegalStateException( "this is no procedure" );
+        //return this.arguments.functionParameterTypes();
+        throw new IllegalStateException( "this is no function" );
     }
 
     @Override
     public Map<String, Class<?>> globalParameterTypes()
     {
         //throw new RuntimeException( "not implemented" );
-        //return procedureParameterTypes();
-        return arguments.procedureParameterTypes();
+        //return functionParameterTypes();
+        return arguments.functionParameterTypes();
     }
 
     @Override

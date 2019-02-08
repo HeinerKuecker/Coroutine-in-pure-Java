@@ -1,17 +1,17 @@
 package de.heinerkuecker.coroutine.exprs.exc;
 
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 
 /**
  * Exception is throwing
  * when a expression
- * {@link GetProcedureArgument}
+ * {@link GetFunctionArgument}
  * is used outside of an
- * procedure.
+ * function.
  *
  * @author Heiner K&uuml;cker
  */
-public class UseGetProcedureArgumentOutsideOfProcedureException
+public class UseGetFunctionArgumentOutsideOfFunctionException
 extends IllegalArgumentException
 {
     /**
@@ -24,7 +24,7 @@ extends IllegalArgumentException
      *
      * @param s
      */
-    public UseGetProcedureArgumentOutsideOfProcedureException(
+    public UseGetFunctionArgumentOutsideOfFunctionException(
             final String s )
     {
         super(s);

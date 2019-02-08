@@ -10,7 +10,7 @@ import de.heinerkuecker.coroutine.stmt.flow.Continue;
  * {@link Continue}
  * is already in use
  * in the current
- * coroutine or procedure.
+ * coroutine or function.
  *
  * @author Heiner K&uuml;cker
  */

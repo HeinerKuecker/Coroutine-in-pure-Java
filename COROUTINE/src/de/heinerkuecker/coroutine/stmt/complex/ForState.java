@@ -2,22 +2,27 @@ package de.heinerkuecker.coroutine.stmt.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 import de.heinerkuecker.util.HCloneable;
 
-class ForState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+class ForState<
+    FUNCTION_RETURN ,
+    COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ ,
+    RESUME_ARGUMENT
+    >
 extends ComplexStmtState<
-    ForState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> ,
-    For<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    ForState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> ,
+    For<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    private final For<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> _for;
+    private final For<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> _for;
 
     // TODO getter
     boolean runInInitializer = true;
@@ -25,13 +30,13 @@ extends ComplexStmtState<
     boolean runInBody;
     boolean runInUpdate;
 
-    private ComplexStmtState<? ,?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStmtState;
+    private ComplexStmtState<? ,?, FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStmtState;
     // TODO getter
-    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
-    private ComplexStmtState<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStmtState;
+    ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexState;
+    private ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStmtState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Local variables for
@@ -51,9 +56,9 @@ extends ComplexStmtState<
      * Constructor.
      */
     public ForState(
-            final For<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> _for ,
+            final For<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> _for ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this._for = _for;
@@ -66,20 +71,20 @@ extends ComplexStmtState<
     }
 
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            //final CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInInitializer )
         {
-            final CoroIterStmt<COROUTINE_RETURN /*, ? super PARENT*/> initializerStmt =
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/> initializerStmt =
                     _for.initialStmt;
 
-            final CoroIterStmtResult<COROUTINE_RETURN> initializerExecuteResult;
+            final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> initializerExecuteResult;
             if ( initializerStmt instanceof SimpleStmt )
             {
-                final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> initializerSimpleStmt =
-                        (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) initializerStmt;
+                final SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> initializerSimpleStmt =
+                        (SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) initializerStmt;
 
                 parent.saveLastStmtState();
 
@@ -93,8 +98,8 @@ extends ComplexStmtState<
             }
             else
             {
-                final ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStmt =
-                        (ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) initializerStmt;
+                final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> initializerComplexStmt =
+                        (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) initializerStmt;
 
                 if ( this.initializerComplexStmtState == null )
                     // no existing state from previous execute call
@@ -122,14 +127,14 @@ extends ComplexStmtState<
                 }
             }
 
-            if ( initializerExecuteResult instanceof CoroIterStmtResult.Break ||
-                    initializerExecuteResult instanceof CoroIterStmtResult.ContinueLoop )
+            if ( initializerExecuteResult instanceof CoroStmtResult.Break ||
+                    initializerExecuteResult instanceof CoroStmtResult.ContinueLoop )
             {
                 throw new IllegalStateException( String.valueOf( initializerExecuteResult ) );
             }
 
             if ( ! ( initializerExecuteResult == null ||
-                    initializerExecuteResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                    initializerExecuteResult instanceof CoroStmtResult.ContinueCoroutine ) )
             {
                 return initializerExecuteResult;
             }
@@ -168,13 +173,13 @@ extends ComplexStmtState<
                 else
                 {
                     finish();
-                    return CoroIterStmtResult.continueCoroutine();
+                    return CoroStmtResult.continueCoroutine();
                 }
             }
 
             if ( runInBody )
             {
-                final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStmt =
+                final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStmt =
                         _for.bodyComplexStmt;
 
                 if ( this.bodyComplexState == null )
@@ -189,7 +194,7 @@ extends ComplexStmtState<
 
                 // TODO only before executing simple stmt: parent.saveLastStmtState();
 
-                final CoroIterStmtResult<COROUTINE_RETURN> bodyExecuteResult =
+                final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> bodyExecuteResult =
                         this.bodyComplexState.execute(
                                 //parent
                                 //this
@@ -202,21 +207,21 @@ extends ComplexStmtState<
                     this.bodyComplexState = null;
                 }
 
-                if ( bodyExecuteResult instanceof CoroIterStmtResult.Break )
+                if ( bodyExecuteResult instanceof CoroStmtResult.Break )
                 {
                     finish();
-                    final String label = ( (CoroIterStmtResult.Break<?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroStmtResult.Break<? , ?>) bodyExecuteResult ).label;
                     if ( label == null ||
                             label.equals( _for.label ) )
                     {
-                        return CoroIterStmtResult.continueCoroutine();
+                        return CoroStmtResult.continueCoroutine();
                     }
                     // break outer loop
                     return bodyExecuteResult;
                 }
-                else if ( bodyExecuteResult instanceof CoroIterStmtResult.ContinueLoop )
+                else if ( bodyExecuteResult instanceof CoroStmtResult.ContinueLoop )
                 {
-                    final String label = ( (CoroIterStmtResult.ContinueLoop<?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroStmtResult.ContinueLoop<? , ?>) bodyExecuteResult ).label;
                     if ( label != null &&
                             ! label.equals( _for.label ) )
                         // continue outer loop
@@ -227,7 +232,7 @@ extends ComplexStmtState<
                     // default behaviour
                 }
                 else if ( ! ( bodyExecuteResult == null ||
-                        bodyExecuteResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                        bodyExecuteResult instanceof CoroStmtResult.ContinueCoroutine ) )
                 {
                     return bodyExecuteResult;
                 }
@@ -239,14 +244,14 @@ extends ComplexStmtState<
 
             if ( runInUpdate )
             {
-                final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT*/> updateStmt =
+                final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/> updateStmt =
                         _for.updateStmt;
 
-                CoroIterStmtResult<COROUTINE_RETURN> updateExecuteResult;
+                CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> updateExecuteResult;
                 if ( updateStmt instanceof SimpleStmt )
                 {
-                    final SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> updateSimpleStmt =
-                            (SimpleStmt<COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) updateStmt;
+                    final SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT> updateSimpleStmt =
+                            (SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/, RESUME_ARGUMENT>) updateStmt;
 
                     parent.saveLastStmtState();
 
@@ -260,8 +265,8 @@ extends ComplexStmtState<
                 }
                 else
                 {
-                    final ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStmt =
-                            (ComplexStmt<?, ?, COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) updateStmt;
+                    final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateComplexStmt =
+                            (ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT>) updateStmt;
 
                     if ( this.updateComplexStmtState == null )
                         // no existing state from previous execute call
@@ -289,14 +294,14 @@ extends ComplexStmtState<
                     }
                 }
 
-                if ( updateExecuteResult instanceof CoroIterStmtResult.Break ||
-                        updateExecuteResult instanceof CoroIterStmtResult.ContinueLoop )
+                if ( updateExecuteResult instanceof CoroStmtResult.Break ||
+                        updateExecuteResult instanceof CoroStmtResult.ContinueLoop )
                 {
                     throw new IllegalStateException( String.valueOf( updateExecuteResult ) );
                 }
 
                 if ( ! ( updateExecuteResult == null ||
-                        updateExecuteResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                        updateExecuteResult instanceof CoroStmtResult.ContinueCoroutine ) )
                 {
                     return updateExecuteResult;
                 }
@@ -346,7 +351,7 @@ extends ComplexStmtState<
      * @see ComplexStmtState#getStmt()
      */
     @Override
-    public For<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> getStmt()
+    public For<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> getStmt()
     {
         return _for;
     }
@@ -355,9 +360,9 @@ extends ComplexStmtState<
      * @see HCloneable#createClone()
      */
     @Override
-    public ForState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
+    public ForState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final ForState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final ForState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new ForState<>(
                         _for ,
                         //this.rootParent

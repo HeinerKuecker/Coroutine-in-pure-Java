@@ -1,14 +1,15 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
-public class While<COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
+public class While<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
 extends WhileOrDoWhile<
-    While<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
-    WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>,
+    While<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> ,
+    WhileState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> ,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
@@ -24,7 +25,7 @@ extends WhileOrDoWhile<
     public While(
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
                 //label
@@ -61,7 +62,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final boolean condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
                 //label
@@ -84,7 +85,7 @@ extends WhileOrDoWhile<
             final String label ,
             //final ConditionOrBooleanExpression/*Condition*/ condition
             final CoroExpression<Boolean> condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
                 label ,
@@ -123,7 +124,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final boolean condition ,
-            final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
                 label ,
@@ -134,8 +135,8 @@ extends WhileOrDoWhile<
     }
 
     @Override
-    public WhileState<COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> newState(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public WhileState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> newState(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         return new WhileState<>(
                 this ,

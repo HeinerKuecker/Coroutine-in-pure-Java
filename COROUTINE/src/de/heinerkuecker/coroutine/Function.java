@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.arg.Parameter;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.complex.Block;
 import de.heinerkuecker.coroutine.stmt.complex.ComplexStmt;
 
-public class Procedure<COROUTINE_RETURN, RESUME_ARGUMENT>
+public class Function<FUNCTION_RETURN, COROUTINE_RETURN, RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
 {
     public final String name;
@@ -24,21 +24,21 @@ extends HasCreationStackTraceElement
      * ist und dessen State in dieser
      * Klasse verwaltet werden muesste.
      */
-    public final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStmt;
+    public final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStmt;
 
     public final Map<String, Parameter> params;
 
     /**
      * Constructor.
      *
-     * @param params procedure parameter, can be <code>null</code>
+     * @param params function parameter, can be <code>null</code>
      *
      */
     @SafeVarargs
-    public Procedure(
+    public Function(
             final String name ,
             final Parameter[] params ,
-            final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodyStmts )
+            final CoroStmt<FUNCTION_RETURN, COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodyStmts )
     {
         super(
                 //creationStackOffset
@@ -52,7 +52,7 @@ extends HasCreationStackTraceElement
 
         if ( bodyStmts.length == 0 )
         {
-            throw new IllegalArgumentException( "procedure body is empty" );
+            throw new IllegalArgumentException( "function body is empty" );
         }
 
         this.bodyComplexStmt =
@@ -65,7 +65,7 @@ extends HasCreationStackTraceElement
     /**
      * Initialize parameter.
      *
-     * @param params procedure parameter, can be <code>null</code>
+     * @param params function parameter, can be <code>null</code>
      * @return unmodifiable parameter map
      */
     public static Map<String, Parameter> initParams(
@@ -80,7 +80,7 @@ extends HasCreationStackTraceElement
                 if ( paramsMap.containsKey( param.name ) )
                 {
                     throw new IllegalArgumentException(
-                            "procedure parameter already defined: " +
+                            "function parameter already defined: " +
                             param.name );
                 }
 
@@ -97,11 +97,11 @@ extends HasCreationStackTraceElement
      *
      */
     public void checkLabelAlreadyInUse(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<? , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         this.bodyComplexStmt.checkLabelAlreadyInUse(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 new HashSet<>() );
     }

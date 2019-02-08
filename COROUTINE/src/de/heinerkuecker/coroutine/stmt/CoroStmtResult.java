@@ -13,7 +13,7 @@ import de.heinerkuecker.coroutine.stmt.complex.While;
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @author Heiner K&uuml;cker
  */
-public interface CoroIterStmtResult<COROUTINE_RETURN>
+public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
 {
     /**
      * This method returns a instance to enforce continue run.
@@ -22,9 +22,9 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
     @SuppressWarnings("unchecked")
-    public static <COROUTINE_RETURN> ContinueCoroutine<COROUTINE_RETURN> continueCoroutine()
+    public static <FUNCTION_RETURN , COROUTINE_RETURN> ContinueCoroutine<FUNCTION_RETURN , COROUTINE_RETURN> continueCoroutine()
     {
-        return (ContinueCoroutine<COROUTINE_RETURN>) ContinueCoroutine.INSTANCE;
+        return (ContinueCoroutine<FUNCTION_RETURN , COROUTINE_RETURN>) ContinueCoroutine.INSTANCE;
     }
 
     /**
@@ -32,8 +32,8 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class ContinueCoroutine<COROUTINE_RETURN>
-    implements CoroIterStmtResult<COROUTINE_RETURN>
+    public class ContinueCoroutine<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         @SuppressWarnings("rawtypes")
         private static ContinueCoroutine INSTANCE = new ContinueCoroutine<>();
@@ -43,9 +43,6 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
             super();
         }
 
-        /**
-         * @see java.lang.Object#toString()
-         */
         @Override
         public String toString()
         {
@@ -58,8 +55,8 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class YieldReturnWithResult<COROUTINE_RETURN>
-    implements CoroIterStmtResult<COROUTINE_RETURN>
+    public class YieldReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         public final COROUTINE_RETURN result;
 
@@ -69,9 +66,6 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
             this.result = result;
         }
 
-        /**
-         * @see Object#toString()
-         */
         @Override
         public String toString()
         {
@@ -84,8 +78,8 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class FinallyReturnWithResult<COROUTINE_RETURN>
-    implements CoroIterStmtResult<COROUTINE_RETURN>
+    public class FinallyReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         public final COROUTINE_RETURN result;
 
@@ -95,9 +89,6 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
             this.result = result;
         }
 
-        /**
-         * @see java.lang.Object#toString()
-         */
         @Override
         public String toString()
         {
@@ -110,12 +101,9 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class FinallyReturnWithoutResult<COROUTINE_RETURN>
-    implements CoroIterStmtResult<COROUTINE_RETURN>
+    public class FinallyReturnWithoutResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
-        /**
-         * @see Object#toString()
-         */
         @Override
         public String toString()
         {
@@ -132,8 +120,8 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class Break<COROUTINE_RETURN>
-    implements CoroIterStmtResult<COROUTINE_RETURN>
+    public class Break<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         /**
          * Label of loop to break.
@@ -151,9 +139,6 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
             this.label = label;
         }
 
-        /**
-         * @see Object#toString()
-         */
         @Override
         public String toString()
         {
@@ -170,8 +155,8 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class ContinueLoop<COROUTINE_RETURN>
-    implements CoroIterStmtResult<COROUTINE_RETURN>
+    public class ContinueLoop<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         /**
          * Label of loop to continue.
@@ -189,13 +174,33 @@ public interface CoroIterStmtResult<COROUTINE_RETURN>
             this.label = label;
         }
 
-        /**
-         * @see Object#toString()
-         */
         @Override
         public String toString()
         {
             return this.getClass().getSimpleName();
+        }
+    }
+
+    /**
+     * Class to return value from function.
+     *
+     * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
+     */
+    public class FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    {
+        public final FUNCTION_RETURN result;
+
+        public FunctionReturnWithResult(
+                final FUNCTION_RETURN result )
+        {
+            this.result = result;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.getClass().getSimpleName() + ": " + result;
         }
     }
 

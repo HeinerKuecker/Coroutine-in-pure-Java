@@ -7,23 +7,23 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetProcedureArgument<T>
+public class GetFunctionArgument<T>
 extends HasCreationStackTraceElement
 implements CoroExpression<T> , HasArgumentName
 {
     /**
-     * Name of procedure argument in
-     * {@link CoroutineOrProcedureOrComplexstmt#procedureArgumentValues()}
+     * Name of function argument in
+     * {@link CoroutineOrFunctioncallOrComplexstmt#functionArgumentValues()}
      * to return.
      */
-    public final String procedureArgumentName;
+    public final String functionArgumentName;
 
     /**
      * For type check.
@@ -34,19 +34,19 @@ implements CoroExpression<T> , HasArgumentName
 
     /**
      * Constructor.
-     * @param procedureArgumentName
+     * @param functionArgumentName
      */
-    public GetProcedureArgument(
-            final String procedureArgumentName ,
+    public GetFunctionArgument(
+            final String functionArgumentName ,
             final Class<T> type )
     {
         super(
                 //creationStackOffset
                 2 );
 
-        this.procedureArgumentName =
+        this.functionArgumentName =
                 Objects.requireNonNull(
-                        procedureArgumentName );
+                        functionArgumentName );
 
         this.type =
                 Objects.requireNonNull(
@@ -55,12 +55,12 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
-        final Object procArgValue = parent.procedureArgumentValues().get( procedureArgumentName );
+        final Object funcArgValue = parent.functionArgumentValues().get( functionArgumentName );
 
-        if ( procArgValue != null &&
-                ! type.isInstance( procArgValue ) )
+        if ( funcArgValue != null &&
+                ! type.isInstance( funcArgValue ) )
         {
             //throw new ClassCastException(
             //        procArgValue.getClass().toString() +
@@ -73,22 +73,22 @@ implements CoroExpression<T> , HasArgumentName
                     //expectedClass
                     type ,
                     //wrongValue
-                    procArgValue );
+                    funcArgValue );
         }
 
-        return type.cast( procArgValue );
+        return type.cast( funcArgValue );
     }
 
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
         return Arrays.asList( this );
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -96,19 +96,19 @@ implements CoroExpression<T> , HasArgumentName
     }
 
     /**
-     * @see CoroCheckable#checkUseArguments(HashSet, CoroutineOrProcedureOrComplexstmt)
+     * @see CoroCheckable#checkUseArguments(HashSet, CoroutineOrFunctioncallOrComplexstmt)
      */
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        if ( ! parent.procedureParameterTypes().containsKey( this.procedureArgumentName ) )
+        if ( ! parent.functionParameterTypes().containsKey( this.functionArgumentName ) )
         {
-            throw new ProcedureArgumentNotDeclaredException( this );
+            throw new FunctionArgumentNotDeclaredException( this );
         }
 
-        final Class<?> argumentType = parent.procedureParameterTypes().get( this.procedureArgumentName );
+        final Class<?> argumentType = parent.functionParameterTypes().get( this.functionArgumentName );
 
         if ( ! argumentType.isAssignableFrom( this.type ) )
         {
@@ -125,7 +125,7 @@ implements CoroExpression<T> , HasArgumentName
     @Override
     public String getArgumentName()
     {
-        return this.procedureArgumentName;
+        return this.functionArgumentName;
     }
 
     @SuppressWarnings("unchecked")
@@ -149,8 +149,8 @@ implements CoroExpression<T> , HasArgumentName
                 //this.type.getName() +
                 ArrayTypeName.toStr( this.type ) +
                 " " +
-                //"procedureArgumentName=" +
-                this.procedureArgumentName +
+                //"functionArgumentName=" +
+                this.functionArgumentName +
                 //"]"
                 ( this.creationStackTraceElement != null
                     ? " " + this.creationStackTraceElement
@@ -160,7 +160,7 @@ implements CoroExpression<T> , HasArgumentName
     /**
      * Exception
      */
-    public static class ProcedureArgumentNotDeclaredException
+    public static class FunctionArgumentNotDeclaredException
     extends RuntimeException
     {
         /**
@@ -171,13 +171,13 @@ implements CoroExpression<T> , HasArgumentName
         /**
          * Constructor.
          *
-         * @param stmtOrExpression statement or expression with access to not declared procedure argument
+         * @param stmtOrExpression statement or expression with access to not declared function argument
          */
-        public <T extends HasCreationStackTraceElement & HasArgumentName> ProcedureArgumentNotDeclaredException(
+        public <T extends HasCreationStackTraceElement & HasArgumentName> FunctionArgumentNotDeclaredException(
                 final T stmtOrExpression )
         {
             super(
-                    "procedure argument not declared: " +
+                    "function argument not declared: " +
                     stmtOrExpression );
         }
 

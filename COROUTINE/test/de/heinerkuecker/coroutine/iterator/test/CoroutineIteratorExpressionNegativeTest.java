@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.bool.IsNull;
-import de.heinerkuecker.coroutine.exprs.exc.UseGetProcedureArgumentOutsideOfProcedureException;
+import de.heinerkuecker.coroutine.exprs.exc.UseGetFunctionArgumentOutsideOfFunctionException;
 import de.heinerkuecker.coroutine.stmt.complex.BlockLocalVariables;
 import de.heinerkuecker.coroutine.stmt.complex.If;
 import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
@@ -20,8 +20,8 @@ import de.heinerkuecker.coroutine.stmt.simple.SetLocalVar;
  */
 public class CoroutineIteratorExpressionNegativeTest
 {
-    @Test( expected = UseGetProcedureArgumentOutsideOfProcedureException.class )
-    public void testUseGetProcedureArgumentOutsideOfProcedureException()
+    @Test( expected = UseGetFunctionArgumentOutsideOfFunctionException.class )
+    public void testUseGetFunctionArgumentOutsideOfFunctionException()
     {
         CoroutineDebugSwitches.initializationChecks = true;
 
@@ -31,8 +31,8 @@ public class CoroutineIteratorExpressionNegativeTest
                 // stmts
                 new If<>(
                         new IsNull(
-                                new GetProcedureArgument<>(
-                                        //procedureArgumentName
+                                new GetFunctionArgument<>(
+                                        //functionArgumentName
                                         "wrong" ,
                                         Object.class ) ) ,
                         new NoOperation<>() ) );

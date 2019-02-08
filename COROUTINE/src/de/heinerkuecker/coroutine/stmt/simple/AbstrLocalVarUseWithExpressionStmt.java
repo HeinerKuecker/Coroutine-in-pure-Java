@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
 // TODO give expression instead local var name
-abstract public class AbstrLocalVarUseWithExpressionStmt<COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
-extends SimpleStmt<COROUTINE_RETURN , RESUME_ARGUMENT>
+abstract public class AbstrLocalVarUseWithExpressionStmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE, EXPRESSION>
+extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
      * Name of variable to use in
-     * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
+     * {@link CoroutineOrFunctioncallOrComplexstmt#localVars()}
      */
     public final String localVarName;
 
@@ -39,7 +39,7 @@ implements HasVariableName
      * @param expressionValue
      */
     abstract protected void execute(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final VARIABLE varvalue ,
             final EXPRESSION expressionValue );
 
@@ -72,8 +72,8 @@ implements HasVariableName
      * @see SimpleStmt#execute
      */
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final VARIABLE varValue =
                 (VARIABLE) parent.localVars().get(
@@ -89,21 +89,21 @@ implements HasVariableName
                 varValue ,
                 expressionValue );
 
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     /**
-     * @see CoroIterStmt#setResultType(Class)
+     * @see CoroStmt#setCoroutineReturnType(Class)
      */
     @Override
-    public void setResultType(
-            final Class<? extends COROUTINE_RETURN> resultType )
+    public void setCoroutineReturnType(
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing
     }
 
     @Override
-    final public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    final public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();
@@ -111,16 +111,16 @@ implements HasVariableName
 
     @Override
     final public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         // nothing to do
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -143,7 +143,7 @@ implements HasVariableName
         // TODO check variable like GetLocalVar
 
         this.expression.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes ,
                 localVariableTypes );

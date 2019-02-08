@@ -29,7 +29,7 @@ public class CoroutineIteratorForeachTest
                         // type
                         Integer.class ,
                         // stmts
-                        new ForEach<Integer, Void , Integer>(
+                        new ForEach<Void, Integer, Void , Integer>(
                                 // variableName
                                 "for_variable" ,
                                 // elementType

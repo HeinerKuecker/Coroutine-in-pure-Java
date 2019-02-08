@@ -89,7 +89,7 @@ public class CoroutineIteratorContinueTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new For<Integer , Void>(
+                        new For<Void , Integer , Void>(
                                 // label
                                 "outer_for" ,
                                 // initialStmt
@@ -129,7 +129,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -159,7 +159,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -189,7 +189,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -219,7 +219,7 @@ public class CoroutineIteratorContinueTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -260,7 +260,7 @@ public class CoroutineIteratorContinueTest
                         new SetLocalVar<>(
                                 "number" ,
                                 0 ) ,
-                        new For<Integer , Void>(
+                        new For<Void , Integer , Void>(
                                 // label
                                 "outer_for" ,
                                 // initialStmt
@@ -309,7 +309,7 @@ public class CoroutineIteratorContinueTest
                         new SetLocalVar<>(
                                 "number" ,
                                 0 ) ,
-                        new For<Integer , Void>(
+                        new For<Void , Integer , Void>(
                                 // label
                                 "outer_for" ,
                                 // initialStmt
@@ -351,7 +351,7 @@ public class CoroutineIteratorContinueTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -398,7 +398,7 @@ public class CoroutineIteratorContinueTest
                                 "number" ,
                                 Integer.class ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // label
                                 "outer_while" ,
                                 // condition
@@ -406,7 +406,7 @@ public class CoroutineIteratorContinueTest
                                         number ,
                                         1 ) ,
                                 // stmts
-                                new While<Integer , Void>(
+                                new While<Void , Integer , Void>(
                                         // condition
                                         Value.trueValue() ,
                                         // stmts
@@ -441,7 +441,7 @@ public class CoroutineIteratorContinueTest
                         new SetLocalVar<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // label
                                 "outer_while" ,
                                 // condition
@@ -449,7 +449,7 @@ public class CoroutineIteratorContinueTest
                                         number ,
                                         1 ) ,
                                 // stmts
-                                new While<Integer , Void>(
+                                new While<Void , Integer , Void>(
                                         // condition
                                         Value.trueValue() ,
                                         // stmts
@@ -483,7 +483,7 @@ public class CoroutineIteratorContinueTest
                         new SetLocalVar<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void , Integer , Void>(
                                 // label
                                 "outer_while" ,
                                 // condition
@@ -491,7 +491,7 @@ public class CoroutineIteratorContinueTest
                                         number ,
                                         1 ) ,
                                 // stmts
-                                new While<Integer , Void>(
+                                new While<Void , Integer , Void>(
                                         // condition
                                         Value.trueValue() ,
                                         // stmts

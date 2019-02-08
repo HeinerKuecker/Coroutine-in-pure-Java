@@ -15,7 +15,7 @@ import de.heinerkuecker.coroutine.exprs.bool.Or;
 import de.heinerkuecker.coroutine.exprs.num.Add;
 import de.heinerkuecker.coroutine.exprs.num.CastToInt;
 import de.heinerkuecker.coroutine.exprs.num.Multiply;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.complex.IfElse;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.ret.FinallyReturn;
@@ -47,7 +47,7 @@ public class CoroutineIteratorWhileTest
                         Integer.class );
 
         final CoroutineIterator<Integer> coroIter =
-                new CoroutineIterator<>(
+                new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
                         // stmts
@@ -211,7 +211,7 @@ public class CoroutineIteratorWhileTest
                         new SetLocalVar<>(
                                 "number0" ,
                                 3 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 //condition
                                 new GreaterOrEqual<>(
                                         new GetLocalVar<>(
@@ -268,7 +268,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "number0" ,
                                 3 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 //condition
                                 new GreaterOrEqual<>(
                                         new GetLocalVar<>(
@@ -325,7 +325,7 @@ public class CoroutineIteratorWhileTest
                         new DeclareVariable<>(
                                 "number0" ,
                                 3 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 //condition
                                 new GreaterOrEqual<>(
                                         new DeclareVariable<>(
@@ -589,11 +589,11 @@ public class CoroutineIteratorWhileTest
                                                 "first" ,
                                                 Boolean.class ) ,
                                         // thenStmts
-                                        (CoroIterStmt<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStmt[] {
+                                        (CoroStmt<Void, Integer/*, CoroutineIterator<Integer>*/>[]) new CoroStmt[] {
                                                 new YieldReturn<>( 0 ) ,
                                         } ,
                                         // elseStmts
-                                        (CoroIterStmt<Integer/*, CoroutineIterator<Integer>*/>[]) new CoroIterStmt[] {
+                                        (CoroStmt<Void, Integer/*, CoroutineIterator<Integer>*/>[]) new CoroStmt[] {
                                                 new FinallyReturn<>( 1 ) ,
                                         } ) ,
                                 new NegateLocalVar<>( "first" ) ) );
@@ -641,11 +641,11 @@ public class CoroutineIteratorWhileTest
                                                 Boolean.class ,
                                                 first ) ,
                                         // thenStmts
-                                        (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
+                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
                                                 new YieldReturn<>( first ) ,
                                         } ,
                                         // elseStmts
-                                        (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
+                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
                                                 new FinallyReturn<>( first ) ,
                                         } ) ,
                                 new NegateLocalVar<>( "first" ) ) );
@@ -699,11 +699,11 @@ public class CoroutineIteratorWhileTest
                                                 Boolean.class ,
                                                 first ) ,
                                         // thenStmts
-                                        (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
+                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
                                                 new YieldReturn<>( copyOfFirst ) ,
                                         } ,
                                         // elseStmts
-                                        (CoroIterStmt<Boolean>[]) new CoroIterStmt[] {
+                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
                                                 new FinallyReturn<>( copyOfFirst ) ,
                                         } ) ,
                                 new NegateLocalVar<>( "first" ) ) );

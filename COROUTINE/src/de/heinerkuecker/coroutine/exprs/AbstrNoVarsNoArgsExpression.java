@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 
 /**
  * Abstract super class for
@@ -20,7 +20,7 @@ implements CoroExpression<T>
 {
 
     @Override
-    public final List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public final List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();
@@ -28,8 +28,8 @@ implements CoroExpression<T>
 
     @Override
     public final void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -38,8 +38,8 @@ implements CoroExpression<T>
 
     @Override
     public final void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         // nothing to do
     }

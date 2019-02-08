@@ -77,7 +77,7 @@ public class CoroutineIteratorBreakTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new For<Integer, Void>(
+                        new For<Void, Integer, Void>(
                                 // label
                                 "outer_for" ,
                                 // initialStmt
@@ -120,7 +120,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -150,14 +150,14 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
                                 new SetLocalVar<>(
                                         "number" ,
                                         0 ) ,
-                                new For<Integer , Void>(
+                                new For<Void, Integer , Void>(
                                         // initialStmt
                                         new Block<>(
                                                 // creationStackOffset
@@ -184,7 +184,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer, Void>(
+                        new While<Void, Integer, Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -214,7 +214,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -244,14 +244,14 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
                                 new SetLocalVar<>(
                                         "number" ,
                                         0 ) ,
-                                new For<Integer , Void>(
+                                new For<Void, Integer , Void>(
                                         // initialStmt
                                         new NoOperation<>() ,
                                         // condition
@@ -278,7 +278,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -308,14 +308,14 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
                                 new SetLocalVar<>(
                                         "number" ,
                                         0 ) ,
-                                new For<Integer , Void>(
+                                new For<Void, Integer , Void>(
                                         // label
                                         "for" ,
                                         // initialStmt
@@ -340,7 +340,7 @@ public class CoroutineIteratorBreakTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
@@ -375,7 +375,7 @@ public class CoroutineIteratorBreakTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 //stmts
@@ -417,7 +417,7 @@ public class CoroutineIteratorBreakTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // label
                                 "outer_while" ,
                                 // condition
@@ -426,7 +426,7 @@ public class CoroutineIteratorBreakTest
                                         //compareValue
                                         2 ) ,
                                 //stmts
-                                new While<Integer , Void>(
+                                new While<Void, Integer , Void>(
                                         // condition
                                         new Lesser<>(
                                                 number ,
@@ -470,7 +470,7 @@ public class CoroutineIteratorBreakTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // label
                                 "outer_while" ,
                                 // condition
@@ -479,7 +479,7 @@ public class CoroutineIteratorBreakTest
                                         // compareValue
                                         2 ) ,
                                 //stmts
-                                new While<Integer , Void>(
+                                new While<Void, Integer , Void>(
                                         // condition
                                         new Lesser<>(
                                                 number ,
@@ -518,7 +518,7 @@ public class CoroutineIteratorBreakTest
                         new SetLocalVar<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // label
                                 "outer_while" ,
                                 // condition
@@ -527,7 +527,7 @@ public class CoroutineIteratorBreakTest
                                         //compareValue
                                         2 ) ,
                                 //stmts
-                                new While<Integer , Void>(
+                                new While<Void, Integer , Void>(
                                         // condition
                                         new Lesser<>(
                                                 number ,

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
@@ -71,7 +71,7 @@ extends CoroBooleanExpression
 
     //@Override
     //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     //{
     //    final Object value = valueExpression.evaluate( parent );
     //    final Class<?> type = typeExpression.evaluate( parent );
@@ -90,44 +90,44 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<?>> result = new ArrayList<>();
 
         result.addAll(
-                valueExpression.getProcedureArgumentGetsNotInProcedure() );
+                valueExpression.getFunctionArgumentGetsNotInFunction() );
 
         result.addAll(
-                typeExpression.getProcedureArgumentGetsNotInProcedure() );
+                typeExpression.getFunctionArgumentGetsNotInFunction() );
 
         return result;
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
         this.valueExpression.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.typeExpression.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
     }
 
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        this.valueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.typeExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.valueExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
+        this.typeExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
     }
 
     /**

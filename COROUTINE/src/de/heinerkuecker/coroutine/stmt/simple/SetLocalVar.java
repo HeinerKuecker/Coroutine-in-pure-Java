@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
 /**
  * {@link SimpleStmt} to set
@@ -24,13 +24,13 @@ import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
  * @author Heiner K&uuml;cker
  * @param <COROUTINE_RETURN> result type of coroutine, here unused
  */
-public /*final*/ class SetLocalVar<COROUTINE_RETURN, RESUME_ARGUMENT , VARIABLE>
-extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+public /*final*/ class SetLocalVar<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT , VARIABLE>
+extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 implements CoroExpression<VARIABLE> , HasVariableName
 {
     /**
      * Name of variable to set in
-     * {@link CoroutineOrProcedureOrComplexstmt#localVars()}
+     * {@link CoroutineOrFunctioncallOrComplexstmt#localVars()}
      */
     public final String localVarName;
 
@@ -79,8 +79,8 @@ implements CoroExpression<VARIABLE> , HasVariableName
      * @see SimpleStmt#execute
      */
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         final Object varValue = varValueExpression.evaluate( parent );
 
@@ -88,7 +88,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
                 localVarName ,
                 varValue );
 
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     @Override
@@ -96,7 +96,8 @@ implements CoroExpression<VARIABLE> , HasVariableName
             final HasArgumentsAndVariables<?> parent )
     // for using in expressions
     {
-        execute( (CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
+        execute(
+                (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
         return (VARIABLE) parent.localVars().get(
                 this ,
@@ -112,28 +113,38 @@ implements CoroExpression<VARIABLE> , HasVariableName
     }
 
     /**
-     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        return this.varValueExpression.getProcedureArgumentGetsNotInProcedure();
+        return this.varValueExpression.getFunctionArgumentGetsNotInFunction();
+    }
+
+    @Override
+    public void checkUseArguments(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
+    {
+        this.varValueExpression.checkUseArguments(
+                alreadyCheckedFunctionNames ,
+                parent );
     }
 
     /**
-     * @see CoroIterStmt#setResultType(Class)
+     * @see CoroStmt#setCoroutineReturnType(Class)
      */
     @Override
-    public void setResultType(
-            final Class<? extends COROUTINE_RETURN> resultType )
+    public void setCoroutineReturnType(
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -143,17 +154,9 @@ implements CoroExpression<VARIABLE> , HasVariableName
         }
 
         this.varValueExpression.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
-    }
-
-    @Override
-    public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
-    {
-        this.varValueExpression.checkUseArguments( alreadyCheckedProcedureNames, parent );
     }
 
     @Override

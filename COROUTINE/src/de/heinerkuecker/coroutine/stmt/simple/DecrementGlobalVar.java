@@ -4,30 +4,30 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
 
 /**
- * Stmt {@link CoroIterStmt} to
+ * Stmt {@link CoroStmt} to
  * decrement an {@link Number}
  * variable in globalVariables
- * {@link CoroutineOrProcedureOrComplexstmt#globalVars()}
+ * {@link CoroutineOrFunctioncallOrComplexstmt#globalVars()}
  *
  * @param <COROUTINE_RETURN>
  * @author Heiner K&uuml;cker
  */
-public final class DecrementGlobalVar<COROUTINE_RETURN , RESUME_ARGUMENT>
+public final class DecrementGlobalVar<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 //extends SimpleStmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
-extends SimpleStmtWithoutArguments<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends SimpleStmtWithoutArguments<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 implements HasVariableName
 {
     /**
      * Name of variable to decrement in
-     * {@link CoroutineOrProcedureOrComplexstmt#globalVars()}
+     * {@link CoroutineOrFunctioncallOrComplexstmt#globalVars()}
      */
     public final String globalVarName;
 
@@ -50,8 +50,8 @@ implements HasVariableName
      * @see SimpleStmt#execute
      */
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         // TODO byte, short, char, long, float, double, BigInteger, BigDecimal
         final int var =
@@ -63,7 +63,7 @@ implements HasVariableName
                 globalVarName ,
                 var - 1 );
 
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     @Override
@@ -73,26 +73,26 @@ implements HasVariableName
     }
 
     //@Override
-    //public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    //public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     //{
     //    // nothing to do
     //    return Collections.emptyList();
     //}
 
     /**
-     * @see CoroIterStmt#setResultType(Class)
+     * @see CoroStmt#setCoroutineReturnType(Class)
      */
     @Override
-    public void setResultType(
-            final Class<? extends COROUTINE_RETURN> resultType )
+    public void setCoroutineReturnType(
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
@@ -115,8 +115,8 @@ implements HasVariableName
 
     //@Override
     //public void checkUseArguments(
-    //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ?> parent )
     //{
     //    // nothing to do
     //}

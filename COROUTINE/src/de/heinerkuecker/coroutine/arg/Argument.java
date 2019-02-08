@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroCheckable;
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetProcedureArgument;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
- * Argument for procedure or
+ * Argument for function or
  * the entire coroutine.
  *
  * @param <T> argument/parameter type
@@ -58,10 +58,10 @@ implements CoroCheckable
     }
 
     public T getValue(
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         @SuppressWarnings("unchecked")
-        final Class<T> parameterType = (Class<T>) parent.procedureParameterTypes().get( name );
+        final Class<T> parameterType = (Class<T>) parent.functionParameterTypes().get( name );
 
         return
                 parameterType.cast(
@@ -69,30 +69,30 @@ implements CoroCheckable
     }
 
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        return this.expression.getProcedureArgumentGetsNotInProcedure();
+        return this.expression.getFunctionArgumentGetsNotInFunction();
     }
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
         this.expression.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
     }
 
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        final Class<?> parameterType = parent.procedureParameterTypes().get( name );
+        final Class<?> parameterType = parent.functionParameterTypes().get( name );
 
         if ( parameterType == null )
         {
@@ -116,7 +116,7 @@ implements CoroCheckable
         }
 
         this.expression.checkUseArguments(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent );
     }
 

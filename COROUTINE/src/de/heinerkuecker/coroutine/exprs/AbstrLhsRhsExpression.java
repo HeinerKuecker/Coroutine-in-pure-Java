@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
 public abstract class AbstrLhsRhsExpression<T>
 implements CoroExpression<T>
@@ -37,47 +37,47 @@ implements CoroExpression<T>
     }
 
     /**
-     * @see CoroIterStmt#getProcedureArgumentGetsNotInProcedure()
+     * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    final public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    final public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetProcedureArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<?>> result = new ArrayList<>();
 
         result.addAll(
-                lhs.getProcedureArgumentGetsNotInProcedure() );
+                lhs.getFunctionArgumentGetsNotInFunction() );
 
         result.addAll(
-                rhs.getProcedureArgumentGetsNotInProcedure() );
+                rhs.getFunctionArgumentGetsNotInFunction() );
 
         return result;
     }
 
     @Override
     final public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent,
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes)
     {
         this.lhs.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
 
         this.rhs.checkUseVariables(
-                alreadyCheckedProcedureNames ,
+                alreadyCheckedFunctionNames ,
                 parent ,
                 globalVariableTypes, localVariableTypes );
     }
 
     @Override
     final public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-        this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
+        this.lhs.checkUseArguments( alreadyCheckedFunctionNames, parent );
+        this.rhs.checkUseArguments( alreadyCheckedFunctionNames, parent );
     }
 
 }

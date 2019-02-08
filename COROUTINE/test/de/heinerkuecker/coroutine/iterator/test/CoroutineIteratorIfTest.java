@@ -32,7 +32,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // stmts
-                        new If< Integer , Void >(
+                        new If< Void , Integer , Void >(
                                 // condition
                                 true ,
                                 // stmts
@@ -74,12 +74,12 @@ public class CoroutineIteratorIfTest
                                 "condition_var" ,
                                 // varValue
                                 true ) ,
-                        new If<Integer , Void>(
+                        new If<Void, Integer , Void>(
                                 // condition
                                 condition_var ,
                                 // stmts
                                 new YieldReturn<>( 0 ) ,
-                                new If<Integer , Void>(
+                                new If<Void, Integer , Void>(
                                         // condition
                                         new Not( condition_var ) ,
                                         // stmts
@@ -116,12 +116,12 @@ public class CoroutineIteratorIfTest
                                 "condition_var" ,
                                 // varValue
                                 true ) ,
-                        new If<Integer , Void>(
+                        new If<Void, Integer , Void>(
                                 // condition
                                 condition_var ,
                                 // stmts
                                 new YieldReturn<>( 0 ) ,
-                                new If<Integer , Void>(
+                                new If<Void, Integer , Void>(
                                         // condition
                                         condition_var ,
                                         // stmts
@@ -149,7 +149,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // stmts
-                        new If<Integer , Void>(
+                        new If<Void, Integer , Void>(
                                 // condition
                                 true
                                 // stmts
@@ -179,18 +179,18 @@ public class CoroutineIteratorIfTest
                         new DeclareVariable<>(
                                 "number" ,
                                 0 ) ,
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 Value.trueValue() ,
                                 // stmts
-                                new If<Integer , Void>(
+                                new If<Void, Integer , Void>(
                                         // condition
                                         new Equals<>(
                                                 number ,
                                                 0 ) ,
                                         // stmts
                                         new YieldReturn<>( 0 ) ) ,
-                                new If<Integer , Void>(
+                                new If<Void, Integer , Void>(
                                         // condition
                                         new Equals<>(
                                                 number ,
@@ -228,7 +228,7 @@ public class CoroutineIteratorIfTest
                         // type
                         Integer.class ,
                         // stmts
-                        new While<Integer , Void>(
+                        new While<Void, Integer , Void>(
                                 // condition
                                 new Equals<>(
                                         // use DeclareVariable as expression

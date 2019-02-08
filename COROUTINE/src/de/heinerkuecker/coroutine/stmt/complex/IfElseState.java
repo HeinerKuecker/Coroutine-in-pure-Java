@@ -2,20 +2,25 @@ package de.heinerkuecker.coroutine.stmt.complex;
 
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroIterStmtResult;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.util.HCloneable;
 
-class IfElseState<COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
+class IfElseState<
+    FUNCTION_RETURN ,
+    COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ ,
+    RESUME_ARGUMENT
+    >
 extends ComplexStmtState<
-    IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
-    IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>,
+    IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    IfElse<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
+    FUNCTION_RETURN ,
     COROUTINE_RETURN ,
     //PARENT
     RESUME_ARGUMENT
     >
 {
-    private final IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ifElse;
+    private final IfElse<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ifElse;
 
     // TODO getter
     boolean runInCondition = true;
@@ -23,19 +28,19 @@ extends ComplexStmtState<
     private boolean runInElseBody;
 
     // TODO getter
-    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyComplexState;
-    ComplexStmtState<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyComplexState;
+    ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyComplexState;
+    ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyComplexState;
 
     //private final CoroutineIterator<COROUTINE_RETURN> rootParent;
-    private final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent;
+    private final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent;
 
     /**
      * Constructor.
      */
     public IfElseState(
-            final IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ifElse ,
+            final IfElse<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ifElse ,
             //final CoroutineIterator<COROUTINE_RETURN> rootParent
-            final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
         super( parent );
         this.ifElse = ifElse;
@@ -48,8 +53,8 @@ extends ComplexStmtState<
     }
 
     @Override
-    public CoroIterStmtResult<COROUTINE_RETURN> execute(
-            //final CoroutineOrProcedureOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
+    public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
+            //final CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
         if ( runInCondition )
@@ -76,7 +81,7 @@ extends ComplexStmtState<
 
         if ( runInThenBody )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStmt =
+            final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> thenBodyStmt =
                     ifElse.thenBodyComplexStmt;
 
             if ( this.thenBodyComplexState == null )
@@ -91,7 +96,7 @@ extends ComplexStmtState<
 
             // TODO only before executing simple stmt: parent.saveLastStmtState();
 
-            final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
+            final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> executeResult =
                     this.thenBodyComplexState.execute(
                             //parent
                             //this
@@ -103,7 +108,7 @@ extends ComplexStmtState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
@@ -112,7 +117,7 @@ extends ComplexStmtState<
         }
         else if ( runInElseBody )
         {
-            final ComplexStmt<?, ?, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyStmt =
+            final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> elseBodyStmt =
                     ifElse.elseBodyComplexStmt;
 
             if ( this.elseBodyComplexState == null )
@@ -127,7 +132,7 @@ extends ComplexStmtState<
 
             // TODO only before executing simple stmt: parent.saveLastStmtState();
 
-            final CoroIterStmtResult<COROUTINE_RETURN> executeResult =
+            final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> executeResult =
                     this.elseBodyComplexState.execute(
                             //parent
                             //this
@@ -139,7 +144,7 @@ extends ComplexStmtState<
             }
 
             if ( ! ( executeResult == null ||
-                    executeResult instanceof CoroIterStmtResult.ContinueCoroutine ) )
+                    executeResult instanceof CoroStmtResult.ContinueCoroutine ) )
             {
                 return executeResult;
             }
@@ -147,7 +152,7 @@ extends ComplexStmtState<
             finish();
         }
 
-        return CoroIterStmtResult.continueCoroutine();
+        return CoroStmtResult.continueCoroutine();
     }
 
     private void finish()
@@ -173,7 +178,7 @@ extends ComplexStmtState<
      * @see ComplexStmtState#getStmt()
      */
     @Override
-    public IfElse<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
+    public IfElse<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> getStmt()
     {
         return this.ifElse;
     }
@@ -182,9 +187,9 @@ extends ComplexStmtState<
      * @see HCloneable#createClone()
      */
     @Override
-    public IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
+    public IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> createClone()
     {
-        final IfElseState<COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
+        final IfElseState<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> clone =
                 new IfElseState<>(
                         ifElse ,
                         //this.rootParent

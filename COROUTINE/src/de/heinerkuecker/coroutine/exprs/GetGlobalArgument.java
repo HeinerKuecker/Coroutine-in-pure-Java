@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.heinerkuecker.coroutine.CoroutineOrProcedureOrComplexstmt;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
@@ -17,8 +17,8 @@ extends HasCreationStackTraceElement
 implements CoroExpression<T> , HasArgumentName
 {
     /**
-     * Name of procedure argument in
-     * {@link CoroutineOrProcedureOrComplexstmt#globalArgumentValues()}
+     * Name of function argument in
+     * {@link CoroutineOrFunctioncallOrComplexstmt#globalArgumentValues()}
      * to return.
      */
     public final String globalArgumentName;
@@ -53,7 +53,7 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object procArgValue = parent.globalArgumentValues().get( globalArgumentName );
 
@@ -79,8 +79,8 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public void checkUseVariables(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
     {
         // nothing to do
@@ -88,8 +88,8 @@ implements CoroExpression<T> , HasArgumentName
 
     @Override
     public void checkUseArguments(
-            final HashSet<String> alreadyCheckedProcedureNames ,
-            final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         if ( ! parent.globalParameterTypes().containsKey( this.globalArgumentName ) )
         {
@@ -100,7 +100,7 @@ implements CoroExpression<T> , HasArgumentName
 
         if ( ! argumentType.isAssignableFrom( this.type ) )
         {
-            throw new GetProcedureArgument.WrongArgumentClassException(
+            throw new GetFunctionArgument.WrongArgumentClassException(
                     //wrongNamedExpression
                     this ,
                     //wrongClass
@@ -112,7 +112,7 @@ implements CoroExpression<T> , HasArgumentName
     }
 
     @Override
-    public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
+    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }

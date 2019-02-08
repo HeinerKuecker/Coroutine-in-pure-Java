@@ -54,7 +54,7 @@ extends AbstrLhsRhsExpression<T>
      */
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrProcedureOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final T lhsResult = lhs.evaluate( parent );
         final T rhsResult = rhs.evaluate( parent );
@@ -103,45 +103,6 @@ extends AbstrLhsRhsExpression<T>
 
         return (T) (Double) ( lhsResult.doubleValue() / rhsResult.doubleValue() );
     }
-
-    //@Override
-    //public List<GetProcedureArgument<?>> getProcedureArgumentGetsNotInProcedure()
-    //{
-    //    final List<GetProcedureArgument<?>> result = new ArrayList<>();
-    //
-    //    result.addAll(
-    //            lhs.getProcedureArgumentGetsNotInProcedure() );
-    //
-    //    result.addAll(
-    //            rhs.getProcedureArgumentGetsNotInProcedure() );
-    //
-    //    return result;
-    //}
-
-    //@Override
-    //public void checkUseVariables(
-    //        final HashSet<String> alreadyCheckedProcedureNames ,
-    //        final CoroutineOrProcedureOrComplexstmt<?, ?> parent ,
-    //        final Map<String, Class<?>> globalVariableTypes, final Map<String, Class<?>> localVariableTypes )
-    //{
-    //    this.lhs.checkUseVariables(
-    //            alreadyCheckedProcedureNames ,
-    //            parent ,
-    //            globalVariableTypes, localVariableTypes );
-    //
-    //    this.rhs.checkUseVariables(
-    //            alreadyCheckedProcedureNames ,
-    //            parent ,
-    //            globalVariableTypes, localVariableTypes );
-    //}
-
-    //@Override
-    //public void checkUseArguments(
-    //        HashSet<String> alreadyCheckedProcedureNames, final CoroutineOrProcedureOrComplexstmt<?, ?> parent )
-    //{
-    //    this.lhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-    //    this.rhs.checkUseArguments( alreadyCheckedProcedureNames, parent );
-    //}
 
     @SuppressWarnings("unchecked")
     @Override

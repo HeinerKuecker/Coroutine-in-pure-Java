@@ -23,12 +23,12 @@ public interface HasArgumentsAndVariables<RESUME_ARGUMENT>
     abstract public VariablesOrLocalVariables globalVars();
 
     /**
-     * @return Map with procedure arguments
+     * @return Map with function arguments
      */
-    //abstract public Map<String, Object> procedureArgumentValues();
-    abstract public Arguments procedureArgumentValues();
+    //abstract public Map<String, Object> functionArgumentValues();
+    abstract public Arguments functionArgumentValues();
 
-    abstract public Map<String, Class<?>> procedureParameterTypes();
+    abstract public Map<String, Class<?>> functionParameterTypes();
 
     /**
      * @return Map with global arguments (arguments of coroutine)

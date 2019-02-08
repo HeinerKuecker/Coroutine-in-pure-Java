@@ -66,7 +66,7 @@ public class CoroutineIteratorTest
                 new CoroutineIterator<>(
                         // type
                         String.class ,
-                        // procedures
+                        // functions
                         null ,
                         params ,
                         args ,
