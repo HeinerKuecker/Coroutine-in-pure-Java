@@ -66,16 +66,15 @@ implements HasVariableName
     }
 
     //@Override
-    //public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    //public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     //{
     //    return Collections.emptyList();
     //}
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing

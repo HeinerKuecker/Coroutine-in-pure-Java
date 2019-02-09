@@ -13,13 +13,13 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class NewArray<ELEMENT>
-implements CoroExpression<ELEMENT[]>
+public class NewArray<ELEMENT , COROUTINE_RETURN>
+implements CoroExpression<ELEMENT[] , COROUTINE_RETURN>
 {
     //public final Class<? extends ELEMENT> elementClass;
     public final Class<? extends ELEMENT[]> arrayClass;
 
-    private final CoroExpression<ELEMENT>[] arrayElementExpressions;
+    private final CoroExpression<ELEMENT , COROUTINE_RETURN>[] arrayElementExpressions;
 
     /**
      * Constructor.
@@ -31,7 +31,7 @@ implements CoroExpression<ELEMENT[]>
     public NewArray(
             //final Class<? extends ELEMENT> elementClass ,
             final Class<? extends ELEMENT[]> arrayClass ,
-            final CoroExpression<ELEMENT>... arrayElementExpressions )
+            final CoroExpression<ELEMENT , COROUTINE_RETURN>... arrayElementExpressions )
     {
         //this.elementClass = Objects.requireNonNull( elementClass );
         this.arrayClass = Objects.requireNonNull( arrayClass );
@@ -63,11 +63,11 @@ implements CoroExpression<ELEMENT[]>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
-        for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
         {
             result.addAll(
                     arrayElementExpression.getFunctionArgumentGetsNotInFunction() );
@@ -83,7 +83,7 @@ implements CoroExpression<ELEMENT[]>
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseVariables(
                     alreadyCheckedFunctionNames ,
@@ -97,7 +97,7 @@ implements CoroExpression<ELEMENT[]>
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        for ( final CoroExpression<ELEMENT> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
         }
@@ -113,6 +113,21 @@ implements CoroExpression<ELEMENT[]>
     public Class<? extends ELEMENT[]>[] type()
     {
         return new Class[]{ arrayClass };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        for ( final CoroExpression<ELEMENT, COROUTINE_RETURN> arrayElementExpression : this.arrayElementExpressions )
+        {
+            arrayElementExpression.setExprCoroutineReturnType(
+                    alreadyCheckedFunctionNames ,
+                    parent ,
+                    coroutineReturnType );
+        }
     }
 
     /**

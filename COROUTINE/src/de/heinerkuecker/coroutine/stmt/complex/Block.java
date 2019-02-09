@@ -105,9 +105,9 @@ extends ComplexStmt<
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
         {
@@ -118,16 +118,18 @@ extends ComplexStmt<
         return result;
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
         {
-            ( (CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN>) stmt ).setCoroutineReturnType( coroutineReturnType );
+            ( (CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN>) stmt ).setStmtCoroutineReturnType(
+                    alreadyCheckedFunctionNames ,
+                    (CoroutineOrFunctioncallOrComplexstmt) parent ,
+                    (Class) coroutineReturnType );
         }
     }
 

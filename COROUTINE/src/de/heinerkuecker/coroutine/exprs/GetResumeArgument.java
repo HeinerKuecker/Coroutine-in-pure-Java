@@ -5,60 +5,58 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 
-public class GetResumeArgument<T>
-//implements CoroExpression<T>
-extends AbstrHasSrcPosNoVarsNoArgsExpression<T>
+public class GetResumeArgument<RESUME_ARGUMENT , COROUTINE_RETURN>
+//implements CoroExpression<RESUME_ARGUMENT>
+extends AbstrHasSrcPosNoVarsNoArgsExpression<RESUME_ARGUMENT , COROUTINE_RETURN>
 {
     /**
      * For type check.
      *
      * Solve unchecked cast.
      */
-    public final Class<? extends T> type;
+    public final Class<? extends RESUME_ARGUMENT> resumeArgumentType;
 
     /**
      * Constructor.
-     *
-     * @param value
      */
     public GetResumeArgument(
-            final Class<? extends T> type )
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
         super(
                 // creationStackOffset
                 3 );
 
-        this.type =
+        this.resumeArgumentType =
                 Objects.requireNonNull(
-                        type );
+                        resumeArgumentType );
     }
 
     @Override
-    public T evaluate(
+    public RESUME_ARGUMENT evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object resumeArgument = parent.getResumeArgument();
 
         if ( resumeArgument != null &&
-                ! type.isInstance( resumeArgument ) )
+                ! resumeArgumentType.isInstance( resumeArgument ) )
         {
             throw new WrongExpressionClassException(
                     //valueExpression
                     this ,
                     //expectedClass
-                    type ,
+                    resumeArgumentType ,
                     //wrongValue
                     resumeArgument );
         }
 
-        return type.cast( resumeArgument );
+        return resumeArgumentType.cast( resumeArgument );
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends RESUME_ARGUMENT>[] type()
     {
-        return new Class[] { type };
+        return new Class[] { resumeArgumentType };
     }
 
     /**

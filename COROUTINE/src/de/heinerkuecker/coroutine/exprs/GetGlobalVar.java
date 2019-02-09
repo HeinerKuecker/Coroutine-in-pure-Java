@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetGlobalVar<T>
+public class GetGlobalVar<GLOBAL_VAR , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<T> , HasVariableName
+implements CoroExpression<GLOBAL_VAR , COROUTINE_RETURN> , HasVariableName
 {
     public final String globalVarName;
 
@@ -25,7 +25,7 @@ implements CoroExpression<T> , HasVariableName
      *
      * Solve unchecked cast.
      */
-    public final Class<T> type;
+    public final Class<GLOBAL_VAR> type;
 
     /**
      * Constructor.
@@ -33,7 +33,7 @@ implements CoroExpression<T> , HasVariableName
      */
     public GetGlobalVar(
             final String globalVarName ,
-            final Class<T> type )
+            final Class<GLOBAL_VAR> type )
     {
         super(
                 //creationStackOffset
@@ -49,7 +49,7 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public T evaluate(
+    public GLOBAL_VAR evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object globalVarValue =
@@ -78,7 +78,7 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
@@ -125,10 +125,19 @@ implements CoroExpression<T> , HasVariableName
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends GLOBAL_VAR>[] type()
     {
         //return type;
         return new Class[] { type };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        // do nothing
     }
 
     /**

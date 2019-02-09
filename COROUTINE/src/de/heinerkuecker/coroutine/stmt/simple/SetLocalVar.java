@@ -9,8 +9,8 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
@@ -26,7 +26,7 @@ import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
  */
 public /*final*/ class SetLocalVar<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT , VARIABLE>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-implements CoroExpression<VARIABLE> , HasVariableName
+implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 {
     /**
      * Name of variable to set in
@@ -38,14 +38,14 @@ implements CoroExpression<VARIABLE> , HasVariableName
      * This is the expression whose result
      * should be set as the value of the variable.
      */
-    public final CoroExpression<VARIABLE> varValueExpression;
+    public final CoroExpression<VARIABLE , COROUTINE_RETURN> varValueExpression;
 
     /**
      * Constructor.
      */
     public SetLocalVar(
             final String localVarName ,
-            final CoroExpression<VARIABLE> varValueExpression )
+            final CoroExpression<VARIABLE , COROUTINE_RETURN> varValueExpression )
     {
         this.localVarName =
                 Objects.requireNonNull(
@@ -68,7 +68,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
                         localVarName );
 
         this.varValueExpression =
-                new Value<VARIABLE>(
+                new Value<VARIABLE , COROUTINE_RETURN>(
                         (Class<? extends VARIABLE>) varValue.getClass() ,
                         varValue );
     }
@@ -116,7 +116,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.varValueExpression.getFunctionArgumentGetsNotInFunction();
     }
@@ -131,14 +131,28 @@ implements CoroExpression<VARIABLE> , HasVariableName
                 parent );
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        // do nothing
+        this.varValueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.varValueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

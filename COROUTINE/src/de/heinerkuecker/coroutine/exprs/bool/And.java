@@ -15,12 +15,11 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
  *
  * @author Heiner K&uuml;cker
  */
-public class And
+public class And<COROUTINE_RETURN>
 //implements Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    //private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/[] conditionsToAnd;
-    private final CoroExpression<Boolean>[] conditionsToAnd;
+    private final CoroExpression<Boolean , COROUTINE_RETURN>[] conditionsToAnd;
 
     /**
      * Constructor.
@@ -28,7 +27,7 @@ extends CoroBooleanExpression
     @SafeVarargs
     public And(
             //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/... conditionsToAnd
-            final CoroExpression<Boolean>... conditionsToAnd )
+            final CoroExpression<Boolean , COROUTINE_RETURN>... conditionsToAnd )
     {
         this.conditionsToAnd = conditionsToAnd;
     }
@@ -52,7 +51,7 @@ extends CoroBooleanExpression
     public Boolean evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
-        for ( final CoroExpression<Boolean> condition : conditionsToAnd )
+        for ( final CoroExpression<Boolean , COROUTINE_RETURN> condition : conditionsToAnd )
         {
             if ( ! condition.evaluate( parent ) )
             {
@@ -63,12 +62,12 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-        for ( final CoroExpression<?> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
         {
             result.addAll(
                     condition.getFunctionArgumentGetsNotInFunction() );
@@ -85,7 +84,7 @@ extends CoroBooleanExpression
             final Map<String, Class<?>> localVariableTypes )
     {
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-        for ( final CoroExpression<?> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
         {
             condition.checkUseVariables(
                     alreadyCheckedFunctionNames ,
@@ -99,10 +98,24 @@ extends CoroBooleanExpression
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-        for ( final CoroExpression<?> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
         {
             condition.checkUseArguments( alreadyCheckedFunctionNames, parent );
+        }
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        for ( final CoroExpression<Boolean, COROUTINE_RETURN> arrayElementExpression : this.conditionsToAnd )
+        {
+            arrayElementExpression.setExprCoroutineReturnType(
+                    alreadyCheckedFunctionNames ,
+                    parent ,
+                    coroutineReturnType );
         }
     }
 
@@ -114,8 +127,7 @@ extends CoroBooleanExpression
     {
         final StringBuilder buff = new StringBuilder();
 
-        //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-        for ( final CoroExpression<?> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
         {
             if ( buff.length() > 0 )
             {

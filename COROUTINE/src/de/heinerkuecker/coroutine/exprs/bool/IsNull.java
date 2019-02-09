@@ -17,20 +17,20 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
  *
  * @author Heiner K&uuml;cker
  */
-public class IsNull
+public class IsNull<COROUTINE_RETURN>
 //implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
     /**
      * Expression to check.
      */
-    public final CoroExpression<?> expression;
+    public final CoroExpression<? , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
      */
     public IsNull(
-            final CoroExpression<?> expression )
+            final CoroExpression<? , COROUTINE_RETURN> expression )
     {
         this.expression = expression;
     }
@@ -61,7 +61,7 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.expression.getFunctionArgumentGetsNotInFunction();
     }
@@ -87,6 +87,17 @@ extends CoroBooleanExpression
         this.expression.checkUseArguments(
                 alreadyCheckedFunctionNames ,
                 parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent, Class<?> coroutineReturnType )
+    {
+        this.expression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

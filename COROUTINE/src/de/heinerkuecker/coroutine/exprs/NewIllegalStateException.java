@@ -2,12 +2,12 @@ package de.heinerkuecker.coroutine.exprs;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
-public class NewIllegalStateException
-extends AbstrOneExprExpression<IllegalStateException , String>
+public class NewIllegalStateException<COROUTINE_RETURN>
+extends AbstrOneExprExpression<IllegalStateException , String , COROUTINE_RETURN>
 {
 
     public NewIllegalStateException(
-            final CoroExpression<String> messageExpr )
+            final CoroExpression<String , COROUTINE_RETURN> messageExpr )
     {
         super( messageExpr );
     }

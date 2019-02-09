@@ -10,7 +10,6 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
 // TODO give expression instead local var name
@@ -29,7 +28,7 @@ implements HasVariableName
      * is used to execute an operation
      * with the value of the variable.
      */
-    public final CoroExpression<EXPRESSION> expression;
+    public final CoroExpression<EXPRESSION , COROUTINE_RETURN> expression;
 
     /**
      * Method to implement the
@@ -55,7 +54,7 @@ implements HasVariableName
      */
     public AbstrLocalVarUseWithExpressionStmt(
             final String localVarName ,
-            final CoroExpression<EXPRESSION> expression )
+            final CoroExpression<EXPRESSION , COROUTINE_RETURN> expression )
     {
         this.localVarName =
                 Objects.requireNonNull(
@@ -92,18 +91,17 @@ implements HasVariableName
         return CoroStmtResult.continueCoroutine();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing
     }
 
     @Override
-    final public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();

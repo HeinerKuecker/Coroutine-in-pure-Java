@@ -12,22 +12,22 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  * expressions without access
  * to variables or arguments.
  *
- * @param <T> expression return type
+ * @param <EXPRESSION_RETURN> expression return type
  * @author Heiner K&uuml;cker
  */
-abstract public class AbstrNoVarsNoArgsExpression<T>
-implements CoroExpression<T>
+abstract public class AbstrNoVarsNoArgsExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
 {
 
     @Override
-    public final List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();
     }
 
     @Override
-    public final void checkUseVariables(
+    final public void checkUseVariables(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
@@ -37,11 +37,20 @@ implements CoroExpression<T>
     }
 
     @Override
-    public final void checkUseArguments(
+    final public void checkUseArguments(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         // nothing to do
+    }
+
+    @Override
+    final public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        // do nothing
     }
 
 }

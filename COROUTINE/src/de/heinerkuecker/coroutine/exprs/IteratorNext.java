@@ -10,15 +10,15 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
-public class IteratorNext<T>
-implements CoroExpression<T>
+public class IteratorNext<T , COROUTINE_RETURN>
+implements CoroExpression<T , COROUTINE_RETURN>
 {
     public final Class<? extends T> elementType;
 
     /**
      * Expression to get {@link Iterator}.
      */
-    public final CoroExpression<? extends Iterator<? extends T>> iteratorExpression;
+    public final CoroExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression;
 
     /**
      * Constructor.
@@ -27,7 +27,7 @@ implements CoroExpression<T>
      */
     public IteratorNext(
             final Class<? extends T> elementType ,
-            final CoroExpression<? extends Iterator<? extends T>> iteratorExpression )
+            final CoroExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression )
     {
         this.elementType =
                 Objects.requireNonNull(
@@ -53,7 +53,7 @@ implements CoroExpression<T>
      * @see CoroExpression#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
@@ -83,6 +83,18 @@ implements CoroExpression<T>
     public Class<? extends T>[] type()
     {
         return new Class[] { elementType };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.iteratorExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

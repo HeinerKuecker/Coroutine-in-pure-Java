@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class LongAdd
+public class LongAdd<COROUTINE_RETURN>
 //implements CoroExpression<Long>
-extends AbstrLhsRhsExpression<Long>
+extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
@@ -35,8 +35,8 @@ extends AbstrLhsRhsExpression<Long>
      * @param rhs
      */
     public LongAdd(
-            final CoroExpression<Long> lhs ,
-            final CoroExpression<Long> rhs )
+            final CoroExpression<Long , COROUTINE_RETURN> lhs ,
+            final CoroExpression<Long , COROUTINE_RETURN> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -52,14 +52,14 @@ extends AbstrLhsRhsExpression<Long>
      * @param rhs
      */
     public LongAdd(
-            final CoroExpression<Long> lhs ,
+            final CoroExpression<Long , COROUTINE_RETURN> lhs ,
             final Long rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = new Value<Long>( rhs );
         super(
                 lhs ,
-                new Value<Long>( rhs ) );
+                new Value<Long , COROUTINE_RETURN>( rhs ) );
     }
 
     /**

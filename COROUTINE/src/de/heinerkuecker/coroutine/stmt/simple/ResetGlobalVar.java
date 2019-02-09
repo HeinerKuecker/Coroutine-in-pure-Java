@@ -7,7 +7,6 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
 public final class ResetGlobalVar<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
@@ -47,16 +46,15 @@ implements HasVariableName
     }
 
     //@Override
-    //public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    //public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     //{
     //    return Collections.emptyList();
     //}
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing

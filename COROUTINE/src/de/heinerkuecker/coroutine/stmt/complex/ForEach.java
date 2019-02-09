@@ -40,7 +40,7 @@ extends ComplexStmt<
 
     public final Class<? extends ELEMENT> elementType;
 
-    final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression;
+    final CoroExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression;
 
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStmt;
 
@@ -51,7 +51,7 @@ extends ComplexStmt<
     public ForEach(
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
-            final CoroExpression<? extends Iterable<ELEMENT>> iterableExpression ,
+            final CoroExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
@@ -87,7 +87,7 @@ extends ComplexStmt<
             final String label ,
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
-            final CoroExpression<Iterable<ELEMENT>> iterableExpression ,
+            final CoroExpression<Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
@@ -153,9 +153,9 @@ extends ComplexStmt<
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 iterableExpression.getFunctionArgumentGetsNotInFunction() );
@@ -166,14 +166,16 @@ extends ComplexStmt<
         return result;
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        this.bodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
+        this.bodyComplexStmt.setStmtCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

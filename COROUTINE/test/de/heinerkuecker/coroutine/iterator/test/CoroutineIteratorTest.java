@@ -54,8 +54,8 @@ public class CoroutineIteratorTest
                         String.class )
         };
 
-        final Argument<?>[] args = {
-                new Argument<String>(
+        final Argument<? , ?>[] args = {
+                new Argument<String , String>(
                         // name
                         "param" ,
                         // value
@@ -181,7 +181,7 @@ public class CoroutineIteratorTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -215,7 +215,7 @@ public class CoroutineIteratorTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         "number" ,
                         Integer.class );
@@ -246,7 +246,7 @@ public class CoroutineIteratorTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,

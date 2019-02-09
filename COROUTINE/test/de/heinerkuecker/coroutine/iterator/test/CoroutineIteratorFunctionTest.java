@@ -2,7 +2,6 @@ package de.heinerkuecker.coroutine.iterator.test;
 
 import java.util.Arrays;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
@@ -22,6 +21,7 @@ import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
 import de.heinerkuecker.coroutine.stmt.complex.If;
 import de.heinerkuecker.coroutine.stmt.ret.FinallyReturn;
 import de.heinerkuecker.coroutine.stmt.ret.FinallyReturnWithoutResult;
+import de.heinerkuecker.coroutine.stmt.ret.FunctionReturn;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 import de.heinerkuecker.coroutine.stmt.simple.DeclareVariable;
 import de.heinerkuecker.coroutine.stmt.simple.IncrementGlobalVar;
@@ -50,7 +50,9 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
-                        Arrays.asList( empty_function ) ,
+                        // functions
+                        Arrays.asList(
+                                empty_function ) ,
                         // params
                         null ,
                         // args
@@ -83,6 +85,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -116,6 +119,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -165,6 +169,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -266,6 +271,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -310,6 +316,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -375,6 +382,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -429,6 +437,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -483,6 +492,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -544,6 +554,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -605,6 +616,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -658,6 +670,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -750,6 +763,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Integer>(
                         // type
                         Integer.class ,
+                        // functions
                         Arrays.asList(
                                 function0 ,
                                 function1 ) ,
@@ -794,7 +808,7 @@ public class CoroutineIteratorFunctionTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get function argument expression
-        final GetFunctionArgument<Long> argument =
+        final GetFunctionArgument<Long , Long> argument =
                 new GetFunctionArgument<>(
                         //functionArgumentName
                         "argument" ,
@@ -836,6 +850,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Long>(
                         // type
                         Long.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -880,7 +895,7 @@ public class CoroutineIteratorFunctionTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Long> variable =
+        final GetLocalVar<Long , Long> variable =
                 new GetLocalVar<>(
                         // varName
                         "variable" ,
@@ -932,6 +947,7 @@ public class CoroutineIteratorFunctionTest
                 new CoroutineIterator<Long>(
                         // type
                         Long.class ,
+                        // functions
                         Arrays.asList( function ) ,
                         // params
                         null ,
@@ -976,14 +992,14 @@ public class CoroutineIteratorFunctionTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> variable =
+        final GetLocalVar<Integer , Integer> variable =
                 new GetLocalVar<>(
                         // localVarName
                         "variable" ,
                         Integer.class );
 
         // extract get function argument expression
-        final GetFunctionArgument<Integer> functionArgument =
+        final GetFunctionArgument<Integer , Integer> functionArgument =
                 new GetFunctionArgument<>(
                         // functionArgumentName
                         "functionArgument" ,
@@ -1073,11 +1089,155 @@ public class CoroutineIteratorFunctionTest
                 coroIter );
     }
 
+    @Test
+    public void test_FunctionReturn_0()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        final Function</*FUNCTION_RETURN*/Integer, /*COROUTINE_RETURN*/Integer , /*RESUME_ARGUMENT*/Void> function0 =
+                new Function<>(
+                        "function0" ,
+                        // params
+                        null ,
+                        // bodyStmts
+                        new FunctionReturn<>(
+                                // functionReturnType
+                                Integer.class ,
+                                //expression
+                                new Value<>( 0 ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // functions
+                        Arrays.asList(
+                                function0 ) ,
+                        // params
+                        null ,
+                        // args
+                        null ,
+                        // globalVariables
+                        null ,
+                        // stmts
+                        new YieldReturn<>(
+                                new FunctionCall<>(
+                                        "function0" ,
+                                        //functionReturnType
+                                        Integer.class ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+
+        //Assert.fail( "TODO" );
+    }
 
     @Test
-    public void test_FunctionReturn()
+    public void test_FunctionReturn_1()
     {
-        Assert.fail( "TODO" );
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        final Function</*FUNCTION_RETURN*/Integer, /*COROUTINE_RETURN*/Integer , /*RESUME_ARGUMENT*/Void> function1 =
+                new Function<>(
+                        "function1" ,
+                        // params
+                        null ,
+                        // bodyStmts
+                        new FunctionReturn<>(
+                                // functionReturnType
+                                Integer.class ,
+                                //expression
+                                new Value<>( 1 ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // functions
+                        Arrays.asList(
+                                function1 ) ,
+                        // params
+                        null ,
+                        // args
+                        null ,
+                        // globalVariables
+                        null ,
+                        // stmts
+                        new YieldReturn<>( 0 ) ,
+                        new YieldReturn<>(
+                                new FunctionCall<>(
+                                        "function1" ,
+                                        //functionReturnType
+                                        Integer.class ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+
+        //Assert.fail( "TODO" );
+    }
+
+    @Test
+    public void test_FunctionReturn_2()
+    {
+        CoroutineDebugSwitches.initializationChecks = true;
+
+        final Function</*FUNCTION_RETURN*/Integer, /*COROUTINE_RETURN*/Integer , /*RESUME_ARGUMENT*/Void> function =
+                new Function<>(
+                        "function" ,
+                        // params
+                        null ,
+                        // bodyStmts
+                        new YieldReturn<>( 0 ) ,
+                        new FunctionReturn<>(
+                                // functionReturnType
+                                Integer.class ,
+                                //expression
+                                new Value<>( 1 ) ) );
+
+        final CoroutineIterator<Integer> coroIter =
+                new CoroutineIterator<Integer>(
+                        // type
+                        Integer.class ,
+                        // functions
+                        Arrays.asList(
+                                function ) ,
+                        // params
+                        null ,
+                        // args
+                        null ,
+                        // globalVariables
+                        null ,
+                        // stmts
+                        new YieldReturn<>(
+                                new FunctionCall<>(
+                                        "function" ,
+                                        //functionReturnType
+                                        Integer.class ) ) );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                0 );
+
+        CoroutineIteratorTest.assertNext(
+                coroIter ,
+                1 );
+
+        CoroutineIteratorTest.assertHasNextFalse(
+                coroIter );
+
+        //Assert.fail( "TODO" );
     }
 
 }

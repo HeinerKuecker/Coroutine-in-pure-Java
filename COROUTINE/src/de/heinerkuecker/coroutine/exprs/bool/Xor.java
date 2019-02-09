@@ -16,39 +16,23 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
  *
  * @author Heiner K&uuml;cker
  */
-public class Xor
+public class Xor<COROUTINE_RETURN>
 //implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    //private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs;
-    private final CoroExpression<Boolean> lhs;
-    //private final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs;
-    private final CoroExpression<Boolean> rhs;
+    private final CoroExpression<Boolean , COROUTINE_RETURN> lhs;
+    private final CoroExpression<Boolean , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
      */
     public Xor(
-            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ lhs ,
-            final CoroExpression<Boolean> lhs ,
-            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ rhs
-            final CoroExpression<Boolean> rhs )
+            final CoroExpression<Boolean , COROUTINE_RETURN> lhs ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
     }
-
-    ///**
-    // * Xors the specified {@link Condition}s.
-    // *
-    // * @see Condition#execute
-    // */
-    //@Override
-    //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
-    //{
-    //    return lhs.execute( parent ) != rhs.execute( parent );
-    //}
 
     /**
      * Xors the specified conditions.
@@ -61,9 +45,9 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 lhs.getFunctionArgumentGetsNotInFunction() );
@@ -99,6 +83,23 @@ extends CoroBooleanExpression
     {
         this.lhs.checkUseArguments( alreadyCheckedFunctionNames, parent );
         this.rhs.checkUseArguments( alreadyCheckedFunctionNames, parent );
+    }
+
+    @Override
+    final public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.lhs.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+
+        this.rhs.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

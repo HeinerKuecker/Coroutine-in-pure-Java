@@ -8,12 +8,12 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
-abstract public class AbstrExprsUseExprs<EXPRESSION_RETURN , ARGUMENT>
-implements CoroExpression<EXPRESSION_RETURN>
+abstract public class AbstrExprsUseExprs<EXPRESSION_RETURN , ARGUMENT , COROUTINE_RETURN>
+implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
 {
     public final Class<? extends EXPRESSION_RETURN> type;
 
-    public final CoroExpression<ARGUMENT> argumentExpression;
+    public final CoroExpression<ARGUMENT , COROUTINE_RETURN> argumentExpression;
 
     abstract public EXPRESSION_RETURN execute(
             final ARGUMENT argument );
@@ -26,7 +26,7 @@ implements CoroExpression<EXPRESSION_RETURN>
      */
     protected AbstrExprsUseExprs(
             Class<? extends EXPRESSION_RETURN> type ,
-            CoroExpression<ARGUMENT> argumentExpression )
+            CoroExpression<ARGUMENT , COROUTINE_RETURN> argumentExpression )
     {
         this.type = Objects.requireNonNull( type );
         this.argumentExpression = Objects.requireNonNull( argumentExpression );
@@ -53,7 +53,7 @@ implements CoroExpression<EXPRESSION_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.argumentExpression.getFunctionArgumentGetsNotInFunction();
     }
@@ -80,6 +80,18 @@ implements CoroExpression<EXPRESSION_RETURN>
         this.argumentExpression.checkUseArguments(
                 alreadyCheckedFunctionNames ,
                 parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        this.argumentExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType);
     }
 
 }

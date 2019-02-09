@@ -41,8 +41,7 @@ extends ComplexStmt<
     // TODO nur SimpleStmt oder FunctionCall erlauben
     final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStmt;
 
-    //final ConditionOrBooleanExpression condition;
-    final CoroExpression<Boolean> condition;
+    final CoroExpression<Boolean , COROUTINE_RETURN> condition;
 
     // TODO nur SimpleStmt oder FunctionCall erlauben
     final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStmt;
@@ -55,8 +54,7 @@ extends ComplexStmt<
     @SafeVarargs
     public For(
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStmt ,
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStmt ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
@@ -89,7 +87,7 @@ extends ComplexStmt<
             // C style default
             this.condition =
                     //new True()
-                    new Value<Boolean>( true );
+                    new Value<Boolean , COROUTINE_RETURN>( true );
         }
         else
         {
@@ -199,8 +197,7 @@ extends ComplexStmt<
     public For(
             final String label ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStmt ,
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStmt ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
@@ -227,7 +224,7 @@ extends ComplexStmt<
             // C style default
             this.condition =
                     //new True()
-                    new Value<Boolean>( true );
+                    new Value<Boolean , COROUTINE_RETURN>( true );
         }
         else
         {
@@ -393,9 +390,9 @@ extends ComplexStmt<
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 initialStmt.getFunctionArgumentGetsNotInFunction() );
@@ -413,10 +410,15 @@ extends ComplexStmt<
     }
 
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        this.bodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
+        this.bodyComplexStmt.setStmtCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

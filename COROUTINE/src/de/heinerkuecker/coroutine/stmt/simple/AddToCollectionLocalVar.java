@@ -9,9 +9,8 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
@@ -31,14 +30,14 @@ implements HasVariableName
      * is to add to the value of the
      * {@link Collection} variable.
      */
-    public final CoroExpression<ELEMENT_TO_ADD> elementToAddExpression;
+    public final CoroExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression;
 
     /**
      * Constructor.
      */
     public AddToCollectionLocalVar(
             final String localVarName ,
-            final CoroExpression<ELEMENT_TO_ADD> elementToAddExpression )
+            final CoroExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression )
     {
         this.collectionLocalVarName =
                 Objects.requireNonNull(
@@ -93,18 +92,20 @@ implements HasVariableName
         return CoroStmtResult.continueCoroutine();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        // do nothing
+        this.elementToAddExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.elementToAddExpression.getFunctionArgumentGetsNotInFunction();
     }

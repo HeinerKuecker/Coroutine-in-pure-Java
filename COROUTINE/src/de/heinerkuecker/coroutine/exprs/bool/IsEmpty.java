@@ -26,20 +26,20 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
  *
  * @author Heiner K&uuml;cker
  */
-public class IsEmpty
+public class IsEmpty<COROUTINE_RETURN>
 //implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
     /**
      * Expression to check.
      */
-    public final CoroExpression<?> expression;
+    public final CoroExpression<? , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
      */
     public IsEmpty(
-            final CoroExpression<?> expression )
+            final CoroExpression<? , COROUTINE_RETURN> expression )
     {
         this.expression = Objects.requireNonNull( expression );
     }
@@ -210,7 +210,7 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.expression.getFunctionArgumentGetsNotInFunction();
     }
@@ -234,6 +234,17 @@ extends CoroBooleanExpression
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         this.expression.checkUseArguments( alreadyCheckedFunctionNames , parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent, Class<?> coroutineReturnType )
+    {
+        this.expression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

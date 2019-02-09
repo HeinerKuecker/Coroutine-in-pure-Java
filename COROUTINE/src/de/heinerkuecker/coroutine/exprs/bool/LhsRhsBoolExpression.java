@@ -1,4 +1,4 @@
-package de.heinerkuecker.coroutine.exprs;
+package de.heinerkuecker.coroutine.exprs.bool;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,20 +7,14 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 
-public abstract class AbstrLhsRhsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
-implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
+abstract public class LhsRhsBoolExpression<OPERAND, COROUTINE_RETURN>
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    /**
-     * Left hand side expression.
-     */
-    public final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs;
-
-    /**
-     * Right hand side expression to add.
-     */
-    public final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs;
+    public final CoroExpression<? extends OPERAND , COROUTINE_RETURN> lhs;
+    public final CoroExpression<? extends OPERAND , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
@@ -28,17 +22,20 @@ implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
      * @param lhs
      * @param rhs
      */
-    protected AbstrLhsRhsExpression(
-            final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs )
+    protected LhsRhsBoolExpression(
+            final CoroExpression<? extends OPERAND, COROUTINE_RETURN> lhs ,
+            final CoroExpression<? extends OPERAND, COROUTINE_RETURN> rhs )
     {
-        this.lhs = Objects.requireNonNull( lhs );
-        this.rhs = Objects.requireNonNull( rhs );
+        this.lhs =
+                Objects.requireNonNull(
+                        lhs );
+
+        this.rhs =
+                Objects.requireNonNull(
+                        rhs );
     }
 
-    /**
-     * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
-     */
+
     @Override
     final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
@@ -56,9 +53,9 @@ implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
     @Override
     final public void checkUseVariables(
             final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
             final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes)
+            final Map<String, Class<?>> localVariableTypes )
     {
         this.lhs.checkUseVariables(
                 alreadyCheckedFunctionNames ,
@@ -81,10 +78,10 @@ implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    public void setExprCoroutineReturnType(
-            HashSet<String> alreadyCheckedFunctionNames ,
-            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            Class<?> coroutineReturnType )
+    final public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
     {
         this.lhs.setExprCoroutineReturnType(
                 alreadyCheckedFunctionNames ,

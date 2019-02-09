@@ -3,10 +3,10 @@ package de.heinerkuecker.coroutine.exprs.bool;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 
 //public interface CoroBooleanExpression
-abstract public class CoroBooleanExpression
+abstract public class CoroBooleanExpression<COROUTINE_RETURN>
 //extends
 implements
-    CoroExpression<Boolean>
+    CoroExpression<Boolean , COROUTINE_RETURN>
     //ConditionOrBooleanExpression
 {
     ///**

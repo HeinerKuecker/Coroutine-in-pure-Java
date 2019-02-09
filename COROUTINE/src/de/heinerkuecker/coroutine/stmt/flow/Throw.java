@@ -10,7 +10,6 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 import de.heinerkuecker.util.ExceptionUnchecker;
@@ -18,7 +17,7 @@ import de.heinerkuecker.util.ExceptionUnchecker;
 public class Throw<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    private final CoroExpression<? extends Throwable> exceptionExpression;
+    private final CoroExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression;
 
     /**
      * Constructor.
@@ -27,7 +26,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      */
     public Throw(
             //final Exception exception
-            final CoroExpression<? extends Throwable> exceptionExpression )
+            final CoroExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression )
     {
         this.exceptionExpression =
                 Objects.requireNonNull(
@@ -43,7 +42,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
             final Throwable exception )
     {
         this.exceptionExpression =
-                new Value<Throwable>(
+                new Value<Throwable , COROUTINE_RETURN>(
                         Objects.requireNonNull(
                                 exception ) );
     }
@@ -76,16 +75,15 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing

@@ -31,7 +31,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     /**
      * Expression to deliver value to print.
      */
-    public final CoroExpression<?> outputExpression;
+    public final CoroExpression<? , COROUTINE_RETURN> outputExpression;
 
     /**
      * Constructor.
@@ -40,7 +40,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @param outputExpression
      */
     public SystemOutPrintln(
-            final CoroExpression<?> outputExpression)
+            final CoroExpression<? , COROUTINE_RETURN> outputExpression )
     {
         this.outputExpression =
                 Objects.requireNonNull(
@@ -60,19 +60,21 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        // do nothing
+        this.outputExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

@@ -35,7 +35,7 @@ public class CoroutineIteratorForeachTest
                                 // elementType
                                 Integer.class ,
                                 // iterableExpression
-                                new Value<List<Integer>>(
+                                new Value<List<Integer> , Integer>(
                                         (Class<? extends List<Integer>>) List.class ,
                                         Arrays.asList( 1 , 2 , 3 ) ) ,
                                 // stmts

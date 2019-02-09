@@ -18,20 +18,20 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
  *
  * @author Heiner K&uuml;cker
  */
-public class IteratorHasNext
+public class IteratorHasNext<COROUTINE_RETURN>
 //implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
     /**
      * Expression to check.
      */
-    public final CoroExpression<Iterator<?>> iteratorExpression;
+    public final CoroExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression;
 
     /**
      * Constructor.
      */
     public IteratorHasNext(
-            final CoroExpression<Iterator<?>> iteratorExpression )
+            final CoroExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression )
     {
         this.iteratorExpression = iteratorExpression;
     }
@@ -58,7 +58,7 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.iteratorExpression.getFunctionArgumentGetsNotInFunction();
     }
@@ -84,6 +84,17 @@ extends CoroBooleanExpression
         this.iteratorExpression.checkUseArguments(
                 alreadyCheckedFunctionNames ,
                 parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent, Class<?> coroutineReturnType )
+    {
+        this.iteratorExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

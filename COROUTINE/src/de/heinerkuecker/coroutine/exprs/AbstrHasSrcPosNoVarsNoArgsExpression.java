@@ -8,11 +8,10 @@ import java.util.Map;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
-public abstract class AbstrHasSrcPosNoVarsNoArgsExpression<T>
+public abstract class AbstrHasSrcPosNoVarsNoArgsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<T>
+implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
 {
-
     /**
      * Constructor.
      *
@@ -25,7 +24,7 @@ implements CoroExpression<T>
     }
 
     @Override
-    public final List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public final List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();
@@ -47,6 +46,15 @@ implements CoroExpression<T>
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         // nothing to do
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        // do nothing
     }
 
 }

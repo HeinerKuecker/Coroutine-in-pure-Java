@@ -15,14 +15,14 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  *
  * @author Heiner K&uuml;cker
  */
-public class NullValue<T>
+public class NullValue<T , COROUTINE_RETURN>
 //implements CoroExpression<T>
-extends AbstrNoVarsNoArgsExpression<T>
+extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
 {
     /**
      * Singleton instance.
      */
-    public static final NullValue<?> INSTANCE = new NullValue<>();
+    public static final NullValue<? , ?> INSTANCE = new NullValue<>();
 
     /**
      * Factory method.
@@ -30,9 +30,9 @@ extends AbstrNoVarsNoArgsExpression<T>
      * @return {@link #INSTANCE}
      */
     @SuppressWarnings("unchecked")
-    public static final <T> NullValue<? extends T> nullValue()
+    public static final <T , COROUTINE_RETURN> NullValue<? extends T , COROUTINE_RETURN> nullValue()
     {
-        return (NullValue<T>) INSTANCE;
+        return (NullValue<T , COROUTINE_RETURN>) INSTANCE;
     }
 
     /**
@@ -50,6 +50,7 @@ extends AbstrNoVarsNoArgsExpression<T>
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends T>[] type()
     {
@@ -61,9 +62,15 @@ extends AbstrNoVarsNoArgsExpression<T>
         return new Class[] {};
     }
 
-    /**
-     * @see Object#toString()
-     */
+    //@Override
+    //public void setExprCoroutineReturnType(
+    //        HashSet<String> alreadyCheckedFunctionNames ,
+    //        CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+    //        Class<?> coroutineReturnType )
+    //{
+    //    // do nothing
+    //}
+
     @Override
     public String toString()
     {

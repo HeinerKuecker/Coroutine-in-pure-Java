@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetFunctionArgument<T>
+public class GetFunctionArgument<FUNCTION_ARGUMENT , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<T> , HasArgumentName
+implements CoroExpression<FUNCTION_ARGUMENT , COROUTINE_RETURN> , HasArgumentName
 {
     /**
      * Name of function argument in
@@ -30,7 +30,7 @@ implements CoroExpression<T> , HasArgumentName
      *
      * Solve unchecked cast.
      */
-    public final Class<T> type;
+    public final Class<FUNCTION_ARGUMENT> type;
 
     /**
      * Constructor.
@@ -38,7 +38,7 @@ implements CoroExpression<T> , HasArgumentName
      */
     public GetFunctionArgument(
             final String functionArgumentName ,
-            final Class<T> type )
+            final Class<FUNCTION_ARGUMENT> type )
     {
         super(
                 //creationStackOffset
@@ -54,7 +54,7 @@ implements CoroExpression<T> , HasArgumentName
     }
 
     @Override
-    public T evaluate(
+    public FUNCTION_ARGUMENT evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object funcArgValue = parent.functionArgumentValues().get( functionArgumentName );
@@ -80,7 +80,7 @@ implements CoroExpression<T> , HasArgumentName
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Arrays.asList( this );
     }
@@ -130,10 +130,19 @@ implements CoroExpression<T> , HasArgumentName
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends FUNCTION_ARGUMENT>[] type()
     {
         //return type;
         return new Class[] { type };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        // do nothing
     }
 
     /**

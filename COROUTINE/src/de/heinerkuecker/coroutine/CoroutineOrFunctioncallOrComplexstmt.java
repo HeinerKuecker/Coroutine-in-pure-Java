@@ -1,7 +1,6 @@
 package de.heinerkuecker.coroutine;
 
 import de.heinerkuecker.coroutine.stmt.complex.ComplexStmt;
-import de.heinerkuecker.coroutine.stmt.complex.ComplexStmtState;
 import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
 
 /**

@@ -23,8 +23,7 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public While(
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
@@ -83,8 +82,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final String label ,
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(

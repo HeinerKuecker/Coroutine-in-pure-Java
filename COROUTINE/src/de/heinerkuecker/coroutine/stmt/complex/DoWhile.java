@@ -27,8 +27,7 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public DoWhile(
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     {
         super(
@@ -87,8 +86,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             final String label ,
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
     {
         super(

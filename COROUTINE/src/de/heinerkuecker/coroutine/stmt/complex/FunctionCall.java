@@ -14,7 +14,7 @@ import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult.FunctionReturnWithResult;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.util.ArrayDeepToString;
 
@@ -32,7 +32,7 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 //implements CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
-implements CoroExpression<FUNCTION_RETURN>
+implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 {
     ///**
     // * Es muss ein ComplexStmt sein,
@@ -49,7 +49,7 @@ implements CoroExpression<FUNCTION_RETURN>
 
     // TODO getter
     //final Map<String, FunctionArgument<?>> functionArguments;
-    final Argument<?>[] functionArguments;
+    final Argument<? , COROUTINE_RETURN>[] functionArguments;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
@@ -72,7 +72,7 @@ implements CoroExpression<FUNCTION_RETURN>
             //final Function<COROUTINE_RETURN> function
             final String functionName ,
             final Class<? extends FUNCTION_RETURN> functionReturnType ,
-            final Argument<?>... args )
+            final Argument<? , COROUTINE_RETURN>... args )
     {
         super(
                 //creationStackOffset
@@ -184,7 +184,15 @@ implements CoroExpression<FUNCTION_RETURN>
     public FUNCTION_RETURN evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
-        throw new RuntimeException( "not implemented" );
+        final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> functionCallState =
+                newState( (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>) /*this*/parent );
+
+        FunctionReturnWithResult<FUNCTION_RETURN, COROUTINE_RETURN> functionCallResult =
+                (FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>) functionCallState.execute();
+
+        return functionCallResult.result;
+
+        //throw new RuntimeException( "not implemented" );
     }
 
     @SuppressWarnings("unchecked")
@@ -232,20 +240,43 @@ implements CoroExpression<FUNCTION_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // all subsequent GetFunctionArgument are in function
         return Collections.emptyList();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        this.coroutineReturnType = coroutineReturnType;
+        setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.coroutineReturnType = (Class<? extends COROUTINE_RETURN>) coroutineReturnType;
+
+        if ( alreadyCheckedFunctionNames.contains( functionName ) )
+        {
+            return;
+        }
+
+        alreadyCheckedFunctionNames.add( functionName );
+
+        parent.getFunction( this.functionName ).bodyComplexStmt.setStmtCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                (Class) coroutineReturnType );
     }
 
     @Override
@@ -275,7 +306,7 @@ implements CoroExpression<FUNCTION_RETURN>
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent )
     {
-        for ( final Argument<?> procArg : this.functionArguments )
+        for ( final Argument<? , ?> procArg : this.functionArguments )
         {
             procArg.checkUseArguments(
                     alreadyCheckedFunctionNames,

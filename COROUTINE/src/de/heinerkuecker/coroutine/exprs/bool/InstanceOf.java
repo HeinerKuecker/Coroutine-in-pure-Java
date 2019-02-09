@@ -21,19 +21,19 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class InstanceOf
+public class InstanceOf<COROUTINE_RETURN>
 //implements CoroBooleanExpression
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
     /**
      * Left hand side expression, value.
      */
-    public final CoroExpression<?> valueExpression;
+    public final CoroExpression<?, COROUTINE_RETURN> valueExpression;
 
     /**
      * Right hand side expression, type.
      */
-    public final CoroExpression<? extends Class<?>> typeExpression;
+    public final CoroExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression;
 
     /**
      * Constructor.
@@ -42,8 +42,8 @@ extends CoroBooleanExpression
      * @param typeExpression
      */
     public InstanceOf(
-            final CoroExpression<?> valueExpression ,
-            final CoroExpression<? extends Class<?>> typeExpression )
+            final CoroExpression<?, COROUTINE_RETURN> valueExpression ,
+            final CoroExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression )
     {
         this.valueExpression = Objects.requireNonNull( valueExpression );
         this.typeExpression = Objects.requireNonNull( typeExpression );
@@ -56,7 +56,7 @@ extends CoroBooleanExpression
      * @param type
      */
     public InstanceOf(
-            final CoroExpression<?> valueExpression ,
+            final CoroExpression<? , COROUTINE_RETURN> valueExpression ,
             final Class<?> type )
     {
         this.valueExpression =
@@ -64,7 +64,7 @@ extends CoroBooleanExpression
                         valueExpression );
 
         this.typeExpression =
-                new Value<Class<?>>(
+                new Value<Class<?> , COROUTINE_RETURN>(
                         Objects.requireNonNull(
                                 type  ) );
     }
@@ -90,9 +90,9 @@ extends CoroBooleanExpression
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 valueExpression.getFunctionArgumentGetsNotInFunction() );
@@ -126,8 +126,29 @@ extends CoroBooleanExpression
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        this.valueExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
-        this.typeExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
+        this.valueExpression.checkUseArguments(
+                alreadyCheckedFunctionNames ,
+                parent );
+
+        this.typeExpression.checkUseArguments(
+                alreadyCheckedFunctionNames ,
+                parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent, Class<?> coroutineReturnType )
+    {
+        this.valueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+
+        this.typeExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

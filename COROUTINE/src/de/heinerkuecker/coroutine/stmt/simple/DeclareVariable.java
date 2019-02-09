@@ -34,9 +34,9 @@ import de.heinerkuecker.util.ArrayTypeName;
  * @param <T> variable type
  * @author Heiner K&uuml;cker
  */
-public final class DeclareVariable<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT, T>
+public final class DeclareVariable<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT, T>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
-implements CoroExpression<T>
+implements CoroExpression<T , COROUTINE_RETURN>
 {
     /**
      * Name of variable.
@@ -53,7 +53,7 @@ implements CoroExpression<T>
      * should be set as the initial value of
      * the variable.
      */
-    public final CoroExpression<? extends T> initialVarValueExpression;
+    public final CoroExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression;
 
     /**
      * Constructor.
@@ -61,7 +61,7 @@ implements CoroExpression<T>
     public DeclareVariable(
             final String varName ,
             final Class<? extends T> type ,
-            final CoroExpression<? extends T> initialVarValueExpression )
+            final CoroExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression )
     {
         this.varName =
                 Objects.requireNonNull(
@@ -194,7 +194,7 @@ implements CoroExpression<T>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         if ( this.initialVarValueExpression == null )
         {
@@ -203,14 +203,28 @@ implements CoroExpression<T>
         return this.initialVarValueExpression.getFunctionArgumentGetsNotInFunction();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        // do nothing
+        this.initialVarValueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.initialVarValueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

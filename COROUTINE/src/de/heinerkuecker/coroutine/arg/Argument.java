@@ -15,15 +15,15 @@ import de.heinerkuecker.coroutine.exprs.Value;
  * Argument for function or
  * the entire coroutine.
  *
- * @param <T> argument/parameter type
+ * @param <ARGUMENT> argument/parameter type
  * @author Heiner K&uuml;cker
  */
-public class Argument<T>
+public class Argument<ARGUMENT , COROUTINE_RETURN>
 implements CoroCheckable
 {
     public final String name;
 
-    public final CoroExpression<T> expression;
+    public final CoroExpression<ARGUMENT , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
@@ -33,7 +33,7 @@ implements CoroCheckable
      */
     public Argument(
             final String name ,
-            final CoroExpression<T> expression )
+            final CoroExpression<ARGUMENT , COROUTINE_RETURN> expression )
     {
         this.name = Objects.requireNonNull( name );
         this.expression = Objects.requireNonNull( expression );
@@ -47,21 +47,21 @@ implements CoroCheckable
      */
     public Argument(
             final String name ,
-            final T value )
+            final ARGUMENT value )
     {
         this.name = Objects.requireNonNull( name );
 
         this.expression =
-                new Value<T>(
-                        (Class<? extends T>) value.getClass() ,
+                new Value<>(
+                        (Class<? extends ARGUMENT>) value.getClass() ,
                         value );
     }
 
-    public T getValue(
+    public ARGUMENT getValue(
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         @SuppressWarnings("unchecked")
-        final Class<T> parameterType = (Class<T>) parent.functionParameterTypes().get( name );
+        final Class<ARGUMENT> parameterType = (Class<ARGUMENT>) parent.functionParameterTypes().get( name );
 
         return
                 parameterType.cast(
@@ -69,7 +69,7 @@ implements CoroCheckable
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.expression.getFunctionArgumentGetsNotInFunction();
     }
@@ -99,9 +99,9 @@ implements CoroCheckable
             throw new ArgumentNotDeclaredException( this );
         }
 
-        final Class<? extends T>[] typeArr = this.expression.type();
+        final Class<? extends ARGUMENT>[] typeArr = this.expression.type();
 
-        for ( final Class<? extends T> type : typeArr )
+        for ( final Class<? extends ARGUMENT> type : typeArr )
         {
             if ( ! parameterType.isAssignableFrom( type ) )
             {
@@ -148,7 +148,7 @@ implements CoroCheckable
         //public <T extends HasCreationStackTraceElement & HasVariableName> ArgumentNotDeclaredException(
         //        final T stmtOrExpression )
         public ArgumentNotDeclaredException(
-                final Argument<?> argument )
+                final Argument<? , ?> argument )
         {
             super(
                     "argument not declared: " +
@@ -172,7 +172,7 @@ implements CoroCheckable
          */
         public WrongArgumentClassException(
                 //final HasVariableName wrongExpression ,
-                final CoroExpression<?> wrongExpression ,
+                final CoroExpression<? , ?> wrongExpression ,
                 final Class<?> wrongClass ,
                 final Class<?> expectedClass )
         {

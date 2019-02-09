@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class IntAdd
+public class IntAdd<COROUTINE_RETURN>
 //implements CoroExpression<Integer>
-extends AbstrLhsRhsExpression<Integer>
+extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
@@ -35,8 +35,8 @@ extends AbstrLhsRhsExpression<Integer>
      * @param rhs
      */
     public IntAdd(
-            final CoroExpression<Integer> lhs ,
-            final CoroExpression<Integer> rhs )
+            final CoroExpression<Integer , COROUTINE_RETURN> lhs ,
+            final CoroExpression<Integer , COROUTINE_RETURN> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -52,14 +52,14 @@ extends AbstrLhsRhsExpression<Integer>
      * @param rhs
      */
     public IntAdd(
-            final CoroExpression<Integer> lhs ,
+            final CoroExpression<Integer , COROUTINE_RETURN> lhs ,
             final Integer rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = new Value<Integer>( rhs );
         super(
                 lhs ,
-                new Value<Integer>( rhs ) );
+                new Value<Integer , COROUTINE_RETURN>( rhs ) );
     }
 
     /**

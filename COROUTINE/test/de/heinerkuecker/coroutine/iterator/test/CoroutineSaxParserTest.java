@@ -16,15 +16,15 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import de.heinerkuecker.coroutine.Coroutine;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.Function;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.exprs.AbstrExprsUseExprs;
 import de.heinerkuecker.coroutine.exprs.AbstrNoVarsNoArgsExpression;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.GetResumeArgument;
 import de.heinerkuecker.coroutine.exprs.NewIllegalStateException;
 import de.heinerkuecker.coroutine.exprs.NullValue;
@@ -36,8 +36,8 @@ import de.heinerkuecker.coroutine.exprs.bool.Equals;
 import de.heinerkuecker.coroutine.exprs.bool.InstanceOf;
 import de.heinerkuecker.coroutine.exprs.bool.Not;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
-import de.heinerkuecker.coroutine.stmt.complex.IfElse;
 import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
+import de.heinerkuecker.coroutine.stmt.complex.IfElse;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.flow.Throw;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
@@ -346,7 +346,7 @@ public class CoroutineSaxParserTest
     }
 
     static class NewStudent
-    extends AbstrNoVarsNoArgsExpression<Student>
+    extends AbstrNoVarsNoArgsExpression<Student , Void>
     {
         @Override
         public Student evaluate(
@@ -371,20 +371,20 @@ public class CoroutineSaxParserTest
     /*VARIABLE*/Student ,
     /*EXPRESSION*/Characters >
     {
-        public final CoroExpression<? extends String> fieldNameExpression;
+        public final CoroExpression<? extends String , Void> fieldNameExpression;
 
         /**
          * Constructor.
          */
         SetStudentField(
-                CoroExpression<? extends String> fieldNameExpression )
+                CoroExpression<? extends String , Void> fieldNameExpression )
         {
             super(
                     //localVarName
                     "student" ,
                     //expression
                     // get characters form resume arguments
-                    new GetResumeArgument<Characters>(
+                    new GetResumeArgument<Characters , Void>(
                             //type
                             Characters.class ) );
 
@@ -450,7 +450,7 @@ public class CoroutineSaxParserTest
                     //localVarName
                     "student" ,
                     //expression
-                    new GetResumeArgument<StartElement>(
+                    new GetResumeArgument<StartElement , Void>(
                             //type
                             StartElement.class ) );
         }
@@ -477,8 +477,8 @@ public class CoroutineSaxParserTest
     public void testSaxParser()
             throws Exception
     {
-        final AbstrExprsUseExprs<String , SaxEventWithElementname> getXmlElementNameFromResumeArgument =
-                new AbstrExprsUseExprs<String, SaxEventWithElementname>(
+        final AbstrExprsUseExprs<String , SaxEventWithElementname , Void> getXmlElementNameFromResumeArgument =
+                new AbstrExprsUseExprs<String, SaxEventWithElementname , Void>(
                         // type
                         String.class ,
                         // argumentExpression
@@ -694,7 +694,7 @@ public class CoroutineSaxParserTest
                                 // functionReturnType
                                 Void.class ,
                                 // args
-                                new Argument<String>(
+                                new Argument<String , Void>(
                                         // name
                                         "name" ,
                                         // expression
@@ -739,8 +739,8 @@ public class CoroutineSaxParserTest
                                         Void.class ) ,
                                 new While<Void, Void, SaxEvent>(
                                         // condition: ! endElement student
-                                        new Not(
-                                                new InstanceOf(
+                                        new Not<>(
+                                                new InstanceOf<>(
                                                         // valueExpression
                                                         new GetResumeArgument<>(
                                                                 // type
@@ -775,7 +775,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String>(
+                                                new Argument<String , Void>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -786,7 +786,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String>(
+                                                new Argument<String , Void>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -797,7 +797,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String>(
+                                                new Argument<String , Void>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -808,7 +808,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String>(
+                                                new Argument<String , Void>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -819,7 +819,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String>(
+                                                new Argument<String , Void>(
                                                         // name
                                                         "name" ,
                                                         // value

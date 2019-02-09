@@ -11,22 +11,22 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
-public class Not
+public class Not<COROUTINE_RETURN>
 //implements Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression
+extends CoroBooleanExpression<COROUTINE_RETURN>
 {
     /**
      * Expression to negate.
      */
     //public final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
-    public final CoroExpression<Boolean> conditionToNegate;
+    public final CoroExpression<Boolean , COROUTINE_RETURN> conditionToNegate;
 
     /**
      * Constructor.
      */
     public Not(
             //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate
-            final CoroExpression<Boolean> conditionToNegate )
+            final CoroExpression<Boolean , COROUTINE_RETURN> conditionToNegate )
     {
         this.conditionToNegate = Objects.requireNonNull( conditionToNegate );
     }
@@ -66,7 +66,7 @@ extends CoroBooleanExpression
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.conditionToNegate.getFunctionArgumentGetsNotInFunction();
     }
@@ -90,6 +90,17 @@ extends CoroBooleanExpression
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         this.conditionToNegate.checkUseArguments( alreadyCheckedFunctionNames , parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent, Class<?> coroutineReturnType )
+    {
+        this.conditionToNegate.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

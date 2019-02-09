@@ -27,8 +27,8 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 {
-    //final ConditionOrBooleanExpression/*Condition*/ condition
-    final CoroExpression<Boolean> condition;
+    final CoroExpression<Boolean , COROUTINE_RETURN> condition;
+
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStmt;
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> elseBodyComplexStmt;
 
@@ -36,8 +36,7 @@ extends ComplexStmt<
      * Constructor.
      */
     public IfElse(
-            //final ConditionOrBooleanExpression/*Condition*/ condition
-            final CoroExpression<Boolean> condition ,
+            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] thenStmts ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>[] elseStmts )
     {
@@ -212,9 +211,9 @@ extends ComplexStmt<
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 condition.getFunctionArgumentGetsNotInFunction() );
@@ -228,15 +227,21 @@ extends ComplexStmt<
         return result;
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        this.thenBodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
-        this.elseBodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
+        this.thenBodyComplexStmt.setStmtCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+
+        this.elseBodyComplexStmt.setStmtCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

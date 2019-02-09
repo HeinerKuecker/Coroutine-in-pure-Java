@@ -11,18 +11,19 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.util.ArrayDeepToString;
 
-public class StrConcat
-implements CoroExpression<String>
+public class StrConcat<COROUTINE_RETURN>
+implements CoroExpression<String , COROUTINE_RETURN>
+//AbstrLhsRhsExpression<String , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    public final CoroExpression<?> lhs;
+    public final CoroExpression<? , COROUTINE_RETURN> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    public final CoroExpression<?> rhs;
+    public final CoroExpression<? , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
@@ -31,8 +32,8 @@ implements CoroExpression<String>
      * @param rhs
      */
     public StrConcat(
-            final CoroExpression<?> lhs ,
-            final CoroExpression<?> rhs )
+            final CoroExpression<? , COROUTINE_RETURN> lhs ,
+            final CoroExpression<? , COROUTINE_RETURN> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -46,7 +47,7 @@ implements CoroExpression<String>
      */
     public StrConcat(
             final String lhs ,
-            final CoroExpression<?> rhs )
+            final CoroExpression<? , COROUTINE_RETURN> rhs )
     {
         this.lhs = Value.strValue( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -59,7 +60,7 @@ implements CoroExpression<String>
      * @param rhs
      */
     public StrConcat(
-            final CoroExpression<?> lhs ,
+            final CoroExpression<? , COROUTINE_RETURN> lhs ,
             final String rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
@@ -67,7 +68,7 @@ implements CoroExpression<String>
     }
 
     /**
-     * Add.
+     * Concat.
      */
     @Override
     public String evaluate(
@@ -86,9 +87,9 @@ implements CoroExpression<String>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 lhs.getFunctionArgumentGetsNotInFunction() );
@@ -132,6 +133,23 @@ implements CoroExpression<String>
     {
         //return String.class;
         return new Class[] { String.class };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.lhs.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+
+        this.rhs.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     /**

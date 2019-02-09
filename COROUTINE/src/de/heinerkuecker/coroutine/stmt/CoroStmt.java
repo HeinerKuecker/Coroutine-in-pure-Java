@@ -1,8 +1,11 @@
 package de.heinerkuecker.coroutine.stmt;
 
+import java.util.HashSet;
+
 import de.heinerkuecker.coroutine.CoroCheckable;
 import de.heinerkuecker.coroutine.Coroutine;
 import de.heinerkuecker.coroutine.CoroutineIterator;
+import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
 /**
@@ -35,11 +38,13 @@ implements CoroCheckable
         super( creationStackOffset + 1 );
     }
 
-    //abstract public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction();
+    //abstract public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction();
 
     /**
      * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
-    abstract public void setCoroutineReturnType(
+    abstract public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType );
 }

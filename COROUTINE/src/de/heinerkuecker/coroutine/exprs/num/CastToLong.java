@@ -9,11 +9,11 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
  * expression {@link CoroExpression}
  * to {@link Long}.
  *
- * @param <T> number type to cast
+ * @param <NUMBER> number type to cast
  * @author Heiner K&uuml;cker
  */
-public class CastToLong<T extends Number>
-extends AbstrOneExprExpression<Long , Number>
+public class CastToLong<NUMBER extends Number , COROUTINE_RETURN>
+extends AbstrOneExprExpression<Long , Number , COROUTINE_RETURN>
 //implements CoroExpression<Long>
 {
     /**
@@ -27,7 +27,7 @@ extends AbstrOneExprExpression<Long , Number>
      * @param numberExpression expression to deliver number object to cast
      */
     public CastToLong(
-            final CoroExpression<? extends T> numberExpression )
+            final CoroExpression<? extends NUMBER , COROUTINE_RETURN> numberExpression )
     {
         //this.numberExpression = Objects.requireNonNull( numberExpression );
         super( numberExpression );

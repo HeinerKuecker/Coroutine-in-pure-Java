@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetLocalVar<VARIABLE>
+public class GetLocalVar<VARIABLE , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<VARIABLE> , HasVariableName
+implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 {
     public final String localVarName;
 
@@ -81,7 +81,7 @@ implements CoroExpression<VARIABLE> , HasVariableName
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
@@ -132,6 +132,15 @@ implements CoroExpression<VARIABLE> , HasVariableName
     {
         //return type;
         return new Class[] { type };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        // do nothing
     }
 
     /**

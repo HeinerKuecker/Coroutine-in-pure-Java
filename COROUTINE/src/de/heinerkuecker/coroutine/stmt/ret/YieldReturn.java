@@ -26,7 +26,7 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 public class YieldReturn<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    public final CoroExpression<? extends COROUTINE_RETURN> expression;
+    public final CoroExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
@@ -37,7 +37,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * Constructor.
      */
     public YieldReturn(
-            final CoroExpression<? extends COROUTINE_RETURN> expression )
+            final CoroExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression )
     {
         super(
                 //creationStackOffset
@@ -61,7 +61,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
                 );
 
         this.expression =
-                new Value<COROUTINE_RETURN>(
+                new Value<COROUTINE_RETURN , COROUTINE_RETURN>(
                         (Class<? extends COROUTINE_RETURN>) value.getClass() ,
                         value );
     }
@@ -100,19 +100,23 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return expression.getFunctionArgumentGetsNotInFunction();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         this.coroutineReturnType = coroutineReturnType;
+
+        this.expression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

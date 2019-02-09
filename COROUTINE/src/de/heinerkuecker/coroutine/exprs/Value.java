@@ -11,9 +11,9 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * @param <T> value type
  * @author Heiner K&uuml;cker
  */
-public class Value<T>
+public class Value<T , COROUTINE_RETURN>
 //implements CoroExpression<T>
-extends AbstrNoVarsNoArgsExpression<T>
+extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
 {
     /**
      * For type check.
@@ -73,17 +73,26 @@ extends AbstrNoVarsNoArgsExpression<T>
         return new Class[] { type };
     }
 
+    //@Override
+    //public void setExprCoroutineReturnType(
+    //        HashSet<String> alreadyCheckedFunctionNames ,
+    //        CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+    //        Class<?> coroutineReturnType )
+    //{
+    //    // do nothing
+    //}
+
     /**
      * Factory method.
      *
      * @param value the value to return
      * @return value expression
      */
-    public static Value<Boolean> booleanValue(
+    public static <COROUTINE_RETURN> Value<Boolean , COROUTINE_RETURN> booleanValue(
             final boolean value )
     {
         return
-                new Value<Boolean>(
+                new Value<Boolean , COROUTINE_RETURN>(
                         Boolean.class ,
                         value );
     }
@@ -93,10 +102,10 @@ extends AbstrNoVarsNoArgsExpression<T>
      *
      * @return value expression
      */
-    public static Value<Boolean> falseValue()
+    public static <COROUTINE_RETURN> Value<Boolean , COROUTINE_RETURN> falseValue()
     {
         return
-                new Value<Boolean>(
+                new Value<Boolean , COROUTINE_RETURN>(
                         Boolean.class ,
                         false );
     }
@@ -106,10 +115,10 @@ extends AbstrNoVarsNoArgsExpression<T>
      *
      * @return value expression
      */
-    public static Value<Boolean> trueValue()
+    public static <COROUTINE_RETURN> Value<Boolean , COROUTINE_RETURN> trueValue()
     {
         return
-                new Value<Boolean>(
+                new Value<Boolean , COROUTINE_RETURN>(
                         Boolean.class ,
                         true );
     }
@@ -120,11 +129,11 @@ extends AbstrNoVarsNoArgsExpression<T>
      * @param value the value to return
      * @return value expression
      */
-    public static Value<Integer> intValue(
+    public static <COROUTINE_RETURN> Value<Integer , COROUTINE_RETURN> intValue(
             final int value )
     {
         return
-                new Value<Integer>(
+                new Value<Integer , COROUTINE_RETURN>(
                         Integer.class ,
                         value );
     }
@@ -135,11 +144,11 @@ extends AbstrNoVarsNoArgsExpression<T>
      * @param value the value to return
      * @return value expression
      */
-    public static Value<Long> longValue(
+    public static <COROUTINE_RETURN> Value<Long , COROUTINE_RETURN> longValue(
             final long value )
     {
         return
-                new Value<Long>(
+                new Value<Long , COROUTINE_RETURN>(
                         Long.class ,
                         value );
     }
@@ -150,11 +159,11 @@ extends AbstrNoVarsNoArgsExpression<T>
      * @param value the value to return
      * @return value expression
      */
-    public static Value<String> strValue(
+    public static <COROUTINE_RETURN> Value<String , COROUTINE_RETURN> strValue(
             final String value )
     {
         return
-                new Value<String>(
+                new Value<String , COROUTINE_RETURN>(
                         String.class ,
                         value );
     }

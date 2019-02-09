@@ -9,8 +9,8 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasVariableName;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
@@ -25,9 +25,9 @@ import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
  * @author Heiner K&uuml;cker
  * @param <COROUTINE_RETURN> result type of coroutine, here unused
  */
-public final class SetGlobalVar<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT , T>
+public final class SetGlobalVar<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-implements CoroExpression<T> , HasVariableName
+implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 {
     /**
      * Name of variable to set in
@@ -39,14 +39,14 @@ implements CoroExpression<T> , HasVariableName
      * This is the expression whose result
      * should be set as the value of the variable.
      */
-    public final CoroExpression<T> varValueExpression;
+    public final CoroExpression<VARIABLE , COROUTINE_RETURN> varValueExpression;
 
     /**
      * Constructor.
      */
     public SetGlobalVar(
             final String globalVarName ,
-            final CoroExpression<T> varValueExpression )
+            final CoroExpression<VARIABLE , COROUTINE_RETURN> varValueExpression )
     {
         this.globalVarName =
                 Objects.requireNonNull(
@@ -62,7 +62,7 @@ implements CoroExpression<T> , HasVariableName
      */
     public SetGlobalVar(
             final String globalVarName ,
-            final T varValue )
+            final VARIABLE varValue )
     {
         this.globalVarName =
                 Objects.requireNonNull(
@@ -70,7 +70,7 @@ implements CoroExpression<T> , HasVariableName
 
         this.varValueExpression =
                 new Value<>(
-                        (Class<? extends T>) varValue.getClass() ,
+                        (Class<? extends VARIABLE>) varValue.getClass() ,
                         varValue );
     }
 
@@ -93,21 +93,21 @@ implements CoroExpression<T> , HasVariableName
     }
 
     @Override
-    public T evaluate(
+    public VARIABLE evaluate(
             final HasArgumentsAndVariables<?> parent )
     // for using in expressions
     {
         execute(
                 (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
-        return (T) parent.globalVars().get(
+        return (VARIABLE) parent.globalVars().get(
                 this ,
                 globalVarName );
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends VARIABLE>[] type()
     {
         //return new Class[] { type };
         return varValueExpression.type();
@@ -117,19 +117,33 @@ implements CoroExpression<T> , HasVariableName
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.varValueExpression.getFunctionArgumentGetsNotInFunction();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
-        // do nothing
+        this.varValueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            final Class<?> coroutineReturnType )
+    {
+        this.varValueExpression.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
     @Override

@@ -18,9 +18,9 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class Divide<T extends Number>
+public class Divide<NUMBER extends Number , COROUTINE_RETURN>
 //implements CoroExpression<T>
-extends AbstrLhsRhsExpression<T>
+extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
@@ -39,8 +39,8 @@ extends AbstrLhsRhsExpression<T>
      * @param rhs
      */
     public Divide(
-            final CoroExpression<? extends T> lhs ,
-            final CoroExpression<? extends T> rhs )
+            final CoroExpression<? extends NUMBER , COROUTINE_RETURN> lhs ,
+            final CoroExpression<? extends NUMBER , COROUTINE_RETURN> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -53,11 +53,11 @@ extends AbstrLhsRhsExpression<T>
      * Add.
      */
     @Override
-    public T evaluate(
+    public NUMBER evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
-        final T lhsResult = lhs.evaluate( parent );
-        final T rhsResult = rhs.evaluate( parent );
+        final NUMBER lhsResult = lhs.evaluate( parent );
+        final NUMBER rhsResult = rhs.evaluate( parent );
 
         if ( lhsResult == null )
         {
@@ -84,29 +84,29 @@ extends AbstrLhsRhsExpression<T>
                     rhsResult instanceof Long ||
                     rhsResult instanceof AtomicLong )
             {
-                return (T) (Long) ( ( (long) lhsLong ) / rhsResult.longValue() );
+                return (NUMBER) (Long) ( ( (long) lhsLong ) / rhsResult.longValue() );
             }
             else if ( rhsResult instanceof Float ||
                     rhsResult instanceof Double )
             {
-                return (T) (Double) ( ( (double) lhsLong ) / rhsResult.doubleValue() );
+                return (NUMBER) (Double) ( ( (double) lhsLong ) / rhsResult.doubleValue() );
             }
             else if ( rhsResult instanceof BigInteger )
             {
-                return (T) BigInteger.valueOf( lhsLong ).divide( ( (BigInteger) rhsResult ) );
+                return (NUMBER) BigInteger.valueOf( lhsLong ).divide( ( (BigInteger) rhsResult ) );
             }
             else if ( rhsResult instanceof BigDecimal )
             {
-                return (T) BigDecimal.valueOf( lhsLong ).divide( ( (BigDecimal) rhsResult ) );
+                return (NUMBER) BigDecimal.valueOf( lhsLong ).divide( ( (BigDecimal) rhsResult ) );
             }
         }
 
-        return (T) (Double) ( lhsResult.doubleValue() / rhsResult.doubleValue() );
+        return (NUMBER) (Double) ( lhsResult.doubleValue() / rhsResult.doubleValue() );
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends NUMBER>[] type()
     {
         //return (Class<? extends T>) Number.class;
         return new Class[] { Number.class };

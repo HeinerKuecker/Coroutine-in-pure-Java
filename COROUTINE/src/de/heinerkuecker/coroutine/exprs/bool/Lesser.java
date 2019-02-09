@@ -1,16 +1,7 @@
 package de.heinerkuecker.coroutine.exprs.bool;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
-import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
-import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
  * Compare condition
@@ -21,32 +12,22 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class Lesser<T extends Comparable<T>>
-//implements ConditionOrBooleanExpression
-extends CoroBooleanExpression
+public class Lesser<TO_COMPARE extends Comparable<TO_COMPARE> , COROUTINE_RETURN>
+extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
 {
     /**
-     * Left hand side expression to check.
-     */
-    public final CoroExpression<? extends T> lhs;
-
-    /**
-     * Right hand side expression to check.
-     */
-    public final CoroExpression<? extends T> rhs;
-
-    /**
      * Constructor.
      *
      * @param lhs
      * @param rhs
      */
     public Lesser(
-            final CoroExpression<? extends T> lhs ,
-            final CoroExpression<? extends T> rhs )
+            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
     {
-        this.lhs = Objects.requireNonNull( lhs );
-        this.rhs = Objects.requireNonNull( rhs );
+        super(
+                lhs ,
+                rhs );
     }
 
     /**
@@ -56,15 +37,12 @@ extends CoroBooleanExpression
      * @param rhs
      */
     public Lesser(
-            final T lhsValue ,
-            final CoroExpression<? extends T> rhs )
+            final TO_COMPARE lhsValue ,
+            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
     {
-        this.lhs =
-                new Value<T>(
-                        (Class<? extends T>) Comparable.class ,
-                        lhsValue );
-
-        this.rhs = Objects.requireNonNull( rhs );
+        super(
+                lhsValue ,
+                rhs );
     }
 
     /**
@@ -74,15 +52,12 @@ extends CoroBooleanExpression
      * @param rhs
      */
     public Lesser(
-            final CoroExpression<? extends T> lhs ,
-            final T rhsValue )
+            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final TO_COMPARE rhsValue )
     {
-        this.lhs = Objects.requireNonNull( lhs );
-
-        this.rhs =
-                new Value<T>(
-                        (Class<? extends T>) Comparable.class ,
-                        rhsValue );
+        super(
+                lhs ,
+                rhsValue );
     }
 
     /**
@@ -92,18 +67,12 @@ extends CoroBooleanExpression
      * @param rhs
      */
     public Lesser(
-            final T lhsValue ,
-            final T rhsValue )
+            final TO_COMPARE lhsValue ,
+            final TO_COMPARE rhsValue )
     {
-        this.lhs =
-                new Value<T>(
-                        (Class<? extends T>) Comparable.class ,
-                        lhsValue );
-
-        this.rhs =
-                new Value<T>(
-                        (Class<? extends T>) Comparable.class ,
-                        rhsValue );
+        super(
+                lhsValue ,
+                rhsValue );
     }
 
     //@Override
@@ -137,8 +106,8 @@ extends CoroBooleanExpression
     public Boolean evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
-        final T lhsResult = lhs.evaluate( parent );
-        final T rhsResult = rhs.evaluate( parent );
+        final TO_COMPARE lhsResult = lhs.evaluate( parent );
+        final TO_COMPARE rhsResult = rhs.evaluate( parent );
 
         if ( lhsResult == null && rhsResult == null )
         {
@@ -160,46 +129,46 @@ extends CoroBooleanExpression
         return lhsResult.compareTo( rhsResult ) < 0;
     }
 
-    @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
-    {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+    //@Override
+    //public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    //{
+    //    final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+    //
+    //    result.addAll(
+    //            lhs.getFunctionArgumentGetsNotInFunction() );
+    //
+    //    result.addAll(
+    //            rhs.getFunctionArgumentGetsNotInFunction() );
+    //
+    //    return result;
+    //}
 
-        result.addAll(
-                lhs.getFunctionArgumentGetsNotInFunction() );
+    //@Override
+    //public void checkUseVariables(
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+    //        final Map<String, Class<?>> globalVariableTypes ,
+    //        final Map<String, Class<?>> localVariableTypes )
+    //{
+    //    this.lhs.checkUseVariables(
+    //            alreadyCheckedFunctionNames ,
+    //            parent ,
+    //            globalVariableTypes, localVariableTypes );
+    //
+    //    this.rhs.checkUseVariables(
+    //            alreadyCheckedFunctionNames ,
+    //            parent ,
+    //            globalVariableTypes, localVariableTypes );
+    //}
 
-        result.addAll(
-                rhs.getFunctionArgumentGetsNotInFunction() );
-
-        return result;
-    }
-
-    @Override
-    public void checkUseVariables(
-            final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            final Map<String, Class<?>> globalVariableTypes ,
-            final Map<String, Class<?>> localVariableTypes )
-    {
-        this.lhs.checkUseVariables(
-                alreadyCheckedFunctionNames ,
-                parent ,
-                globalVariableTypes, localVariableTypes );
-
-        this.rhs.checkUseVariables(
-                alreadyCheckedFunctionNames ,
-                parent ,
-                globalVariableTypes, localVariableTypes );
-    }
-
-    @Override
-    public void checkUseArguments(
-            final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
-    {
-        this.lhs.checkUseArguments( alreadyCheckedFunctionNames , parent );
-        this.rhs.checkUseArguments( alreadyCheckedFunctionNames , parent );
-    }
+    //@Override
+    //public void checkUseArguments(
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
+    //{
+    //    this.lhs.checkUseArguments( alreadyCheckedFunctionNames , parent );
+    //    this.rhs.checkUseArguments( alreadyCheckedFunctionNames , parent );
+    //}
 
     /**
      * @see Object#toString()

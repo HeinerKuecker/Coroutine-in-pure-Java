@@ -12,7 +12,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
 
     @Override
-    final public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();

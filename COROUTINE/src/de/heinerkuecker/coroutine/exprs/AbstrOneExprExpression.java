@@ -16,27 +16,27 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  * @param <ARGUMENT> argument type
  * @author Heiner K&uuml;cker
  */
-public abstract class AbstrOneExprExpression<RETURN, ARGUMENT>
-implements CoroExpression<RETURN>
+public abstract class AbstrOneExprExpression<RETURN , ARGUMENT , COROUTINE_RETURN>
+implements CoroExpression<RETURN , COROUTINE_RETURN>
 {
     /**
      * Expression to map.
      */
-    public final CoroExpression<? extends ARGUMENT> expr;
+    public final CoroExpression<? extends ARGUMENT , COROUTINE_RETURN> expr;
 
     /**
      * Constructor.
      */
     protected AbstrOneExprExpression(
-            final CoroExpression<? extends ARGUMENT> expr )
+            final CoroExpression<? extends ARGUMENT , COROUTINE_RETURN> expr )
     {
         this.expr = Objects.requireNonNull( expr );
     }
 
     @Override
-    final public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 expr.getFunctionArgumentGetsNotInFunction() );
@@ -65,6 +65,18 @@ implements CoroExpression<RETURN>
         this.expr.checkUseArguments(
                 alreadyCheckedFunctionNames ,
                 parent );
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        this.expr.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
     }
 
 }

@@ -75,7 +75,7 @@ public class CoroutineIteratorContinueTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -246,7 +246,7 @@ public class CoroutineIteratorContinueTest
         CoroutineDebugSwitches.initializationChecks = false;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -295,7 +295,7 @@ public class CoroutineIteratorContinueTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -383,7 +383,7 @@ public class CoroutineIteratorContinueTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -427,7 +427,7 @@ public class CoroutineIteratorContinueTest
         CoroutineDebugSwitches.initializationChecks = false;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -469,7 +469,7 @@ public class CoroutineIteratorContinueTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,

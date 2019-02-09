@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
@@ -77,7 +78,11 @@ extends ComplexStmtState<
         if ( coroutineReturnType != null )
         {
             // TODO execute only once
-            function.bodyComplexStmt.setCoroutineReturnType( coroutineReturnType );
+            function.bodyComplexStmt.setStmtCoroutineReturnType(
+                    // alreadyCheckedFunctionNames
+                    new HashSet<>() ,
+                    this ,
+                    coroutineReturnType );
         }
     }
 

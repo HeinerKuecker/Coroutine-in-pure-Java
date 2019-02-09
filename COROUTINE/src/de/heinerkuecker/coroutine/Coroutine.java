@@ -79,7 +79,11 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
                         5 ,
                         stmts );
 
-        this.complexStmt.setCoroutineReturnType( coroutineReturnType );
+        this.complexStmt.setStmtCoroutineReturnType(
+                // alreadyCheckedFunctionNames
+                new HashSet<>() ,
+                this ,
+                coroutineReturnType );
 
         this.params = Collections.emptyMap();
 
@@ -101,7 +105,7 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
             final Iterable<Function<? , COROUTINE_RETURN , RESUME_ARGUMENT>> functions ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
-            final Argument<?>[] args ,
+            final Argument<? , ?>[] args ,
             final DeclareVariable<Void , COROUTINE_RETURN, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
             final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
@@ -157,7 +161,11 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
             }
         }
 
-        this.complexStmt.setCoroutineReturnType( coroutineReturnType );
+        this.complexStmt.setStmtCoroutineReturnType(
+                // alreadyCheckedFunctionNames
+                new HashSet<>() ,
+                this ,
+                coroutineReturnType );
 
         doMoreInitializations();
     }
@@ -305,7 +313,7 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
      */
     private void checkForUseGetFunctionArgumentOutsideOfFunctionException()
     {
-        final List<GetFunctionArgument<?>> getFunctionArgumentsNotInFunction =
+        final List<GetFunctionArgument<? , ?>> getFunctionArgumentsNotInFunction =
                 complexStmt.getFunctionArgumentGetsNotInFunction();
 
         if ( ! getFunctionArgumentsNotInFunction.isEmpty() )

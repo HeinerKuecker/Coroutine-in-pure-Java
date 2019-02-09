@@ -12,9 +12,9 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
 
-public class GetGlobalArgument<T>
+public class GetGlobalArgument<T , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<T> , HasArgumentName
+implements CoroExpression<T , COROUTINE_RETURN> , HasArgumentName
 {
     /**
      * Name of function argument in
@@ -112,7 +112,7 @@ implements CoroExpression<T> , HasArgumentName
     }
 
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
@@ -129,6 +129,15 @@ implements CoroExpression<T> , HasArgumentName
     {
         //return type;
         return new Class[] { type };
+    }
+
+    @Override
+    public void setExprCoroutineReturnType(
+            HashSet<String> alreadyCheckedFunctionNames ,
+            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+            Class<?> coroutineReturnType )
+    {
+        // do nothing
     }
 
     /**

@@ -32,14 +32,14 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      */
     private final Class<? extends FUNCTION_RETURN> functionReturnType;
 
-    public final CoroExpression<? extends FUNCTION_RETURN> expression;
+    public final CoroExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
      */
     public FunctionReturn(
             final Class<? extends FUNCTION_RETURN> functionReturnType ,
-            final CoroExpression<? extends FUNCTION_RETURN> expression )
+            final CoroExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression )
     {
         super(
                 //creationStackOffset
@@ -72,7 +72,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
                         functionReturnType );
 
         this.expression =
-                new Value<FUNCTION_RETURN>(
+                new Value<FUNCTION_RETURN , COROUTINE_RETURN>(
                         (Class<? extends FUNCTION_RETURN>) value.getClass() ,
                         value );
     }
@@ -111,16 +111,15 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return expression.getFunctionArgumentGetsNotInFunction();
     }
 
-    /**
-     * @see CoroStmt#setCoroutineReturnType(Class)
-     */
     @Override
-    public void setCoroutineReturnType(
+    public void setStmtCoroutineReturnType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
         // do nothing

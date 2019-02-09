@@ -57,7 +57,7 @@ public class CoroutineIteratorIfTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Boolean> condition_var =
+        final GetLocalVar<Boolean , Integer> condition_var =
                 new GetLocalVar<>(
                         // localVarName
                         "condition_var" ,
@@ -99,7 +99,7 @@ public class CoroutineIteratorIfTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Boolean> condition_var =
+        final GetLocalVar<Boolean , Integer> condition_var =
                 new GetLocalVar<>(
                         // localVarName
                         "condition_var" ,
@@ -165,7 +165,7 @@ public class CoroutineIteratorIfTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -217,7 +217,7 @@ public class CoroutineIteratorIfTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer> number =
+        final GetLocalVar<Integer , Integer> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
