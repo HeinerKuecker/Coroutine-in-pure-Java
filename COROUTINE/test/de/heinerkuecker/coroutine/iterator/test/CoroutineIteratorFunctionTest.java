@@ -1203,7 +1203,7 @@ public class CoroutineIteratorFunctionTest
                         new FunctionReturn<>(
                                 // functionReturnType
                                 Integer.class ,
-                                //expression
+                                // expression
                                 new Value<>( 1 ) ) );
 
         final CoroutineIterator<Integer> coroIter =
@@ -1223,7 +1223,7 @@ public class CoroutineIteratorFunctionTest
                         new YieldReturn<>(
                                 new FunctionCall<>(
                                         "function" ,
-                                        //functionReturnType
+                                        // functionReturnType
                                         Integer.class ) ) );
 
         CoroutineIteratorTest.assertNext(

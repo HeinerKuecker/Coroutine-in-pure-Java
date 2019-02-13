@@ -7,11 +7,13 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.Function;
 import de.heinerkuecker.coroutine.arg.Arguments;
+import de.heinerkuecker.coroutine.exprs.complex.ComplexExpressionState;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.util.HCloneable;
 
 class FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
-extends ComplexStmtState<
+//extends ComplexStmtState<
+extends ComplexExpressionState<
     FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>,
     FunctionCall<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>,
     FUNCTION_RETURN ,

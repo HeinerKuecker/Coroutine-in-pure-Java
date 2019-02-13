@@ -8,9 +8,9 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.exc.StmtVariableIsNullException;
 import de.heinerkuecker.coroutine.stmt.simple.exc.WrongStmtVariableClassException;
@@ -30,14 +30,14 @@ implements HasVariableName
      * is to add to the value of the
      * {@link Collection} variable.
      */
-    public final CoroExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression;
+    public final SimpleExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression;
 
     /**
      * Constructor.
      */
     public AddToCollectionLocalVar(
             final String localVarName ,
-            final CoroExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression )
+            final SimpleExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression )
     {
         this.collectionLocalVarName =
                 Objects.requireNonNull(

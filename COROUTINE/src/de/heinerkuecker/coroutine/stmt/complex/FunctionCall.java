@@ -9,12 +9,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
-import de.heinerkuecker.coroutine.stmt.CoroStmtResult.FunctionReturnWithResult;
+import de.heinerkuecker.coroutine.exprs.complex.ComplexExpression;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.util.ArrayDeepToString;
 
@@ -23,7 +22,7 @@ public class FunctionCall<
     COROUTINE_RETURN/*, PARENT extends CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, PARENT>*/ ,
     RESUME_ARGUMENT
     >
-extends ComplexStmt<
+extends ComplexExpression<
     FunctionCall<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> ,
     FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> ,
     FUNCTION_RETURN ,
@@ -32,6 +31,7 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 //implements CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
+//implements SimpleExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 {
     ///**
@@ -63,10 +63,8 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 
     /**
      * Constructor.
-     *
-     * @param creationStackOffset
      */
-    //@SafeVarargs
+    @SafeVarargs
     public FunctionCall(
             //final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodyStmts
             //final Function<COROUTINE_RETURN> function
@@ -180,20 +178,27 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
         return functionCallState;
     }
 
-    @Override
-    public FUNCTION_RETURN evaluate(
-            final HasArgumentsAndVariables<?> parent )
-    {
-        final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> functionCallState =
-                newState( (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>) /*this*/parent );
-
-        FunctionReturnWithResult<FUNCTION_RETURN, COROUTINE_RETURN> functionCallResult =
-                (FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>) functionCallState.execute();
-
-        return functionCallResult.result;
-
-        //throw new RuntimeException( "not implemented" );
-    }
+    //@Override
+    //public FUNCTION_RETURN evaluate(
+    //        final HasArgumentsAndVariables<?> parent )
+    //{
+    //    final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> functionCallState =
+    //            newState( (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>) /*this*/parent );
+    //
+    //    CoroStmtResult<FUNCTION_RETURN, COROUTINE_RETURN> functionCallResult =
+    //            functionCallState.execute();
+    //
+    //    if ( functionCallResult instanceof FunctionReturnWithResult )
+    //    {
+    //        FunctionReturnWithResult<FUNCTION_RETURN, COROUTINE_RETURN> functionReturnWithResult =
+    //                (FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>) functionCallResult;
+    //
+    //
+    //        return functionReturnWithResult.result;
+    //    }
+    //
+    //    throw new RuntimeException( "not implemented" );
+    //}
 
     @SuppressWarnings("unchecked")
     @Override

@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
 // TODO give expression instead local var name
@@ -28,7 +28,7 @@ implements HasVariableName
      * is used to execute an operation
      * with the value of the variable.
      */
-    public final CoroExpression<EXPRESSION , COROUTINE_RETURN> expression;
+    public final SimpleExpression<EXPRESSION , COROUTINE_RETURN> expression;
 
     /**
      * Method to implement the
@@ -54,7 +54,7 @@ implements HasVariableName
      */
     public AbstrLocalVarUseWithExpressionStmt(
             final String localVarName ,
-            final CoroExpression<EXPRESSION , COROUTINE_RETURN> expression )
+            final SimpleExpression<EXPRESSION , COROUTINE_RETURN> expression )
     {
         this.localVarName =
                 Objects.requireNonNull(

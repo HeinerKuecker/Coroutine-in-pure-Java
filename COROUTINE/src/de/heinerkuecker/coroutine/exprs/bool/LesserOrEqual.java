@@ -1,15 +1,15 @@
 package de.heinerkuecker.coroutine.exprs.bool;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Compare condition
  * to check lesserness or equality of result
  * of the left
- * expression {@link CoroExpression}
+ * expression {@link SimpleExpression}
  * to the result of the right
- * expression {@link CoroExpression}.
+ * expression {@link SimpleExpression}.
  *
  * @author Heiner K&uuml;cker
  */
@@ -23,8 +23,8 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      * @param rhs
      */
     public LesserOrEqual(
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
     {
         super(
                 lhs ,
@@ -39,7 +39,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      */
     public LesserOrEqual(
             final TO_COMPARE lhsValue ,
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
     {
         super(
                 lhsValue ,
@@ -53,7 +53,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      * @param rhs
      */
     public LesserOrEqual(
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
             final TO_COMPARE rhsValue )
     {
         super(

@@ -7,7 +7,7 @@ extends AbstrOneExprExpression<IllegalStateException , String , COROUTINE_RETURN
 {
 
     public NewIllegalStateException(
-            final CoroExpression<String , COROUTINE_RETURN> messageExpr )
+            final SimpleExpression<String , COROUTINE_RETURN> messageExpr )
     {
         super( messageExpr );
     }

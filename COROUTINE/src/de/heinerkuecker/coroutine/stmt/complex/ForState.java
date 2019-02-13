@@ -127,7 +127,7 @@ extends ComplexStmtState<
                 }
             }
 
-            if ( initializerExecuteResult instanceof CoroStmtResult.Break ||
+            if ( initializerExecuteResult instanceof CoroStmtResult.BreakLoop ||
                     initializerExecuteResult instanceof CoroStmtResult.ContinueLoop )
             {
                 throw new IllegalStateException( String.valueOf( initializerExecuteResult ) );
@@ -207,10 +207,10 @@ extends ComplexStmtState<
                     this.bodyComplexState = null;
                 }
 
-                if ( bodyExecuteResult instanceof CoroStmtResult.Break )
+                if ( bodyExecuteResult instanceof CoroStmtResult.BreakLoop )
                 {
                     finish();
-                    final String label = ( (CoroStmtResult.Break<? , ?>) bodyExecuteResult ).label;
+                    final String label = ( (CoroStmtResult.BreakLoop<? , ?>) bodyExecuteResult ).label;
                     if ( label == null ||
                             label.equals( _for.label ) )
                     {
@@ -294,7 +294,7 @@ extends ComplexStmtState<
                     }
                 }
 
-                if ( updateExecuteResult instanceof CoroStmtResult.Break ||
+                if ( updateExecuteResult instanceof CoroStmtResult.BreakLoop ||
                         updateExecuteResult instanceof CoroStmtResult.ContinueLoop )
                 {
                     throw new IllegalStateException( String.valueOf( updateExecuteResult ) );

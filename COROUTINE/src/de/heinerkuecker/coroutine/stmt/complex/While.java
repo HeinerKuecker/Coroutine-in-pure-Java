@@ -1,7 +1,7 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
@@ -23,7 +23,7 @@ extends WhileOrDoWhile<
      */
     @SafeVarargs
     public While(
-            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
@@ -41,7 +41,7 @@ extends WhileOrDoWhile<
     // */
     //@SafeVarargs
     //public While(
-    //        final CoroExpression<Boolean> condition ,
+    //        final SimpleExpression<Boolean> condition ,
     //        final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     //{
     //    super(
@@ -82,7 +82,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final String label ,
-            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     {
         super(
@@ -101,7 +101,7 @@ extends WhileOrDoWhile<
     //@SafeVarargs
     //public While(
     //        final String label ,
-    //        final CoroExpression<Boolean> condition ,
+    //        final SimpleExpression<Boolean> condition ,
     //        final CoroIterStmt<? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
     //{
     //    super(

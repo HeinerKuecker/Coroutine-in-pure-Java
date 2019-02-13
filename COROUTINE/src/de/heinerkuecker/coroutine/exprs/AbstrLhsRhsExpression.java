@@ -10,17 +10,17 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
 public abstract class AbstrLhsRhsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
-implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
+implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    public final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs;
+    public final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    public final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs;
+    public final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
@@ -29,8 +29,8 @@ implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
      * @param rhs
      */
     protected AbstrLhsRhsExpression(
-            final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );

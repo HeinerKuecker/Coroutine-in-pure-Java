@@ -11,14 +11,14 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 public class IteratorNext<T , COROUTINE_RETURN>
-implements CoroExpression<T , COROUTINE_RETURN>
+implements SimpleExpression<T , COROUTINE_RETURN>
 {
     public final Class<? extends T> elementType;
 
     /**
      * Expression to get {@link Iterator}.
      */
-    public final CoroExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression;
+    public final SimpleExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression;
 
     /**
      * Constructor.
@@ -27,7 +27,7 @@ implements CoroExpression<T , COROUTINE_RETURN>
      */
     public IteratorNext(
             final Class<? extends T> elementType ,
-            final CoroExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression )
+            final SimpleExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression )
     {
         this.elementType =
                 Objects.requireNonNull(
@@ -35,7 +35,7 @@ implements CoroExpression<T , COROUTINE_RETURN>
 
         this.iteratorExpression =
                 Objects.requireNonNull(
-                iteratorExpression );
+                        iteratorExpression );
     }
 
     @Override

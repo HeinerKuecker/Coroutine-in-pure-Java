@@ -7,8 +7,8 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
 public class Not<COROUTINE_RETURN>
@@ -18,15 +18,13 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     /**
      * Expression to negate.
      */
-    //public final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate;
-    public final CoroExpression<Boolean , COROUTINE_RETURN> conditionToNegate;
+    public final SimpleExpression<Boolean , COROUTINE_RETURN> conditionToNegate;
 
     /**
      * Constructor.
      */
     public Not(
-            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ conditionToNegate
-            final CoroExpression<Boolean , COROUTINE_RETURN> conditionToNegate )
+            final SimpleExpression<Boolean , COROUTINE_RETURN> conditionToNegate )
     {
         this.conditionToNegate = Objects.requireNonNull( conditionToNegate );
     }
@@ -40,16 +38,6 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     //    this.conditionToNegate =
     //            new IsTrue(
     //                    conditionToNegate );
-    //}
-
-    ///**
-    // * Negates the specified condition.
-    // */
-    //@Override
-    //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
-    //{
-    //    return ! conditionToNegate.execute( parent );
     //}
 
     /**

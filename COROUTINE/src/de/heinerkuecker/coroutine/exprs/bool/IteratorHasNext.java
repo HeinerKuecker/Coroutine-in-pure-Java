@@ -9,6 +9,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * {@link Iterator#hasNext} condition
@@ -25,27 +26,16 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     /**
      * Expression to check.
      */
-    public final CoroExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression;
+    public final SimpleExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression;
 
     /**
      * Constructor.
      */
     public IteratorHasNext(
-            final CoroExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression )
+            final SimpleExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression )
     {
         this.iteratorExpression = iteratorExpression;
     }
-
-    //@Override
-    //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
-    //{
-    //    //final Object varValue = parent.localVars().get( varName );
-    //    final Iterator<?> iterator = iteratorExpression.evaluate( parent );
-    //
-    //    // TODO null handling
-    //    return iterator.hasNext();
-    //}
 
     @Override
     public Boolean evaluate(

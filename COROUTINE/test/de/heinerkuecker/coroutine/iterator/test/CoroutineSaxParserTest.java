@@ -22,12 +22,12 @@ import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Parameter;
 import de.heinerkuecker.coroutine.exprs.AbstrExprsUseExprs;
 import de.heinerkuecker.coroutine.exprs.AbstrNoVarsNoArgsExpression;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
 import de.heinerkuecker.coroutine.exprs.GetResumeArgument;
 import de.heinerkuecker.coroutine.exprs.NewIllegalStateException;
 import de.heinerkuecker.coroutine.exprs.NullValue;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.StrConcat;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.exprs.bool.And;
@@ -371,13 +371,13 @@ public class CoroutineSaxParserTest
     /*VARIABLE*/Student ,
     /*EXPRESSION*/Characters >
     {
-        public final CoroExpression<? extends String , Void> fieldNameExpression;
+        public final SimpleExpression<? extends String , Void> fieldNameExpression;
 
         /**
          * Constructor.
          */
         SetStudentField(
-                CoroExpression<? extends String , Void> fieldNameExpression )
+                final SimpleExpression<? extends String , Void> fieldNameExpression )
         {
             super(
                     //localVarName

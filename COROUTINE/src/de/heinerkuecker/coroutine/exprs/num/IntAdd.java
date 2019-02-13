@@ -2,31 +2,31 @@ package de.heinerkuecker.coroutine.exprs.num;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.AbstrLhsRhsExpression;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
  * {@link Integer} add
  * result of the right
- * expression {@link CoroExpression}
+ * expression {@link SimpleExpression}
  * to the result of the left
- * expression {@link CoroExpression}.
+ * expression {@link SimpleExpression}.
  *
  * @author Heiner K&uuml;cker
  */
 public class IntAdd<COROUTINE_RETURN>
-//implements CoroExpression<Integer>
+//implements SimpleExpression<Integer>
 extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    //public final CoroExpression<Integer> lhs;
+    //public final SimpleExpression<Integer> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    //public final CoroExpression<Integer> rhs;
+    //public final SimpleExpression<Integer> rhs;
 
     /**
      * Constructor.
@@ -35,8 +35,8 @@ extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
      * @param rhs
      */
     public IntAdd(
-            final CoroExpression<Integer , COROUTINE_RETURN> lhs ,
-            final CoroExpression<Integer , COROUTINE_RETURN> rhs )
+            final SimpleExpression<Integer , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Integer , COROUTINE_RETURN> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -52,7 +52,7 @@ extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
      * @param rhs
      */
     public IntAdd(
-            final CoroExpression<Integer , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Integer , COROUTINE_RETURN> lhs ,
             final Integer rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );

@@ -3,7 +3,7 @@ package de.heinerkuecker.coroutine.exprs;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
+import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 
 public class GetResumeArgument<RESUME_ARGUMENT , COROUTINE_RETURN>
 //implements CoroExpression<RESUME_ARGUMENT>
@@ -40,7 +40,7 @@ extends AbstrHasSrcPosNoVarsNoArgsExpression<RESUME_ARGUMENT , COROUTINE_RETURN>
         if ( resumeArgument != null &&
                 ! resumeArgumentType.isInstance( resumeArgument ) )
         {
-            throw new WrongExpressionClassException(
+            throw new WrongExpressionResultValueClassException(
                     //valueExpression
                     this ,
                     //expectedClass

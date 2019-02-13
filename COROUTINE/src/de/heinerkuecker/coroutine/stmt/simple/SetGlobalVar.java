@@ -8,9 +8,9 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.GetGlobalVar;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
@@ -27,7 +27,7 @@ import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
  */
 public final class SetGlobalVar<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
+implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 {
     /**
      * Name of variable to set in
@@ -39,14 +39,14 @@ implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
      * This is the expression whose result
      * should be set as the value of the variable.
      */
-    public final CoroExpression<VARIABLE , COROUTINE_RETURN> varValueExpression;
+    public final SimpleExpression<VARIABLE , COROUTINE_RETURN> varValueExpression;
 
     /**
      * Constructor.
      */
     public SetGlobalVar(
             final String globalVarName ,
-            final CoroExpression<VARIABLE , COROUTINE_RETURN> varValueExpression )
+            final SimpleExpression<VARIABLE , COROUTINE_RETURN> varValueExpression )
     {
         this.globalVarName =
                 Objects.requireNonNull(

@@ -2,31 +2,31 @@ package de.heinerkuecker.coroutine.exprs.num;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.AbstrLhsRhsExpression;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
  * {@link Long} add
  * result of the right
- * expression {@link CoroExpression}
+ * expression {@link SimpleExpression}
  * to the result of the left
- * expression {@link CoroExpression}.
+ * expression {@link SimpleExpression}.
  *
  * @author Heiner K&uuml;cker
  */
 public class LongAdd<COROUTINE_RETURN>
-//implements CoroExpression<Long>
+//implements SimpleExpression<Long>
 extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    //public final CoroExpression<Long> lhs;
+    //public final SimpleExpression<Long> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    //public final CoroExpression<Long> rhs;
+    //public final SimpleExpression<Long> rhs;
 
     /**
      * Constructor.
@@ -35,8 +35,8 @@ extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
      * @param rhs
      */
     public LongAdd(
-            final CoroExpression<Long , COROUTINE_RETURN> lhs ,
-            final CoroExpression<Long , COROUTINE_RETURN> rhs )
+            final SimpleExpression<Long , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Long , COROUTINE_RETURN> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -52,7 +52,7 @@ extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
      * @param rhs
      */
     public LongAdd(
-            final CoroExpression<Long , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Long , COROUTINE_RETURN> lhs ,
             final Long rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );

@@ -10,6 +10,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
@@ -28,12 +29,12 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     /**
      * Left hand side expression, value.
      */
-    public final CoroExpression<?, COROUTINE_RETURN> valueExpression;
+    public final SimpleExpression<?, COROUTINE_RETURN> valueExpression;
 
     /**
      * Right hand side expression, type.
      */
-    public final CoroExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression;
+    public final SimpleExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression;
 
     /**
      * Constructor.
@@ -42,8 +43,8 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param typeExpression
      */
     public InstanceOf(
-            final CoroExpression<?, COROUTINE_RETURN> valueExpression ,
-            final CoroExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression )
+            final SimpleExpression<?, COROUTINE_RETURN> valueExpression ,
+            final SimpleExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression )
     {
         this.valueExpression = Objects.requireNonNull( valueExpression );
         this.typeExpression = Objects.requireNonNull( typeExpression );
@@ -56,7 +57,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param type
      */
     public InstanceOf(
-            final CoroExpression<? , COROUTINE_RETURN> valueExpression ,
+            final SimpleExpression<? , COROUTINE_RETURN> valueExpression ,
             final Class<?> type )
     {
         this.valueExpression =
@@ -68,16 +69,6 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
                         Objects.requireNonNull(
                                 type  ) );
     }
-
-    //@Override
-    //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
-    //{
-    //    final Object value = valueExpression.evaluate( parent );
-    //    final Class<?> type = typeExpression.evaluate( parent );
-    //
-    //    return type.isInstance( value );
-    //}
 
     @Override
     public Boolean evaluate(

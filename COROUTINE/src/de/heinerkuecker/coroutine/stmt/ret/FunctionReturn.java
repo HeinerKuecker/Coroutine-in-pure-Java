@@ -7,18 +7,19 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
+import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
+import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 
 /**
  * Stmt {@link CoroStmt} to
  * return a specified value
- * from a {@link Function}
+ * from a {@link FunctionCall}
  * and continue run.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
@@ -32,14 +33,14 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      */
     private final Class<? extends FUNCTION_RETURN> functionReturnType;
 
-    public final CoroExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression;
+    public final SimpleExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
      */
     public FunctionReturn(
             final Class<? extends FUNCTION_RETURN> functionReturnType ,
-            final CoroExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression )
+            final SimpleExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression )
     {
         super(
                 //creationStackOffset
@@ -91,7 +92,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
         if ( resultValue != null &&
                 ! functionReturnType.isInstance( resultValue ) )
         {
-            throw new WrongExpressionClassException(
+            throw new WrongExpressionResultValueClassException(
                     //valueExpression
                     expression ,
                     //expectedClass

@@ -8,22 +8,21 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 public class StrConcat<COROUTINE_RETURN>
-implements CoroExpression<String , COROUTINE_RETURN>
+implements SimpleExpression<String , COROUTINE_RETURN>
 //AbstrLhsRhsExpression<String , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    public final CoroExpression<? , COROUTINE_RETURN> lhs;
+    public final SimpleExpression<? , COROUTINE_RETURN> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    public final CoroExpression<? , COROUTINE_RETURN> rhs;
+    public final SimpleExpression<? , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
@@ -32,8 +31,8 @@ implements CoroExpression<String , COROUTINE_RETURN>
      * @param rhs
      */
     public StrConcat(
-            final CoroExpression<? , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? , COROUTINE_RETURN> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -47,7 +46,7 @@ implements CoroExpression<String , COROUTINE_RETURN>
      */
     public StrConcat(
             final String lhs ,
-            final CoroExpression<? , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? , COROUTINE_RETURN> rhs )
     {
         this.lhs = Value.strValue( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -60,7 +59,7 @@ implements CoroExpression<String , COROUTINE_RETURN>
      * @param rhs
      */
     public StrConcat(
-            final CoroExpression<? , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? , COROUTINE_RETURN> lhs ,
             final String rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
@@ -83,9 +82,6 @@ implements CoroExpression<String , COROUTINE_RETURN>
                 ArrayDeepToString.deepToString( rhsResult );
     }
 
-    /**
-     * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
-     */
     @Override
     public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
     {

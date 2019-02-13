@@ -1,13 +1,9 @@
 package de.heinerkuecker.coroutine.exprs.bool;
 
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
-//public interface CoroBooleanExpression
 abstract public class CoroBooleanExpression<COROUTINE_RETURN>
-//extends
-implements
-    CoroExpression<Boolean , COROUTINE_RETURN>
-    //ConditionOrBooleanExpression
+implements SimpleExpression<Boolean , COROUTINE_RETURN>
 {
     ///**
     // * Execute the condition and return the result.

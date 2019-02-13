@@ -9,6 +9,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * And condition.
@@ -16,42 +17,25 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
  * @author Heiner K&uuml;cker
  */
 public class And<COROUTINE_RETURN>
-//implements Condition/*<CoroutineIterator<?>>*/
 extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    private final CoroExpression<Boolean , COROUTINE_RETURN>[] conditionsToAnd;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN>[] conditionsToAnd;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public And(
-            //final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/... conditionsToAnd
-            final CoroExpression<Boolean , COROUTINE_RETURN>... conditionsToAnd )
+            final SimpleExpression<Boolean , COROUTINE_RETURN>... conditionsToAnd )
     {
         this.conditionsToAnd = conditionsToAnd;
     }
-
-    //@Override
-    //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
-    //{
-    //    //for ( final ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-    //    for ( final CoroExpression<Boolean> condition : conditionsToAnd )
-    //    {
-    //        if ( ! condition.execute( parent ) )
-    //        {
-    //            return false;
-    //        }
-    //    }
-    //    return true;
-    //}
 
     @Override
     public Boolean evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
-        for ( final CoroExpression<Boolean , COROUTINE_RETURN> condition : conditionsToAnd )
+        for ( final SimpleExpression<Boolean , COROUTINE_RETURN> condition : conditionsToAnd )
         {
             if ( ! condition.evaluate( parent ) )
             {

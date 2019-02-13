@@ -7,30 +7,30 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.AbstrLhsRhsExpression;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Add
  * result of the right
- * expression {@link CoroExpression}
+ * expression {@link SimpleExpression}
  * to the result of the left
- * expression {@link CoroExpression}.
+ * expression {@link SimpleExpression}.
  *
  * @author Heiner K&uuml;cker
  */
 public class Add<NUMBER extends Number , COROUTINE_RETURN>
-//implements CoroExpression<T>
+//implements SimpleExpression<T>
 extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    //public final CoroExpression<? extends T> lhs;
+    //public final SimpleExpression<? extends T> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    //public final CoroExpression<? extends T> rhs;
+    //public final SimpleExpression<? extends T> rhs;
 
     /**
      * Constructor.
@@ -39,8 +39,8 @@ extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN>
      * @param rhs
      */
     public Add(
-            final CoroExpression<? extends NUMBER , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends NUMBER , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );

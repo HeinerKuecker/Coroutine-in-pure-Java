@@ -10,11 +10,11 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentName;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
-import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
+import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 
 public class GetGlobalArgument<T , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<T , COROUTINE_RETURN> , HasArgumentName
+implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
 {
     /**
      * Name of function argument in
@@ -65,7 +65,7 @@ implements CoroExpression<T , COROUTINE_RETURN> , HasArgumentName
             //        ( this.creationStackTraceElement != null
             //            ? " " + this.creationStackTraceElement
             //            : "" ) );
-            throw new WrongExpressionClassException(
+            throw new WrongExpressionResultValueClassException(
                     //valueExpression
                     this ,
                     //expectedClass

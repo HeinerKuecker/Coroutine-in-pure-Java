@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
@@ -17,7 +17,7 @@ import de.heinerkuecker.util.ExceptionUnchecker;
 public class Throw<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    private final CoroExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression;
+    private final SimpleExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression;
 
     /**
      * Constructor.
@@ -26,7 +26,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      */
     public Throw(
             //final Exception exception
-            final CoroExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression )
+            final SimpleExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression )
     {
         this.exceptionExpression =
                 Objects.requireNonNull(

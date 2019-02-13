@@ -8,9 +8,9 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.NullValue;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
@@ -36,7 +36,7 @@ import de.heinerkuecker.util.ArrayTypeName;
  */
 public final class DeclareVariable<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT, T>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
-implements CoroExpression<T , COROUTINE_RETURN>
+implements SimpleExpression<T , COROUTINE_RETURN>
 {
     /**
      * Name of variable.
@@ -53,7 +53,7 @@ implements CoroExpression<T , COROUTINE_RETURN>
      * should be set as the initial value of
      * the variable.
      */
-    public final CoroExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression;
+    public final SimpleExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression;
 
     /**
      * Constructor.
@@ -61,7 +61,7 @@ implements CoroExpression<T , COROUTINE_RETURN>
     public DeclareVariable(
             final String varName ,
             final Class<? extends T> type ,
-            final CoroExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression )
+            final SimpleExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression )
     {
         this.varName =
                 Objects.requireNonNull(

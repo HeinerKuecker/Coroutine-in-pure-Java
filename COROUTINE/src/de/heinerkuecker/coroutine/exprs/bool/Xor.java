@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Xor condition.
@@ -20,15 +20,15 @@ public class Xor<COROUTINE_RETURN>
 //implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
 extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    private final CoroExpression<Boolean , COROUTINE_RETURN> lhs;
-    private final CoroExpression<Boolean , COROUTINE_RETURN> rhs;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN> lhs;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
      */
     public Xor(
-            final CoroExpression<Boolean , COROUTINE_RETURN> lhs ,
-            final CoroExpression<Boolean , COROUTINE_RETURN> rhs )
+            final SimpleExpression<Boolean , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );

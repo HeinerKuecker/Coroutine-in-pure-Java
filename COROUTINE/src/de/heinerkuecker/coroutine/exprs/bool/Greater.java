@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.exprs.bool;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Compare condition
@@ -22,8 +23,8 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      * @param rhs
      */
     public Greater(
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
     {
         super(
                 lhs ,
@@ -38,7 +39,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      */
     public Greater(
             final TO_COMPARE lhsValue ,
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
     {
         //super(
         //        new Value<>(
@@ -57,7 +58,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      * @param rhs
      */
     public Greater(
-            final CoroExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
             final TO_COMPARE rhsValue )
     {
         //super(

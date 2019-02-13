@@ -9,10 +9,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.flow.Break;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.stmt.flow.Continue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
@@ -41,7 +42,7 @@ extends ComplexStmt<
     // TODO nur SimpleStmt oder FunctionCall erlauben
     final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStmt;
 
-    final CoroExpression<Boolean , COROUTINE_RETURN> condition;
+    final SimpleExpression<Boolean , COROUTINE_RETURN> condition;
 
     // TODO nur SimpleStmt oder FunctionCall erlauben
     final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStmt;
@@ -54,7 +55,7 @@ extends ComplexStmt<
     @SafeVarargs
     public For(
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStmt ,
-            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStmt ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
@@ -197,7 +198,7 @@ extends ComplexStmt<
     public For(
             final String label ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> initialStmt ,
-            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> updateStmt ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {

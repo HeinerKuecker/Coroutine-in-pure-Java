@@ -120,7 +120,7 @@ public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class Break<FUNCTION_RETURN , COROUTINE_RETURN>
+    public class BreakLoop<FUNCTION_RETURN , COROUTINE_RETURN>
     implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         /**
@@ -133,7 +133,7 @@ public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
          *
          * @param label label of loop to break
          */
-        public Break(
+        public BreakLoop(
                 final String label )
         {
             this.label = label;
@@ -189,8 +189,16 @@ public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     public class FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>
     implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
+        /**
+         * Function return value.
+         */
         public final FUNCTION_RETURN result;
 
+        /**
+         * Constructor.
+         *
+         * @param result function return value
+         */
         public FunctionReturnWithResult(
                 final FUNCTION_RETURN result )
         {

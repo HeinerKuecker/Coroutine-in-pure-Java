@@ -14,12 +14,12 @@ import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.util.ArrayTypeName;
 
 public class NewArray<ELEMENT , COROUTINE_RETURN>
-implements CoroExpression<ELEMENT[] , COROUTINE_RETURN>
+implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN>
 {
     //public final Class<? extends ELEMENT> elementClass;
     public final Class<? extends ELEMENT[]> arrayClass;
 
-    private final CoroExpression<ELEMENT , COROUTINE_RETURN>[] arrayElementExpressions;
+    private final SimpleExpression<ELEMENT , COROUTINE_RETURN>[] arrayElementExpressions;
 
     /**
      * Constructor.
@@ -31,7 +31,7 @@ implements CoroExpression<ELEMENT[] , COROUTINE_RETURN>
     public NewArray(
             //final Class<? extends ELEMENT> elementClass ,
             final Class<? extends ELEMENT[]> arrayClass ,
-            final CoroExpression<ELEMENT , COROUTINE_RETURN>... arrayElementExpressions )
+            final SimpleExpression<ELEMENT , COROUTINE_RETURN>... arrayElementExpressions )
     {
         //this.elementClass = Objects.requireNonNull( elementClass );
         this.arrayClass = Objects.requireNonNull( arrayClass );

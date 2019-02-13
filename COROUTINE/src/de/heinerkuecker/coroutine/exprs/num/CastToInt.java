@@ -2,11 +2,11 @@ package de.heinerkuecker.coroutine.exprs.num;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.AbstrOneExprExpression;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Cast result of the specified
- * expression {@link CoroExpression}
+ * expression {@link SimpleExpression}
  * to {@link Integer}.
  *
  * @param <NUMBER> number type to cast
@@ -14,12 +14,12 @@ import de.heinerkuecker.coroutine.exprs.CoroExpression;
  */
 public class CastToInt<NUMBER extends Number , COROUTINE_RETURN>
 extends AbstrOneExprExpression<Integer , Number , COROUTINE_RETURN>
-//implements CoroExpression<Integer>
+//implements SimpleExpression<Integer>
 {
     /**
      * Number expression to deliver number object to cast.
      */
-    //public final CoroExpression<? extends T> numberExpression;
+    //public final SimpleExpression<? extends T> numberExpression;
 
     /**
      * Constructor.
@@ -27,7 +27,7 @@ extends AbstrOneExprExpression<Integer , Number , COROUTINE_RETURN>
      * @param numberExpression expression to deliver number object to cast
      */
     public CastToInt(
-            final CoroExpression<? extends NUMBER , COROUTINE_RETURN> numberExpression )
+            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN> numberExpression )
     {
         //this.numberExpression = Objects.requireNonNull( numberExpression );
         super( numberExpression );

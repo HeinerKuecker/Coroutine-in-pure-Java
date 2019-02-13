@@ -9,11 +9,11 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 abstract public class AbstrExprsUseExprs<EXPRESSION_RETURN , ARGUMENT , COROUTINE_RETURN>
-implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+implements SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
 {
     public final Class<? extends EXPRESSION_RETURN> type;
 
-    public final CoroExpression<ARGUMENT , COROUTINE_RETURN> argumentExpression;
+    public final SimpleExpression<ARGUMENT , COROUTINE_RETURN> argumentExpression;
 
     abstract public EXPRESSION_RETURN execute(
             final ARGUMENT argument );
@@ -25,8 +25,8 @@ implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
      * @param argumentExpression
      */
     protected AbstrExprsUseExprs(
-            Class<? extends EXPRESSION_RETURN> type ,
-            CoroExpression<ARGUMENT , COROUTINE_RETURN> argumentExpression )
+            final Class<? extends EXPRESSION_RETURN> type ,
+            final SimpleExpression<ARGUMENT , COROUTINE_RETURN> argumentExpression )
     {
         this.type = Objects.requireNonNull( type );
         this.argumentExpression = Objects.requireNonNull( argumentExpression );

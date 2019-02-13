@@ -9,6 +9,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Or condition.
@@ -19,15 +20,14 @@ public class Or<COROUTINE_RETURN>
 //implements Condition/*<CoroutineIterator<?>>*/
 extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    //private final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/[] conditionsToOr;
-    private final CoroExpression<Boolean , COROUTINE_RETURN>[] conditionsToOr;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN>[] conditionsToOr;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public Or(
-            final CoroExpression<Boolean , COROUTINE_RETURN>... conditionsToOr )
+            final SimpleExpression<Boolean , COROUTINE_RETURN>... conditionsToOr )
     {
         this.conditionsToOr = conditionsToOr;
     }
@@ -36,7 +36,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     public Boolean evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
-        for ( final CoroExpression<Boolean , COROUTINE_RETURN> condition : conditionsToOr )
+        for ( final SimpleExpression<Boolean , COROUTINE_RETURN> condition : conditionsToOr )
         {
             if ( condition.evaluate( parent ) )
             {

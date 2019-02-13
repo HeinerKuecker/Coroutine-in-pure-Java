@@ -2,6 +2,7 @@ package de.heinerkuecker.coroutine.exprs.bool;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
@@ -14,8 +15,6 @@ import de.heinerkuecker.coroutine.exprs.Value;
  * @author Heiner K&uuml;cker
  */
 public class Equals<TO_EQUAL , COROUTINE_RETURN>
-//implements ConditionOrBooleanExpression
-//extends CoroBooleanExpression<COROUTINE_RETURN>
 extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
 {
     /**
@@ -25,8 +24,8 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
      * @param rhs
      */
     public Equals(
-            final CoroExpression<? extends TO_EQUAL , COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends TO_EQUAL , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> rhs )
     {
         super(
                 lhs ,
@@ -41,7 +40,7 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
      */
     public Equals(
             final TO_EQUAL lhsValue ,
-            final CoroExpression<? extends TO_EQUAL , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> rhs )
     {
         super(
                 new Value<TO_EQUAL , COROUTINE_RETURN>(
@@ -57,7 +56,7 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
      * @param rhs
      */
     public Equals(
-            final CoroExpression<? extends TO_EQUAL , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> lhs ,
             final TO_EQUAL rhsValue )
     {
         super(

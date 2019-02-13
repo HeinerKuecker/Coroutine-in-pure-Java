@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 abstract public class LhsRhsBoolExpression<OPERAND, COROUTINE_RETURN>
 extends CoroBooleanExpression<COROUTINE_RETURN>
 {
-    public final CoroExpression<? extends OPERAND , COROUTINE_RETURN> lhs;
-    public final CoroExpression<? extends OPERAND , COROUTINE_RETURN> rhs;
+    public final SimpleExpression<? extends OPERAND , COROUTINE_RETURN> lhs;
+    public final SimpleExpression<? extends OPERAND , COROUTINE_RETURN> rhs;
 
     /**
      * Constructor.
@@ -23,8 +23,8 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param rhs
      */
     protected LhsRhsBoolExpression(
-            final CoroExpression<? extends OPERAND, COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends OPERAND, COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN> rhs )
     {
         this.lhs =
                 Objects.requireNonNull(

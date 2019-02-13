@@ -7,10 +7,10 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
-import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
+import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
@@ -26,7 +26,7 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 public class FinallyReturn<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    public final CoroExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression;
+    public final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
@@ -37,7 +37,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * Constructor.
      */
     public FinallyReturn(
-            final CoroExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression )
+            final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression )
     {
         super(
                 //creationStackOffset
@@ -80,7 +80,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
         if ( resultValue != null &&
                 ! coroutineReturnType.isInstance( resultValue ) )
         {
-            throw new WrongExpressionClassException(
+            throw new WrongExpressionResultValueClassException(
                     //valueExpression
                     expression ,
                     //expectedClass

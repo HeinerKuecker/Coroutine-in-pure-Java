@@ -4,10 +4,17 @@ import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
+import de.heinerkuecker.coroutine.stmt.CoroStmtResult.YieldReturnWithResult;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 
 /**
- * Interface for one statement
+ * Interface for one simple statement
  * in {@link CoroutineIterator}.
+ *
+ * A simple statement has no own state
+ * and is not interruptable by
+ * {@link YieldReturn} or
+ * {@link YieldReturnWithResult}.
  *
  * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
  * @param <PARENT> type the {@link CoroutineIterator} instance

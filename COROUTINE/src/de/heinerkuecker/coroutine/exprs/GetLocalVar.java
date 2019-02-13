@@ -10,13 +10,13 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.HasVariableName;
-import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionClassException;
+import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
 public class GetLocalVar<VARIABLE , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
+implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 {
     public final String localVarName;
 
@@ -68,7 +68,7 @@ implements CoroExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
             //        ( this.creationStackTraceElement != null
             //            ? " " + this.creationStackTraceElement
             //            : "" ) );
-            throw new WrongExpressionClassException(
+            throw new WrongExpressionResultValueClassException(
                     //valueExpression
                     this ,
                     //expectedClass

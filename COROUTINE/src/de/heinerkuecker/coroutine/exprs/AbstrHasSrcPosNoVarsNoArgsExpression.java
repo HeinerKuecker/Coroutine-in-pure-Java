@@ -10,7 +10,7 @@ import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
 public abstract class AbstrHasSrcPosNoVarsNoArgsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
 extends HasCreationStackTraceElement
-implements CoroExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
+implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
 {
     /**
      * Constructor.

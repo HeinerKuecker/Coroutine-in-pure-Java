@@ -16,7 +16,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  * @author Heiner K&uuml;cker
  */
 abstract public class AbstrNoVarsNoArgsExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
-implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+implements SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
 {
 
     @Override

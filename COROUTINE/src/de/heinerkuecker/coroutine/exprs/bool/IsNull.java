@@ -8,6 +8,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
 /**
  * Is <code>null</code> condition
@@ -24,29 +25,16 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     /**
      * Expression to check.
      */
-    public final CoroExpression<? , COROUTINE_RETURN> expression;
+    public final SimpleExpression<? , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
      */
     public IsNull(
-            final CoroExpression<? , COROUTINE_RETURN> expression )
+            final SimpleExpression<? , COROUTINE_RETURN> expression )
     {
         this.expression = expression;
     }
-
-    ///**
-    // * Equals variable to <code>null</code>.
-    // */
-    //@Override
-    //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
-    //{
-    //    //final Object varValue = parent.localVars().get( varName );
-    //    final Object varValue = expression.evaluate( parent );
-    //
-    //    return varValue == null;
-    //}
 
     /**
      * Equals variable to <code>null</code>.

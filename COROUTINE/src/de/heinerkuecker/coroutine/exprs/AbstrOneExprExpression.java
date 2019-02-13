@@ -17,20 +17,22 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  * @author Heiner K&uuml;cker
  */
 public abstract class AbstrOneExprExpression<RETURN , ARGUMENT , COROUTINE_RETURN>
-implements CoroExpression<RETURN , COROUTINE_RETURN>
+implements SimpleExpression<RETURN , COROUTINE_RETURN>
 {
     /**
      * Expression to map.
      */
-    public final CoroExpression<? extends ARGUMENT , COROUTINE_RETURN> expr;
+    public final SimpleExpression<? extends ARGUMENT , COROUTINE_RETURN> expr;
 
     /**
      * Constructor.
      */
     protected AbstrOneExprExpression(
-            final CoroExpression<? extends ARGUMENT , COROUTINE_RETURN> expr )
+            final SimpleExpression<? extends ARGUMENT , COROUTINE_RETURN> expr )
     {
-        this.expr = Objects.requireNonNull( expr );
+        this.expr =
+                Objects.requireNonNull(
+                        expr );
     }
 
     @Override

@@ -9,9 +9,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
+import de.heinerkuecker.coroutine.stmt.flow.Break;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 import de.heinerkuecker.coroutine.stmt.flow.Continue;
 import de.heinerkuecker.coroutine.stmt.flow.exc.LabelAlreadyInUseException;
@@ -40,7 +41,7 @@ extends ComplexStmt<
 
     public final Class<? extends ELEMENT> elementType;
 
-    final CoroExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression;
+    final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression;
 
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStmt;
 
@@ -51,7 +52,7 @@ extends ComplexStmt<
     public ForEach(
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
-            final CoroExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
+            final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
@@ -87,7 +88,7 @@ extends ComplexStmt<
             final String label ,
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
-            final CoroExpression<Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
+            final SimpleExpression<Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(

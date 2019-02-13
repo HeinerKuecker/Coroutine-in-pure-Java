@@ -59,7 +59,7 @@ extends BreakOrContinue<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
     public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
             final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        return new CoroStmtResult.Break<FUNCTION_RETURN , COROUTINE_RETURN>( this.label );
+        return new CoroStmtResult.BreakLoop<FUNCTION_RETURN , COROUTINE_RETURN>( this.label );
     }
 
     /**

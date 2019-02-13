@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.flow.Break;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
@@ -38,7 +38,7 @@ extends ComplexStmt<
      */
     public final String label;
 
-    final CoroExpression<Boolean , COROUTINE_RETURN> condition;
+    final SimpleExpression<Boolean , COROUTINE_RETURN> condition;
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexStmt;
 
     /**
@@ -47,7 +47,7 @@ extends ComplexStmt<
     @SafeVarargs
     WhileOrDoWhile(
             final String label ,
-            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... stmts )
     {
         super(

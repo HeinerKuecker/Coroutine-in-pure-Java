@@ -10,8 +10,8 @@ import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
 
 /**
- * Interface for {@link CoroStmt}
- * to complex statements like
+ * Interface for complex statements
+ * {@link CoroStmt} like
  * {@link While}.
  *
  * @param <STMT>       type of the complex statement, resursivly defined

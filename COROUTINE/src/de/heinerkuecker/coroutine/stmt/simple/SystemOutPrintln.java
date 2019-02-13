@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 import de.heinerkuecker.util.ArrayDeepToString;
@@ -31,7 +31,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     /**
      * Expression to deliver value to print.
      */
-    public final CoroExpression<? , COROUTINE_RETURN> outputExpression;
+    public final SimpleExpression<? , COROUTINE_RETURN> outputExpression;
 
     /**
      * Constructor.
@@ -40,7 +40,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @param outputExpression
      */
     public SystemOutPrintln(
-            final CoroExpression<? , COROUTINE_RETURN> outputExpression )
+            final SimpleExpression<? , COROUTINE_RETURN> outputExpression )
     {
         this.outputExpression =
                 Objects.requireNonNull(

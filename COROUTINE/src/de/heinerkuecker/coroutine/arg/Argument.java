@@ -9,6 +9,7 @@ import de.heinerkuecker.coroutine.CoroCheckable;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 /**
@@ -23,7 +24,7 @@ implements CoroCheckable
 {
     public final String name;
 
-    public final CoroExpression<ARGUMENT , COROUTINE_RETURN> expression;
+    public final SimpleExpression<ARGUMENT , COROUTINE_RETURN> expression;
 
     /**
      * Constructor.
@@ -33,7 +34,7 @@ implements CoroCheckable
      */
     public Argument(
             final String name ,
-            final CoroExpression<ARGUMENT , COROUTINE_RETURN> expression )
+            final SimpleExpression<ARGUMENT , COROUTINE_RETURN> expression )
     {
         this.name = Objects.requireNonNull( name );
         this.expression = Objects.requireNonNull( expression );

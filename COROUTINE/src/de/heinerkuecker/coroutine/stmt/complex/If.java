@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.flow.BreakOrContinue;
@@ -23,7 +23,7 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 {
-    final CoroExpression<Boolean , COROUTINE_RETURN> condition;
+    final SimpleExpression<Boolean , COROUTINE_RETURN> condition;
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> thenBodyComplexStmt;
 
     /**
@@ -31,7 +31,7 @@ extends ComplexStmt<
      */
     @SafeVarargs
     public If(
-            final CoroExpression<Boolean , COROUTINE_RETURN> condition ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN> condition ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... stmts )
     {
         super(
@@ -52,7 +52,7 @@ extends ComplexStmt<
     // */
     //@SafeVarargs
     //public If(
-    //        final CoroExpression<Boolean> condition ,
+    //        final SimpleExpression<Boolean> condition ,
     //        final CoroIterStmt<COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... stmts )
     //{
     //    super(

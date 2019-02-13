@@ -1,6 +1,6 @@
 package de.heinerkuecker.coroutine.exprs.bool;
 
-import de.heinerkuecker.coroutine.exprs.CoroExpression;
+import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
 
 abstract public class CmpblLhsRhsBoolExpression<OPERAND extends Comparable<OPERAND> , COROUTINE_RETURN>
@@ -13,8 +13,8 @@ extends LhsRhsBoolExpression<OPERAND , COROUTINE_RETURN>
      * @param rhs
      */
     protected CmpblLhsRhsBoolExpression(
-            final CoroExpression<? extends OPERAND, COROUTINE_RETURN> lhs ,
-            final CoroExpression<? extends OPERAND, COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN> rhs )
     {
         super(
                 lhs ,
@@ -44,7 +44,7 @@ extends LhsRhsBoolExpression<OPERAND , COROUTINE_RETURN>
      */
     protected CmpblLhsRhsBoolExpression(
             final OPERAND lhsValue ,
-            final CoroExpression<? extends OPERAND , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends OPERAND , COROUTINE_RETURN> rhs )
     {
         super(
                 new Value<>(
@@ -60,7 +60,7 @@ extends LhsRhsBoolExpression<OPERAND , COROUTINE_RETURN>
      * @param rhs
      */
     protected CmpblLhsRhsBoolExpression(
-            final CoroExpression<? extends OPERAND , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends OPERAND , COROUTINE_RETURN> lhs ,
             final OPERAND rhsValue )
     {
         super(
