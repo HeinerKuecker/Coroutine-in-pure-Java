@@ -599,7 +599,7 @@ public class CoroutineSaxParserTest
                         // bodyStmts
                         new While<>(
                                 // condition
-                                new InstanceOf(
+                                new InstanceOf<>(
                                         // valueExpression
                                         new GetResumeArgument<>(
                                                 // type
@@ -630,10 +630,10 @@ public class CoroutineSaxParserTest
                                 "consumeWhitespaces" ,
                                 //functionReturnType
                                 Void.class ) ,
-                        new IfElse<>(
+                        new IfElse</*FUNCTION_RETURN*/ Void, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
                                 // condition
-                                new And(
-                                        new InstanceOf(
+                                new And<>(
+                                        new InstanceOf<>(
                                                 // valueExpression
                                                 new GetResumeArgument<>(
                                                         // type
@@ -672,10 +672,10 @@ public class CoroutineSaxParserTest
                         // params
                         null ,
                         // bodyStmts
-                        new IfElse<>(
+                        new IfElse</*FUNCTION_RETURN*/ Void, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
                                 // condition
-                                new And(
-                                        new InstanceOf(
+                                new And<>(
+                                        new InstanceOf<>(
                                                 // valueExpression
                                                 new GetResumeArgument<>(
                                                         // type
@@ -720,10 +720,10 @@ public class CoroutineSaxParserTest
                                 "consumeWhitespaces" ,
                                 // functionReturnType
                                 Void.class ) ,
-                        new IfElse<>(
+                        new IfElse</*FUNCTION_RETURN*/ Void, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
                                 // condition
-                                new And(
-                                        new InstanceOf(
+                                new And<>(
+                                        new InstanceOf<>(
                                                 // valueExpression
                                                 new GetResumeArgument<>(
                                                         //type
