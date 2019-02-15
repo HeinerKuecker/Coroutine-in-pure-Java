@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.Function;
 import de.heinerkuecker.coroutine.arg.Argument;
 import de.heinerkuecker.coroutine.arg.Arguments;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
@@ -327,7 +328,14 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 
         alreadyCheckedFunctionNames.add( functionName );
 
-        parent.getFunction( this.functionName ).bodyComplexStmt.checkUseArguments(
+        final Function<?, ?, ?> function = parent.getFunction( this.functionName );
+
+        if ( function == null )
+        {
+            throw new IllegalStateException( "unknown function: " + this.functionName );
+        }
+
+        function.bodyComplexStmt.checkUseArguments(
                 alreadyCheckedFunctionNames ,
                 //parent
                 this.newStateForCheck(

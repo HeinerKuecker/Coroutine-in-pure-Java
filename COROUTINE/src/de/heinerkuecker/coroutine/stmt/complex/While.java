@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.complex.ComplexExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
 public class While<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
@@ -15,6 +16,24 @@ extends WhileOrDoWhile<
     RESUME_ARGUMENT
     >
 {
+    /**
+     * Constructor.
+     *
+     * @param condition
+     * @param stmts
+     */
+    @SafeVarargs
+    public While(
+            final ComplexExpression<? , ? , Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+    {
+        super(
+                //label
+                null ,
+                condition ,
+                stmts );
+    }
+
     /**
      * Constructor.
      *

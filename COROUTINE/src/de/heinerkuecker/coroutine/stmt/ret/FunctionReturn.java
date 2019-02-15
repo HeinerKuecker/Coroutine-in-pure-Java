@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
@@ -85,6 +86,11 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     public CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> execute(
             final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
+        if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
+        {
+            System.out.println( "execute " + this );
+        }
+
         final FUNCTION_RETURN resultValue =
                 expression.evaluate(
                         parent );

@@ -186,7 +186,7 @@ public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
      *
      * @param <COROUTINE_RETURN> result type of method {@link CoroutineIterator#next()}
      */
-    public class FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    public class ComplexExprReturn<FUNCTION_RETURN , COROUTINE_RETURN>
     implements CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
     {
         /**
@@ -199,7 +199,7 @@ public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
          *
          * @param result function return value
          */
-        public FunctionReturnWithResult(
+        public ComplexExprReturn(
                 final FUNCTION_RETURN result )
         {
             this.result = result;
@@ -209,6 +209,21 @@ public interface CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN>
         public String toString()
         {
             return this.getClass().getSimpleName() + ": " + result;
+        }
+    }
+
+    public class FunctionReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>
+    extends ComplexExprReturn<FUNCTION_RETURN , COROUTINE_RETURN>
+    {
+        /**
+         * Constructor.
+         *
+         * @param result
+         */
+        public FunctionReturnWithResult(
+                final FUNCTION_RETURN result )
+        {
+            super(result);
         }
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
@@ -53,7 +54,10 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
     public VARIABLE evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
-        System.out.println( "evaluate " + this );
+        if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
+        {
+            System.out.println( "evaluate " + this );
+        }
 
         final Object localVarValue =
                 parent.localVars().get(

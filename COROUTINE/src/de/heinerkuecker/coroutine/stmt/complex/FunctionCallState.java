@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.Function;
 import de.heinerkuecker.coroutine.arg.Arguments;
@@ -93,6 +94,11 @@ extends ComplexExpressionState<
             //final CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN, RESUME_ARGUMENT> parent
             )
     {
+        if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
+        {
+            System.out.println( "execute " + this.functionCall );
+        }
+
         if ( runInFunction )
         {
             final ComplexStmt<?, ?, ? , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT> bodyComplexStmt =

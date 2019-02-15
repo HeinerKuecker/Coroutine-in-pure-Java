@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.exprs.bool;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
 import de.heinerkuecker.coroutine.exprs.SimpleExpression;
@@ -89,6 +90,11 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
     public Boolean evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
+        if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
+        {
+            System.out.println( "evaluate " + this );
+        }
+
         final TO_EQUAL lhsResult = lhs.evaluate( parent );
         final TO_EQUAL rhsResult = rhs.evaluate( parent );
 

@@ -233,6 +233,11 @@ extends ComplexStmt<
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType )
     {
+        this.condition.setExprCoroutineReturnType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType );
+
         this.thenBodyComplexStmt.setStmtCoroutineReturnType(
                 alreadyCheckedFunctionNames ,
                 parent ,

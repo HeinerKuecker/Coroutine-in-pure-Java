@@ -3,6 +3,7 @@ package de.heinerkuecker.coroutine.stmt.complex;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.exprs.Value;
+import de.heinerkuecker.coroutine.exprs.complex.ComplexExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
 public class DoWhile<
@@ -19,6 +20,24 @@ extends WhileOrDoWhile<
     RESUME_ARGUMENT
     >
 {
+    /**
+     * Constructor.
+     *
+     * @param condition
+     * @param statements
+     */
+    @SafeVarargs
+    public DoWhile(
+            final ComplexExpression<? , ? , Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+    {
+        super(
+                //label
+                null ,
+                condition ,
+                stmts );
+    }
+
     /**
      * Constructor.
      *

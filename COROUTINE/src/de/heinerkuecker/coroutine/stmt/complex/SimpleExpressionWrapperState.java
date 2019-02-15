@@ -75,7 +75,9 @@ extends ComplexExpressionState<
 
             FUNCTION_RETURN expressionResult =
                     this.simpleExpressionWrapper.simpleExpression.evaluate(
-                            this);
+                            //this
+                            // use parent local vars, no own local var scope
+                            parent );
 
             //bodyComplexState = null;
             finish();

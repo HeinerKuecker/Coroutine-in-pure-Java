@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.exprs.CoroExpression;
@@ -74,6 +75,11 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     public Boolean evaluate(
             final HasArgumentsAndVariables<?> parent )
     {
+        if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
+        {
+            System.out.println( "evaluate " + this );
+        }
+
         final Object value = valueExpression.evaluate( parent );
         final Class<?> type = typeExpression.evaluate( parent );
 

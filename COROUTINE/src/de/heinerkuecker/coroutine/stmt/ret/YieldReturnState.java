@@ -1,5 +1,8 @@
 package de.heinerkuecker.coroutine.stmt.ret;
 
+import java.util.Objects;
+
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.complex.ComplexExpressionState;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
@@ -38,8 +41,8 @@ extends ComplexStmtState<
             final YieldReturn<FUNCTION_RETURN, COROUTINE_RETURN, RESUME_ARGUMENT> yieldReturn ,
             final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN, COROUTINE_RETURN, RESUME_ARGUMENT> parent )
     {
-        super(parent);
-        this.yieldReturn = yieldReturn;
+        super( Objects.requireNonNull( parent ) );
+        this.yieldReturn = Objects.requireNonNull( yieldReturn );
     }
 
     /**
@@ -48,6 +51,11 @@ extends ComplexStmtState<
     @Override
     public CoroStmtResult<FUNCTION_RETURN, COROUTINE_RETURN> execute()
     {
+        if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
+        {
+            System.out.println( "execute " + this.yieldReturn );
+        }
+
         if ( runInYieldReturn )
         {
             if ( currentComplexExpressionState == null )
@@ -80,6 +88,12 @@ extends ComplexStmtState<
                             yieldReturn.coroutineReturnType ,
                             //wrongValue
                             resultValue );
+                }
+
+                if ( yieldReturn.coroutineReturnType == null )
+                {
+                    throw new IllegalStateException(
+                            "yieldReturn.coroutineReturnType == null: " + this.yieldReturn );
                 }
 
                 return new CoroStmtResult.YieldReturnWithResult<FUNCTION_RETURN , COROUTINE_RETURN>(

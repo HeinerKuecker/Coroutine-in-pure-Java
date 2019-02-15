@@ -1,5 +1,6 @@
 package de.heinerkuecker.coroutine.stmt.complex;
 
+import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
 
@@ -24,6 +25,7 @@ extends ComplexStmtState<
 
     // TODO getter
     protected boolean runInCondition;
+    protected ComplexStmtState<?, ?, Boolean , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> conditionState;
     protected boolean runInBody;
     protected ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/, RESUME_ARGUMENT> bodyComplexState;
 
@@ -44,6 +46,14 @@ extends ComplexStmtState<
         //this.rootParent = Objects.requireNonNull( rootParent );
 
         //this.parent = Objects.requireNonNull( parent );
+
+        if ( CoroutineDebugSwitches.saveToStringInfos )
+        {
+            // for debug
+            conditionState =
+                    whileOrDoWhile.condition.newState(
+                            (CoroutineOrFunctioncallOrComplexstmt) this );
+        }
     }
 
     @Override
@@ -56,25 +66,60 @@ extends ComplexStmtState<
         {
             if ( runInCondition )
             {
-                // for debug toString
-                parent.saveLastStmtState();
+                //// for debug toString
+                //parent.saveLastStmtState();
+                //
+                //final boolean conditionResult =
+                //        whileOrDoWhile.condition.evaluate(
+                //                //parent
+                //                this );
+                //
+                //this.runInCondition = false;
+                //
+                //if ( conditionResult )
+                //{
+                //    runInBody = true;
+                //}
+                //else
+                //{
+                //    finish();
+                //    return CoroStmtResult.continueCoroutine();
+                //}
+                if ( conditionState == null )
+                {
+                    // for debug
+                    conditionState =
+                            whileOrDoWhile.condition.newState(
+                                    (CoroutineOrFunctioncallOrComplexstmt) this
+                                    // use parent local vars, no own local var scope
+                                    //(CoroutineOrFunctioncallOrComplexstmt) parent
+                                    );
+                }
 
-                final boolean conditionResult =
-                        whileOrDoWhile.condition.evaluate(
-                                //parent
-                                this );
+                final CoroStmtResult<Boolean , COROUTINE_RETURN> conditionExecuteResult =
+                        this.conditionState.execute();
+
+                if ( conditionExecuteResult instanceof CoroStmtResult.ComplexExprReturn )
+                {
+                    if ( Boolean.TRUE.equals( ((CoroStmtResult.ComplexExprReturn) conditionExecuteResult).result ) )
+                    {
+                        runInBody = true;
+                    }
+                    else
+                    {
+                        finish();
+                        return CoroStmtResult.continueCoroutine();
+                    }
+                }
+                else if ( ! ( conditionExecuteResult == null ||
+                        conditionExecuteResult instanceof CoroStmtResult.ContinueCoroutine ) )
+                {
+                    return (CoroStmtResult) conditionExecuteResult;
+                }
 
                 this.runInCondition = false;
-
-                if ( conditionResult )
-                {
-                    runInBody = true;
-                }
-                else
-                {
-                    finish();
-                    return CoroStmtResult.continueCoroutine();
-                }
+                this.runInBody = true;
+                this.conditionState = null;
             }
 
             if ( runInBody )

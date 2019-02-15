@@ -41,4 +41,6 @@ public class CoroutineDebugSwitches
      * {@link CoroutineIterator#toString()}.
      */
     public static boolean saveToStringInfos = true;
+
+    public static boolean logSimpleStatementsAndExpressions = true;
 }

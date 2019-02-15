@@ -37,9 +37,11 @@ import de.heinerkuecker.coroutine.exprs.bool.InstanceOf;
 import de.heinerkuecker.coroutine.exprs.bool.Not;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
+import de.heinerkuecker.coroutine.stmt.complex.If;
 import de.heinerkuecker.coroutine.stmt.complex.IfElse;
 import de.heinerkuecker.coroutine.stmt.complex.While;
 import de.heinerkuecker.coroutine.stmt.flow.Throw;
+import de.heinerkuecker.coroutine.stmt.ret.FunctionReturn;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
 import de.heinerkuecker.coroutine.stmt.simple.AbstrLocalVarUseWithExpressionStmt;
 import de.heinerkuecker.coroutine.stmt.simple.AddToCollectionLocalVar;
@@ -80,6 +82,10 @@ public class CoroutineSaxParserTest
             "   </student>\r\n" +
             "</class>";
 
+    /**
+     *
+     * Student.
+     */
     static class Student
     {
         String rollno;
@@ -88,6 +94,9 @@ public class CoroutineSaxParserTest
         String nickname;
         String marks;
 
+        /**
+         * generated
+         */
         @Override
         public int hashCode() {
             final int prime = 31;
@@ -100,6 +109,9 @@ public class CoroutineSaxParserTest
             return result;
         }
 
+        /**
+         * generated
+         */
         @Override
         public boolean equals(Object obj) {
             if (this == obj) {
@@ -150,6 +162,9 @@ public class CoroutineSaxParserTest
             return true;
         }
 
+        /**
+         * generated
+         */
         @Override
         public String toString() {
             return "Student [rollno=" + this.rollno + ", firstname=" + this.firstname + ", lastname=" + this.lastname
@@ -163,6 +178,10 @@ public class CoroutineSaxParserTest
      */
     static interface SaxEvent {};
 
+    /**
+     * Abstract super class for sax events
+     * with name of XML element.
+     */
     abstract static class SaxEventWithElementname
     implements SaxEvent
     {
@@ -185,6 +204,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Start XML element sax event.
+     */
     static class StartElement
     extends SaxEventWithElementname
     {
@@ -227,6 +249,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * End XML element sax event.
+     */
     static class EndElement
     extends SaxEventWithElementname
     {
@@ -251,6 +276,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Characters sax event.
+     */
     static class Characters
     implements SaxEvent
     {
@@ -276,6 +304,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Sax event handler.
+     */
     static class CoroSaxhandler
     extends DefaultHandler
     {
@@ -298,7 +329,7 @@ public class CoroutineSaxParserTest
                 String localName ,
                 String qName ,
                 Attributes attributes )
-                throws SAXException
+        throws SAXException
         {
             final StartElement startElement = new StartElement( qName , attributes );
 
@@ -315,7 +346,7 @@ public class CoroutineSaxParserTest
                 String uri ,
                 String localName ,
                 String qName )
-                throws SAXException
+        throws SAXException
         {
             final EndElement endElement = new EndElement( qName );
 
@@ -332,7 +363,7 @@ public class CoroutineSaxParserTest
                 char[] ch ,
                 int start ,
                 int length )
-                        throws SAXException
+        throws SAXException
         {
             final Characters characters = new Characters( new String( ch , start , length ) );
 
@@ -345,6 +376,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Coroutine expression to create new {@link Student} object.
+     */
     static class NewStudent
     extends AbstrNoVarsNoArgsExpression<Student , Void>
     {
@@ -363,6 +397,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Coroutine statement to set an arbitrary member of an {@link Student} object from appropriate XML element.
+     */
     static class SetStudentField
     extends AbstrLocalVarUseWithExpressionStmt<
     /*FUNCTION_RETURN*/Void ,
@@ -433,6 +470,9 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Coroutine statement to set member {@link Student#rollno} of an {@link Student} object from start XML element attributes.
+     */
     static class SetStudentRollno
     extends AbstrLocalVarUseWithExpressionStmt<
     /*FUNCTION_RETURN*/Void ,
@@ -473,6 +513,11 @@ public class CoroutineSaxParserTest
         }
     }
 
+    /**
+     * Test SAX parser.
+     *
+     * @throws Exception
+     */
     @Test
     public void testSaxParser()
             throws Exception
@@ -500,6 +545,7 @@ public class CoroutineSaxParserTest
             }
         };
 
+        // check is start XML element class: <class>
         final CoroBooleanExpression isStartElementClass =
                 new And(
                         new InstanceOf(
@@ -512,6 +558,36 @@ public class CoroutineSaxParserTest
                         new Equals<>(
                                 getXmlElementNameFromResumeArgument ,
                                 "class" ) );
+
+        // function to check is start XML element class and consume it
+        final Function</*FUNCTION_RETURN*/ Boolean, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent> checkIsStartElementClassAndConsumeIt =
+                new Function<>(
+                        // name
+                        "checkIsStartElementClassAndConsumeIt" ,
+                        // params
+                        null ,
+                        // bodyStmts
+                        new IfElse<>(
+                                // condition
+                                isStartElementClass ,
+                                // thenStmts
+                                new CoroStmt[] {
+                                        // consume start xml element class
+                                        new YieldReturn<>( NullValue.nullValue() ) ,
+                                        new FunctionReturn</*FUNCTION_RETURN*/ Boolean, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
+                                                // functionReturnType
+                                                Boolean.class ,
+                                                // value
+                                                true )
+                                } ,
+                                // elseStmts
+                                new CoroStmt[] {
+                                        new FunctionReturn</*FUNCTION_RETURN*/ Boolean, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
+                                                // functionReturnType
+                                                Boolean.class ,
+                                                // value
+                                                false )
+                                } ) );
 
         // function to consume white space between xml elements (actually consume all characters)
         final Function<Void, Void , SaxEvent> consumeWhitespaces =
@@ -534,7 +610,7 @@ public class CoroutineSaxParserTest
                                 new YieldReturn<>( NullValue.nullValue() ) ) );
 
         // function to consume end xml element
-        final Function<Void, Void , SaxEvent> consumeEndElement =
+        final Function</*FUNCTION_RETURN*/ Void, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent> consumeEndElement =
                 new Function<Void, Void , SaxEvent>(
                         // name
                         "consumeEndElement" ,
@@ -712,6 +788,7 @@ public class CoroutineSaxParserTest
                         Void.class ,
                         // functions
                         Arrays.asList(
+                                checkIsStartElementClassAndConsumeIt ,
                                 consumeWhitespaces ,
                                 readRollnoAttrFromStartXmlElement ,
                                 readXmlElement ,
@@ -728,10 +805,13 @@ public class CoroutineSaxParserTest
                                 students ) ,
                         new While<>(
                                 // condition
-                                isStartElementClass ,
+                                //isStartElementClass
+                                new FunctionCall<>(
+                                        // functionName
+                                        "checkIsStartElementClassAndConsumeIt" ,
+                                        // functionReturnType
+                                        Boolean.class ) ,
                                 // stmts
-                                // consume start xml element class
-                                new YieldReturn<>( NullValue.nullValue() ) ,
                                 new FunctionCall<>(
                                         // functionName
                                         "consumeWhitespaces" ,
