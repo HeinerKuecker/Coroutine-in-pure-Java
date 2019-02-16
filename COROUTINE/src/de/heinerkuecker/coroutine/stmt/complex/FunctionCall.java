@@ -428,13 +428,19 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
                             nextBodyState );
         }
 
-        final String functionArgumentExpressionsStr =
-                indent + " " +
-                "function argument expressions: " +
-                ArrayDeepToString.deepToString( this.functionArguments ) +
-                "\n";
-
-
+        final String functionArgumentExpressionsStr;
+        if ( this.functionArguments == null || this.functionArguments.length == 0 )
+        {
+            functionArgumentExpressionsStr = "";
+        }
+        else
+        {
+            functionArgumentExpressionsStr =
+                    indent + " " +
+                    "function argument expressions: " +
+                    ArrayDeepToString.deepToString( this.functionArguments ) +
+                    "\n";
+        }
         return
                 indent +
                 //( this.label != null ? this.label + " : " : "" ) +
