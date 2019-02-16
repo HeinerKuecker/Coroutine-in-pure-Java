@@ -8,24 +8,24 @@ import de.heinerkuecker.util.ArrayDeepToString;
 /**
  * Expression to return the specified value.
  *
- * @param <T> value type
+ * @param <VALUE> value type
  * @author Heiner K&uuml;cker
  */
-public class Value<T , COROUTINE_RETURN>
+public class Value<VALUE , COROUTINE_RETURN>
 //implements CoroExpression<T>
-extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
+extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
 {
     /**
      * For type check.
      *
      * Solve unchecked cast.
      */
-    public final Class<? extends T> type;
+    public final Class<? extends VALUE> type;
 
     /**
      * The value they return the expression.
      */
-    public final T value;
+    public final VALUE value;
 
     /**
      * Constructor.
@@ -34,8 +34,8 @@ extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
      * @param value value to return
      */
     public Value(
-            final Class<? extends T> type ,
-            final T value )
+            final Class<? extends VALUE> type ,
+            final VALUE value )
     {
         this.type =
                 Objects.requireNonNull(
@@ -50,17 +50,17 @@ extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
      * @param value
      */
     public Value(
-            final T value )
+            final VALUE value )
     {
         @SuppressWarnings("unchecked")
-        final Class<? extends T> valueType = (Class<? extends T>) value.getClass();
+        final Class<? extends VALUE> valueType = (Class<? extends VALUE>) value.getClass();
         this.type = valueType;
 
         this.value = value;
     }
 
     @Override
-    public T evaluate(
+    public VALUE evaluate(
             final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         return this.value;
@@ -68,7 +68,7 @@ extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends VALUE>[] type()
     {
         return new Class[] { type };
     }
