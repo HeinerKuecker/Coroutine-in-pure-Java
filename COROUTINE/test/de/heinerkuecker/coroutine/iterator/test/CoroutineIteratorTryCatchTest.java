@@ -5,11 +5,11 @@ import org.junit.Test;
 import de.heinerkuecker.coroutine.CoroutineDebugSwitches;
 import de.heinerkuecker.coroutine.CoroutineIterator;
 import de.heinerkuecker.coroutine.exprs.GetLocalVar;
-import de.heinerkuecker.coroutine.exprs.NullValue;
 import de.heinerkuecker.coroutine.stmt.complex.Block;
 import de.heinerkuecker.coroutine.stmt.complex.TryCatch;
 import de.heinerkuecker.coroutine.stmt.flow.Throw;
 import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
+import de.heinerkuecker.coroutine.stmt.ret.YieldReturnVoid;
 
 
 /**
@@ -139,7 +139,7 @@ public class CoroutineIteratorTryCatchTest
                                                         // message
                                                         "test" ) ) ,
                                         // this yield return is never executed
-                                        new YieldReturn<>( NullValue.nullValue() ) ) ,
+                                        new YieldReturnVoid<>() ) ,
                                 // catchExceptionClass
                                 TestException.class ,
                                 // catchedExceptionVariableName

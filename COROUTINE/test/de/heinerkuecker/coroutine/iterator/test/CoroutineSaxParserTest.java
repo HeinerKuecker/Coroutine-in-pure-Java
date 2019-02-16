@@ -571,7 +571,6 @@ public class CoroutineSaxParserTest
                                 // thenStmts
                                 new CoroStmt[] {
                                         // consume start xml element class
-                                        //new YieldReturn<>( NullValue.nullValue() )
                                         new YieldReturnVoid<>() ,
                                         new FunctionReturn</*FUNCTION_RETURN*/ Boolean, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
                                                 // functionReturnType
@@ -606,7 +605,6 @@ public class CoroutineSaxParserTest
                                         // type
                                         Characters.class ) ,
                                 // stmts
-                                //new YieldReturn<>( NullValue.nullValue() )
                                 new YieldReturnVoid<>() ) );
 
         // function to consume end xml element
@@ -650,7 +648,6 @@ public class CoroutineSaxParserTest
                                 // thenStmts
                                 new CoroStmt[] {
                                         // consume end xml element
-                                        //new YieldReturn<>( NullValue.nullValue() )
                                         new YieldReturnVoid<>()
                                 } ,
                                 // elseStmts
@@ -690,7 +687,6 @@ public class CoroutineSaxParserTest
                                 new CoroStmt[] {
                                         new SetStudentRollno() ,
                                         // consume start xml element
-                                        //new YieldReturn<>( NullValue.nullValue() )
                                         new YieldReturnVoid<>()
                                 } ,
                                 // elseStmts
@@ -742,7 +738,6 @@ public class CoroutineSaxParserTest
                                 // thenStmts
                                 new CoroStmt[] {
                                         // consume start xml element
-                                        //new YieldReturn<>( NullValue.nullValue() )
                                         new YieldReturnVoid<>()
                                 } ,
                                 // elseStmts
@@ -766,7 +761,6 @@ public class CoroutineSaxParserTest
                                         // type
                                         String.class ) ) ,
                         // consume resume call
-                        //new YieldReturn<Void , Void , SaxEvent>( NullValue.nullValue() ) ,
                         new YieldReturnVoid<>() ,
                         new FunctionCall<>(
                                 // functionName
