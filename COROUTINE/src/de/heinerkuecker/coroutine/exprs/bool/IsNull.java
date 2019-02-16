@@ -18,20 +18,19 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class IsNull<COROUTINE_RETURN>
-//implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression<COROUTINE_RETURN>
+public class IsNull<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Expression to check.
      */
-    public final SimpleExpression<? , COROUTINE_RETURN> expression;
+    public final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> expression;
 
     /**
      * Constructor.
      */
     public IsNull(
-            final SimpleExpression<? , COROUTINE_RETURN> expression )
+            final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         this.expression = expression;
     }
@@ -41,7 +40,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      */
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         final Object varValue = expression.evaluate( parent );
 
@@ -49,7 +48,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.expression.getFunctionArgumentGetsNotInFunction();
     }

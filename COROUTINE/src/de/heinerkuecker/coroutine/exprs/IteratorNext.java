@@ -10,15 +10,15 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
-public class IteratorNext<T , COROUTINE_RETURN>
-implements SimpleExpression<T , COROUTINE_RETURN>
+public class IteratorNext<ITERATOR_ELEMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<ITERATOR_ELEMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
-    public final Class<? extends T> elementType;
+    public final Class<? extends ITERATOR_ELEMENT> elementType;
 
     /**
      * Expression to get {@link Iterator}.
      */
-    public final SimpleExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression;
+    public final SimpleExpression<? extends Iterator<? extends ITERATOR_ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iteratorExpression;
 
     /**
      * Constructor.
@@ -26,8 +26,8 @@ implements SimpleExpression<T , COROUTINE_RETURN>
      * @param value
      */
     public IteratorNext(
-            final Class<? extends T> elementType ,
-            final SimpleExpression<? extends Iterator<? extends T> , COROUTINE_RETURN> iteratorExpression )
+            final Class<? extends ITERATOR_ELEMENT> elementType ,
+            final SimpleExpression<? extends Iterator<? extends ITERATOR_ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iteratorExpression )
     {
         this.elementType =
                 Objects.requireNonNull(
@@ -39,10 +39,10 @@ implements SimpleExpression<T , COROUTINE_RETURN>
     }
 
     @Override
-    public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+    public ITERATOR_ELEMENT evaluate(
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
-        final Iterator<? extends T> iterator = iteratorExpression.evaluate( parent );
+        final Iterator<? extends ITERATOR_ELEMENT> iterator = iteratorExpression.evaluate( parent );
 
         // TODO null handling iterator
 
@@ -53,7 +53,7 @@ implements SimpleExpression<T , COROUTINE_RETURN>
      * @see CoroExpression#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
@@ -80,7 +80,7 @@ implements SimpleExpression<T , COROUTINE_RETURN>
     }
 
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends ITERATOR_ELEMENT>[] type()
     {
         return new Class[] { elementType };
     }

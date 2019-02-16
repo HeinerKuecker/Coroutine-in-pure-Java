@@ -27,7 +27,7 @@ import de.heinerkuecker.coroutine.stmt.CoroStmtResult;
  */
 public final class SetGlobalVar<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT , VARIABLE>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
-implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
+implements SimpleExpression<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT> , HasVariableName
 {
     /**
      * Name of variable to set in
@@ -39,14 +39,14 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
      * This is the expression whose result
      * should be set as the value of the variable.
      */
-    public final SimpleExpression<VARIABLE , COROUTINE_RETURN> varValueExpression;
+    public final SimpleExpression<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT> varValueExpression;
 
     /**
      * Constructor.
      */
     public SetGlobalVar(
             final String globalVarName ,
-            final SimpleExpression<VARIABLE , COROUTINE_RETURN> varValueExpression )
+            final SimpleExpression<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT> varValueExpression )
     {
         this.globalVarName =
                 Objects.requireNonNull(
@@ -94,7 +94,7 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 
     @Override
     public VARIABLE evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     // for using in expressions
     {
         execute(
@@ -117,7 +117,7 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.varValueExpression.getFunctionArgumentGetsNotInFunction();
     }

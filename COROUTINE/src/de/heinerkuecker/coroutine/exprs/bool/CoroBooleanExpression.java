@@ -2,8 +2,8 @@ package de.heinerkuecker.coroutine.exprs.bool;
 
 import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
-abstract public class CoroBooleanExpression<COROUTINE_RETURN>
-implements SimpleExpression<Boolean , COROUTINE_RETURN>
+abstract public class CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     ///**
     // * Execute the condition and return the result.
@@ -13,7 +13,7 @@ implements SimpleExpression<Boolean , COROUTINE_RETURN>
     // */
     //@Override
     //boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent );
+    //        final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent );
 
     @SuppressWarnings("unchecked")
     @Override

@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class IntAdd<COROUTINE_RETURN>
+public class IntAdd<COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements SimpleExpression<Integer>
-extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
+extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Left hand side expression.
@@ -35,8 +35,8 @@ extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
      * @param rhs
      */
     public IntAdd(
-            final SimpleExpression<Integer , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<Integer , COROUTINE_RETURN> rhs )
+            final SimpleExpression<Integer , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<Integer , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -52,14 +52,14 @@ extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
      * @param rhs
      */
     public IntAdd(
-            final SimpleExpression<Integer , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Integer , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
             final Integer rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = new Value<Integer>( rhs );
         super(
                 lhs ,
-                new Value<Integer , COROUTINE_RETURN>( rhs ) );
+                new Value<Integer , COROUTINE_RETURN , RESUME_ARGUMENT>( rhs ) );
     }
 
     /**
@@ -67,7 +67,7 @@ extends AbstrLhsRhsExpression<Integer , COROUTINE_RETURN>
      */
     @Override
     public Integer evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Integer lhsResult = lhs.evaluate( parent );
         final Integer rhsResult = rhs.evaluate( parent );

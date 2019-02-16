@@ -11,20 +11,19 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
-public class Not<COROUTINE_RETURN>
-//implements Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression<COROUTINE_RETURN>
+public class Not<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Expression to negate.
      */
-    public final SimpleExpression<Boolean , COROUTINE_RETURN> conditionToNegate;
+    public final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> conditionToNegate;
 
     /**
      * Constructor.
      */
     public Not(
-            final SimpleExpression<Boolean , COROUTINE_RETURN> conditionToNegate )
+            final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> conditionToNegate )
     {
         this.conditionToNegate = Objects.requireNonNull( conditionToNegate );
     }
@@ -45,7 +44,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      */
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         return ! conditionToNegate.evaluate( parent );
     }
@@ -54,7 +53,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.conditionToNegate.getFunctionArgumentGetsNotInFunction();
     }

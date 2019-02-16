@@ -105,8 +105,8 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
             final Iterable<Function<? , COROUTINE_RETURN , RESUME_ARGUMENT>> functions ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
-            final Argument<? , ?>[] args ,
-            final DeclareVariable<Void , COROUTINE_RETURN, RESUME_ARGUMENT, ?>[] globalVariableDeclarations ,
+            final Argument<? , ? , ?>[] args ,
+            final DeclareVariable<? , Void , COROUTINE_RETURN, RESUME_ARGUMENT>[] globalVariableDeclarations ,
             final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         //this( stmts );
@@ -155,7 +155,7 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
 
         if ( globalVariableDeclarations != null )
         {
-            for ( DeclareVariable<Void , COROUTINE_RETURN, RESUME_ARGUMENT , ?> globalVariableDeclaration : globalVariableDeclarations )
+            for ( DeclareVariable</*VARIABLE*/ ? , /*FUNCTION_RETURN*/ Void , COROUTINE_RETURN , RESUME_ARGUMENT> globalVariableDeclaration : globalVariableDeclarations )
             {
                 globalVariableDeclaration.execute( this );
             }
@@ -313,7 +313,7 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
      */
     private void checkForUseGetFunctionArgumentOutsideOfFunctionException()
     {
-        final List<GetFunctionArgument<? , ?>> getFunctionArgumentsNotInFunction =
+        final List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentsNotInFunction =
                 complexStmt.getFunctionArgumentGetsNotInFunction();
 
         if ( ! getFunctionArgumentsNotInFunction.isEmpty() )

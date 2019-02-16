@@ -403,7 +403,7 @@ public class CoroutineIteratorBreakTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -456,7 +456,7 @@ public class CoroutineIteratorBreakTest
         CoroutineDebugSwitches.initializationChecks = false;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -504,7 +504,7 @@ public class CoroutineIteratorBreakTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,

@@ -16,26 +16,26 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class And<COROUTINE_RETURN>
-extends CoroBooleanExpression<COROUTINE_RETURN>
+public class And<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
-    private final SimpleExpression<Boolean , COROUTINE_RETURN>[] conditionsToAnd;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT>[] conditionsToAnd;
 
     /**
      * Constructor.
      */
     @SafeVarargs
     public And(
-            final SimpleExpression<Boolean , COROUTINE_RETURN>... conditionsToAnd )
+            final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT>... conditionsToAnd )
     {
         this.conditionsToAnd = conditionsToAnd;
     }
 
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
-        for ( final SimpleExpression<Boolean , COROUTINE_RETURN> condition : conditionsToAnd )
+        for ( final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition : conditionsToAnd )
         {
             if ( ! condition.evaluate( parent ) )
             {
@@ -46,9 +46,9 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
         for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )

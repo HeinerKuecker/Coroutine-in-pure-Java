@@ -10,11 +10,11 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 import de.heinerkuecker.coroutine.exprs.SimpleExpression;
 
-abstract public class LhsRhsBoolExpression<OPERAND, COROUTINE_RETURN>
-extends CoroBooleanExpression<COROUTINE_RETURN>
+abstract public class LhsRhsBoolExpression<OPERAND, COROUTINE_RETURN , RESUME_ARGUMENT>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
-    public final SimpleExpression<? extends OPERAND , COROUTINE_RETURN> lhs;
-    public final SimpleExpression<? extends OPERAND , COROUTINE_RETURN> rhs;
+    public final SimpleExpression<? extends OPERAND , COROUTINE_RETURN , RESUME_ARGUMENT> lhs;
+    public final SimpleExpression<? extends OPERAND , COROUTINE_RETURN , RESUME_ARGUMENT> rhs;
 
     /**
      * Constructor.
@@ -23,8 +23,8 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param rhs
      */
     protected LhsRhsBoolExpression(
-            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN> lhs ,
-            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<? extends OPERAND, COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         this.lhs =
                 Objects.requireNonNull(
@@ -37,9 +37,9 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
 
 
     @Override
-    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 lhs.getFunctionArgumentGetsNotInFunction() );

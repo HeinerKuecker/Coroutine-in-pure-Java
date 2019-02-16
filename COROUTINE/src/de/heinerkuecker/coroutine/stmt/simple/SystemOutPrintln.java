@@ -31,7 +31,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     /**
      * Expression to deliver value to print.
      */
-    public final SimpleExpression<? , COROUTINE_RETURN> outputExpression;
+    public final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> outputExpression;
 
     /**
      * Constructor.
@@ -40,7 +40,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @param outputExpression
      */
     public SystemOutPrintln(
-            final SimpleExpression<? , COROUTINE_RETURN> outputExpression )
+            final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> outputExpression )
     {
         this.outputExpression =
                 Objects.requireNonNull(
@@ -60,7 +60,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }

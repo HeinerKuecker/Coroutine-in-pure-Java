@@ -12,23 +12,23 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  * Like map from expression
  * to expression.
  *
- * @param <RETURN> return type
+ * @param <EXPRESSION_RETURN> return type
  * @param <ARGUMENT> argument type
  * @author Heiner K&uuml;cker
  */
-public abstract class AbstrOneExprExpression<RETURN , ARGUMENT , COROUTINE_RETURN>
-implements SimpleExpression<RETURN , COROUTINE_RETURN>
+public abstract class AbstrOneExprExpression<EXPRESSION_RETURN , ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Expression to map.
      */
-    public final SimpleExpression<? extends ARGUMENT , COROUTINE_RETURN> expr;
+    public final SimpleExpression<? extends ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT> expr;
 
     /**
      * Constructor.
      */
     protected AbstrOneExprExpression(
-            final SimpleExpression<? extends ARGUMENT , COROUTINE_RETURN> expr )
+            final SimpleExpression<? extends ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT> expr )
     {
         this.expr =
                 Objects.requireNonNull(
@@ -36,9 +36,9 @@ implements SimpleExpression<RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 expr.getFunctionArgumentGetsNotInFunction() );

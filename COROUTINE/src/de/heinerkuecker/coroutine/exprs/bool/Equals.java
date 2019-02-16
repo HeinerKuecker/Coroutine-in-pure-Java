@@ -15,8 +15,8 @@ import de.heinerkuecker.coroutine.exprs.Value;
  * @param <TO_EQUAL> type of expression results to compare
  * @author Heiner K&uuml;cker
  */
-public class Equals<TO_EQUAL , COROUTINE_RETURN>
-extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
+public class Equals<TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT>
+extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Constructor.
@@ -25,8 +25,8 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
      * @param rhs
      */
     public Equals(
-            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         super(
                 lhs ,
@@ -41,10 +41,10 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
      */
     public Equals(
             final TO_EQUAL lhsValue ,
-            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         super(
-                new Value<TO_EQUAL , COROUTINE_RETURN>(
+                new Value<TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         (Class<? extends TO_EQUAL>) Object.class ,
                         lhsValue ) ,
                 rhs );
@@ -57,12 +57,12 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
      * @param rhs
      */
     public Equals(
-            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
             final TO_EQUAL rhsValue )
     {
         super(
                 lhs ,
-                new Value<TO_EQUAL , COROUTINE_RETURN>(
+                new Value<TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         (Class<? extends TO_EQUAL>) Object.class ,
                         rhsValue ) );
     }
@@ -78,17 +78,17 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
             final TO_EQUAL rhsValue )
     {
         super(
-                new Value<TO_EQUAL , COROUTINE_RETURN>(
+                new Value<TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         (Class<? extends TO_EQUAL>) Object.class ,
                         lhsValue ) ,
-                new Value<TO_EQUAL , COROUTINE_RETURN>(
+                new Value<TO_EQUAL , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         (Class<? extends TO_EQUAL>) Object.class ,
                         rhsValue ) );
     }
 
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
         {
@@ -112,9 +112,9 @@ extends LhsRhsBoolExpression<TO_EQUAL, COROUTINE_RETURN>
     }
 
     //@Override
-    //public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    //public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     //{
-    //    final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+    //    final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
     //
     //    result.addAll(
     //            lhs.getFunctionArgumentGetsNotInFunction() );

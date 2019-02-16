@@ -8,9 +8,9 @@ import java.util.Map;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 
-public abstract class AbstrHasSrcPosNoVarsNoArgsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
+public abstract class AbstrHasSrcPosNoVarsNoArgsExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
-implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
+implements SimpleExpression</*EXPRESSION_RETURN*/RESUME_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Constructor.
@@ -24,7 +24,7 @@ implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    public final List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public final List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();

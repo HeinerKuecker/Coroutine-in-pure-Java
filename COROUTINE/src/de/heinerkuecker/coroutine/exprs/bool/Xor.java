@@ -16,19 +16,18 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class Xor<COROUTINE_RETURN>
-//implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression<COROUTINE_RETURN>
+public class Xor<COROUTINE_RETURN , RESUME_ARGUMENT>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
-    private final SimpleExpression<Boolean , COROUTINE_RETURN> lhs;
-    private final SimpleExpression<Boolean , COROUTINE_RETURN> rhs;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> lhs;
+    private final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> rhs;
 
     /**
      * Constructor.
      */
     public Xor(
-            final SimpleExpression<Boolean , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<Boolean , COROUTINE_RETURN> rhs )
+            final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -39,15 +38,15 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      */
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         return lhs.evaluate( parent ) != rhs.evaluate( parent );
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 lhs.getFunctionArgumentGetsNotInFunction() );

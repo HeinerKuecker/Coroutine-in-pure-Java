@@ -28,7 +28,7 @@ implements HasVariableName
      * is used to execute an operation
      * with the value of the variable.
      */
-    public final SimpleExpression<EXPRESSION , COROUTINE_RETURN> expression;
+    public final SimpleExpression<EXPRESSION , COROUTINE_RETURN , RESUME_ARGUMENT> expression;
 
     /**
      * Method to implement the
@@ -54,7 +54,7 @@ implements HasVariableName
      */
     public AbstrLocalVarUseWithExpressionStmt(
             final String localVarName ,
-            final SimpleExpression<EXPRESSION , COROUTINE_RETURN> expression )
+            final SimpleExpression<EXPRESSION , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         this.localVarName =
                 Objects.requireNonNull(
@@ -101,7 +101,7 @@ implements HasVariableName
     }
 
     @Override
-    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();

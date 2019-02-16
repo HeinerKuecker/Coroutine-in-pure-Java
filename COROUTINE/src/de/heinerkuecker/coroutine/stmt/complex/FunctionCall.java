@@ -50,7 +50,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 
     // TODO getter
     //final Map<String, FunctionArgument<?>> functionArguments;
-    final Argument<? , COROUTINE_RETURN>[] functionArguments;
+    final Argument<? , COROUTINE_RETURN , RESUME_ARGUMENT>[] functionArguments;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
@@ -71,7 +71,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
             //final Function<COROUTINE_RETURN> function
             final String functionName ,
             final Class<? extends FUNCTION_RETURN> functionReturnType ,
-            final Argument<? , COROUTINE_RETURN>... args )
+            final Argument<? , COROUTINE_RETURN , RESUME_ARGUMENT>... args )
     {
         super(
                 //creationStackOffset
@@ -181,7 +181,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 
     //@Override
     //public FUNCTION_RETURN evaluate(
-    //        final HasArgumentsAndVariables<?> parent )
+    //        final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     //{
     //    final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> functionCallState =
     //            newState( (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>) /*this*/parent );
@@ -246,7 +246,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // all subsequent GetFunctionArgument are in function
         return Collections.emptyList();
@@ -312,7 +312,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent )
     {
-        for ( final Argument<? , ?> procArg : this.functionArguments )
+        for ( final Argument<? , ? , ?> procArg : this.functionArguments )
         {
             procArg.checkUseArguments(
                     alreadyCheckedFunctionNames,

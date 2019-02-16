@@ -808,7 +808,7 @@ public class CoroutineIteratorFunctionTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get function argument expression
-        final GetFunctionArgument<Long , Long> argument =
+        final GetFunctionArgument<Long , Long , Void> argument =
                 new GetFunctionArgument<>(
                         //functionArgumentName
                         "argument" ,
@@ -895,7 +895,7 @@ public class CoroutineIteratorFunctionTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Long , Long> variable =
+        final GetLocalVar<Long , Long , Void> variable =
                 new GetLocalVar<>(
                         // varName
                         "variable" ,
@@ -992,14 +992,14 @@ public class CoroutineIteratorFunctionTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> variable =
+        final GetLocalVar<Integer , Integer , Void> variable =
                 new GetLocalVar<>(
                         // localVarName
                         "variable" ,
                         Integer.class );
 
         // extract get function argument expression
-        final GetFunctionArgument<Integer , Integer> functionArgument =
+        final GetFunctionArgument<Integer , Integer , Void> functionArgument =
                 new GetFunctionArgument<>(
                         // functionArgumentName
                         "functionArgument" ,

@@ -17,7 +17,7 @@ import de.heinerkuecker.util.ExceptionUnchecker;
 public class Throw<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    private final SimpleExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression;
+    private final SimpleExpression<? extends Throwable , COROUTINE_RETURN , RESUME_ARGUMENT> exceptionExpression;
 
     /**
      * Constructor.
@@ -26,7 +26,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      */
     public Throw(
             //final Exception exception
-            final SimpleExpression<? extends Throwable , COROUTINE_RETURN> exceptionExpression )
+            final SimpleExpression<? extends Throwable , COROUTINE_RETURN , RESUME_ARGUMENT> exceptionExpression )
     {
         this.exceptionExpression =
                 Objects.requireNonNull(
@@ -42,7 +42,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
             final Throwable exception )
     {
         this.exceptionExpression =
-                new Value<Throwable , COROUTINE_RETURN>(
+                new Value<Throwable , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Objects.requireNonNull(
                                 exception ) );
     }
@@ -75,7 +75,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }

@@ -15,9 +15,9 @@ import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassExcep
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetLocalVar<VARIABLE , COROUTINE_RETURN>
+public class GetLocalVar<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
-implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
+implements SimpleExpression<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT> , HasVariableName
 {
     public final String localVarName;
 
@@ -52,7 +52,7 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
 
     @Override
     public VARIABLE evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
         {
@@ -85,7 +85,7 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN> , HasVariableName
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }

@@ -29,7 +29,7 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -76,7 +76,7 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -129,13 +129,13 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
                         Integer.class );
 
-        final GetLocalVar<Integer , Integer> number1 =
+        final GetLocalVar<Integer , Integer , Void> number1 =
                 new GetLocalVar<>(
                         // varName
                         "number1" ,
@@ -192,14 +192,14 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
                         Integer.class );
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number1 =
+        final GetLocalVar<Integer , Integer , Void> number1 =
                 new GetLocalVar<>(
                         // varName
                         "number1" ,
@@ -255,14 +255,14 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
                         Integer.class );
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number1 =
+        final GetLocalVar<Integer , Integer , Void> number1 =
                 new GetLocalVar<>(
                         // varName
                         "number1" ,
@@ -314,7 +314,7 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -365,7 +365,7 @@ public class CoroutineIteratorForTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,

@@ -15,14 +15,14 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  *
  * @author Heiner K&uuml;cker
  */
-public class NullValue<T , COROUTINE_RETURN>
+public class NullValue<T , COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements CoroExpression<T>
-extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
+extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Singleton instance.
      */
-    public static final NullValue<? , ?> INSTANCE = new NullValue<>();
+    public static final NullValue<? , ? , ?> INSTANCE = new NullValue<>();
 
     /**
      * Factory method.
@@ -30,9 +30,9 @@ extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
      * @return {@link #INSTANCE}
      */
     @SuppressWarnings("unchecked")
-    public static final <T , COROUTINE_RETURN> NullValue<? extends T , COROUTINE_RETURN> nullValue()
+    public static final <T , COROUTINE_RETURN , RESUME_ARGUMENT> NullValue<? extends T , COROUTINE_RETURN , RESUME_ARGUMENT> nullValue()
     {
-        return (NullValue<T , COROUTINE_RETURN>) INSTANCE;
+        return (NullValue<T , COROUTINE_RETURN , RESUME_ARGUMENT>) INSTANCE;
     }
 
     /**
@@ -45,7 +45,7 @@ extends AbstrNoVarsNoArgsExpression<T , COROUTINE_RETURN>
 
     @Override
     public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         return null;
     }

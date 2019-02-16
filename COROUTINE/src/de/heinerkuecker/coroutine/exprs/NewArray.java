@@ -13,13 +13,13 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class NewArray<ELEMENT , COROUTINE_RETURN>
-implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN>
+public class NewArray<ELEMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     //public final Class<? extends ELEMENT> elementClass;
     public final Class<? extends ELEMENT[]> arrayClass;
 
-    private final SimpleExpression<ELEMENT , COROUTINE_RETURN>[] arrayElementExpressions;
+    private final SimpleExpression<ELEMENT , COROUTINE_RETURN , RESUME_ARGUMENT>[] arrayElementExpressions;
 
     /**
      * Constructor.
@@ -31,7 +31,7 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN>
     public NewArray(
             //final Class<? extends ELEMENT> elementClass ,
             final Class<? extends ELEMENT[]> arrayClass ,
-            final SimpleExpression<ELEMENT , COROUTINE_RETURN>... arrayElementExpressions )
+            final SimpleExpression<ELEMENT , COROUTINE_RETURN , RESUME_ARGUMENT>... arrayElementExpressions )
     {
         //this.elementClass = Objects.requireNonNull( elementClass );
         this.arrayClass = Objects.requireNonNull( arrayClass );
@@ -43,7 +43,7 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN>
 
     @Override
     public ELEMENT[] evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         //final Class<? extends ELEMENT> componentClass = elementClass;
         final Class<?> componentClass = arrayClass.getComponentType();
@@ -63,9 +63,9 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
         {

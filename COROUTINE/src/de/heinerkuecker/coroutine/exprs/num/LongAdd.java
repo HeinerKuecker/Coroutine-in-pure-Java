@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class LongAdd<COROUTINE_RETURN>
+public class LongAdd<COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements SimpleExpression<Long>
-extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
+extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Left hand side expression.
@@ -35,8 +35,8 @@ extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
      * @param rhs
      */
     public LongAdd(
-            final SimpleExpression<Long , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<Long , COROUTINE_RETURN> rhs )
+            final SimpleExpression<Long , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<Long , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -52,14 +52,14 @@ extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
      * @param rhs
      */
     public LongAdd(
-            final SimpleExpression<Long , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<Long , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
             final Long rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = new Value<Long>( rhs );
         super(
                 lhs ,
-                new Value<Long , COROUTINE_RETURN>( rhs ) );
+                new Value<Long , COROUTINE_RETURN , RESUME_ARGUMENT>( rhs ) );
     }
 
     /**
@@ -67,7 +67,7 @@ extends AbstrLhsRhsExpression<Long , COROUTINE_RETURN>
      */
     @Override
     public Long evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Long lhsResult = lhs.evaluate( parent );
         final Long rhsResult = rhs.evaluate( parent );

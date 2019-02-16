@@ -41,7 +41,7 @@ extends ComplexStmt<
 
     public final Class<? extends ELEMENT> elementType;
 
-    final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression;
+    final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iterableExpression;
 
     final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> bodyComplexStmt;
 
@@ -52,7 +52,7 @@ extends ComplexStmt<
     public ForEach(
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
-            final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
+            final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iterableExpression ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
@@ -88,7 +88,7 @@ extends ComplexStmt<
             final String label ,
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
-            final SimpleExpression<Iterable<ELEMENT> , COROUTINE_RETURN> iterableExpression ,
+            final SimpleExpression<Iterable<ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iterableExpression ,
             final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
     {
         super(
@@ -154,9 +154,9 @@ extends ComplexStmt<
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 iterableExpression.getFunctionArgumentGetsNotInFunction() );

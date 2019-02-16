@@ -9,7 +9,7 @@ import de.heinerkuecker.coroutine.exprs.GetFunctionArgument;
 public interface CoroCheckable
 {
 
-    abstract public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction();
+    abstract public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction();
 
     abstract public void checkUseVariables(
             final HashSet<String> alreadyCheckedFunctionNames ,

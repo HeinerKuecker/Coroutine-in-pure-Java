@@ -15,12 +15,12 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  * @param <EXPRESSION_RETURN> expression return type
  * @author Heiner K&uuml;cker
  */
-abstract public class AbstrNoVarsNoArgsExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
-implements SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+abstract public class AbstrNoVarsNoArgsExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
 
     @Override
-    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         // nothing to do
         return Collections.emptyList();

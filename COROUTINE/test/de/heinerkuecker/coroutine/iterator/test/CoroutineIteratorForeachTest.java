@@ -41,7 +41,7 @@ public class CoroutineIteratorForeachTest
                                 // elementType
                                 Integer.class ,
                                 // iterableExpression
-                                new Value<List<Integer> , Integer>(
+                                new Value<List<Integer> , Integer , Void>(
                                         (Class<? extends List<Integer>>) List.class ,
                                         Arrays.asList( 1 , 2 , 3 ) ) ,
                                 // stmts
@@ -89,7 +89,7 @@ public class CoroutineIteratorForeachTest
                         new FunctionReturn</*FUNCTION_RETURN*/Integer , /*COROUTINE_RETURN*/Integer , /*RESUME_ARGUMENT*/ Void>(
                                 // functionReturnType
                                 Integer.class ,
-                                new GetFunctionArgument</*FUNCTION_ARGUMENT*/ Integer , /*COROUTINE_RETURN*/ Integer>(
+                                new GetFunctionArgument</*FUNCTION_ARGUMENT*/ Integer , /*COROUTINE_RETURN*/ Integer , /*RESUME_ARGUMENT*/ Void>(
                                         // functionArgumentName
                                         "for_variable_param" ,
                                         // type
@@ -115,7 +115,7 @@ public class CoroutineIteratorForeachTest
                                 // elementType
                                 Integer.class ,
                                 // iterableExpression
-                                new Value<List<Integer> , Integer>(
+                                new Value<List<Integer> , Integer , Void>(
                                         (Class<? extends List<Integer>>) List.class ,
                                         Arrays.asList( 1 , 2 , 3 ) ) ,
                                 // stmts

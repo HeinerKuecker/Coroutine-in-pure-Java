@@ -40,7 +40,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -56,7 +56,7 @@ public class CoroutineIteratorWhileTest
                                 0 ) ,
                         new While<>(
                                 // condition
-                                new Equals<Integer , Integer>(
+                                new Equals<Integer , Integer , Void>(
                                         number ,
                                         0 ) ,
                                 // stmts
@@ -77,7 +77,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -122,7 +122,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -160,7 +160,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -232,8 +232,8 @@ public class CoroutineIteratorWhileTest
                                         // stmts
                                         new YieldReturn<>(
                                                 new CastToInt<>(
-                                                        new Add<Integer , Integer>(
-                                                                new Multiply<Integer , Integer>(
+                                                        new Add<Integer , Integer , Void>(
+                                                                new Multiply<Integer , Integer , Void>(
                                                                         new GetLocalVar<>(
                                                                                 "number0" ,
                                                                                 Integer.class ) ,
@@ -289,8 +289,8 @@ public class CoroutineIteratorWhileTest
                                         // stmts
                                         new YieldReturn<>(
                                                 new CastToInt<>(
-                                                        new Add<Integer , Integer>(
-                                                                new Multiply<Integer , Integer>(
+                                                        new Add<Integer , Integer , Void>(
+                                                                new Multiply<Integer , Integer , Void>(
                                                                         new GetLocalVar<>(
                                                                                 "number0" ,
                                                                                 Integer.class ) ,
@@ -349,8 +349,8 @@ public class CoroutineIteratorWhileTest
                                         // stmts
                                         new YieldReturn<>(
                                                 new CastToInt<>(
-                                                        new Add<Integer , Integer>(
-                                                                new Multiply<Integer , Integer>(
+                                                        new Add<Integer , Integer , Void>(
+                                                                new Multiply<Integer , Integer , Void>(
                                                                         new GetLocalVar<>(
                                                                                 "number00" ,
                                                                                 Integer.class ) ,
@@ -477,7 +477,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -522,7 +522,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Integer , Integer> number =
+        final GetLocalVar<Integer , Integer , Void> number =
                 new GetLocalVar<>(
                         // varName
                         "number" ,
@@ -616,7 +616,7 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Boolean , Boolean> first =
+        final GetLocalVar<Boolean , Boolean , Void> first =
                 new GetLocalVar<>(
                         "first" ,
                         Boolean.class );
@@ -668,13 +668,13 @@ public class CoroutineIteratorWhileTest
         CoroutineDebugSwitches.initializationChecks = true;
 
         // extract get local variable expression
-        final GetLocalVar<Boolean , Boolean> first =
+        final GetLocalVar<Boolean , Boolean , Void> first =
                 new GetLocalVar<>(
                         "first" ,
                         Boolean.class );
 
         // extract get local variable expression
-        final GetLocalVar<Boolean , Boolean> copyOfFirst =
+        final GetLocalVar<Boolean , Boolean , Void> copyOfFirst =
                 new GetLocalVar<>(
                         "copyOfFirst" ,
                         Boolean.class );

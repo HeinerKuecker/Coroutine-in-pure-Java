@@ -39,7 +39,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN /*, CoroutineIterator<CORO
     abstract public String getLabel();
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }

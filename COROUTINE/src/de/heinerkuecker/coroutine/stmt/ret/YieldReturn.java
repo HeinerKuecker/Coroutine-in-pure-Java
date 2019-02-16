@@ -76,7 +76,7 @@ extends ComplexStmt<
      * Constructor.
      */
     public YieldReturn(
-            final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression )
+            final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         super(
                 //creationStackOffset
@@ -100,7 +100,7 @@ extends ComplexStmt<
 
         this.expression =
                 new SimpleExpressionWrapper<>(
-                        new Value<COROUTINE_RETURN , COROUTINE_RETURN>(
+                        new Value<COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>(
                                 (Class<? extends COROUTINE_RETURN>) value.getClass() ,
                                 value ) );
     }
@@ -144,7 +144,7 @@ extends ComplexStmt<
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return expression.getFunctionArgumentGetsNotInFunction();
     }

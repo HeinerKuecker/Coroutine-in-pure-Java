@@ -23,19 +23,19 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class InstanceOf<COROUTINE_RETURN , INSTANCE>
+public class InstanceOf<INSTANCE , COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements CoroBooleanExpression
-extends CoroBooleanExpression<COROUTINE_RETURN>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Left hand side expression, value.
      */
-    public final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN> valueExpression;
+    public final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN , RESUME_ARGUMENT> valueExpression;
 
     /**
      * Right hand side expression, type.
      */
-    public final SimpleExpression<? extends Class<? extends INSTANCE>, COROUTINE_RETURN> typeExpression;
+    public final SimpleExpression<? extends Class<? extends INSTANCE>, COROUTINE_RETURN , RESUME_ARGUMENT> typeExpression;
 
     /**
      * Constructor.
@@ -44,8 +44,8 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param typeExpression
      */
     public InstanceOf(
-            final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN> valueExpression ,
-            final SimpleExpression<? extends Class<? extends INSTANCE>, COROUTINE_RETURN> typeExpression )
+            final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN , RESUME_ARGUMENT> valueExpression ,
+            final SimpleExpression<? extends Class<? extends INSTANCE>, COROUTINE_RETURN , RESUME_ARGUMENT> typeExpression )
     {
         this.valueExpression = Objects.requireNonNull( valueExpression );
         this.typeExpression = Objects.requireNonNull( typeExpression );
@@ -58,7 +58,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param type
      */
     public InstanceOf(
-            final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN> valueExpression ,
+            final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN , RESUME_ARGUMENT> valueExpression ,
             final Class<? extends INSTANCE> type )
     {
         this.valueExpression =
@@ -66,14 +66,14 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
                         valueExpression );
 
         this.typeExpression =
-                new Value<Class<? extends INSTANCE> , COROUTINE_RETURN>(
+                new Value<Class<? extends INSTANCE> , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Objects.requireNonNull(
                                 type  ) );
     }
 
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         if ( CoroutineDebugSwitches.logSimpleStatementsAndExpressions )
         {
@@ -87,9 +87,9 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 valueExpression.getFunctionArgumentGetsNotInFunction() );

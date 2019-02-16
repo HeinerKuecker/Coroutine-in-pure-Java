@@ -12,8 +12,8 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class Lesser<TO_COMPARE extends Comparable<TO_COMPARE> , COROUTINE_RETURN>
-extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
+public class Lesser<TO_COMPARE extends Comparable<TO_COMPARE> , COROUTINE_RETURN , RESUME_ARGUMENT>
+extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Constructor.
@@ -22,8 +22,8 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      * @param rhs
      */
     public Lesser(
-            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         super(
                 lhs ,
@@ -38,7 +38,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      */
     public Lesser(
             final TO_COMPARE lhsValue ,
-            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         super(
                 lhsValue ,
@@ -52,7 +52,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
      * @param rhs
      */
     public Lesser(
-            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? extends TO_COMPARE , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
             final TO_COMPARE rhsValue )
     {
         super(
@@ -77,7 +77,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
 
     //@Override
     //public boolean execute(
-    //        final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+    //        final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     //{
     //    final T lhsResult = lhs.evaluate( parent );
     //    final T rhsResult = rhs.evaluate( parent );
@@ -104,7 +104,7 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
 
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         final TO_COMPARE lhsResult = lhs.evaluate( parent );
         final TO_COMPARE rhsResult = rhs.evaluate( parent );
@@ -130,9 +130,9 @@ extends CmpblLhsRhsBoolExpression<TO_COMPARE , COROUTINE_RETURN>
     }
 
     //@Override
-    //public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    //public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     //{
-    //    final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+    //    final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
     //
     //    result.addAll(
     //            lhs.getFunctionArgumentGetsNotInFunction() );

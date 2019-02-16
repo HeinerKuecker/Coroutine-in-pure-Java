@@ -10,19 +10,19 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.util.ArrayDeepToString;
 
-public class StrConcat<COROUTINE_RETURN>
-implements SimpleExpression<String , COROUTINE_RETURN>
+public class StrConcat<COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<String , COROUTINE_RETURN , RESUME_ARGUMENT>
 //AbstrLhsRhsExpression<String , COROUTINE_RETURN>
 {
     /**
      * Left hand side expression.
      */
-    public final SimpleExpression<? , COROUTINE_RETURN> lhs;
+    public final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    public final SimpleExpression<? , COROUTINE_RETURN> rhs;
+    public final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> rhs;
 
     /**
      * Constructor.
@@ -31,8 +31,8 @@ implements SimpleExpression<String , COROUTINE_RETURN>
      * @param rhs
      */
     public StrConcat(
-            final SimpleExpression<? , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<? , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -46,7 +46,7 @@ implements SimpleExpression<String , COROUTINE_RETURN>
      */
     public StrConcat(
             final String lhs ,
-            final SimpleExpression<? , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         this.lhs = Value.strValue( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -59,7 +59,7 @@ implements SimpleExpression<String , COROUTINE_RETURN>
      * @param rhs
      */
     public StrConcat(
-            final SimpleExpression<? , COROUTINE_RETURN> lhs ,
+            final SimpleExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
             final String rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
@@ -71,7 +71,7 @@ implements SimpleExpression<String , COROUTINE_RETURN>
      */
     @Override
     public String evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object lhsResult = lhs.evaluate( parent );
         final Object rhsResult = rhs.evaluate( parent );
@@ -83,9 +83,9 @@ implements SimpleExpression<String , COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 lhs.getFunctionArgumentGetsNotInFunction() );

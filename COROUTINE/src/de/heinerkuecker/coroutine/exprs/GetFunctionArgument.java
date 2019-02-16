@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetFunctionArgument<FUNCTION_ARGUMENT , COROUTINE_RETURN>
+public class GetFunctionArgument<FUNCTION_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
-implements SimpleExpression<FUNCTION_ARGUMENT , COROUTINE_RETURN> , HasArgumentName
+implements SimpleExpression<FUNCTION_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT> , HasArgumentName
 {
     /**
      * Name of function argument in
@@ -55,7 +55,7 @@ implements SimpleExpression<FUNCTION_ARGUMENT , COROUTINE_RETURN> , HasArgumentN
 
     @Override
     public FUNCTION_ARGUMENT evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object funcArgValue = parent.functionArgumentValues().get( functionArgumentName );
 
@@ -80,7 +80,7 @@ implements SimpleExpression<FUNCTION_ARGUMENT , COROUTINE_RETURN> , HasArgumentN
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Arrays.asList( this );
     }

@@ -26,7 +26,7 @@ import de.heinerkuecker.coroutine.stmt.simple.SimpleStmt;
 public class FinallyReturn<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>
 {
-    public final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression;
+    public final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
@@ -37,7 +37,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * Constructor.
      */
     public FinallyReturn(
-            final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN> expression )
+            final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         super(
                 //creationStackOffset
@@ -61,7 +61,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
                 );
 
         this.expression =
-                new Value<COROUTINE_RETURN , COROUTINE_RETURN>(
+                new Value<COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         (Class<? extends COROUTINE_RETURN>) value.getClass() ,
                         value );
     }
@@ -98,7 +98,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return expression.getFunctionArgumentGetsNotInFunction();
     }

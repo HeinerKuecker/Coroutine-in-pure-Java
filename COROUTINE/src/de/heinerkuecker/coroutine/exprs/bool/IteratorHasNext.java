@@ -19,27 +19,27 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class IteratorHasNext<COROUTINE_RETURN>
+public class IteratorHasNext<COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements ConditionOrBooleanExpression/*Condition/*<CoroutineIterator<?>>*/
-extends CoroBooleanExpression<COROUTINE_RETURN>
+extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Expression to check.
      */
-    public final SimpleExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression;
+    public final SimpleExpression<Iterator<?> , COROUTINE_RETURN , RESUME_ARGUMENT> iteratorExpression;
 
     /**
      * Constructor.
      */
     public IteratorHasNext(
-            final SimpleExpression<Iterator<?> , COROUTINE_RETURN> iteratorExpression )
+            final SimpleExpression<Iterator<?> , COROUTINE_RETURN , RESUME_ARGUMENT> iteratorExpression )
     {
         this.iteratorExpression = iteratorExpression;
     }
 
     @Override
     public Boolean evaluate(
-            final HasArgumentsAndVariables<?> parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     {
         final Iterator<?> iterator = iteratorExpression.evaluate( parent );
 
@@ -48,7 +48,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.iteratorExpression.getFunctionArgumentGetsNotInFunction();
     }

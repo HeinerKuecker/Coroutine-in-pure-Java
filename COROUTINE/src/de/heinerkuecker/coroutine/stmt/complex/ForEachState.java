@@ -57,10 +57,12 @@ extends ComplexStmtState<
                 Objects.requireNonNull(
                         parent );
 
-        new DeclareVariable<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT, ELEMENT>(
-                forEach.variableName ,
-                forEach.elementType ).execute(
-                        this );
+        final DeclareVariable<ELEMENT , FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> declareForEachVar =
+                new DeclareVariable<ELEMENT , FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT>(
+                        forEach.variableName ,
+                        forEach.elementType );
+
+        declareForEachVar.execute( this );
     }
 
     @Override

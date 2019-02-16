@@ -7,7 +7,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  *
  * @author Heiner K&uuml;cker
  */
-public interface SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+public interface SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
 {
     /**
@@ -17,5 +17,5 @@ extends CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
      * @return result value
      */
     EXPRESSION_RETURN evaluate(
-            final HasArgumentsAndVariables<?> parent );
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent );
 }

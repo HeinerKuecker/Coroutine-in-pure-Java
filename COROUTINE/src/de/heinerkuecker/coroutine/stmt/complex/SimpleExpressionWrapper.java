@@ -41,7 +41,7 @@ implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
     // */
     //final ComplexStmt<?, ?, COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/> bodyComplexStmt;
 
-    final SimpleExpression<EXPRESSION_RETURN, COROUTINE_RETURN> simpleExpression;
+    final SimpleExpression<EXPRESSION_RETURN, COROUTINE_RETURN , RESUME_ARGUMENT> simpleExpression;
 
     /**
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
@@ -57,7 +57,7 @@ implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
      * Constructor.
      */
     public SimpleExpressionWrapper(
-            final SimpleExpression<EXPRESSION_RETURN, COROUTINE_RETURN> simpleExpression
+            final SimpleExpression<EXPRESSION_RETURN, COROUTINE_RETURN , RESUME_ARGUMENT> simpleExpression
             //final Class<? extends EXPRESSION_RETURN> functionReturnType
             )
     {
@@ -138,7 +138,7 @@ implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.simpleExpression.getFunctionArgumentGetsNotInFunction();
     }

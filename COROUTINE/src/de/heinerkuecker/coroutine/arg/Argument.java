@@ -19,12 +19,12 @@ import de.heinerkuecker.coroutine.exprs.Value;
  * @param <ARGUMENT> argument/parameter type
  * @author Heiner K&uuml;cker
  */
-public class Argument<ARGUMENT , COROUTINE_RETURN>
+public class Argument<ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
 implements CoroCheckable
 {
     public final String name;
 
-    public final SimpleExpression<ARGUMENT , COROUTINE_RETURN> expression;
+    public final SimpleExpression<ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT> expression;
 
     /**
      * Constructor.
@@ -34,7 +34,7 @@ implements CoroCheckable
      */
     public Argument(
             final String name ,
-            final SimpleExpression<ARGUMENT , COROUTINE_RETURN> expression )
+            final SimpleExpression<ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         this.name = Objects.requireNonNull( name );
         this.expression = Objects.requireNonNull( expression );
@@ -59,7 +59,7 @@ implements CoroCheckable
     }
 
     public ARGUMENT getValue(
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ?, RESUME_ARGUMENT> parent )
     {
         @SuppressWarnings("unchecked")
         final Class<ARGUMENT> parameterType = (Class<ARGUMENT>) parent.functionParameterTypes().get( name );
@@ -70,7 +70,7 @@ implements CoroCheckable
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.expression.getFunctionArgumentGetsNotInFunction();
     }
@@ -149,7 +149,7 @@ implements CoroCheckable
         //public <T extends HasCreationStackTraceElement & HasVariableName> ArgumentNotDeclaredException(
         //        final T stmtOrExpression )
         public ArgumentNotDeclaredException(
-                final Argument<? , ?> argument )
+                final Argument<? , ? , ?> argument )
         {
             super(
                     "argument not declared: " +

@@ -31,12 +31,12 @@ import de.heinerkuecker.util.ArrayTypeName;
  * statement.
  *
  * @param <COROUTINE_RETURN> result type of coroutine, here unused
- * @param <T> variable type
+ * @param <VARIABLE> variable type
  * @author Heiner K&uuml;cker
  */
-public final class DeclareVariable<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT, T>
+public final class DeclareVariable<VARIABLE , FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT>
-implements SimpleExpression<T , COROUTINE_RETURN>
+implements SimpleExpression<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Name of variable.
@@ -46,22 +46,22 @@ implements SimpleExpression<T , COROUTINE_RETURN>
     /**
      * Type (class) of the variable.
      */
-    public final Class<? extends T> type;
+    public final Class<? extends VARIABLE> type;
 
     /**
      * This is the expression whose result
      * should be set as the initial value of
      * the variable.
      */
-    public final SimpleExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression;
+    public final SimpleExpression<? extends VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT> initialVarValueExpression;
 
     /**
      * Constructor.
      */
     public DeclareVariable(
             final String varName ,
-            final Class<? extends T> type ,
-            final SimpleExpression<? extends T , COROUTINE_RETURN> initialVarValueExpression )
+            final Class<? extends VARIABLE> type ,
+            final SimpleExpression<? extends VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT> initialVarValueExpression )
     {
         this.varName =
                 Objects.requireNonNull(
@@ -81,8 +81,8 @@ implements SimpleExpression<T , COROUTINE_RETURN>
      */
     public DeclareVariable(
             final String varName ,
-            final Class<? extends T> type ,
-            final T initialVarValue )
+            final Class<? extends VARIABLE> type ,
+            final VARIABLE initialVarValue )
     {
         this.varName =
                 Objects.requireNonNull(
@@ -104,14 +104,14 @@ implements SimpleExpression<T , COROUTINE_RETURN>
     public DeclareVariable(
             final String varName ,
             // null is forbidden
-            final T initialVarValue )
+            final VARIABLE initialVarValue )
     {
         this.varName =
                 Objects.requireNonNull(
                         varName );
 
         this.type =
-                (Class<? extends T>) initialVarValue.getClass();
+                (Class<? extends VARIABLE>) initialVarValue.getClass();
 
         this.initialVarValueExpression =
                 new Value<>(
@@ -124,7 +124,7 @@ implements SimpleExpression<T , COROUTINE_RETURN>
      */
     public DeclareVariable(
             final String varName ,
-            final Class<? extends T> type )
+            final Class<? extends VARIABLE> type )
     {
         this.varName =
                 Objects.requireNonNull(
@@ -158,7 +158,7 @@ implements SimpleExpression<T , COROUTINE_RETURN>
         //}
         //else
         {
-            final T varValue = initialVarValueExpression.evaluate( parent );
+            final VARIABLE varValue = initialVarValueExpression.evaluate( parent );
 
             parent.localVars().declare(
                     this ,
@@ -171,21 +171,21 @@ implements SimpleExpression<T , COROUTINE_RETURN>
     }
 
     @Override
-    public T evaluate(
-            final HasArgumentsAndVariables<?> parent )
+    public VARIABLE evaluate(
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT> parent )
     // for using in expressions
     {
         execute(
                 (CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT>) parent );
 
-        return (T) parent.localVars().get(
+        return (VARIABLE) parent.localVars().get(
                 this ,
                 varName );
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends VARIABLE>[] type()
     {
         return new Class[] { type };
     }
@@ -194,7 +194,7 @@ implements SimpleExpression<T , COROUTINE_RETURN>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         if ( this.initialVarValueExpression == null )
         {

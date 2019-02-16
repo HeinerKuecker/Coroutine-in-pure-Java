@@ -378,11 +378,11 @@ public class CoroutineSaxParserTest
      * Coroutine expression to create new {@link Student} object.
      */
     static class NewStudent
-    extends AbstrNoVarsNoArgsExpression<Student , Void>
+    extends AbstrNoVarsNoArgsExpression<Student , Void , Void>
     {
         @Override
         public Student evaluate(
-                final HasArgumentsAndVariables<?> parent )
+                final HasArgumentsAndVariables<? extends Void> parent )
         {
             return new Student();
         }
@@ -406,13 +406,13 @@ public class CoroutineSaxParserTest
     /*VARIABLE*/Student ,
     /*EXPRESSION*/Characters >
     {
-        public final SimpleExpression<? extends String , Void> fieldNameExpression;
+        public final SimpleExpression<? extends String , Void , Characters> fieldNameExpression;
 
         /**
          * Constructor.
          */
         SetStudentField(
-                final SimpleExpression<? extends String , Void> fieldNameExpression )
+                final SimpleExpression<? extends String , Void , Characters> fieldNameExpression )
         {
             super(
                     //localVarName
@@ -433,7 +433,7 @@ public class CoroutineSaxParserTest
                 final Characters characters )
         {
             final String fieldName =
-                    fieldNameExpression.evaluate(parent);
+                    fieldNameExpression.evaluate( parent );
 
             switch ( fieldName )
             {
@@ -520,12 +520,12 @@ public class CoroutineSaxParserTest
     public void testSaxParser()
             throws Exception
     {
-        final AbstrExprsUseExprs<String , SaxEventWithElementname , Void> getXmlElementNameFromResumeArgument =
-                new AbstrExprsUseExprs<String, SaxEventWithElementname , Void>(
+        final AbstrExprsUseExprs getXmlElementNameFromResumeArgumentRaw =
+                new AbstrExprsUseExprs<String, SaxEventWithElementname , Void , SaxEventWithElementname>(
                         // type
                         String.class ,
                         // argumentExpression
-                        new GetResumeArgument<>(
+                        new GetResumeArgument</*RESUME_ARGUMENT*/SaxEventWithElementname , /*COROUTINE_RETURN*/ Void>(
                                 //type
                                 SaxEventWithElementname.class ) ) {
 
@@ -542,6 +542,9 @@ public class CoroutineSaxParserTest
                 return "ResumeArgument element.getElementname()";
             }
         };
+
+        final AbstrExprsUseExprs<String , SaxEventWithElementname , Void , SaxEvent> getXmlElementNameFromResumeArgument =
+                getXmlElementNameFromResumeArgumentRaw;
 
         // check is start XML element class: <class>
         final CoroBooleanExpression isStartElementClass =
@@ -768,7 +771,7 @@ public class CoroutineSaxParserTest
                                 // functionReturnType
                                 Void.class ,
                                 // args
-                                new Argument<String , Void>(
+                                new Argument<String , Void, SaxEvent>(
                                         // name
                                         "name" ,
                                         // expression
@@ -853,7 +856,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String , Void>(
+                                                new Argument<String , Void , SaxEvent>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -864,7 +867,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String , Void>(
+                                                new Argument<String , Void , SaxEvent>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -875,7 +878,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String , Void>(
+                                                new Argument<String , Void , SaxEvent>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -886,7 +889,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String , Void>(
+                                                new Argument<String , Void , SaxEvent>(
                                                         // name
                                                         "name" ,
                                                         // value
@@ -897,7 +900,7 @@ public class CoroutineSaxParserTest
                                                 // functionReturnType
                                                 Void.class ,
                                                 // args
-                                                new Argument<String , Void>(
+                                                new Argument<String , Void , SaxEvent>(
                                                         // name
                                                         "name" ,
                                                         // value

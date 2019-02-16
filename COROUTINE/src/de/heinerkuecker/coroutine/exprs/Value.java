@@ -11,9 +11,9 @@ import de.heinerkuecker.util.ArrayDeepToString;
  * @param <VALUE> value type
  * @author Heiner K&uuml;cker
  */
-public class Value<VALUE , COROUTINE_RETURN>
+public class Value<VALUE , COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements CoroExpression<T>
-extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
+extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * For type check.
@@ -61,7 +61,7 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
 
     @Override
     public VALUE evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         return this.value;
     }
@@ -88,11 +88,11 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
      * @param value the value to return
      * @return value expression
      */
-    public static <COROUTINE_RETURN> Value<Boolean , COROUTINE_RETURN> booleanValue(
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> Value<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> booleanValue(
             final boolean value )
     {
         return
-                new Value<Boolean , COROUTINE_RETURN>(
+                new Value<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Boolean.class ,
                         value );
     }
@@ -102,10 +102,10 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
      *
      * @return value expression
      */
-    public static <COROUTINE_RETURN> Value<Boolean , COROUTINE_RETURN> falseValue()
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> Value<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> falseValue()
     {
         return
-                new Value<Boolean , COROUTINE_RETURN>(
+                new Value<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Boolean.class ,
                         false );
     }
@@ -115,10 +115,10 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
      *
      * @return value expression
      */
-    public static <COROUTINE_RETURN> Value<Boolean , COROUTINE_RETURN> trueValue()
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> Value<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> trueValue()
     {
         return
-                new Value<Boolean , COROUTINE_RETURN>(
+                new Value<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Boolean.class ,
                         true );
     }
@@ -129,11 +129,11 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
      * @param value the value to return
      * @return value expression
      */
-    public static <COROUTINE_RETURN> Value<Integer , COROUTINE_RETURN> intValue(
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> Value<Integer , COROUTINE_RETURN , RESUME_ARGUMENT> intValue(
             final int value )
     {
         return
-                new Value<Integer , COROUTINE_RETURN>(
+                new Value<Integer , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Integer.class ,
                         value );
     }
@@ -144,11 +144,11 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
      * @param value the value to return
      * @return value expression
      */
-    public static <COROUTINE_RETURN> Value<Long , COROUTINE_RETURN> longValue(
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> Value<Long , COROUTINE_RETURN , RESUME_ARGUMENT> longValue(
             final long value )
     {
         return
-                new Value<Long , COROUTINE_RETURN>(
+                new Value<Long , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         Long.class ,
                         value );
     }
@@ -159,11 +159,11 @@ extends AbstrNoVarsNoArgsExpression<VALUE , COROUTINE_RETURN>
      * @param value the value to return
      * @return value expression
      */
-    public static <COROUTINE_RETURN> Value<String , COROUTINE_RETURN> strValue(
+    public static <COROUTINE_RETURN , RESUME_ARGUMENT> Value<String , COROUTINE_RETURN , RESUME_ARGUMENT> strValue(
             final String value )
     {
         return
-                new Value<String , COROUTINE_RETURN>(
+                new Value<String , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         String.class ,
                         value );
     }

@@ -3,11 +3,10 @@ package de.heinerkuecker.coroutine.exprs;
 import java.util.Objects;
 
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
-import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 
 public class GetResumeArgument<RESUME_ARGUMENT , COROUTINE_RETURN>
 //implements CoroExpression<RESUME_ARGUMENT>
-extends AbstrHasSrcPosNoVarsNoArgsExpression<RESUME_ARGUMENT , COROUTINE_RETURN>
+extends AbstrHasSrcPosNoVarsNoArgsExpression<RESUME_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * For type check.
@@ -33,23 +32,25 @@ extends AbstrHasSrcPosNoVarsNoArgsExpression<RESUME_ARGUMENT , COROUTINE_RETURN>
 
     @Override
     public RESUME_ARGUMENT evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
-        final Object resumeArgument = parent.getResumeArgument();
+        final RESUME_ARGUMENT resumeArgument = parent.getResumeArgument();
 
-        if ( resumeArgument != null &&
-                ! resumeArgumentType.isInstance( resumeArgument ) )
-        {
-            throw new WrongExpressionResultValueClassException(
-                    //valueExpression
-                    this ,
-                    //expectedClass
-                    resumeArgumentType ,
-                    //wrongValue
-                    resumeArgument );
-        }
+        //if ( resumeArgument != null &&
+        //        ! resumeArgumentType.isInstance( resumeArgument ) )
+        //{
+        //    throw new WrongExpressionResultValueClassException(
+        //            //valueExpression
+        //            this ,
+        //            //expectedClass
+        //            resumeArgumentType ,
+        //            //wrongValue
+        //            resumeArgument );
+        //}
+        //
+        //return resumeArgumentType.cast( resumeArgument );
 
-        return resumeArgumentType.cast( resumeArgument );
+        return resumeArgument;
     }
 
     @SuppressWarnings("unchecked")

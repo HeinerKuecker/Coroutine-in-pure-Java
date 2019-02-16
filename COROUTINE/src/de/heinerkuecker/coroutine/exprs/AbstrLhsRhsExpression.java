@@ -9,18 +9,18 @@ import java.util.Objects;
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 
-public abstract class AbstrLhsRhsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
-implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
+public abstract class AbstrLhsRhsExpression<EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
+implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Left hand side expression.
      */
-    public final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs;
+    public final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> lhs;
 
     /**
      * Right hand side expression to add.
      */
-    public final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs;
+    public final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> rhs;
 
     /**
      * Constructor.
@@ -29,8 +29,8 @@ implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
      * @param rhs
      */
     protected AbstrLhsRhsExpression(
-            final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<? extends EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         this.lhs = Objects.requireNonNull( lhs );
         this.rhs = Objects.requireNonNull( rhs );
@@ -40,9 +40,9 @@ implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN>
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    final public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    final public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
-        final List<GetFunctionArgument<? , ?>> result = new ArrayList<>();
+        final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         result.addAll(
                 lhs.getFunctionArgumentGetsNotInFunction() );

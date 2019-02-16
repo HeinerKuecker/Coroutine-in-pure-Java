@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
+import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.util.ArrayDeepToString;
 
 /**
@@ -39,7 +40,7 @@ implements Iterable<Entry<String, Object>>
             final boolean isInitializationCheck ,
             final boolean checkMandantoryValues ,
             final Map<String, Parameter> params ,
-            final Argument<? , ?>[] args ,
+            final Argument<? , ? , ?>[] args ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
         Set<String> missedMandantoryParamNames = null;
@@ -72,7 +73,7 @@ implements Iterable<Entry<String, Object>>
 
         if ( args != null )
         {
-            for ( final Argument<? , ?> argument : args )
+            for ( final Argument<? , ? , ?> argument : args )
             {
                 if ( params == null ||
                         ! params.containsKey( argument.name ) )
@@ -98,7 +99,7 @@ implements Iterable<Entry<String, Object>>
                 {
                     final Object argumentValue =
                             argument.expression.evaluate(
-                                    parent );
+                                    (HasArgumentsAndVariables) parent );
 
                     if ( argumentValue != null )
                     {

@@ -12,8 +12,8 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  * @param <NUMBER> number type to cast
  * @author Heiner K&uuml;cker
  */
-public class CastToLong<NUMBER extends Number , COROUTINE_RETURN>
-extends AbstrOneExprExpression<Long , Number , COROUTINE_RETURN>
+public class CastToLong<NUMBER extends Number , COROUTINE_RETURN , RESUME_ARGUMENT>
+extends AbstrOneExprExpression<Long , Number , COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements SimpleExpression<Long>
 {
     /**
@@ -27,7 +27,7 @@ extends AbstrOneExprExpression<Long , Number , COROUTINE_RETURN>
      * @param numberExpression expression to deliver number object to cast
      */
     public CastToLong(
-            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN> numberExpression )
+            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN , RESUME_ARGUMENT> numberExpression )
     {
         //this.numberExpression = Objects.requireNonNull( numberExpression );
         super( numberExpression );
@@ -38,7 +38,7 @@ extends AbstrOneExprExpression<Long , Number , COROUTINE_RETURN>
      */
     @Override
     public Long evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Number numberExpressionResult = /*numberExpression*/expr.evaluate( parent );
 

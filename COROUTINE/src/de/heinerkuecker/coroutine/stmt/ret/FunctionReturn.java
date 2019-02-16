@@ -34,14 +34,14 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      */
     private final Class<? extends FUNCTION_RETURN> functionReturnType;
 
-    public final SimpleExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression;
+    public final SimpleExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression;
 
     /**
      * Constructor.
      */
     public FunctionReturn(
             final Class<? extends FUNCTION_RETURN> functionReturnType ,
-            final SimpleExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN> expression )
+            final SimpleExpression<? extends FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         super(
                 //creationStackOffset
@@ -74,7 +74,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
                         functionReturnType );
 
         this.expression =
-                new Value<FUNCTION_RETURN , COROUTINE_RETURN>(
+                new Value<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>(
                         (Class<? extends FUNCTION_RETURN>) value.getClass() ,
                         value );
     }
@@ -118,7 +118,7 @@ extends SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, CoroutineIterator<COROU
      * @see CoroStmt#getFunctionArgumentGetsNotInFunction()
      */
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return expression.getFunctionArgumentGetsNotInFunction();
     }

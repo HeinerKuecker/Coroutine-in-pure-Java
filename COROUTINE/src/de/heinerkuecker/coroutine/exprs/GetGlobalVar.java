@@ -14,9 +14,9 @@ import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassExcep
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionVariableClassException;
 import de.heinerkuecker.util.ArrayTypeName;
 
-public class GetGlobalVar<GLOBAL_VAR , COROUTINE_RETURN>
+public class GetGlobalVar<GLOBAL_VAR , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
-implements SimpleExpression<GLOBAL_VAR , COROUTINE_RETURN> , HasVariableName
+implements SimpleExpression<GLOBAL_VAR , COROUTINE_RETURN , RESUME_ARGUMENT> , HasVariableName
 {
     public final String globalVarName;
 
@@ -50,7 +50,7 @@ implements SimpleExpression<GLOBAL_VAR , COROUTINE_RETURN> , HasVariableName
 
     @Override
     public GLOBAL_VAR evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object globalVarValue =
                 parent.globalVars().get(
@@ -78,7 +78,7 @@ implements SimpleExpression<GLOBAL_VAR , COROUTINE_RETURN> , HasVariableName
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }

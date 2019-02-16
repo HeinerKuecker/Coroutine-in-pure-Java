@@ -12,9 +12,9 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
 import de.heinerkuecker.coroutine.exprs.exc.WrongExpressionResultValueClassException;
 
-public class GetGlobalArgument<T , COROUTINE_RETURN>
+public class GetGlobalArgument<GLOBAL_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
-implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
+implements SimpleExpression<GLOBAL_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUMENT> , HasArgumentName
 {
     /**
      * Name of function argument in
@@ -28,7 +28,7 @@ implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
      *
      * Solve unchecked cast.
      */
-    public final Class<T> type;
+    public final Class<GLOBAL_ARGUMENT> type;
 
     /**
      * Constructor.
@@ -36,7 +36,7 @@ implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
      */
     public GetGlobalArgument(
             final String globalArgumentName ,
-            final Class<T> type )
+            final Class<GLOBAL_ARGUMENT> type )
     {
         super(
                 //creationStackOffset
@@ -52,8 +52,8 @@ implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
     }
 
     @Override
-    public T evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+    public GLOBAL_ARGUMENT evaluate(
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final Object procArgValue = parent.globalArgumentValues().get( globalArgumentName );
 
@@ -112,7 +112,7 @@ implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return Collections.emptyList();
     }
@@ -125,7 +125,7 @@ implements SimpleExpression<T , COROUTINE_RETURN> , HasArgumentName
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<? extends T>[] type()
+    public Class<? extends GLOBAL_ARGUMENT>[] type()
     {
         //return type;
         return new Class[] { type };

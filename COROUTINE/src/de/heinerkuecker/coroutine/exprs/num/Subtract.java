@@ -18,9 +18,9 @@ import de.heinerkuecker.coroutine.exprs.SimpleExpression;
  *
  * @author Heiner K&uuml;cker
  */
-public class Subtract<NUMBER extends Number , COROUTINE_RETURN>
+public class Subtract<NUMBER extends Number , COROUTINE_RETURN , RESUME_ARGUMENT>
 //implements SimpleExpression<T>
-extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN>
+extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Left hand side expression.
@@ -39,8 +39,8 @@ extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN>
      * @param rhs
      */
     public Subtract(
-            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN> lhs ,
-            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN> rhs )
+            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN , RESUME_ARGUMENT> lhs ,
+            final SimpleExpression<? extends NUMBER , COROUTINE_RETURN , RESUME_ARGUMENT> rhs )
     {
         //this.lhs = Objects.requireNonNull( lhs );
         //this.rhs = Objects.requireNonNull( rhs );
@@ -54,7 +54,7 @@ extends AbstrLhsRhsExpression<NUMBER , COROUTINE_RETURN>
      */
     @Override
     public NUMBER evaluate(
-            final HasArgumentsAndVariables<?>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
+            final HasArgumentsAndVariables<? extends RESUME_ARGUMENT>/*CoroutineOrFunctioncallOrComplexstmt<?, ?>*/ parent )
     {
         final NUMBER lhsResult = lhs.evaluate( parent );
         final NUMBER rhsResult = rhs.evaluate( parent );

@@ -30,14 +30,14 @@ implements HasVariableName
      * is to add to the value of the
      * {@link Collection} variable.
      */
-    public final SimpleExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression;
+    public final SimpleExpression<ELEMENT_TO_ADD , COROUTINE_RETURN , RESUME_ARGUMENT> elementToAddExpression;
 
     /**
      * Constructor.
      */
     public AddToCollectionLocalVar(
             final String localVarName ,
-            final SimpleExpression<ELEMENT_TO_ADD , COROUTINE_RETURN> elementToAddExpression )
+            final SimpleExpression<ELEMENT_TO_ADD , COROUTINE_RETURN , RESUME_ARGUMENT> elementToAddExpression )
     {
         this.collectionLocalVarName =
                 Objects.requireNonNull(
@@ -105,7 +105,7 @@ implements HasVariableName
     }
 
     @Override
-    public List<GetFunctionArgument<? , ?>> getFunctionArgumentGetsNotInFunction()
+    public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction()
     {
         return this.elementToAddExpression.getFunctionArgumentGetsNotInFunction();
     }
