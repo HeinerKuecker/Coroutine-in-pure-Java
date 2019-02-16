@@ -23,19 +23,19 @@ import de.heinerkuecker.coroutine.exprs.Value;
  *
  * @author Heiner K&uuml;cker
  */
-public class InstanceOf<COROUTINE_RETURN>
+public class InstanceOf<COROUTINE_RETURN , INSTANCE>
 //implements CoroBooleanExpression
 extends CoroBooleanExpression<COROUTINE_RETURN>
 {
     /**
      * Left hand side expression, value.
      */
-    public final SimpleExpression<?, COROUTINE_RETURN> valueExpression;
+    public final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN> valueExpression;
 
     /**
      * Right hand side expression, type.
      */
-    public final SimpleExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression;
+    public final SimpleExpression<? extends Class<? extends INSTANCE>, COROUTINE_RETURN> typeExpression;
 
     /**
      * Constructor.
@@ -44,8 +44,8 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param typeExpression
      */
     public InstanceOf(
-            final SimpleExpression<?, COROUTINE_RETURN> valueExpression ,
-            final SimpleExpression<? extends Class<?>, COROUTINE_RETURN> typeExpression )
+            final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN> valueExpression ,
+            final SimpleExpression<? extends Class<? extends INSTANCE>, COROUTINE_RETURN> typeExpression )
     {
         this.valueExpression = Objects.requireNonNull( valueExpression );
         this.typeExpression = Objects.requireNonNull( typeExpression );
@@ -58,15 +58,15 @@ extends CoroBooleanExpression<COROUTINE_RETURN>
      * @param type
      */
     public InstanceOf(
-            final SimpleExpression<? , COROUTINE_RETURN> valueExpression ,
-            final Class<?> type )
+            final SimpleExpression<? extends INSTANCE , COROUTINE_RETURN> valueExpression ,
+            final Class<? extends INSTANCE> type )
     {
         this.valueExpression =
                 Objects.requireNonNull(
                         valueExpression );
 
         this.typeExpression =
-                new Value<Class<?> , COROUTINE_RETURN>(
+                new Value<Class<? extends INSTANCE> , COROUTINE_RETURN>(
                         Objects.requireNonNull(
                                 type  ) );
     }
