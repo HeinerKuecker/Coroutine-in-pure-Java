@@ -519,19 +519,18 @@ public class CoroutineSaxParserTest
     public void testSaxParser()
             throws Exception
     {
-        @SuppressWarnings("rawtypes")
-        final AbstrExprsUseExprs getXmlElementNameFromResumeArgumentRaw =
-                new AbstrExprsUseExprs<String, SaxEventWithElementname , Void , SaxEventWithElementname>(
+        final AbstrExprsUseExprs<String , SaxEvent , Void , SaxEvent> getXmlElementNameFromResumeArgument =
+                new AbstrExprsUseExprs<String, SaxEvent , Void , SaxEvent>(
                         // type
                         String.class ,
                         // argumentExpression
-                        new GetResumeArgument</*RESUME_ARGUMENT*/SaxEventWithElementname , /*COROUTINE_RETURN*/ Void>() )
+                        new GetResumeArgument</*RESUME_ARGUMENT*/SaxEvent , /*COROUTINE_RETURN*/ Void>() )
         {
             @Override
             public String execute(
-                    final SaxEventWithElementname startElement )
+                    final SaxEvent startElement )
             {
-                return startElement.getElementname();
+                return ( (SaxEventWithElementname) startElement ).getElementname();
             }
 
             @Override
@@ -540,10 +539,6 @@ public class CoroutineSaxParserTest
                 return "ResumeArgument element.getElementname()";
             }
         };
-
-        @SuppressWarnings("unchecked")
-        final AbstrExprsUseExprs<String , SaxEventWithElementname , Void , SaxEvent> getXmlElementNameFromResumeArgument =
-                getXmlElementNameFromResumeArgumentRaw;
 
         // check is start XML element class: <class>
         final CoroBooleanExpression</*COROUTINE_RETURN*/Void , /*RESUME_ARGUMENT*/SaxEvent> isStartElementClass =
