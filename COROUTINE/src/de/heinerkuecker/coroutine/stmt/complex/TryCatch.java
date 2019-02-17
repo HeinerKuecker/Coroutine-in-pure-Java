@@ -39,10 +39,10 @@ extends ComplexStmt<
      */
     @SafeVarargs
     public TryCatch(
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> tryStmt ,
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> tryStmt ,
             final Class<? extends Throwable> catchExceptionClass ,
             final String catchedExceptionVariableName ,
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... catchBodyStmts )
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> ... catchBodyStmts )
     {
         super(
                 //creationStackOffset
@@ -74,10 +74,10 @@ extends ComplexStmt<
      */
     @SafeVarargs
     public static <FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT extends CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> TryCatch<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT> newTryCatch(
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/> tryStmt ,
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> tryStmt ,
             final Class<? extends Throwable> catchExceptionClass ,
             final String catchedExceptionVariableName ,
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... catchBodyStmts )
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> ... catchBodyStmts )
     {
         return new TryCatch<>(
                 tryStmt ,
@@ -137,20 +137,24 @@ extends ComplexStmt<
     }
 
     @Override
-    public void setStmtCoroutineReturnType(
+    public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        this.tryBodyComplexStmt.setStmtCoroutineReturnType(
+        this.tryBodyComplexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
 
-        this.catchBodyComplexStmt.setStmtCoroutineReturnType(
+        this.catchBodyComplexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override

@@ -29,7 +29,7 @@ extends ComplexExpression<
     >
 //implements CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 //implements SimpleExpression<FUNCTION_RETURN , COROUTINE_RETURN>
-implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     ///**
     // * Es muss ein ComplexStmt sein,
@@ -144,29 +144,39 @@ implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    public void setStmtCoroutineReturnType(
+    public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        setExprCoroutineReturnType(
+        setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override
-    public void setExprCoroutineReturnType(
+    //public void setExprCoroutineReturnType(
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+    //        final Class<?> coroutineReturnType )
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            final Class<?> coroutineReturnType )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
         this.coroutineReturnType = (Class<? extends COROUTINE_RETURN>) coroutineReturnType;
 
-        this.simpleExpression.setExprCoroutineReturnType(
+        this.simpleExpression.setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                (Class) coroutineReturnType );
+                (Class) coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override

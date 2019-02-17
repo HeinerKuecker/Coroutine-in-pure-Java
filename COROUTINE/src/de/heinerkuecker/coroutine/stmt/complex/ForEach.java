@@ -53,7 +53,7 @@ extends ComplexStmt<
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
             final SimpleExpression<? extends Iterable<ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iterableExpression ,
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //creationStackOffset
@@ -89,7 +89,7 @@ extends ComplexStmt<
             final String variableName ,
             final Class<? extends ELEMENT> elementType ,
             final SimpleExpression<Iterable<ELEMENT> , COROUTINE_RETURN , RESUME_ARGUMENT> iterableExpression ,
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT /*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //creationStackOffset
@@ -168,15 +168,18 @@ extends ComplexStmt<
     }
 
     @Override
-    public void setStmtCoroutineReturnType(
+    public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        this.bodyComplexStmt.setStmtCoroutineReturnType(
+        this.bodyComplexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override

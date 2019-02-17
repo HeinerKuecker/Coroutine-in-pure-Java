@@ -204,27 +204,33 @@ implements SimpleExpression<VARIABLE , COROUTINE_RETURN , RESUME_ARGUMENT>
     }
 
     @Override
-    public void setStmtCoroutineReturnType(
+    public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        this.initialVarValueExpression.setExprCoroutineReturnType(
+        this.initialVarValueExpression.setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override
-    public void setExprCoroutineReturnType(
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            final Class<?> coroutineReturnType )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        this.initialVarValueExpression.setExprCoroutineReturnType(
+        this.initialVarValueExpression.setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override

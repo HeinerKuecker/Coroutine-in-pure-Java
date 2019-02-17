@@ -17,7 +17,7 @@ extends RuntimeException
      * Constructor.
      */
     public WrongStmtVariableClassException(
-            final CoroStmt<?, ?> wrongStmt ,
+            final CoroStmt<?, ? , ?> wrongStmt ,
             final Class<?> wrongClass ,
             final Class<?> expectedClass )
     {

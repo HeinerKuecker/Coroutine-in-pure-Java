@@ -67,7 +67,7 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN , RESUME_ARGUMENT>
     {
         final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
-        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN , ?> arrayElementExpression : arrayElementExpressions )
         {
             result.addAll(
                     arrayElementExpression.getFunctionArgumentGetsNotInFunction() );
@@ -83,7 +83,7 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN , RESUME_ARGUMENT>
             final Map<String, Class<?>> globalVariableTypes ,
             final Map<String, Class<?>> localVariableTypes )
     {
-        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN , ?> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseVariables(
                     alreadyCheckedFunctionNames ,
@@ -97,7 +97,7 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN , RESUME_ARGUMENT>
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN> arrayElementExpression : arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT , COROUTINE_RETURN , ?> arrayElementExpression : arrayElementExpressions )
         {
             arrayElementExpression.checkUseArguments( alreadyCheckedFunctionNames, parent );
         }
@@ -116,17 +116,20 @@ implements SimpleExpression<ELEMENT[] , COROUTINE_RETURN , RESUME_ARGUMENT>
     }
 
     @Override
-    public void setExprCoroutineReturnType(
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            final Class<?> coroutineReturnType )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        for ( final CoroExpression<ELEMENT, COROUTINE_RETURN> arrayElementExpression : this.arrayElementExpressions )
+        for ( final CoroExpression<ELEMENT, COROUTINE_RETURN , RESUME_ARGUMENT> arrayElementExpression : this.arrayElementExpressions )
         {
-            arrayElementExpression.setExprCoroutineReturnType(
+            arrayElementExpression.setExprCoroutineReturnTypeAndResumeArgumentType(
                     alreadyCheckedFunctionNames ,
                     parent ,
-                    coroutineReturnType );
+                    coroutineReturnType ,
+                    resumeArgumentType );
         }
     }
 

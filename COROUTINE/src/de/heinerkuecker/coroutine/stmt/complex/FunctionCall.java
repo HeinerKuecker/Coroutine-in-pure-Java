@@ -33,7 +33,7 @@ extends ComplexExpression<
     >
 //implements CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN/*, CoroutineIterator<COROUTINE_RETURN>*/>
 //implements SimpleExpression<FUNCTION_RETURN , COROUTINE_RETURN>
-implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
+implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     ///**
     // * Es muss ein ComplexStmt sein,
@@ -56,6 +56,11 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
      * Reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
      */
     private Class<? extends COROUTINE_RETURN> coroutineReturnType;
+
+    /**
+     * Reifier for type param {@link #RESUME_ARGUMENT} to solve unchecked casts.
+     */
+    private Class<? extends RESUME_ARGUMENT> resumeArgumentType;
 
     /**
      * Reifier for type param {@link #FUNCTION_RETURN} to solve unchecked casts.
@@ -144,6 +149,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
                         false ,
                         this ,
                         coroutineReturnType ,
+                        resumeArgumentType ,
                         // functionArgumentValues
                         arguments ,
                         parent );
@@ -172,6 +178,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
                         true ,
                         this ,
                         coroutineReturnType ,
+                        resumeArgumentType ,
                         // functionArgumentValues
                         arguments ,
                         parent );
@@ -253,24 +260,38 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
     }
 
     @Override
-    public void setStmtCoroutineReturnType(
+    public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        setExprCoroutineReturnType(
+        setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override
-    public void setExprCoroutineReturnType(
+    //public void setExprCoroutineReturnType(
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
+    //        final Class<?> coroutineReturnType )
+
+    /**
+     * Set reifier for type param {@link #COROUTINE_RETURN} and {@link #RESUME_ARGUMENT} to solve unchecked casts.
+     */
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            final Class<?> coroutineReturnType )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
         this.coroutineReturnType = (Class<? extends COROUTINE_RETURN>) coroutineReturnType;
+        this.resumeArgumentType = resumeArgumentType;
 
         if ( alreadyCheckedFunctionNames.contains( functionName ) )
         {
@@ -279,10 +300,11 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN>
 
         alreadyCheckedFunctionNames.add( functionName );
 
-        parent.getFunction( this.functionName ).bodyComplexStmt.setStmtCoroutineReturnType(
+        parent.getFunction( this.functionName ).bodyComplexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                (Class) coroutineReturnType );
+                (Class) coroutineReturnType ,
+                (Class) resumeArgumentType );
     }
 
     @Override

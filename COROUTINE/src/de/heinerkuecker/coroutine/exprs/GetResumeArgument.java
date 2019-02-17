@@ -1,7 +1,5 @@
 package de.heinerkuecker.coroutine.exprs;
 
-import java.util.Objects;
-
 import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
 
 public class GetResumeArgument<RESUME_ARGUMENT , COROUTINE_RETURN>
@@ -13,21 +11,20 @@ extends AbstrHasSrcPosNoVarsNoArgsExpression<RESUME_ARGUMENT , COROUTINE_RETURN 
      *
      * Solve unchecked cast.
      */
-    public final Class<? extends RESUME_ARGUMENT> resumeArgumentType;
+    public /*final*/ Class<? extends RESUME_ARGUMENT> resumeArgumentType;
 
     /**
      * Constructor.
      */
     public GetResumeArgument(
-            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
+            //final Class<? extends RESUME_ARGUMENT> resumeArgumentType
+                    )
     {
         super(
                 // creationStackOffset
                 3 );
 
-        this.resumeArgumentType =
-                Objects.requireNonNull(
-                        resumeArgumentType );
+        //this.resumeArgumentType = Objects.requireNonNull( resumeArgumentType );
     }
 
     @Override

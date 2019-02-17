@@ -51,7 +51,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
         final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> condition : conditionsToAnd )
         {
             result.addAll(
                     condition.getFunctionArgumentGetsNotInFunction() );
@@ -68,7 +68,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
             final Map<String, Class<?>> localVariableTypes )
     {
         //for ( final ConditionOrBooleanExpression/*Condition<CoroutineIterator<?>>*/ condition : conditionsToAnd )
-        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN , ?> condition : conditionsToAnd )
         {
             condition.checkUseVariables(
                     alreadyCheckedFunctionNames ,
@@ -82,24 +82,27 @@ extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN , RESUME_ARGUMENT> condition : conditionsToAnd )
         {
             condition.checkUseArguments( alreadyCheckedFunctionNames, parent );
         }
     }
 
     @Override
-    public void setExprCoroutineReturnType(
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
-            final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            final Class<?> coroutineReturnType )
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        for ( final CoroExpression<Boolean, COROUTINE_RETURN> arrayElementExpression : this.conditionsToAnd )
+        for ( final CoroExpression<Boolean, COROUTINE_RETURN , RESUME_ARGUMENT> arrayElementExpression : this.conditionsToAnd )
         {
-            arrayElementExpression.setExprCoroutineReturnType(
+            arrayElementExpression.setExprCoroutineReturnTypeAndResumeArgumentType(
                     alreadyCheckedFunctionNames ,
                     parent ,
-                    coroutineReturnType );
+                    coroutineReturnType ,
+                    resumeArgumentType );
         }
     }
 
@@ -111,7 +114,7 @@ extends CoroBooleanExpression<COROUTINE_RETURN , RESUME_ARGUMENT>
     {
         final StringBuilder buff = new StringBuilder();
 
-        for ( final CoroExpression<? , COROUTINE_RETURN> condition : conditionsToAnd )
+        for ( final CoroExpression<? , COROUTINE_RETURN , ?> condition : conditionsToAnd )
         {
             if ( buff.length() > 0 )
             {

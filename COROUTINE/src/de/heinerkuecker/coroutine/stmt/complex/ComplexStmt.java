@@ -28,7 +28,7 @@ abstract public class ComplexStmt<
     //PARENT extends CoroutineOrFunctioncallOrComplexstmt<COROUTINE_RETURN/*, PARENT*/>
     RESUME_ARGUMENT
     >
-extends CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/>
+extends CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>
 {
     /**
      * Constructor.

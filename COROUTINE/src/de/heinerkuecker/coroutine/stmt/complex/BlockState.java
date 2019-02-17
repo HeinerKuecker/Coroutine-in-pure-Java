@@ -60,7 +60,7 @@ extends ComplexStmtState<
     {
         while ( currentStmtIndex < sequence.length() )
         {
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, ? super PARENT*/> currentStmt =
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT> currentStmt =
                     sequence.getStmt( this.currentStmtIndex );
 
             final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> executeResult;

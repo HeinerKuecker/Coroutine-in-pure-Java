@@ -10,7 +10,7 @@ import de.heinerkuecker.coroutine.CoroutineOrFunctioncallOrComplexstmt;
  *
  * @author Heiner K&uuml;cker
  */
-public interface CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+public interface CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 extends CoroCheckable
 {
     /**
@@ -20,11 +20,21 @@ extends CoroCheckable
      */
     Class<? extends EXPRESSION_RETURN>[] type();
 
+    ///**
+    // * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
+    // */
+    //abstract public void setExprCoroutineReturnType(
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+    //        final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType );
+
     /**
-     * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
+     * Set reifier for type param {@link #COROUTINE_RETURN} and {@link #RESUME_ARGUMENT} to solve unchecked casts.
      */
-    abstract public void setExprCoroutineReturnType(
+    abstract public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType );
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType );
 }

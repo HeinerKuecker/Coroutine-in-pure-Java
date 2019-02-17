@@ -25,7 +25,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final ComplexExpression<? , ? , Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //label
@@ -43,7 +43,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //label
@@ -80,7 +80,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public While(
             final boolean condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //label
@@ -102,7 +102,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 label ,
@@ -141,7 +141,7 @@ extends WhileOrDoWhile<
     public While(
             final String label ,
             final boolean condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 label ,

@@ -8,7 +8,7 @@ import de.heinerkuecker.coroutine.HasArgumentsAndVariables;
  * @author Heiner K&uuml;cker
  */
 public interface SimpleExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
-extends CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN>
+extends CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
 {
     /**
      * Evaluate (compute) result value.

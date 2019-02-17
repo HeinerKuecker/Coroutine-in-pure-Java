@@ -29,7 +29,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             final ComplexExpression<? , ? , Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //label
@@ -47,7 +47,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //label
@@ -84,7 +84,7 @@ extends WhileOrDoWhile<
     @SafeVarargs
     public DoWhile(
             final boolean condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 //label
@@ -106,7 +106,7 @@ extends WhileOrDoWhile<
     public DoWhile(
             final String label ,
             final SimpleExpression<Boolean , COROUTINE_RETURN , RESUME_ARGUMENT> condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 label ,
@@ -145,7 +145,7 @@ extends WhileOrDoWhile<
     public DoWhile(
             final String label ,
             final Boolean condition ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         super(
                 label ,

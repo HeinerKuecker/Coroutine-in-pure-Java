@@ -103,7 +103,7 @@ implements
             final Parameter[] params ,
             final Argument<? , ? , ?>[] args ,
             final DeclareVariable<? , Void, COROUTINE_RETURN, Void>[] globalVariableDeclarations ,
-            final CoroStmt<Void, COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final CoroStmt<Void, COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/ , Void>... stmts )
     {
         //this( stmts );
 
@@ -157,11 +157,12 @@ implements
             }
         }
 
-        this.complexStmt.setStmtCoroutineReturnType(
+        this.complexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 // alreadyCheckedFunctionNames
                 new HashSet<>() ,
                 this ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                Void.class );
 
         doMoreInitializations();
     }
@@ -174,7 +175,7 @@ implements
     @SafeVarargs
     public CoroutineIterator(
             final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
-            final CoroStmt<Void, COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final CoroStmt<Void, COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/ , Void>... stmts )
     {
         this.coroutineReturnType =
                 Objects.requireNonNull(
@@ -186,11 +187,12 @@ implements
                         5 ,
                         stmts );
 
-        this.complexStmt.setStmtCoroutineReturnType(
+        this.complexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 // alreadyCheckedFunctionNames
                 new HashSet<>() ,
                 this ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                Void.class );
 
         this.params = Collections.emptyMap();
 

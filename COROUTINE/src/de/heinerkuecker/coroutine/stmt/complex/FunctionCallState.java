@@ -45,6 +45,7 @@ extends ComplexExpressionState<
             final boolean isInitializationCheck ,
             final FunctionCall<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> functionCall ,
             final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType ,
             //final Map<String, Object> functionArgumentValues
             final Arguments arguments ,
             final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN , COROUTINE_RETURN, RESUME_ARGUMENT> parent )
@@ -81,11 +82,12 @@ extends ComplexExpressionState<
         if ( coroutineReturnType != null )
         {
             // TODO execute only once
-            function.bodyComplexStmt.setStmtCoroutineReturnType(
+            function.bodyComplexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                     // alreadyCheckedFunctionNames
                     new HashSet<>() ,
                     this ,
-                    coroutineReturnType );
+                    coroutineReturnType ,
+                    resumeArgumentType );
         }
     }
 
@@ -177,6 +179,8 @@ extends ComplexExpressionState<
                         true ,
                         this.functionCall ,
                         // coroutineReturnType null, because only for first call necessary
+                        null ,
+                        // resumeArgumentType null, because only for first call necessary
                         null ,
                         //this.functionArgumentValues
                         this.arguments ,

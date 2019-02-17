@@ -38,7 +38,7 @@ extends HasCreationStackTraceElement
     public Function(
             final String name ,
             final Parameter[] params ,
-            final CoroStmt<FUNCTION_RETURN, COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/> ... bodyStmts )
+            final CoroStmt<FUNCTION_RETURN, COROUTINE_RETURN/*, ? super PARENT/*CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT> ... bodyStmts )
     {
         super(
                 //creationStackOffset

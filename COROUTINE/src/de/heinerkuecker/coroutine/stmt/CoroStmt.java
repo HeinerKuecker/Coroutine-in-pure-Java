@@ -16,7 +16,7 @@ import de.heinerkuecker.coroutine.HasCreationStackTraceElement;
  * @param <PARENT> type the {@link CoroutineIterator} instance
  * @author Heiner K&uuml;cker
  */
-abstract public class CoroStmt<FUNCTION_RETURN, COROUTINE_RETURN/*, PARENT*/>
+abstract public class CoroStmt<FUNCTION_RETURN, COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>
 extends HasCreationStackTraceElement
 implements CoroCheckable
 {
@@ -40,11 +40,21 @@ implements CoroCheckable
 
     //abstract public List<GetFunctionArgument<? , ? , ?>> getFunctionArgumentGetsNotInFunction();
 
+    ///**
+    // * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
+    // */
+    //abstract public void setStmtCoroutineReturnType(
+    //        final HashSet<String> alreadyCheckedFunctionNames ,
+    //        final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+    //        final Class<? extends COROUTINE_RETURN> coroutineReturnType );
+
     /**
-     * Set reifier for type param {@link #COROUTINE_RETURN} to solve unchecked casts.
+     * Set reifier for type param {@link #COROUTINE_RETURN} and {@link #RESUME_ARGUMENT} to solve unchecked casts.
      */
-    abstract public void setStmtCoroutineReturnType(
+    abstract public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType );
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType );
 }

@@ -173,7 +173,7 @@ implements CoroCheckable
          */
         public WrongArgumentClassException(
                 //final HasVariableName wrongExpression ,
-                final CoroExpression<? , ?> wrongExpression ,
+                final CoroExpression<? , ? , ?> wrongExpression ,
                 final Class<?> wrongClass ,
                 final Class<?> expectedClass )
         {

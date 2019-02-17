@@ -17,7 +17,7 @@ extends RuntimeException
      * Constructor.
      */
     public StmtVariableIsNullException(
-            final CoroStmt<?, ?> wrongStmt ,
+            final CoroStmt<?, ? , ?> wrongStmt ,
             final Class<?> expectedClass )
     {
         super(

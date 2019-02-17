@@ -77,7 +77,7 @@ extends ComplexStmtState<
     {
         if ( runInInitializer )
         {
-            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/> initializerStmt =
+            final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT> initializerStmt =
                     _for.initialStmt;
 
             final CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> initializerExecuteResult;
@@ -244,7 +244,7 @@ extends ComplexStmtState<
 
             if ( runInUpdate )
             {
-                final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/> updateStmt =
+                final CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, ? super PARENT*/ , RESUME_ARGUMENT> updateStmt =
                         _for.updateStmt;
 
                 CoroStmtResult<FUNCTION_RETURN , COROUTINE_RETURN> updateExecuteResult;

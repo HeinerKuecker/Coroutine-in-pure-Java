@@ -32,7 +32,7 @@ extends ComplexStmt<
     RESUME_ARGUMENT
     >
 {
-    private final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/>[] stmts;
+    private final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN/*, PARENT*/ , RESUME_ARGUMENT>[] stmts;
 
     /**
      * Constructor.
@@ -40,12 +40,12 @@ extends ComplexStmt<
     @SafeVarargs
     public Block(
             final int creationStackOffset ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>... stmts )
     {
         // TODO HasCreationStackTraceElement.creationStackTraceElement never used
         super( creationStackOffset );
 
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : stmts )
         {
             Objects.requireNonNull( stmt );
         }
@@ -60,7 +60,7 @@ extends ComplexStmt<
         return stmts.length;
     }
 
-    CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, ? super PARENT*/> getStmt(
+    CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, ? super PARENT*/ , RESUME_ARGUMENT> getStmt(
             final int index )
     {
         return stmts[ index ];
@@ -82,7 +82,7 @@ extends ComplexStmt<
     {
         final List<BreakOrContinue<?, ?, ?>> result = new ArrayList<>();
 
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : this.stmts )
         {
             if ( stmt instanceof BreakOrContinue )
             {
@@ -109,7 +109,7 @@ extends ComplexStmt<
     {
         final List<GetFunctionArgument<? , ? , ?>> result = new ArrayList<>();
 
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : this.stmts )
         {
             result.addAll(
                     stmt.getFunctionArgumentGetsNotInFunction() );
@@ -119,17 +119,20 @@ extends ComplexStmt<
     }
 
     @Override
-    public void setStmtCoroutineReturnType(
+    public void setStmtCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
-            final Class<? extends COROUTINE_RETURN> coroutineReturnType )
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : this.stmts )
         {
-            ( (CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN>) stmt ).setStmtCoroutineReturnType(
+            ( (CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>) stmt ).setStmtCoroutineReturnTypeAndResumeArgumentType(
                     alreadyCheckedFunctionNames ,
                     (CoroutineOrFunctioncallOrComplexstmt) parent ,
-                    (Class) coroutineReturnType );
+                    coroutineReturnType ,
+                    resumeArgumentType );
         }
     }
 
@@ -142,7 +145,7 @@ extends ComplexStmt<
             final CoroutineOrFunctioncallOrComplexstmt<? , COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
             final Set<String> labels )
     {
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : this.stmts )
         {
             if ( stmt instanceof ComplexStmt )
             {
@@ -165,7 +168,7 @@ extends ComplexStmt<
                 new HashMap<>(
                         localVariableTypes );
 
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : this.stmts )
         {
             if ( stmt instanceof DeclareVariable )
             {
@@ -198,7 +201,7 @@ extends ComplexStmt<
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent )
     {
-        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt : this.stmts )
+        for ( final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt : this.stmts )
         {
             stmt.checkUseArguments(
                     alreadyCheckedFunctionNames ,
@@ -236,7 +239,7 @@ extends ComplexStmt<
 
         for ( int i = 0 ; i < stmts.length ; i++ )
         {
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/> stmt = this.stmts[ i ];
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> stmt = this.stmts[ i ];
 
             if ( stmt instanceof ComplexStmt )
             {
@@ -307,7 +310,7 @@ extends ComplexStmt<
     @SafeVarargs
     public static <FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT> convertStmtsToComplexStmt(
             final int creationStackOffset ,
-            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final CoroStmt<FUNCTION_RETURN , ? extends COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>... stmts )
     {
         final ComplexStmt<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, /*PARENT* / CoroutineIterator<COROUTINE_RETURN>*/, RESUME_ARGUMENT> complexStmt;
         if ( stmts.length == 1 &&

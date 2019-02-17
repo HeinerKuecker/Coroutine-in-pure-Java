@@ -81,20 +81,24 @@ implements SimpleExpression<EXPRESSSION_RETURN , COROUTINE_RETURN , RESUME_ARGUM
     }
 
     @Override
-    public void setExprCoroutineReturnType(
-            HashSet<String> alreadyCheckedFunctionNames ,
-            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            Class<?> coroutineReturnType )
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        this.lhs.setExprCoroutineReturnType(
+        this.lhs.setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
 
-        this.rhs.setExprCoroutineReturnType(
+        this.rhs.setExprCoroutineReturnTypeAndResumeArgumentType(
                 alreadyCheckedFunctionNames ,
                 parent ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
 }

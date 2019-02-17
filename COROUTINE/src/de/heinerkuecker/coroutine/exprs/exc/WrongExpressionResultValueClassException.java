@@ -19,7 +19,7 @@ extends RuntimeException
      * Constructor.
      */
     public WrongExpressionResultValueClassException(
-            final CoroExpression<? , ?> valueExpression ,
+            final CoroExpression<? , ? , ?> valueExpression ,
             final Class<?> expectedClass ,
             final Object wrongValue )
     {

@@ -137,10 +137,12 @@ implements SimpleExpression<FUNCTION_ARGUMENT , COROUTINE_RETURN , RESUME_ARGUME
     }
 
     @Override
-    public void setExprCoroutineReturnType(
-            HashSet<String> alreadyCheckedFunctionNames ,
-            CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-            Class<?> coroutineReturnType )
+    public void setExprCoroutineReturnTypeAndResumeArgumentType(
+            final HashSet<String> alreadyCheckedFunctionNames ,
+            final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
+            //final Class<? /*extends COROUTINE_RETURN*/> coroutineReturnType ,
+            final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
         // do nothing
     }

@@ -46,6 +46,11 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
     private final Class<? extends COROUTINE_RETURN> coroutineReturnType;
 
     /**
+     * Reifier for type param {@link #RESUME_ARGUMENT} to solve unchecked casts.
+     */
+    private final Class<? extends RESUME_ARGUMENT> resumeArgumentType;
+
+    /**
      * GlobalVariables.
      */
     //public final HashMap<String, Object> vars = new HashMap<>();
@@ -67,11 +72,16 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
     @SafeVarargs
     public Coroutine(
             final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
-            final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType ,
+            final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>... stmts )
     {
         this.coroutineReturnType =
                 Objects.requireNonNull(
                         coroutineReturnType );
+
+        this.resumeArgumentType =
+                Objects.requireNonNull(
+                        resumeArgumentType );
 
         this.complexStmt =
                 Block.convertStmtsToComplexStmt(
@@ -79,11 +89,12 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
                         5 ,
                         stmts );
 
-        this.complexStmt.setStmtCoroutineReturnType(
+        this.complexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 // alreadyCheckedFunctionNames
                 new HashSet<>() ,
                 this ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
 
         this.params = Collections.emptyMap();
 
@@ -102,18 +113,23 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
     @SafeVarargs
     public Coroutine(
             final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
+            final Class<? extends RESUME_ARGUMENT> resumeArgumentType ,
             final Iterable<Function<? , COROUTINE_RETURN , RESUME_ARGUMENT>> functions ,
             //final Map<String, ? extends Object> initialVariableValues ,
             final Parameter[] params ,
             final Argument<? , ? , ?>[] args ,
             final DeclareVariable<? , Void , COROUTINE_RETURN, RESUME_ARGUMENT>[] globalVariableDeclarations ,
-            final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/>... stmts )
+            final CoroStmt<Void , COROUTINE_RETURN /*, /*PARENT * / CoroutineIterator<COROUTINE_RETURN>*/ , RESUME_ARGUMENT>... stmts )
     {
         //this( stmts );
 
         this.coroutineReturnType =
                 Objects.requireNonNull(
                         coroutineReturnType );
+
+        this.resumeArgumentType =
+                Objects.requireNonNull(
+                        resumeArgumentType );
 
         this.complexStmt =
                 Block.convertStmtsToComplexStmt(
@@ -161,11 +177,12 @@ implements CoroutineOrFunctioncallOrComplexstmt<Void , COROUTINE_RETURN, RESUME_
             }
         }
 
-        this.complexStmt.setStmtCoroutineReturnType(
+        this.complexStmt.setStmtCoroutineReturnTypeAndResumeArgumentType(
                 // alreadyCheckedFunctionNames
                 new HashSet<>() ,
                 this ,
-                coroutineReturnType );
+                coroutineReturnType ,
+                resumeArgumentType );
 
         doMoreInitializations();
     }

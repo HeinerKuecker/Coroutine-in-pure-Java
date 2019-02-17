@@ -23,6 +23,8 @@ public class CoroutineTest
         final Coroutine<Void, Void> coro =
                 new Coroutine<>(
                         // coroutineReturnType
+                        Void.class ,
+                        // resumeArgumentType
                         Void.class
                         // stmts
                         );

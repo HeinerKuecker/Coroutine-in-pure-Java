@@ -589,11 +589,11 @@ public class CoroutineIteratorWhileTest
                                                 "first" ,
                                                 Boolean.class ) ,
                                         // thenStmts
-                                        (CoroStmt<Void, Integer/*, CoroutineIterator<Integer>*/>[]) new CoroStmt[] {
+                                        (CoroStmt<Void, Integer/*, CoroutineIterator<Integer>*/ , Void>[]) new CoroStmt[] {
                                                 new YieldReturn<>( 0 ) ,
                                         } ,
                                         // elseStmts
-                                        (CoroStmt<Void, Integer/*, CoroutineIterator<Integer>*/>[]) new CoroStmt[] {
+                                        (CoroStmt<Void, Integer/*, CoroutineIterator<Integer>*/ , Void>[]) new CoroStmt[] {
                                                 new FinallyReturn<>( 1 ) ,
                                         } ) ,
                                 new NegateLocalVar<>( "first" ) ) );
@@ -641,11 +641,11 @@ public class CoroutineIteratorWhileTest
                                                 Boolean.class ,
                                                 first ) ,
                                         // thenStmts
-                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
+                                        (CoroStmt<Void , Boolean , Void>[]) new CoroStmt[] {
                                                 new YieldReturn<>( first ) ,
                                         } ,
                                         // elseStmts
-                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
+                                        (CoroStmt<Void , Boolean , Void>[]) new CoroStmt[] {
                                                 new FinallyReturn<>( first ) ,
                                         } ) ,
                                 new NegateLocalVar<>( "first" ) ) );
@@ -699,11 +699,11 @@ public class CoroutineIteratorWhileTest
                                                 Boolean.class ,
                                                 first ) ,
                                         // thenStmts
-                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
+                                        (CoroStmt<Void , Boolean , Void>[]) new CoroStmt[] {
                                                 new YieldReturn<>( copyOfFirst ) ,
                                         } ,
                                         // elseStmts
-                                        (CoroStmt<Void, Boolean>[]) new CoroStmt[] {
+                                        (CoroStmt<Void , Boolean ,  Void>[]) new CoroStmt[] {
                                                 new FinallyReturn<>( copyOfFirst ) ,
                                         } ) ,
                                 new NegateLocalVar<>( "first" ) ) );

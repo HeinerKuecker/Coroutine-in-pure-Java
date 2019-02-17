@@ -21,7 +21,7 @@ import de.heinerkuecker.coroutine.stmt.ret.YieldReturn;
  * @author Heiner K&uuml;cker
  */
 abstract public class SimpleStmt<FUNCTION_RETURN , COROUTINE_RETURN/*, PARENT*/, RESUME_ARGUMENT>
-extends CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN /*,PARENT*/>
+extends CoroStmt<FUNCTION_RETURN , COROUTINE_RETURN /*,PARENT*/ , RESUME_ARGUMENT>
 {
     /**
      * Constructor.
