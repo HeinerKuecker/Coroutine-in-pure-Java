@@ -33,7 +33,6 @@ import de.heinerkuecker.coroutine.exprs.bool.And;
 import de.heinerkuecker.coroutine.exprs.bool.CoroBooleanExpression;
 import de.heinerkuecker.coroutine.exprs.bool.Equals;
 import de.heinerkuecker.coroutine.exprs.bool.InstanceOf;
-import de.heinerkuecker.coroutine.exprs.bool.Not;
 import de.heinerkuecker.coroutine.stmt.CoroStmt;
 import de.heinerkuecker.coroutine.stmt.complex.FunctionCall;
 import de.heinerkuecker.coroutine.stmt.complex.IfElse;
@@ -582,6 +581,18 @@ public class CoroutineSaxParserTest
                                                 false )
                                 } ) );
 
+        // check is start XML element student: <stdent>
+        final CoroBooleanExpression</*COROUTINE_RETURN*/Void , /*RESUME_ARGUMENT*/SaxEvent> checkIsStartElementStudent =
+                new And<>(
+                        new InstanceOf<>(
+                                // valueExpression
+                                new GetResumeArgument<>() ,
+                                // type
+                                StartElement.class ) ,
+                        new Equals<>(
+                                getXmlElementNameFromResumeArgument ,
+                                "student" ) );
+
         // function to consume white space between xml elements (actually consume all characters)
         final Function<Void, Void , SaxEvent> consumeWhitespaces =
                 new Function<Void, Void , SaxEvent>(
@@ -806,13 +817,8 @@ public class CoroutineSaxParserTest
                                         // functionReturnType
                                         Void.class ) ,
                                 new While<Void, Void, SaxEvent>(
-                                        // condition: ! endElement student
-                                        new Not<>(
-                                                new InstanceOf<>(
-                                                        // valueExpression
-                                                        new GetResumeArgument<>() ,
-                                                        // type
-                                                        EndElement.class ) ) ,
+                                        // condition: startElement student <student>
+                                        checkIsStartElementStudent ,
                                         // stmts
                                         new DeclareVariable</*VARIABLE*/Student , /*FUNCTION_RETURN*/ Void , /*COROUTINE_RETURN*/ Void , /*RESUME_ARGUMENT*/ SaxEvent>(
                                                 // varName
