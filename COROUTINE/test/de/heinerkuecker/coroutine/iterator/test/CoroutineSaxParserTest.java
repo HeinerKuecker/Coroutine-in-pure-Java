@@ -402,9 +402,9 @@ public class CoroutineSaxParserTest
     extends AbstrLocalVarUseWithExpressionStmt<
     /*FUNCTION_RETURN*/Void ,
     /*COROUTINE_RETURN*/Void ,
-    /*RESUME_ARGUMENT*//*Characters*/SaxEvent ,
+    /*RESUME_ARGUMENT*/SaxEvent ,
     /*VARIABLE*/Student ,
-    /*EXPRESSION*//*Characters*/SaxEvent >
+    /*EXPRESSION*/SaxEvent >
     {
         public final SimpleExpression<? extends String , Void , /*Characters*/SaxEvent> fieldNameExpression;
 
@@ -419,10 +419,7 @@ public class CoroutineSaxParserTest
                     "student" ,
                     //expression
                     // get characters form resume arguments
-                    new GetResumeArgument</*Characters*/SaxEvent , Void>(
-                            //type
-                            //Characters.class
-                            ) );
+                    new GetResumeArgument<SaxEvent , Void>() );
 
             this.fieldNameExpression = fieldNameExpression;
         }
@@ -431,7 +428,7 @@ public class CoroutineSaxParserTest
         protected void execute(
                 final CoroutineOrFunctioncallOrComplexstmt<Void, Void, /*Characters*/SaxEvent> parent ,
                 final Student student ,
-                final /*Characters*/SaxEvent saxEvent )
+                final SaxEvent saxEvent )
         {
             final String fieldName =
                     fieldNameExpression.evaluate( parent );
@@ -492,10 +489,7 @@ public class CoroutineSaxParserTest
                     // localVarName
                     "student" ,
                     // expression
-                    new GetResumeArgument<StartElement , Void>(
-                            //type
-                            //StartElement.class
-                            ) );
+                    new GetResumeArgument<StartElement , Void>() );
         }
 
         @Override
@@ -525,16 +519,14 @@ public class CoroutineSaxParserTest
     public void testSaxParser()
             throws Exception
     {
+        @SuppressWarnings("rawtypes")
         final AbstrExprsUseExprs getXmlElementNameFromResumeArgumentRaw =
                 new AbstrExprsUseExprs<String, SaxEventWithElementname , Void , SaxEventWithElementname>(
                         // type
                         String.class ,
                         // argumentExpression
-                        new GetResumeArgument</*RESUME_ARGUMENT*/SaxEventWithElementname , /*COROUTINE_RETURN*/ Void>(
-                                // type
-                                //SaxEventWithElementname.class
-                                ) ) {
-
+                        new GetResumeArgument</*RESUME_ARGUMENT*/SaxEventWithElementname , /*COROUTINE_RETURN*/ Void>() )
+        {
             @Override
             public String execute(
                     final SaxEventWithElementname startElement )
@@ -557,10 +549,7 @@ public class CoroutineSaxParserTest
                 new And(
                         new InstanceOf(
                                 // valueExpression
-                                new GetResumeArgument<>(
-                                        // type
-                                        //SaxEvent.class
-                                        ) ,
+                                new GetResumeArgument<>() ,
                                 // type
                                 StartElement.class ) ,
                         new Equals<>(
@@ -609,10 +598,7 @@ public class CoroutineSaxParserTest
                                 // condition
                                 new InstanceOf<>(
                                         // valueExpression
-                                        new GetResumeArgument<>(
-                                                // type
-                                                //SaxEvent.class
-                                                ) ,
+                                        new GetResumeArgument<>() ,
                                         // type
                                         Characters.class ) ,
                                 // stmts
@@ -644,10 +630,7 @@ public class CoroutineSaxParserTest
                                 new And<>(
                                         new InstanceOf<>(
                                                 // valueExpression
-                                                new GetResumeArgument<>(
-                                                        // type
-                                                        //SaxEvent.class
-                                                        ) ,
+                                                new GetResumeArgument<>() ,
                                                 // type
                                                 EndElement.class ) ,
                                         new Equals<>(
@@ -687,10 +670,7 @@ public class CoroutineSaxParserTest
                                 new And<>(
                                         new InstanceOf<>(
                                                 // valueExpression
-                                                new GetResumeArgument<>(
-                                                        // type
-                                                        //SaxEvent.class
-                                                        ) ,
+                                                new GetResumeArgument<>() ,
                                                 // type
                                                 StartElement.class ) ,
                                         new Equals<>(
@@ -736,10 +716,7 @@ public class CoroutineSaxParserTest
                                 new And<>(
                                         new InstanceOf<>(
                                                 // valueExpression
-                                                new GetResumeArgument<>(
-                                                        //type
-                                                        //SaxEvent.class
-                                                        ) ,
+                                                new GetResumeArgument<>() ,
                                                 // type
                                                 StartElement.class ) ,
                                         new Equals<>(
@@ -837,10 +814,7 @@ public class CoroutineSaxParserTest
                                         new Not<>(
                                                 new InstanceOf<>(
                                                         // valueExpression
-                                                        new GetResumeArgument<>(
-                                                                // type
-                                                                //SaxEvent.class
-                                                                ) ,
+                                                        new GetResumeArgument<>() ,
                                                         // type
                                                         EndElement.class ) ) ,
                                         // stmts

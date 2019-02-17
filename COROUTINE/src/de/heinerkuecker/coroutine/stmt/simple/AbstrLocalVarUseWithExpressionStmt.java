@@ -99,7 +99,11 @@ implements HasVariableName
             final Class<? extends COROUTINE_RETURN> coroutineReturnType ,
             final Class<? extends RESUME_ARGUMENT> resumeArgumentType )
     {
-        // do nothing
+        this.expression.setExprCoroutineReturnTypeAndResumeArgumentType(
+                alreadyCheckedFunctionNames ,
+                parent ,
+                coroutineReturnType ,
+                resumeArgumentType );
     }
 
     @Override

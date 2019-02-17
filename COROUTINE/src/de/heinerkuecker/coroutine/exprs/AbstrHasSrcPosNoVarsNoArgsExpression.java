@@ -49,10 +49,6 @@ implements SimpleExpression</*EXPRESSION_RETURN*/RESUME_ARGUMENT , COROUTINE_RET
     }
 
     @Override
-    //public void setExprCoroutineReturnType(
-    //        final HashSet<String> alreadyCheckedFunctionNames ,
-    //        final CoroutineOrFunctioncallOrComplexstmt<?, ?, ?> parent ,
-    //        final Class<?> coroutineReturnType )
     public void setExprCoroutineReturnTypeAndResumeArgumentType(
             final HashSet<String> alreadyCheckedFunctionNames ,
             final CoroutineOrFunctioncallOrComplexstmt<?, ? , ?> parent ,
