@@ -541,13 +541,14 @@ public class CoroutineSaxParserTest
             }
         };
 
+        @SuppressWarnings("unchecked")
         final AbstrExprsUseExprs<String , SaxEventWithElementname , Void , SaxEvent> getXmlElementNameFromResumeArgument =
                 getXmlElementNameFromResumeArgumentRaw;
 
         // check is start XML element class: <class>
-        final CoroBooleanExpression isStartElementClass =
-                new And(
-                        new InstanceOf(
+        final CoroBooleanExpression</*COROUTINE_RETURN*/Void , /*RESUME_ARGUMENT*/SaxEvent> isStartElementClass =
+                new And<>(
+                        new InstanceOf<>(
                                 // valueExpression
                                 new GetResumeArgument<>() ,
                                 // type
