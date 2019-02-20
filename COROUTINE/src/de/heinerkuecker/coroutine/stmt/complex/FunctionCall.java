@@ -372,17 +372,17 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
             final ComplexStmtState<?, ?, /*FUNCTION_RETURN*/? , COROUTINE_RETURN , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastProcExecuteState =
+        final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastExecuteState =
                 (FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         @SuppressWarnings("unchecked")
-        final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextProcExecuteState =
+        final FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextExecuteState =
                 (FunctionCallState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
         final ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
-        if ( lastProcExecuteState != null )
+        if ( lastExecuteState != null )
         {
-            lastBodyState = lastProcExecuteState.bodyComplexState;
+            lastBodyState = lastExecuteState.bodyComplexState;
         }
         else
         {
@@ -390,9 +390,9 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
         }
 
         final ComplexStmtState<?, ?, FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
-        if ( nextProcExecuteState != null )
+        if ( nextExecuteState != null )
         {
-            nextBodyState = nextProcExecuteState.bodyComplexState;
+            nextBodyState = nextExecuteState.bodyComplexState;
         }
         else
         {
@@ -400,7 +400,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
         }
 
         final String functionArgumentsStr;
-        if ( nextProcExecuteState == null )
+        if ( nextExecuteState == null )
         //if ( lastBodyState == null &&
         //        nextBodyState == null )
         {
@@ -412,12 +412,12 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
                     indent + " " +
                             //"function arguments: " +
                             "function argument values: " +
-                            nextProcExecuteState.arguments +
+                            nextExecuteState.arguments +
                             "\n";
         }
 
         //final String functionVariablesStr;
-        //if ( nextProcExecuteState == null ||
+        //if ( nextExecuteState == null ||
         //        ( lastBodyState == null &&
         //        nextBodyState == null ) )
         //{
@@ -428,7 +428,7 @@ implements CoroExpression<FUNCTION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT>
         //    functionVariablesStr =
         //            indent + " " +
         //                    "function variables: " +
-        //                    nextProcExecuteState.variables +
+        //                    nextExecuteState.variables +
         //                    "\n";
         //}
 

@@ -213,36 +213,31 @@ implements CoroExpression<EXPRESSION_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT
             final ComplexStmtState<?, ?, /*FUNCTION_RETURN*/? , COROUTINE_RETURN , RESUME_ARGUMENT> nextStmtExecuteState )
     {
         @SuppressWarnings("unchecked")
-        final FunctionCallState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastProcExecuteState =
-                (FunctionCallState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
+        final SimpleExpressionWrapperState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastExecuteState =
+                (SimpleExpressionWrapperState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
 
         @SuppressWarnings("unchecked")
-        final FunctionCallState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextProcExecuteState =
-                (FunctionCallState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
+        final SimpleExpressionWrapperState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextExecuteState =
+                (SimpleExpressionWrapperState<EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
 
-        final ComplexStmtState<?, ?, EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastBodyState;
-        if ( lastProcExecuteState != null )
+        if ( nextExecuteState != null )
         {
-            lastBodyState = lastProcExecuteState.bodyComplexState;
-        }
-        else
-        {
-            lastBodyState = null;
+            return
+                    "next:" +
+                    indentStrWithoutNextOrLastPart( indent ) +
+                    this.simpleExpression;
         }
 
-        final ComplexStmtState<?, ?, EXPRESSION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextBodyState;
-        if ( nextProcExecuteState != null )
+        if ( lastExecuteState != null )
         {
-            nextBodyState = nextProcExecuteState.bodyComplexState;
-        }
-        else
-        {
-            nextBodyState = null;
+            return
+                    "last:" +
+                    indentStrWithoutNextOrLastPart( indent ) +
+                    this.simpleExpression;
         }
 
         return
                 indent +
-                // TODO next and last
                 this.simpleExpression;
     }
 

@@ -96,7 +96,7 @@ extends ComplexStmt<
     {
         super(
                 //creationStackOffset
-                2 );
+                3 );
 
         this.expression =
                 new SimpleExpressionWrapper<>(
@@ -190,19 +190,6 @@ extends ComplexStmt<
                 parent );
     }
 
-    //@Override
-    //public String toString()
-    //{
-    //    return
-    //            this.getClass().getSimpleName() +
-    //            "[" +
-    //            expression +
-    //            "]" +
-    //            ( this.creationStackTraceElement != null
-    //                ? " " + this.creationStackTraceElement
-    //                : "" );
-    //}
-
     @Override
     public YieldReturnState<FUNCTION_RETURN, COROUTINE_RETURN, RESUME_ARGUMENT> newState(
             final CoroutineOrFunctioncallOrComplexstmt<FUNCTION_RETURN, COROUTINE_RETURN, RESUME_ARGUMENT> parent )
@@ -237,6 +224,19 @@ extends ComplexStmt<
                 labels );
     }
 
+    //@Override
+    //public String toString()
+    //{
+    //    return
+    //            this.getClass().getSimpleName() +
+    //            "[" +
+    //            expression +
+    //            "]" +
+    //            ( this.creationStackTraceElement != null
+    //                ? " " + this.creationStackTraceElement
+    //                : "" );
+    //}
+
     @Override
     public String toString(
             CoroutineOrFunctioncallOrComplexstmt<?, COROUTINE_RETURN, RESUME_ARGUMENT> parent ,
@@ -245,13 +245,46 @@ extends ComplexStmt<
             ComplexStmtState<?, ?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> nextStmtExecuteState )
     {
         //throw new RuntimeException( "not implemented" );
+        @SuppressWarnings("unchecked")
+        final YieldReturnState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastYieldReturnExecuteState =
+                (YieldReturnState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
+
+        @SuppressWarnings("unchecked")
+        final YieldReturnState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextYieldReturnExecuteState =
+                (YieldReturnState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) nextStmtExecuteState;
+
+        final ComplexStmtState<?, ?, ? , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastExpressionState;
+        if ( lastYieldReturnExecuteState != null )
+        {
+            lastExpressionState = lastYieldReturnExecuteState.currentComplexExpressionState;
+        }
+        else
+        {
+            lastExpressionState = null;
+        }
+
+        final ComplexStmtState<?, ?, ? , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> nextExpressionState;
+        if ( nextYieldReturnExecuteState != null )
+        {
+            nextExpressionState = nextYieldReturnExecuteState.currentComplexExpressionState;
+        }
+        else
+        {
+            nextExpressionState = null;
+        }
+
         return
                 indent +
                 this.getClass().getSimpleName() +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
-                "\n" +
-                "(" +
-                this.expression +
+                "(\n" +
+                indent +
+                nextOrLastSpaceStr() +
+                this.expression.toString(
+                        parent ,
+                        indent + nextOrLastSpaceStr() ,
+                        lastExpressionState ,
+                        nextExpressionState ) +
                 ")\n";
     }
 
