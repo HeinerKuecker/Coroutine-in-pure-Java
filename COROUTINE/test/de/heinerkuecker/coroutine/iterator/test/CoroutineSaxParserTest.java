@@ -414,10 +414,10 @@ public class CoroutineSaxParserTest
                 final SimpleExpression<? extends String , Void , /*Characters*/SaxEvent> fieldNameExpression )
         {
             super(
-                    //localVarName
+                    // localVarName
                     "student" ,
-                    //expression
-                    // get characters form resume arguments
+                    // expression
+                    // get characters from resume arguments
                     new GetResumeArgument<SaxEvent , Void>() );
 
             this.fieldNameExpression = fieldNameExpression;
@@ -804,7 +804,6 @@ public class CoroutineSaxParserTest
                                 students ) ,
                         new While<>(
                                 // condition
-                                //isStartElementClass
                                 new FunctionCall<>(
                                         // functionName
                                         "checkIsStartElementClassAndConsumeIt" ,
