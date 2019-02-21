@@ -91,6 +91,22 @@ extends ComplexStmt<
     /**
      * Constructor.
      */
+    protected YieldReturn(
+    		final int creationStackOffset ,
+            final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
+    {
+        super(
+                creationStackOffset + 1 );
+
+        this.expression =
+                new SimpleExpressionWrapper(
+                        Objects.requireNonNull(
+                                expression ) );
+    }
+
+    /**
+     * Constructor.
+     */
     public YieldReturn(
             final COROUTINE_RETURN value )
     {

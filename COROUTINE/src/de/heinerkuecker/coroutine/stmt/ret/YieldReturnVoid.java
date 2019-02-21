@@ -22,6 +22,8 @@ extends YieldReturn</*FUNCTION_RETURN*/Void , COROUTINE_RETURN , RESUME_ARGUMENT
     public YieldReturnVoid()
     {
         super(
+        		// creationStackOffset 
+        		3 ,
                 NullValue.nullValue() );
     }
 
