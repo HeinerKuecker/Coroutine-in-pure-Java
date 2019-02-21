@@ -295,9 +295,9 @@ extends ComplexStmt<
         return
                 indent +
                 ( this.label != null ? this.label + " : " : "" ) +
-                this.getClass().getSimpleName() + " (" +
+                this.getClass().getSimpleName() + 
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
-                "\n" +
+                " (\n" +
                 conditionStr + " )\n" +
                 variablesStr +
                 this.bodyComplexStmt.toString(
