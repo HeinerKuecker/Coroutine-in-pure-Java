@@ -626,11 +626,11 @@ public class CoroutineSaxParserTest
                                         // type
                                         String.class )
                         } ,
-                        //bodyStmts
+                        // bodyStmts
                         new FunctionCall<>(
                                 // functionName
                                 "consumeWhitespaces" ,
-                                //functionReturnType
+                                // functionReturnType
                                 Void.class ) ,
                         new IfElse</*FUNCTION_RETURN*/ Void, /*COROUTINE_RETURN*/ Void, /*RESUME_ARGUMENT*/ SaxEvent>(
                                 // condition
@@ -777,6 +777,7 @@ public class CoroutineSaxParserTest
                                                 String.class ) ) )
                         );
 
+        // collection of result objects
         final List<Student> students = new ArrayList<>();
 
         final Coroutine<Void, SaxEvent> coroutine =
