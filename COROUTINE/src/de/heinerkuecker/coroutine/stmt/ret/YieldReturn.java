@@ -92,7 +92,7 @@ extends ComplexStmt<
      * Constructor.
      */
     protected YieldReturn(
-    		final int creationStackOffset ,
+            final int creationStackOffset ,
             final SimpleExpression<? extends COROUTINE_RETURN , COROUTINE_RETURN , RESUME_ARGUMENT> expression )
     {
         super(
@@ -260,7 +260,6 @@ extends ComplexStmt<
             ComplexStmtState<?, ?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> lastStmtExecuteState ,
             ComplexStmtState<?, ?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> nextStmtExecuteState )
     {
-        //throw new RuntimeException( "not implemented" );
         @SuppressWarnings("unchecked")
         final YieldReturnState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT> lastYieldReturnExecuteState =
                 (YieldReturnState<FUNCTION_RETURN , COROUTINE_RETURN /*, PARENT*/ , RESUME_ARGUMENT>) lastStmtExecuteState;
@@ -294,8 +293,8 @@ extends ComplexStmt<
                 this.getClass().getSimpleName() +
                 ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
                 "(\n" +
-                indent +
-                nextOrLastSpaceStr() +
+                //indent +
+                //nextOrLastSpaceStr() +
                 this.expression.toString(
                         parent ,
                         indent + nextOrLastSpaceStr() ,

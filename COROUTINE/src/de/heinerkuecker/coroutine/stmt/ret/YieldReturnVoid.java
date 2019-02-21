@@ -22,8 +22,8 @@ extends YieldReturn</*FUNCTION_RETURN*/Void , COROUTINE_RETURN , RESUME_ARGUMENT
     public YieldReturnVoid()
     {
         super(
-        		// creationStackOffset 
-        		3 ,
+                // creationStackOffset
+                3 ,
                 NullValue.nullValue() );
     }
 
@@ -34,8 +34,29 @@ extends YieldReturn</*FUNCTION_RETURN*/Void , COROUTINE_RETURN , RESUME_ARGUMENT
             final ComplexStmtState<?, ?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> lastStmtExecuteState ,
             final ComplexStmtState<?, ?, ?, COROUTINE_RETURN, RESUME_ARGUMENT> nextStmtExecuteState )
     {
-        // TODO Auto-generated method stub
-        return super.toString(parent, indent, lastStmtExecuteState, nextStmtExecuteState);
+        String myIdent;
+        if ( nextStmtExecuteState != null )
+        {
+            myIdent =
+                    "next:" +
+                    indentStrWithoutNextOrLastPart( indent );
+        }
+        else if ( lastStmtExecuteState != null )
+        {
+            myIdent =
+                    "last:" +
+                    indentStrWithoutNextOrLastPart( indent );
+        }
+        else
+        {
+            myIdent = indent;
+        }
+
+        return
+                myIdent +
+                this.getClass().getSimpleName() +
+                ( this.creationStackTraceElement != null ? " " + this.creationStackTraceElement : "" ) +
+                "\n";
     }
 
 }
